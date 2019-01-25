@@ -70,7 +70,6 @@ void CmdLineExec::executeGo3(Ris::CmdLineCmd* aCmd)
       printf("CMD %d %s", (int)strlen(tString), tString);
       if (strcmp(tString, "e\n") == 0) break;
    }
-
 }
 
 //******************************************************************************
