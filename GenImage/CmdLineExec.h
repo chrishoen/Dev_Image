@@ -32,7 +32,7 @@ public:
    //***************************************************************************
    //***************************************************************************
    //***************************************************************************
-   // Infrastructure.
+   // Methods.
 
    CmdLineExec();
    void reset();
@@ -58,7 +58,6 @@ public:
    void executeGo3(Ris::CmdLineCmd* aCmd);
    void executeGo4(Ris::CmdLineCmd* aCmd);
    void executeGo5(Ris::CmdLineCmd* aCmd);
-
    void executeParms(Ris::CmdLineCmd* aCmd);
 };
 

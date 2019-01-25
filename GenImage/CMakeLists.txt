@@ -9,3 +9,11 @@ my_add_pch (GenImage)
 target_include_directories(GenImage PRIVATE CommomLib)
 target_link_libraries(GenImage CommonLib)
 
+find_package(OpenCV CONFIG REQUIRED PATHS ${MyOpenCVConfigPath} NO_DEFAULT_PATH)
+target_include_directories(GenImage PUBLIC OpenCV)
+target_link_libraries(GenImage OpenCV)
+
+
+
+
+
