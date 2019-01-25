@@ -1,9 +1,8 @@
-﻿# CMakeList.txt : Top-level CMake project file, do global configuration
-# and include sub-projects here.
-#
-cmake_minimum_required (VERSION 3.8)
+﻿cmake_minimum_required (VERSION 3.8)
+
+include(MyCMake.cmake)
 
 project ("Dev_Image")
+my_init_variables()
 
-# Include sub-projects.
-add_subdirectory ("CMakeProject1")
+add_subdirectory ("Test")
