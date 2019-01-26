@@ -10,6 +10,10 @@ my_add_pch (CommonLib)
 
 target_include_directories(CommonLib PUBLIC ${PROJECT_SOURCE_DIR})
 
+my_lib_import_RisLib(CommonLib)
+my_lib_import_DspLib(CommonLib)
+return()
+
 find_package(DspLib CONFIG REQUIRED PATHS ${MyDspLibConfigPath} NO_DEFAULT_PATH)
 target_include_directories(CommonLib PUBLIC DspLib)
 target_link_libraries(CommonLib DspLib)
