@@ -9,11 +9,9 @@ my_add_pch (GenImage)
 target_include_directories(GenImage PUBLIC ${PROJECT_SOURCE_DIR})
 
 my_exe_import_RisLib(GenImage)
-my_exe_import_DspLib(GenImage)
+my_exe_import_CommonLib(GenImage)
 my_exe_import_OpenCV(GenImage)
-
-target_include_directories(GenImage PUBLIC CommonLib)
-target_link_libraries(GenImage CommonLib)
+my_exe_import_DspLib(GenImage)
 
 return()
 
@@ -24,4 +22,8 @@ target_link_libraries(GenImage OpenCV)
 
 
 
+
+target_link_libraries(GenImage CommonLib)
+target_include_directories(GenImage
+  PRIVATE $<TARGET_PROPERTY:CommonLib,INTERFACE_INCLUDE_DIRECTORIES>)
 

@@ -2,6 +2,7 @@
 
 include(MyCMake.cmake)
 include(MyImports.cmake)
+include(MyLocalImports.cmake)
 
 project ("Dev_Image")
 my_init_variables()

@@ -8,7 +8,7 @@ add_library (CommonLib STATIC ${src_files})
 my_add_compile_options (CommonLib)
 my_add_pch (CommonLib)
 
-target_include_directories(CommonLib PUBLIC ${PROJECT_SOURCE_DIR})
+target_include_directories(CommonLib INTERFACE ${PROJECT_SOURCE_DIR})
 
 my_lib_import_RisLib(CommonLib)
 my_lib_import_DspLib(CommonLib)
