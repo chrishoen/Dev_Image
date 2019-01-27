@@ -70,7 +70,8 @@ void CmdLineExec::executeDraw1(Ris::CmdLineCmd* aCmd)
    aCmd->setArgDefault(1, 0);
    int tCode = aCmd->argInt(1);
 
-   Display::gGraphicsThread->postDraw1(tCode);
+   cv::Mat tImage = cv::imread("C:\\Alpha\\TestImage\\Image1920_0.png");
+   Display::gGraphicsThread->postDraw1(new cv::Mat(tImage));
 }
 
 //******************************************************************************

@@ -28,9 +28,13 @@ void GraphicsThread::doVideoDraw1(SDL_Event* aEvent)
    mStartTime = Ris::getCurrentProgramTime();
 
    int tRet = 0;
-   int tCode = aEvent->user.code;
+   cv::Mat* tImage = (cv::Mat*)aEvent->user.data1;
 
-   Prn::print(Prn::Show1, "doVideoDraw1 %d", tCode);
+   Prn::print(Prn::Show1, "doVideoDraw1  %4d %4d", tImage->rows, tImage->cols);
+
+   delete tImage;
+   return;
+
 
    //***************************************************************************
    //***************************************************************************
@@ -58,8 +62,7 @@ void GraphicsThread::doVideoDraw1(SDL_Event* aEvent)
 
       // Render the rectangle.
       SDL_Rect tRect = mRectA;
-      if (tCode == 0) tRect = mRectA;
-      if (tCode == 1) tRect = mRectB;
+      tRect = mRectA;
       SDL_RenderFillRect(mRenderer, &tRect);
 
       // Render the changes above.

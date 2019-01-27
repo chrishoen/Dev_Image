@@ -9,6 +9,8 @@ Display video thread class.
 //******************************************************************************
 
 #include <string>
+#include <opencv2/core/core.hpp>
+
 #include "risThreadsThreads.h"
 #include "risThreadsNotify.h"
 #include "SDL.h"
@@ -130,7 +132,7 @@ public:
    void postDraw0(int aCode);
 
    // Post an event to draw a cv matrix image.
-   void postDraw1(int aCode);
+   void postDraw1(cv::Mat* aImage);
 
 
    // Draw the test image. This is called for the posted event.

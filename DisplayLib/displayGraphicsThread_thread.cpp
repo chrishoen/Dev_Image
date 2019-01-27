@@ -211,14 +211,14 @@ void GraphicsThread::postDraw0(int aCode)
 //******************************************************************************
 // Post an event to draw a test pattern.
 
-void GraphicsThread::postDraw1(int aCode)
+void GraphicsThread::postDraw1(cv::Mat* aImage)
 {
    // Post the event.
    SDL_Event tEvent;
    SDL_memset(&tEvent, 0, sizeof(tEvent));
    tEvent.type = mDraw1EventType;
-   tEvent.user.code = aCode;
-   tEvent.user.data1 = 0;
+   tEvent.user.code = 0;
+   tEvent.user.data1 = aImage;
    tEvent.user.data2 = 0;
    SDL_PushEvent(&tEvent);
 }
