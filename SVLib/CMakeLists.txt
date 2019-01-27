@@ -10,6 +10,7 @@ my_add_pch (SVLib)
 
 target_include_directories(SVLib INTERFACE ${PROJECT_SOURCE_DIR})
 
+my_lib_import_OpenCV(SVLib)
 my_lib_import_RisLib(SVLib)
 my_lib_import_DspLib(SVLib)
 return()
