@@ -9,5 +9,6 @@ my_init_variables()
 my_init_import_variables()
 
 add_subdirectory ("CommonLib")
-add_subdirectory ("GenImage")
+add_subdirectory ("ImageGen")
+add_subdirectory ("SVLib")
 add_subdirectory ("Test")
