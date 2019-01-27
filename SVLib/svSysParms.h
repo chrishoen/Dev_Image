@@ -57,17 +57,15 @@ public:
    //***************************************************************************
    // Parameter members.
 
-   // Target and sensor pixel variables.
-   double mTargetPixelPitch;
-   double mSensorPixelPitch;
+   // Image pixel variables.
+   double mImagePixelPitch;
 
-   // Number of target and sensor pixels.
-   RCSize mTargetSize;
-   RCSize mSensorSize;
+   // Number of target and Image pixels.
+   RCSize mImageSize;
 
-   // Sensor limits.
-   int mSensorRowLimit;
-   int mSensorColLimit;
+   // Image limits.
+   int mImageRowLimit;
+   int mImageColLimit;
 
    //***************************************************************************
    //***************************************************************************
@@ -75,10 +73,8 @@ public:
    // Expanded members that are not read from the parms file.
 
    // Pixel pitch and pixel per millimeter.
-   double mTargetPixelPerMM;
-   double mTargetMMPerPixel;
-   double mSensorPixelPerMM;
-   double mSensorMMPerPixel;
+   double mImagePixelPerMM;
+   double mImageMMPerPixel;
 
    //***************************************************************************
    //***************************************************************************

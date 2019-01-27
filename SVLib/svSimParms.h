@@ -10,6 +10,7 @@ Parameters class whose values are read from a command file.
 //******************************************************************************
 
 #include "risCmdLineParms.h"
+#include "svRCIndex.h"
 #include "svRCSize.h"
 
 //******************************************************************************
@@ -64,11 +65,11 @@ public:
    //***************************************************************************
    // Parameter members.
 
-   // Number of target and sensor pixels.
-   RCSize mImageSize;
+   // Center image point.
+   RCIndex mCenterPixel;
 
    // Image file name.
-   char mImageFilename[cMaxStringSize];
+   char mImageFileName[cMaxStringSize];
 
    // Pulse parms.
    int    mPulsePixelWidth;

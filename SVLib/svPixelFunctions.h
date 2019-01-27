@@ -26,25 +26,6 @@ namespace SV
 // millimeters.
 
 // Convert from a pixel row column to a point xy coordinates in millimeters.
-void convertObjectPixelToPoint(
-   RCIndex       aPixel,   // Input
-   cv::Point3d&  aPoint);  // Output
-
-// Convert a point xy coordinates in millimeters to a pixel row column.
-void convertObjectPointToPixel(
-   cv::Point3d   aPoint,   // Input
-   RCIndex&      aPixel);  // Output
-
-//******************************************************************************
-//******************************************************************************
-//******************************************************************************
-//******************************************************************************
-//******************************************************************************
-//******************************************************************************
-// Convert between a pixel row column pair and a point coordinate pair in
-// millimeters.
-
-// Convert from a pixel row column to a point xy coordinates in millimeters.
 void convertImagePixelToPoint(
    RCIndex       aPixel,   // Input
    cv::Point2d&  aPoint);  // Output
@@ -65,18 +46,6 @@ void convertImagePixelXYToPoint (
    double  aRowY,      // Input 
    double& aPointX,    // Output 
    double& aPointY);   // Output
-
-//******************************************************************************
-//******************************************************************************
-//******************************************************************************
-// Limit object pixel indices.
-
-// Limit a coordinate so that it doesn't go out of bounds. Use global size
-// parameters as the limits.
-void limitObjectPixel(RCIndex& aIndex);
-
-// Return true if a pixel is in bounds.
-bool isObjectPixelInBounds(RCIndex& aIndex);
 
 //******************************************************************************
 //******************************************************************************

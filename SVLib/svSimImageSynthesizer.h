@@ -53,14 +53,9 @@ public:
    //***************************************************************************
    // Methods.
 
-   // Generate a simulated image for a noise floor image.
-   void doGenerateNoiseFloor(
-      cv::Mat&         aNoiseFloor);   // Output
-
-   // Generate a simulated image for a filtered image.
-   void doGenerateFilteredImage(
-      cv::Point2d&     aImagePoint,         // Input
-      cv::Mat&         aImage);             // Output
+   // Generate a simulated image.
+   void doGenerateImage(
+      cv::Mat&         aImage);      // Output
 
    //***************************************************************************
    //***************************************************************************
@@ -69,13 +64,8 @@ public:
 
    // Generate a simulated pulse at an image point.
    void doGeneratePulse1(
-      cv::Point2d&     aImagePoint,  // Input
-      cv::Mat&         aImage);      // InOut
-
-   // Generate a simulated pulse at an image point.
-   void doGeneratePulse2(
-      cv::Point2d&     aImagePoint,  // Input
-      cv::Mat&         aImage);      // InOut
+      SV::RCIndex      aCenterPixel,  // Input
+      cv::Mat&         aImage);       // InOut
 };
 
 //******************************************************************************

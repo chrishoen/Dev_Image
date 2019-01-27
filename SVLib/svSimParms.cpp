@@ -29,7 +29,7 @@ void SimParms::reset()
    BaseClass::reset();
    BaseClass::setFileName_RelAlphaFiles("Image/SV_Sim_Parms.txt");
 
-   mImageFilename[0] = 0;
+   mImageFileName[0] = 0;
 
    mPulsePixelWidth = 0;
    mPulseGaussianWidth = 0.0;
@@ -57,10 +57,10 @@ void SimParms::show()
    printf("SimParms****************************************** %s\n", mTargetSection);
 
    printf("\n");
-   printf("ImageSize              %10d %10d\n", mImageSize.mRows, mImageSize.mCols);
+   printf("CenterPixel            %10d %10d\n", mCenterPixel.mRow, mCenterPixel.mCol);
 
    printf("\n");
-   printf("ImageFilename          %-10s\n", mImageFilename);
+   printf("ImageFileName          %-10s\n", mImageFileName);
 
    printf("\n");
    printf("PulsePixelWidth        %10d\n",   mPulsePixelWidth);
@@ -82,8 +82,8 @@ void SimParms::execute(Ris::CmdLineCmd* aCmd)
 {
    if (!isTargetSection(aCmd)) return;
 
-   if (aCmd->isCmd("ImageSize"))           mImageSize.execute(aCmd);
-   if (aCmd->isCmd("ImageFilename"))       aCmd->copyArgString(1, mImageFilename, cMaxStringSize);
+   if (aCmd->isCmd("CenterPixel"))         mCenterPixel.execute(aCmd);
+   if (aCmd->isCmd("ImageFileName"))       aCmd->copyArgString(1, mImageFileName, cMaxStringSize);
 
    if (aCmd->isCmd("PulsePixelWidth"))     mPulsePixelWidth    = aCmd->argInt(1);
    if (aCmd->isCmd("PulseGaussianWidth"))  mPulseGaussianWidth = aCmd->argDouble(1);

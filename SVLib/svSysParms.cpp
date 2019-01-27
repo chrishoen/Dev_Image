@@ -29,19 +29,15 @@ void SysParms::reset()
    BaseClass::reset();
    BaseClass::setFileName_RelAlphaFiles("Image/SV_Sys_Parms.txt");
 
-   mTargetPixelPitch = 0.0;
-   mSensorPixelPitch = 0.0;
+   mImagePixelPitch = 0.0;
 
-   mTargetSize.reset();
-   mSensorSize.reset();
+   mImageSize.reset();
 
-   mSensorRowLimit = 0;
-   mSensorColLimit = 0;
+   mImageRowLimit = 0;
+   mImageColLimit = 0;
 
-   mTargetPixelPerMM = 0.0;
-   mTargetMMPerPixel = 0.0;
-   mSensorPixelPerMM = 0.0;
-   mSensorMMPerPixel = 0.0;
+   mImagePixelPerMM = 0.0;
+   mImageMMPerPixel = 0.0;
 }
 
 //******************************************************************************
@@ -52,10 +48,8 @@ void SysParms::reset()
 
 void SysParms::expand()
 {
-   mTargetPixelPerMM = 1.0/mTargetPixelPitch;
-   mTargetMMPerPixel = mTargetPixelPitch;
-   mSensorPixelPerMM = 1.0/mSensorPixelPitch;
-   mSensorMMPerPixel = mSensorPixelPitch;
+   mImagePixelPerMM = 1.0/mImagePixelPitch;
+   mImageMMPerPixel = mImagePixelPitch;
 }
 
 //******************************************************************************
@@ -68,22 +62,18 @@ void SysParms::show()
    printf("\n");
    printf("SysParms************************************************ %s\n", mTargetSection);
 
-   printf("TargetPixelPitch      %10.6f\n", mTargetPixelPitch);
-   printf("SensorPixelPitch      %10.6f\n", mSensorPixelPitch);
+   printf("ImagePixelPitch      %10.6f\n", mImagePixelPitch);
 
    printf("\n");
-   printf("TargetSize            %10d %10d\n",  mTargetSize.mRows,mTargetSize.mCols);
-   printf("SensorSize            %10d %10d\n",  mSensorSize.mRows,mSensorSize.mCols);
+   printf("ImageSize            %10d %10d\n",  mImageSize.mRows,mImageSize.mCols);
 
    printf("\n");
-   printf("SensorRowLimit        %10d\n",  mSensorRowLimit);
-   printf("SensorColLimit        %10d\n",  mSensorColLimit);
+   printf("ImageRowLimit        %10d\n",  mImageRowLimit);
+   printf("ImageColLimit        %10d\n",  mImageColLimit);
 
    printf("\n");
-   printf("TargetPixelPerMM      %10.6f\n", mTargetPixelPerMM);
-   printf("TargetMMPerPixel      %10.6f\n", mTargetMMPerPixel);
-   printf("SensorPixelPerMM      %10.6f\n", mSensorPixelPerMM);
-   printf("SensorMMPerPixel      %10.6f\n", mSensorMMPerPixel);
+   printf("ImagePixelPerMM      %10.6f\n", mImagePixelPerMM);
+   printf("ImageMMPerPixel      %10.6f\n", mImageMMPerPixel);
 }
 
 //******************************************************************************
@@ -97,13 +87,11 @@ void SysParms::execute(Ris::CmdLineCmd* aCmd)
 {
    if (!isTargetSection(aCmd)) return;
 
-   if (aCmd->isCmd("TargetPixelPitch"))      mTargetPixelPitch = aCmd->argDouble(1);
-   if (aCmd->isCmd("SensorPixelPitch"))      mSensorPixelPitch = aCmd->argDouble(1);
-   if (aCmd->isCmd("SensorRowLimit"))        mSensorRowLimit = aCmd->argInt(1);
-   if (aCmd->isCmd("SensorColLimit"))        mSensorColLimit = aCmd->argInt(1);
+   if (aCmd->isCmd("ImagePixelPitch"))      mImagePixelPitch = aCmd->argDouble(1);
+   if (aCmd->isCmd("ImageRowLimit"))        mImageRowLimit = aCmd->argInt(1);
+   if (aCmd->isCmd("ImageColLimit"))        mImageColLimit = aCmd->argInt(1);
 
-   if (aCmd->isCmd("TargetSize"))            mTargetSize.execute(aCmd);
-   if (aCmd->isCmd("SensorSize"))            mSensorSize.execute(aCmd);
+   if (aCmd->isCmd("ImageSize"))            mImageSize.execute(aCmd);
 }
 
 //******************************************************************************
