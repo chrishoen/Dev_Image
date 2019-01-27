@@ -119,6 +119,7 @@ void GraphicsThread::threadInitFunction()
 
    // Initialize event types.
    mDraw0EventType = SDL_RegisterEvents(1);
+   mDraw1EventType = SDL_RegisterEvents(1);
 
    // Create the window and renderer.
    doVideoStart();
@@ -148,6 +149,7 @@ void GraphicsThread::threadRunFunction()
 
       // Draw something if a draw event was posted.
       if (tEvent.type == mDraw0EventType) doVideoDraw0(&tEvent);
+      if (tEvent.type == mDraw1EventType) doVideoDraw1(&tEvent);
    }
 }
 
@@ -198,6 +200,23 @@ void GraphicsThread::postDraw0(int aCode)
    SDL_Event tEvent;
    SDL_memset(&tEvent, 0, sizeof(tEvent));
    tEvent.type = mDraw0EventType;
+   tEvent.user.code = aCode;
+   tEvent.user.data1 = 0;
+   tEvent.user.data2 = 0;
+   SDL_PushEvent(&tEvent);
+}
+
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+// Post an event to draw a test pattern.
+
+void GraphicsThread::postDraw1(int aCode)
+{
+   // Post the event.
+   SDL_Event tEvent;
+   SDL_memset(&tEvent, 0, sizeof(tEvent));
+   tEvent.type = mDraw1EventType;
    tEvent.user.code = aCode;
    tEvent.user.data1 = 0;
    tEvent.user.data2 = 0;

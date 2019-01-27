@@ -33,6 +33,7 @@ void CmdLineExec::reset()
 void CmdLineExec::execute(Ris::CmdLineCmd* aCmd)
 {
    if (aCmd->isCmd("D0"))        executeDraw0(aCmd);
+   if (aCmd->isCmd("D1"))        executeDraw1(aCmd);
 
    if (aCmd->isCmd("GO1"))       executeGo1(aCmd);
    if (aCmd->isCmd("GO2"))       executeGo2(aCmd);
@@ -58,6 +59,18 @@ void CmdLineExec::executeDraw0(Ris::CmdLineCmd* aCmd)
    int tCode = aCmd->argInt(1);
 
    Display::gGraphicsThread->postDraw0(tCode);
+}
+
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+
+void CmdLineExec::executeDraw1(Ris::CmdLineCmd* aCmd)
+{
+   aCmd->setArgDefault(1, 0);
+   int tCode = aCmd->argInt(1);
+
+   Display::gGraphicsThread->postDraw1(tCode);
 }
 
 //******************************************************************************
