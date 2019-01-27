@@ -56,32 +56,13 @@ public:
    //***************************************************************************
    // Parameter members.
 
-   // Camera parameters.
-   double  mFx;
-   double  mFy;
-   double  mCx;
-   double  mCy;
-
-   // Gamma variables.
-   bool   mUseGamma;
-   double mGamma;
-   double mWD;
-
    // Simulated error variables.
    double   mSigma;
-
-   // Trial variables.
-   int      mNumTrialTests;
-   double   mTrialDeltaA;
-   double   mTrialDeltaT;
 
    //***************************************************************************
    //***************************************************************************
    //***************************************************************************
    // Synthetic image generation.
-
-   // If true then generate synthetic images.
-   bool mSyntheticFlag;
 
    // Pulse parms.
    int    mPulsePixelWidth;

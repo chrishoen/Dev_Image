@@ -9,7 +9,6 @@ Description:
 #include "stdafx.h"
 
 #include "svDefs.h"
-#include "svPixelFunctions.h"
 #include "svImageWrapper.h"
 
 //******************************************************************************
