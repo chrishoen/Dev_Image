@@ -6,10 +6,6 @@
 //******************************************************************************
 #include "stdafx.h"
 
-
-#include "SDL.h"
-#include "SDL_image.h"
-
 #include "risProgramTime.h"
 #include "risAlphaDir.h"
 

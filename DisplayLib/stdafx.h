@@ -11,6 +11,9 @@
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/calib3d.hpp>
 
+#include "SDL.h"
+#include "SDL_image.h"
+
 #include "tsThreadServices.h"
 #include "my_functions.h"
 #include "prnPrint.h"

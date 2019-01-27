@@ -7,8 +7,6 @@
 #include "stdafx.h"
 
 
-#include "SDL.h"
-
 #include "displayGraphicsThread.h"
 
 namespace Display
