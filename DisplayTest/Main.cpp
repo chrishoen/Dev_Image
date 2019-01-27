@@ -3,6 +3,7 @@
 
 #include "MainInit.h"
 #include "risCmdLineConsole.h"
+#include "risThreadsProcess.h"
 #include "CmdLineExec.h"
 
 //#define SDL_MAIN_HANDLED
