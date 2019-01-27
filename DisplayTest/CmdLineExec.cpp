@@ -1,16 +1,12 @@
 
 #include "stdafx.h"
+#include <string>
 
-#include "risAlphaDir.h"
-#include "someImageParms.h"
-#include "someImagePainter.h"
-#include "svSysParms.h"
-#include "svSimParms.h"
-#include "svSimImageSynthesizer.h"
+#include "displayGraphicsThread.h"
+#include "displayParms.h"
 
+#include "risCmdLineConsole.h"
 #include "CmdLineExec.h"
-
-using namespace Some;
 
 //******************************************************************************
 //******************************************************************************
@@ -27,43 +23,41 @@ void CmdLineExec::reset()
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
-// Base class override. Execute a command line command. It calls one of
-// the following specific command execution functions. This is called by
-// the owner of this object to pass command line commands to it. 
+// This class is the program command line executive. It processes user
+// command line inputs and executes them. It inherits from the command line
+// command executive base class, which provides an interface for executing
+// command line commands. It provides an override execute function that is
+// called by a console executive when it receives a console command line input.
+// The execute function then executes the command.
 
 void CmdLineExec::execute(Ris::CmdLineCmd* aCmd)
 {
-   if (aCmd->isCmd("Gen"))    executeGen(aCmd);
-   if (aCmd->isCmd("GO1"))    executeGo1(aCmd);
-   if (aCmd->isCmd("GO2"))    executeGo2(aCmd);
-   if (aCmd->isCmd("GO3"))    executeGo3(aCmd);
-   if (aCmd->isCmd("GO4"))    executeGo4(aCmd);
-   if (aCmd->isCmd("GO5"))    executeGo5(aCmd);
-   if (aCmd->isCmd("Parms"))  executeParms(aCmd);
+   if (aCmd->isCmd("D0"))        executeDraw0(aCmd);
+
+   if (aCmd->isCmd("GO1"))       executeGo1(aCmd);
+   if (aCmd->isCmd("GO2"))       executeGo2(aCmd);
+   if (aCmd->isCmd("GO3"))       executeGo3(aCmd);
+   if (aCmd->isCmd("GO4"))       executeGo4(aCmd);
+   if (aCmd->isCmd("GO5"))       executeGo5(aCmd);
+   if (aCmd->isCmd("GO5"))       executeGo5(aCmd);
+
+   if (aCmd->isCmd("Parms"))     executeParms(aCmd);
 }
 
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
 
-void CmdLineExec::executeGen(Ris::CmdLineCmd* aCmd)
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+
+void CmdLineExec::executeDraw0(Ris::CmdLineCmd* aCmd)
 {
-   aCmd->setArgDefault(1, 1);
+   aCmd->setArgDefault(1, 0);
+   int tCode = aCmd->argInt(1);
 
-   SV::gSimParms.reset();
-   SV::gSimParms.readSection("default");
-
-   SV::SimImageSynthesizer tSim(&SV::gSimParms);
-   cv::Mat tImage;
-   tSim.doGenerateImage(tImage);
-
-   Prn::print(0, "ImageRC %d %d", tImage.rows, tImage.cols);
-
-
-   return;
-   cv::namedWindow("GenImage", cv::WINDOW_AUTOSIZE);
-   cv::imshow("GenImage", tImage);
-   cv::waitKey();
+   Display::gGraphicsThread->postDraw0(tCode);
 }
 
 //******************************************************************************
@@ -72,19 +66,16 @@ void CmdLineExec::executeGen(Ris::CmdLineCmd* aCmd)
 
 void CmdLineExec::executeGo1(Ris::CmdLineCmd* aCmd)
 {
-   aCmd->setArgDefault(1, 1);
+   // Set defaults if no arguments were entered.
+   aCmd->setArgDefault(1, 10);
+   aCmd->setArgDefault(2, 11.1);
 
-   Some::gImageParms.reset();
-   Some::gImageParms.readSection("default");
+   // Set variables from arguments.
+   int    tInt = aCmd->argInt(1);
+   double tDouble = aCmd->argDouble(2);
 
-   Some::ImagePainter tPainter(&Some::gImageParms);
-   cv::Mat tImage;
-   tPainter.doPaintImage(aCmd->argInt(1), tImage);
-
-   Prn::print(0, "ImageRC %d %d", tImage.rows, tImage.cols);
-
-   char tBuffer[100];
-   cv::imwrite(Ris::getAlphaFilePath_Image(tBuffer, gImageParms.mImageFilename), tImage);
+   // Show variables.
+   Prn::print(0, "Show2 %d %10.6f", tInt, tDouble);
 }
 
 //******************************************************************************
@@ -93,8 +84,11 @@ void CmdLineExec::executeGo1(Ris::CmdLineCmd* aCmd)
 
 void CmdLineExec::executeGo2(Ris::CmdLineCmd* aCmd)
 {
-   char tBuffer[100];
-   Prn::print(0,"ImageFilename %s",Ris::getAlphaFilePath_Image(tBuffer,gImageParms.mImageFilename));
+   // Set defaults if no arguments were entered.
+   aCmd->setArgDefault(1,"something");
+
+   // Show arguments.
+   Prn::print(0,"Go2 %s %10.6f",aCmd->argString(1));
 }
 
 //******************************************************************************
@@ -103,22 +97,6 @@ void CmdLineExec::executeGo2(Ris::CmdLineCmd* aCmd)
 
 void CmdLineExec::executeGo3(Ris::CmdLineCmd* aCmd)
 {
-   int blockSize = 75;
-   int imageSize = blockSize * 8;
-   cv::Mat chessBoard(imageSize, imageSize, CV_8UC3, cv::Scalar::all(0));
-   unsigned char color = 0;
-
-   for (int i = 0; i < imageSize; i = i + blockSize) {
-      color = ~color;
-      for (int j = 0; j < imageSize; j = j + blockSize) {
-         cv::Mat ROI = chessBoard(cv::Rect(i, j, blockSize, blockSize));
-         ROI.setTo(cv::Scalar::all(color));
-         color = ~color;
-      }
-   }
-
-   char tBuffer[200];
-   cv::imwrite(Ris::getAlphaFilePath_Image(tBuffer, gImageParms.mImageFilename), chessBoard );
 }
 
 //******************************************************************************
@@ -143,12 +121,8 @@ void CmdLineExec::executeGo5(Ris::CmdLineCmd* aCmd)
 
 void CmdLineExec::executeParms(Ris::CmdLineCmd* aCmd)
 {
-   SV::gSysParms.reset();
-   SV::gSysParms.readSection("default");
-   SV::gSysParms.show();
-
-   SV::gSimParms.reset();
-   SV::gSimParms.readSection("default");
-   SV::gSimParms.show();
+   Display::gParms.reset();
+   Display::gParms.readSection("default");
+   Display::gParms.show();
 }
 

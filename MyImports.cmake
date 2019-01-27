@@ -9,17 +9,21 @@ function(my_init_import_variables)
       set (MyRisLibImportPath  "C:\\MyTools\\MyLib\\lib\\RisLib.lib" PARENT_SCOPE)
       set (MyDspLibIncludePath "C:\\MyTools\\MyLib\\include\\DspLib" PARENT_SCOPE)
       set (MyDspLibImportPath  "C:\\MyTools\\MyLib\\lib\\DspLib.lib" PARENT_SCOPE)
+      set (MyEigenIncludePath  "C:\\MyTools\\Eigen" PARENT_SCOPE)
       set (MyOpenCVIncludePath "C:\\MyTools\\opencv\\build\\include" PARENT_SCOPE)
       set (MyOpenCVImportPath  "C:\\MyTools\\opencv\\build\\x64\\vc15\\lib\\opencv_world343.lib" PARENT_SCOPE)
-      set (MyEigenIncludePath  "C:\\MyTools\\Eigen" PARENT_SCOPE)
+      set (MySDL2IncludePath   "C:\\MyTools\\SDL2\\include" PARENT_SCOPE)
+      set (MySDL2ImportPath        "C:\\MyTools\\SDL2\\lib\\SDL2.lib" PARENT_SCOPE)
+      set (MySDL2mainImportPath    "C:\\MyTools\\SDL2\\lib\\SDL2main.lib" PARENT_SCOPE)
+      set (MySDL2_imageImportPath  "C:\\MyTools\\SDL2\\lib\\SDL2_image.lib" PARENT_SCOPE)
    else()
       set (MyRisLibIncludePath "/usr/local/include/RisLib" PARENT_SCOPE)
       set (MyRisLibImportPath  "/usr/local/lib/libRisLib.a" PARENT_SCOPE)
       set (MyDspLibIncludePath "/usr/local/include/DspLib" PARENT_SCOPE)
       set (MyDspLibImportPath  "/usr/local/lib/libDspLib.a" PARENT_SCOPE)
+      set (MyEigenIncludePath "/usr/include/eigen3" PARENT_SCOPE)
       set (MyOpenCVIncludePath "C:\\MyTools\\opencv\\build\\include" PARENT_SCOPE)
       set (MyOpenCVImportPath  "C:\\MyTools\\opencv\\build\\x64\\vc15\\lib\\opencv_world343.lib" PARENT_SCOPE)
-      set (MyEigenIncludePath "/usr/include/eigen3" PARENT_SCOPE)
    endif()
 endfunction()
 
@@ -101,6 +105,36 @@ endfunction()
 function(my_lib_import_OpenCV _target)
 
    target_include_directories(${_target} PUBLIC ${MyOpenCVIncludePath})
+
+endfunction()
+
+#*******************************************************************************
+#*******************************************************************************
+#*******************************************************************************
+
+function(my_exe_import_SDL2 _target)
+
+   add_library(SDL2 STATIC IMPORTED)
+   add_library(SDL2main STATIC IMPORTED)
+   add_library(SDL2_image STATIC IMPORTED)
+   set_target_properties(SDL2 PROPERTIES IMPORTED_LOCATION ${MySDL2ImportPath})
+   set_target_properties(SDL2main PROPERTIES IMPORTED_LOCATION ${MySDL2mainImportPath})
+   set_target_properties(SDL2_image PROPERTIES IMPORTED_LOCATION ${MySDL2_imageImportPath})
+
+   target_include_directories(${_target} PRIVATE ${MySDL2IncludePath})
+   target_link_libraries(${_target} SDL2)
+   target_link_libraries(${_target} SDL2main)
+   target_link_libraries(${_target} SDL2_image)
+
+endfunction()
+
+#*******************************************************************************
+#*******************************************************************************
+#*******************************************************************************
+
+function(my_lib_import_SDL2 _target)
+
+   target_include_directories(${_target} PUBLIC ${MySDL2IncludePath})
 
 endfunction()
 
