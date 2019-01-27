@@ -48,9 +48,7 @@ namespace SV
 // structure. If so, then this class is the root.
 // 
 
- class GridParms;
-
- class SysParms : public Ris::BaseCmdLineParms
+class SysParms : public Ris::BaseCmdLineParms
 {
 public:
 
@@ -101,14 +99,6 @@ public:
    // Calculate expanded member variables. This is called after the entire
    // section of the command file has been processed.
    void expand() override;
-
-   //***************************************************************************
-   //***************************************************************************
-   //***************************************************************************
-   // Methods.
-
-   // Override some variables with grid parms variables.
-   void readOverrides(GridParms* aGridParms);
 };
 
 //******************************************************************************

@@ -4,6 +4,7 @@
 #include "risAlphaDir.h"
 #include "someImageParms.h"
 #include "someImagePainter.h"
+#include "svSimParms.h"
 
 #include "CmdLineExec.h"
 
@@ -118,5 +119,9 @@ void CmdLineExec::executeParms(Ris::CmdLineCmd* aCmd)
    Some::gImageParms.reset();
    Some::gImageParms.readSection("default");
    Some::gImageParms.show();
+
+   SV::gSimParms.reset();
+   SV::gSimParms.readSection("default");
+   SV::gSimParms.show();
 }
 

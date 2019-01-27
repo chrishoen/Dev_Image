@@ -8,10 +8,12 @@ project ("Dev_Image")
 my_init_variables()
 my_init_import_variables()
 
-add_subdirectory ("SVLib")
-return()
-
 add_subdirectory ("CommonLib")
 add_subdirectory ("ImageGen")
 add_subdirectory ("SVLib")
 add_subdirectory ("Test")
+return()
+
+
+add_subdirectory ("SVLib")
+

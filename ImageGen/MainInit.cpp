@@ -2,6 +2,7 @@
 
 
 #include "someImageParms.h"
+#include "svSimParms.h"
 
 //******************************************************************************
 //******************************************************************************
@@ -49,6 +50,9 @@ void main_initialize(int argc,char** argv)
 
    Some::gImageParms.reset();
    Some::gImageParms.readSection("default");
+
+   SV::gSimParms.reset();
+   SV::gSimParms.readSection("default");
 
    Prn::print(0,"GenImage*******************************************BEGIN");
 }
