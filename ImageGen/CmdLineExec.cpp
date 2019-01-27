@@ -4,7 +4,9 @@
 #include "risAlphaDir.h"
 #include "someImageParms.h"
 #include "someImagePainter.h"
+#include "svSysParms.h"
 #include "svSimParms.h"
+#include "svSimImageSynthesizer.h"
 
 #include "CmdLineExec.h"
 
@@ -31,12 +33,35 @@ void CmdLineExec::reset()
 
 void CmdLineExec::execute(Ris::CmdLineCmd* aCmd)
 {
+   if (aCmd->isCmd("Gen"))    executeGen(aCmd);
    if (aCmd->isCmd("GO1"))    executeGo1(aCmd);
    if (aCmd->isCmd("GO2"))    executeGo2(aCmd);
    if (aCmd->isCmd("GO3"))    executeGo3(aCmd);
    if (aCmd->isCmd("GO4"))    executeGo4(aCmd);
    if (aCmd->isCmd("GO5"))    executeGo5(aCmd);
    if (aCmd->isCmd("Parms"))  executeParms(aCmd);
+}
+
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+
+void CmdLineExec::executeGen(Ris::CmdLineCmd* aCmd)
+{
+   aCmd->setArgDefault(1, 1);
+
+   SV::gSimParms.reset();
+   SV::gSimParms.readSection("default");
+
+   SV::SimImageSynthesizer tSim(&SV::gSimParms);
+   cv::Mat tImage;
+   tSim.doGenerateImage(tImage);
+
+   Prn::print(0, "ImageRC %d %d", tImage.rows, tImage.cols);
+
+   cv::namedWindow("GenImage", cv::WINDOW_AUTOSIZE);
+   cv::imshow("GenImage", tImage);
+   cv::waitKey();
 }
 
 //******************************************************************************
@@ -52,12 +77,12 @@ void CmdLineExec::executeGo1(Ris::CmdLineCmd* aCmd)
 
    Some::ImagePainter tPainter(&Some::gImageParms);
    cv::Mat tImage;
-   tPainter.doPaintImage(aCmd->argInt(1),tImage);
+   tPainter.doPaintImage(aCmd->argInt(1), tImage);
 
    Prn::print(0, "ImageRC %d %d", tImage.rows, tImage.cols);
 
    char tBuffer[100];
-   cv::imwrite(Ris::getAlphaFilePath_Image(tBuffer, gImageParms.mImageFilename),tImage);
+   cv::imwrite(Ris::getAlphaFilePath_Image(tBuffer, gImageParms.mImageFilename), tImage);
 }
 
 //******************************************************************************
@@ -116,9 +141,9 @@ void CmdLineExec::executeGo5(Ris::CmdLineCmd* aCmd)
 
 void CmdLineExec::executeParms(Ris::CmdLineCmd* aCmd)
 {
-   Some::gImageParms.reset();
-   Some::gImageParms.readSection("default");
-   Some::gImageParms.show();
+   SV::gSysParms.reset();
+   SV::gSysParms.readSection("default");
+   SV::gSysParms.show();
 
    SV::gSimParms.reset();
    SV::gSimParms.readSection("default");
