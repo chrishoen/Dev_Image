@@ -32,10 +32,6 @@ void GraphicsThread::doVideoDraw1(SDL_Event* aEvent)
 
    Prn::print(Prn::Show1, "doVideoDraw1  %4d %4d", tImage->rows, tImage->cols);
 
-   delete tImage;
-   return;
-
-
    //***************************************************************************
    //***************************************************************************
    //***************************************************************************
@@ -48,22 +44,35 @@ void GraphicsThread::doVideoDraw1(SDL_Event* aEvent)
       //***************************************************************************
       // Draw the window.
 
-      // Set renderer to blue.
-      tRet = SDL_SetRenderDrawColor(mRenderer, 0, 0, 255, 255);
-      if (tRet) throw "SDL_SetRenderDrawColor";
+      // Create an intel image structure from the opencv image matrix.
+      IplImage tIntelImage(*tImage);
 
-      // Clear the window and make it all blue.
+      Prn::print(Prn::Show1, "height        %4d", tIntelImage.height);
+      Prn::print(Prn::Show1, "width         %4d", tIntelImage.width);
+      Prn::print(Prn::Show1, "nChannels     %4d", tIntelImage.nChannels);
+
+      // Create a surface from the intel image.
+      SDL_Surface* tSurface = SDL_CreateRGBSurfaceFrom(
+         tIntelImage.imageData,
+         tIntelImage.width, tIntelImage.height,
+         tIntelImage.depth*tIntelImage.nChannels,
+         tIntelImage.widthStep,
+         0xff0000, 0x00ff00, 0x0000ff, 0);
+      if (tSurface==0) throw "SDL_SDL_CreateRGBSurfaceFrom";
+
+      // Create a texture from the surface.
+      SDL_Texture* tTexture = SDL_CreateTextureFromSurface(
+         mRenderer,
+         tSurface);
+      if (tTexture == 0) throw "SDL_SDL_SDL_CreateTextureFromSurface";
+
+      // Clear the renderer.
       tRet = SDL_RenderClear(mRenderer);
       if (tRet) throw "SDL_RenderClear";
 
-      // Set renderer to red.
-      tRet = SDL_SetRenderDrawColor(mRenderer, 255, 0, 0, 255);
-      if (tRet) throw "SDL_SetRenderDrawColor";
-
-      // Render the rectangle.
-      SDL_Rect tRect = mRectA;
-      tRect = mRectA;
-      SDL_RenderFillRect(mRenderer, &tRect);
+      // Copy the texture to the renderer.
+      tRet = SDL_RenderCopy(mRenderer, tTexture, NULL, NULL);
+      if (tRet) throw "SDL_RenderCopy";
 
       // Render the changes above.
       SDL_RenderPresent(mRenderer);
@@ -80,6 +89,9 @@ void GraphicsThread::doVideoDraw1(SDL_Event* aEvent)
    {
       Prn::print(Prn::Show1, "Latency %6.3f", mStopTime - mStartTime);
    }
+
+   // Done.
+   delete tImage;
 }
 
 //******************************************************************************
