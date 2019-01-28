@@ -49,12 +49,15 @@ void GraphicsThread::doVideoDraw1(SDL_Event* aEvent)
 
       Prn::print(Prn::Show1, "height        %4d", tIntelImage.height);
       Prn::print(Prn::Show1, "width         %4d", tIntelImage.width);
+      Prn::print(Prn::Show1, "depth         %4d", tIntelImage.depth);
       Prn::print(Prn::Show1, "nChannels     %4d", tIntelImage.nChannels);
+      Prn::print(Prn::Show1, "widthStep     %4d", tIntelImage.widthStep);
 
       // Create a surface from the intel image.
       SDL_Surface* tSurface = SDL_CreateRGBSurfaceFrom(
          tIntelImage.imageData,
-         tIntelImage.width, tIntelImage.height,
+         tIntelImage.width,
+         tIntelImage.height,
          tIntelImage.depth*tIntelImage.nChannels,
          tIntelImage.widthStep,
          0xff0000, 0x00ff00, 0x0000ff, 0);
@@ -76,6 +79,10 @@ void GraphicsThread::doVideoDraw1(SDL_Event* aEvent)
 
       // Render the changes above.
       SDL_RenderPresent(mRenderer);
+
+      // Free
+      SDL_FreeSurface(tSurface);
+      SDL_DestroyTexture(tTexture);
    }
    catch (const char* aString)
    {
