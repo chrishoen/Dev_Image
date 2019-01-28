@@ -10,7 +10,10 @@ my_init_import_variables()
 
 add_subdirectory ("DisplayLib")
 add_subdirectory ("DisplayTest")
+add_subdirectory ("ImageGen")
+add_subdirectory ("SVLib")
 return()
+
 
 add_subdirectory ("CommonLib")
 add_subdirectory ("DisplayLib")

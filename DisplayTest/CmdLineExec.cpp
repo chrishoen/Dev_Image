@@ -4,6 +4,7 @@
 
 #include "risAlphaDir.h"
 
+#include "svImageFunctions.h"
 #include "displayGraphicsThread.h"
 #include "displayParms.h"
 
@@ -55,18 +56,6 @@ void CmdLineExec::execute(Ris::CmdLineCmd* aCmd)
 //******************************************************************************
 //******************************************************************************
 
-void CmdLineExec::executeDraw0(Ris::CmdLineCmd* aCmd)
-{
-   aCmd->setArgDefault(1, 0);
-   int tCode = aCmd->argInt(1);
-
-   Display::gGraphicsThread->postDraw0(tCode);
-}
-
-//******************************************************************************
-//******************************************************************************
-//******************************************************************************
-
 void CmdLineExec::executeDraw1(Ris::CmdLineCmd* aCmd)
 {
    aCmd->setArgDefault(1, 0);
@@ -74,7 +63,21 @@ void CmdLineExec::executeDraw1(Ris::CmdLineCmd* aCmd)
 
    char tBuffer[100];
    cv::Mat tImage = cv::imread(Ris::getAlphaFilePath_TestImage(tBuffer, "Image1920_0.png"));
+   SV::showImageInfo(0, "tImage", tImage);
+
    Display::gGraphicsThread->postDraw1(new cv::Mat(tImage));
+}
+
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+
+void CmdLineExec::executeDraw0(Ris::CmdLineCmd* aCmd)
+{
+   aCmd->setArgDefault(1, 0);
+   int tCode = aCmd->argInt(1);
+
+   Display::gGraphicsThread->postDraw0(tCode);
 }
 
 //******************************************************************************

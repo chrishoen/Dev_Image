@@ -10,5 +10,6 @@ my_exe_import_RisLib(DisplayTest)
 my_exe_import_OpenCV(DisplayTest)
 my_exe_import_SDL2(DisplayTest)
 my_exe_import_DisplayLib(DisplayTest)
+my_exe_import_SVLib(DisplayTest)
 my_exe_import_DspLib(DisplayTest)
 
