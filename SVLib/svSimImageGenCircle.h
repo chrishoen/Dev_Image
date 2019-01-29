@@ -52,7 +52,7 @@ public:
    //***************************************************************************
    // Methods.
 
-   // Generate the image, depending on the parms.
+   // Generate an image according to the parms.
    void doGenerateImage(
       cv::Mat&       aImage) override;          // Output
 };

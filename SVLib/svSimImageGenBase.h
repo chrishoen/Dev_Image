@@ -43,9 +43,19 @@ public:
    //***************************************************************************
    // Methods.
 
-   // Generate the image, depending on the parms.
+   // Generate an image according to the parms.
+   // This is supplied by inheriting classes.
    virtual void doGenerateImage(
       cv::Mat&       aImage)=0;          // Output
+
+   //***************************************************************************
+   //***************************************************************************
+   //***************************************************************************
+   // Methods.
+
+   // Create an image filled with all zeros.
+   void doCreateZeroImage(
+      cv::Mat&       aImage);            // Output
 };
 
 //******************************************************************************
