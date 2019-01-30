@@ -35,10 +35,10 @@ GraphicsThread::GraphicsThread()
    mImage = 0;
    mRenderer = 0;
 
-   mWindowW = 0;
-   mWindowH = 0;
-   mRectH = 0;
-   mRectW = 0;
+   mWindowW = gParms.mWindowWidth;
+   mWindowH = gParms.mWindowHeight;
+
+   mWindowFull = false;
 
    mForeColor[0] = 0;
    mForeColor[1] = 0;
@@ -50,15 +50,16 @@ GraphicsThread::GraphicsThread()
    mBackColor[2] = 0;
    mBackColor[3] = 0;
 
-   mRectA.x = 0;
-   mRectA.y = 0;
-   mRectA.w = 0;
-   mRectA.h = 0;
+   mRectA.x = gParms.mWindowWidth/4;
+   mRectA.y = gParms.mWindowHeight/4;
+   mRectA.w = gParms.mWindowWidth/2;
+   mRectA.h = gParms.mWindowHeight/2;
 
-   mRectB.x = 0;
-   mRectB.y = 0;
-   mRectB.w = 0;
-   mRectB.h = 0;
+   mRectB.x = 3*gParms.mWindowWidth/4;
+   mRectB.y = 3*gParms.mWindowHeight/4;
+   mRectB.w = gParms.mWindowWidth/2;
+   mRectB.h = gParms.mWindowHeight/2;
+
 
    mDraw0EventType = 0;
 

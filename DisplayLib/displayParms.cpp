@@ -49,11 +49,8 @@ void Parms::reset()
    mBackColor[2] = 0;
    mBackColor[3] = 0;
 
-   mImageFilename0[0] = 0;
-   mImageFilename1[0] = 0;
    mSideX = 0;
    mSideY = 0;
-   mTimerThreadPeriod = 0;
    mShowCode = 0;
 }
 
@@ -79,15 +76,9 @@ void Parms::show()
    printf("BackColor             %-4d %4d %4d %4d\n", mBackColor[0], mBackColor[1], mBackColor[2], mBackColor[3]);
 
    printf("\n");
-   printf("ImageFilename0        %-10s\n", mImageFilename0);
-   printf("ImageFilename1        %-10s\n", mImageFilename1);
-
-   printf("\n");
    printf("SideX                 %-4d\n", mSideX);
    printf("sideY                 %-4d\n", mSideY);
    printf("\n");
-   printf("TimerThreadPeriod     %-4d\n", mTimerThreadPeriod);
-   printf("ShowCode              %-4d\n", mShowCode);
 
    printf("\n");
    printf("PrintLevel            %-10s\n", mPrintLevel.asString(tBuffer));
@@ -128,16 +119,10 @@ void Parms::execute(Ris::CmdLineCmd* aCmd)
       mBackColor[3] = aCmd->argInt(4);
    }
 
-   if (aCmd->isCmd("ImageFilename0"))  aCmd->copyArgString(1, mImageFilename0, cMaxStringSize);
-   if (aCmd->isCmd("ImageFilename1"))  aCmd->copyArgString(1, mImageFilename1, cMaxStringSize);
-
    if (aCmd->isCmd("SideX"))        mSideX = aCmd->argInt(1);
    if (aCmd->isCmd("SideY"))        mSideY = aCmd->argInt(1);
 
-   if (aCmd->isCmd("TimerThreadPeriod"))  mTimerThreadPeriod = aCmd->argInt(1);
-
    if (aCmd->isCmd("ShowCode"))     mShowCode = aCmd->argInt(1);
-
    if (aCmd->isCmd("PrintLevel"))          mPrintLevel.readArgs(aCmd);
 }
 

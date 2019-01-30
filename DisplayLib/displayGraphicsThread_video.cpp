@@ -91,18 +91,21 @@ void GraphicsThread::doVideoStart()
       int tRet = SDL_GetCurrentDisplayMode(mDisplay, &mDisplayMode);
       mWindowW = mDisplayMode.w;
       mWindowH = mDisplayMode.h;
-      mRectW = mDisplayMode.w/8;
-      mRectH = mDisplayMode.w/8;
 
-      mRectA.x = mWindowW/4 - mRectW/2;
-      mRectA.y = mWindowH/2 - mRectH/2;
-      mRectA.w = mRectW;
-      mRectA.h = mRectH;
+      mWindowW = gParms.mWindowWidth;
+      mWindowH = gParms.mWindowHeight;
 
-      mRectB.x = (3*mWindowW)/4 - mRectW/2;
-      mRectB.y = mWindowH/2 - mRectH/2;
-      mRectB.w = mRectW;
-      mRectB.h = mRectH;
+      mWindowFull = (mWindowW == mDisplayMode.w);
+
+      mRectA.x = mWindowW / 8;
+      mRectA.y = mWindowH / 8;
+      mRectA.w = mWindowW / 4;
+      mRectA.h = mWindowH / 4;
+
+      mRectB.x = (5 * mWindowW) / 8;
+      mRectB.y = (5 * mWindowH) / 8;
+      mRectB.w = mWindowW / 4;
+      mRectB.h = mWindowH / 4;
 
       //************************************************************************
       //************************************************************************
@@ -113,17 +116,16 @@ void GraphicsThread::doVideoStart()
       TS::print(2, "CreateWindow***************************************************");
 
       unsigned int tWindowFlags = 0;
-      if (false)
+      if (mWindowFull)
       {
          tWindowFlags |= SDL_WINDOW_SHOWN;
-         tWindowFlags |= SDL_WINDOW_FULLSCREEN;
+         tWindowFlags |= SDL_WINDOW_BORDERLESS;
+         tWindowFlags |= SDL_WINDOW_MAXIMIZED;
          tWindowFlags |= SDL_WINDOW_OPENGL;
       }
       else
       {
          tWindowFlags |= SDL_WINDOW_SHOWN;
-         tWindowFlags |= SDL_WINDOW_BORDERLESS;
-         tWindowFlags |= SDL_WINDOW_MAXIMIZED;
          tWindowFlags |= SDL_WINDOW_OPENGL;
       }
 

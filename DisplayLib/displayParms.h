@@ -79,16 +79,9 @@ public:
    //***************************************************************************
    // Members.
 
-   // Image file name.
-   char mImageFilename0[cMaxStringSize];
-   char mImageFilename1[cMaxStringSize];
-
    // Side variables.
    int mSideX;
    int mSideY;
-
-   // Timer thread period.
-   int mTimerThreadPeriod;
 
    // Thread print and log levels.
    // Thread print level.
@@ -105,7 +98,7 @@ public:
    //***************************************************************************
    //***************************************************************************
    //***************************************************************************
-   // Infrastucture.
+   // Methods.
 
    // Constructor,
    typedef Ris::BaseCmdLineParms BaseClass;

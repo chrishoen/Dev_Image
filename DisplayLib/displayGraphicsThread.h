@@ -62,8 +62,9 @@ public:
    // Widths and heights.
    int mWindowW;
    int mWindowH;
-   int mRectW;
-   int mRectH;
+
+   // If true then draw a window border.
+   bool mWindowFull;
 
    // Window colors.
    int mForeColor[4];
