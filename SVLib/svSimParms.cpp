@@ -34,6 +34,8 @@ void SimParms::reset()
    mPulsePixelWidth = 0;
    mPulseGaussianWidth = 0.0;
    mPulseAmplitude = 0.0;
+
+   mImageGenParms.reset();
 }
 
 //******************************************************************************
@@ -69,6 +71,9 @@ void SimParms::show()
 
    printf("\n");
    printf("Sigma                  %10.2f\n", mSigma);
+
+   printf("\n");
+   mImageGenParms.show();
 }
 
 //******************************************************************************
@@ -90,6 +95,8 @@ void SimParms::execute(Ris::CmdLineCmd* aCmd)
    if (aCmd->isCmd("PulseAmplitude"))      mPulseAmplitude     = aCmd->argDouble(1);
 
    if (aCmd->isCmd("Sigma"))               mSigma = aCmd->argDouble(1);
+
+   if (aCmd->isCmd("ImageGenParms"))       readSection(aCmd->argString(1), &mImageGenParms);
 }
 
 //******************************************************************************

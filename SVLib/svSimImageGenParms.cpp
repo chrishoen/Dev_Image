@@ -47,11 +47,11 @@ void SimImageGenParms::reset()
 void SimImageGenParms::show()
 {
    printf("\n");
-   printf("SimImageGenParms*******************************************");
+   printf("SimImageGenParms*******************************************\n");
    printf("ImageType                %10s\n",        asStringImageType(mImageType));
    printf("ImageSize                %10d %10d\n",   mImageSize.mRows,mImageSize.mCols);
    printf("ImageB                   %10d\n",        mImageB);
-   printf("SimImageGenParms*******************************************");
+   printf("SimImageGenParms*******************************************\n");
 }
 
 //******************************************************************************
@@ -67,9 +67,9 @@ void SimImageGenParms::execute(Ris::CmdLineCmd* aCmd)
 
    if (aCmd->isCmd("ImageType"))
    {
-      if (aCmd->isArgString(1,asStringImageType(cNone)))               mImageType = cNone;
-      if (aCmd->isArgString(1, asStringImageType(cImageCircle)))       mImageType = cImageCircle;
-      if (aCmd->isArgString(1, asStringImageType(cImageSquare)))       mImageType = cImageSquare;
+      if (aCmd->isArgString(1,asStringImageType(cNone)))              mImageType = cNone;
+      if (aCmd->isArgString(1,asStringImageType(cImageCircle)))       mImageType = cImageCircle;
+      if (aCmd->isArgString(1,asStringImageType(cImageSquare)))       mImageType = cImageSquare;
    }
 
    if (aCmd->isCmd("ImageB"))       mImageB = aCmd->argInt(1);

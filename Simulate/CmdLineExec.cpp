@@ -119,12 +119,12 @@ void CmdLineExec::executeParms(Ris::CmdLineCmd* aCmd)
    SV::gSysParms.readSection("default");
    SV::gSysParms.show();
 
-   SV::gSimParms.reset();
-   SV::gSimParms.readSection("default");
-   SV::gSimParms.show();
-
    Display::gParms.reset();
    Display::gParms.readSection("Default");
    Display::gParms.show();
+
+   SV::gSimParms.reset();
+   SV::gSimParms.readSection("default");
+   SV::gSimParms.show();
 }
 
