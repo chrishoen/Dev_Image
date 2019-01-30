@@ -1,16 +1,15 @@
 
 #include "stdafx.h"
 
-#include "risAlphaDir.h"
-#include "someImageParms.h"
-#include "someImagePainter.h"
+#include "Simulate.h"
+
 #include "svSysParms.h"
 #include "svSimParms.h"
-#include "svSimImageSynthesizer.h"
+#include "displayParms.h"
+
+#include "displayGraphicsThread.h"
 
 #include "CmdLineExec.h"
-
-using namespace Some;
 
 //******************************************************************************
 //******************************************************************************
@@ -33,37 +32,41 @@ void CmdLineExec::reset()
 
 void CmdLineExec::execute(Ris::CmdLineCmd* aCmd)
 {
-   if (aCmd->isCmd("Gen"))    executeGen(aCmd);
-   if (aCmd->isCmd("GO1"))    executeGo1(aCmd);
-   if (aCmd->isCmd("GO2"))    executeGo2(aCmd);
-   if (aCmd->isCmd("GO3"))    executeGo3(aCmd);
-   if (aCmd->isCmd("GO4"))    executeGo4(aCmd);
-   if (aCmd->isCmd("GO5"))    executeGo5(aCmd);
-   if (aCmd->isCmd("Parms"))  executeParms(aCmd);
+   if (aCmd->isCmd("D0"))        executeDraw0(aCmd);
+   if (aCmd->isCmd("Run1"))      executeRun1(aCmd);
+   if (aCmd->isCmd("GO1"))       executeGo1(aCmd);
+   if (aCmd->isCmd("GO2"))       executeGo2(aCmd);
+   if (aCmd->isCmd("GO3"))       executeGo3(aCmd);
+   if (aCmd->isCmd("GO4"))       executeGo4(aCmd);
+   if (aCmd->isCmd("GO5"))       executeGo5(aCmd);
+   if (aCmd->isCmd("Parms"))     executeParms(aCmd);
 }
 
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
 
-void CmdLineExec::executeGen(Ris::CmdLineCmd* aCmd)
+void CmdLineExec::executeRun1(Ris::CmdLineCmd* aCmd)
 {
    aCmd->setArgDefault(1, 1);
 
    SV::gSimParms.reset();
    SV::gSimParms.readSection("default");
 
-   SV::SimImageSynthesizer tSim(&SV::gSimParms);
-   cv::Mat tImage;
-   tSim.doGenerateImage(tImage);
+   Simulate tSim;
+   tSim.doRun1();
+}
 
-   Prn::print(0, "ImageRC %d %d", tImage.rows, tImage.cols);
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
 
+void CmdLineExec::executeDraw0(Ris::CmdLineCmd* aCmd)
+{
+   aCmd->setArgDefault(1, 0);
+   int tCode = aCmd->argInt(1);
 
-   return;
-   cv::namedWindow("GenImage", cv::WINDOW_AUTOSIZE);
-   cv::imshow("GenImage", tImage);
-   cv::waitKey();
+   Display::gGraphicsThread->postDraw0(tCode);
 }
 
 //******************************************************************************
@@ -72,19 +75,6 @@ void CmdLineExec::executeGen(Ris::CmdLineCmd* aCmd)
 
 void CmdLineExec::executeGo1(Ris::CmdLineCmd* aCmd)
 {
-   aCmd->setArgDefault(1, 1);
-
-   Some::gImageParms.reset();
-   Some::gImageParms.readSection("default");
-
-   Some::ImagePainter tPainter(&Some::gImageParms);
-   cv::Mat tImage;
-   tPainter.doPaintImage(aCmd->argInt(1), tImage);
-
-   Prn::print(0, "ImageRC %d %d", tImage.rows, tImage.cols);
-
-   char tBuffer[100];
-   cv::imwrite(Ris::getAlphaFilePath_Image(tBuffer, gImageParms.mImageFilename), tImage);
 }
 
 //******************************************************************************
@@ -93,8 +83,6 @@ void CmdLineExec::executeGo1(Ris::CmdLineCmd* aCmd)
 
 void CmdLineExec::executeGo2(Ris::CmdLineCmd* aCmd)
 {
-   char tBuffer[100];
-   Prn::print(0,"ImageFilename %s",Ris::getAlphaFilePath_Image(tBuffer,gImageParms.mImageFilename));
 }
 
 //******************************************************************************
@@ -103,22 +91,6 @@ void CmdLineExec::executeGo2(Ris::CmdLineCmd* aCmd)
 
 void CmdLineExec::executeGo3(Ris::CmdLineCmd* aCmd)
 {
-   int blockSize = 75;
-   int imageSize = blockSize * 8;
-   cv::Mat chessBoard(imageSize, imageSize, CV_8UC3, cv::Scalar::all(0));
-   unsigned char color = 0;
-
-   for (int i = 0; i < imageSize; i = i + blockSize) {
-      color = ~color;
-      for (int j = 0; j < imageSize; j = j + blockSize) {
-         cv::Mat ROI = chessBoard(cv::Rect(i, j, blockSize, blockSize));
-         ROI.setTo(cv::Scalar::all(color));
-         color = ~color;
-      }
-   }
-
-   char tBuffer[200];
-   cv::imwrite(Ris::getAlphaFilePath_Image(tBuffer, gImageParms.mImageFilename), chessBoard );
 }
 
 //******************************************************************************
@@ -150,5 +122,9 @@ void CmdLineExec::executeParms(Ris::CmdLineCmd* aCmd)
    SV::gSimParms.reset();
    SV::gSimParms.readSection("default");
    SV::gSimParms.show();
+
+   Display::gParms.reset();
+   Display::gParms.readSection("Default");
+   Display::gParms.show();
 }
 

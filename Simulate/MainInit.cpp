@@ -1,76 +1,107 @@
+
 #include "stdafx.h"
 
+#include "tsThreadServices.h"
+#include "risThreadsProcess.h"
 
-#include "someImageParms.h"
 #include "svSysParms.h"
 #include "svSimParms.h"
+#include "displayParms.h"
 
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
-// Initialize
+// Initialize program resources.
 
 void main_initialize(int argc,char** argv)
 {
-   //***************************************************************************
-   //***************************************************************************
-   //***************************************************************************
-   // Initialize print.
+   printf("Simulate Program********************************************BEGIN\n");
+   printf("Simulate Program********************************************BEGIN\n");
+   printf("Simulate Program********************************************BEGIN\n\n");
 
-   // Initialize print facility
+   //***************************************************************************
+   //***************************************************************************
+   //***************************************************************************
+   // Initialize thread services.
+
+   TS::reset();
+   TS::setProgramName("Simulate");
+   TS::setProgramPrintLevel(TS::PrintLevel(0, 3));
+   TS::initialize();
+
+   //***************************************************************************
+   //***************************************************************************
+   //***************************************************************************
+   // Enter process.
+
+   // Set program process for high priority.
+   Ris::Threads::enterProcessHigh();
+
+   //***************************************************************************
+   //***************************************************************************
+   //***************************************************************************
+   // Initialize print facility.
+
+   // Initialize print.
    Prn::resetPrint();
    Prn::initializePrint();
-   
-   // Initialize print filters
-   Prn::setFilter(Prn::ThreadRun1,  true);
-   Prn::setFilter(Prn::ThreadRun2,  false);
-   Prn::setFilter(Prn::ThreadRun3,  true);
-   Prn::setFilter(Prn::ThreadRun4,  true);
 
-   Prn::setFilter(Prn::ProcRun1,    true);
-   Prn::setFilter(Prn::ProcRun2,    true);
-   Prn::setFilter(Prn::ProcRun3,    false);
-   Prn::setFilter(Prn::ProcRun4,    true);
+   // Initialize print filters.
+   Prn::setFilter(Prn::ThreadInit1, true);
+   Prn::setFilter(Prn::ThreadInit2, false);
+   Prn::setFilter(Prn::ThreadRun1, true);
+   Prn::setFilter(Prn::ThreadRun2, true);
+   Prn::setFilter(Prn::ThreadRun3, true);
+   Prn::setFilter(Prn::ThreadRun4, true);
 
-   Prn::setFilter(Prn::ViewRun1,    true, 1);
-   Prn::setFilter(Prn::ViewRun2,    true, 1);
-   Prn::setFilter(Prn::ViewRun3,    false,1);
-   Prn::setFilter(Prn::ViewRun4,    true, 1);
+   Prn::setFilter(Prn::View01,          true);
+   Prn::setFilter(Prn::View02,          true);
+   Prn::setFilter(Prn::View11,          true,  1);
+   Prn::setFilter(Prn::View12,          true,  1);
+   Prn::setFilter(Prn::View21,          true,  2);
+   Prn::setFilter(Prn::View21,          true,  2);
 
-   Prn::setFilter(Prn::QCallInit1, true);
-   Prn::setFilter(Prn::QCallInit2, true);
-   Prn::setFilter(Prn::QCallRun1,  false);
-   Prn::setFilter(Prn::QCallRun2,  false);
-   Prn::setFilter(Prn::QCallRun3,  false);
-   Prn::setFilter(Prn::QCallRun4,  false);
+   Prn::setFilter(Prn::Show1, true);
 
    //***************************************************************************
    //***************************************************************************
    //***************************************************************************
-   // Open settings file.
+   // Read parameters files.
 
-   Some::gImageParms.reset();
-   Some::gImageParms.readSection("default");
-
+   // Read parameters files.
    SV::gSysParms.reset();
-   SV::gSysParms.readSection("default");
+   SV::gSysParms.readSection("Default");
 
+   // Read parameters files.
    SV::gSimParms.reset();
-   SV::gSimParms.readSection("default");
+   SV::gSimParms.readSection("Default");
 
-   Prn::print(0,"GenImage*******************************************BEGIN");
+   // Read parameters files.
+   Display::gParms.reset();
+   Display::gParms.readSection("Default");
 }
 
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
-// Finalize
+// Finalize.
 
 void main_finalize()
 {
-   Prn::print(0,"GenImage*******************************************END");
-
-   // Close print
+   // Finalize print facility.
    Prn::finalizePrint();
+
+   // Exit process.
+   Ris::Threads::exitProcess();
+
+   // Finalize thread services.
+   TS::finalize();
+
+   // Done.
+   printf("\n");
+   printf("Simulate Program********************************************END\n\n");
 }
 
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************

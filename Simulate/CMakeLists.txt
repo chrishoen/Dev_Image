@@ -8,6 +8,8 @@ my_add_pch (Simulate)
 
 my_exe_import_RisLib(Simulate)
 my_exe_import_SVLib(Simulate)
+my_exe_import_DisplayLib(Simulate)
 my_exe_import_OpenCV(Simulate)
+my_exe_import_SDL2(Simulate)
 my_exe_import_DspLib(Simulate)
 
