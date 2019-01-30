@@ -1,67 +1,69 @@
-#pragma once
-
 /*==============================================================================
-SV namespace: sixdofs that are measured by a computer vision based system.
-Common definitions
+Description:
 ==============================================================================*/
 
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
 
-//******************************************************************************
-//******************************************************************************
-//******************************************************************************
+#include "stdafx.h"
+
+#include "prnPrint.h"
+#include "dsp_math.h"
+
+#include "svSysParms.h"
+#include "svDefs.h"
+#include "svImageWrapper.h"
+
+#include "svSimImageGenImpulse.h"
 
 namespace SV
 {
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
 
-namespace Defs
+SimImageGenImpulse::SimImageGenImpulse()
 {
-//******************************************************************************
-//******************************************************************************
-//******************************************************************************
-// Constants
+   reset();
+}
 
-// Filtered image types.
-static const int cNone             = 0;
-static const int cFilteredImage    = 1;
-static const int cDynamicRangeHigh = 2;
-static const int cNoiseFloor       = 3;
+SimImageGenImpulse::SimImageGenImpulse(SimImageGenParms* aParms)
+{
+   BaseClass::mP = aParms;
+   reset();
+}
 
-// Log files.
-static const int cLogGrid          = 0;
-static const int cLogPointCenter   = 1;
-static const int cLogCoefficeints  = 2;
-static const int cLogRowColCount   = 3;
-static const int cLogMaxValue      = 4;
-static const int cLogResults       = 5;
-static const int cLogImagePoints   = 6;
+void SimImageGenImpulse::reset()
+{
+}
 
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
-}//namespace
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+// Generate the image, depending on the parms.
 
-// Grid types.
-static const int cPGrid1 = 1;
-static const int cPGrid2 = 2;
-static const int cUGrid1 = 3;
-static const int cUGrid2 = 4;
+void SimImageGenImpulse::doGenerateImage(
+   cv::Mat&       aImage)          // Output
+{
+   Prn::print(0, "SimImageGenImpulse::doGenerateImage");
+   // Create an image filled with all zeros.
+   BaseClass::doCreateZeroImage(aImage);
 
-// Error codes.
-static const int cTargetError1 = -101;
-static const int cCameraError1 = -102;
-static const int cTargetError2 = -201;
-static const int cCameraError2 = -202;
-static const int cPnPCheckArgumentsError1 = -103;
-static const int cStage4NotReachedError1 = -104;
+   // Image wrapper.
+   ImageWrapper tImage(aImage);
 
-// Image scale factor, 100.0 corresponds to max value 65535.
-static const float cImageScale    = (float)100.0/(float)255.0;
+   // Impulse variables. 
+   RCIndex tCenter(mP->mImageSize.mRows / 2, mP->mImageSize.mCols / 2);
+
+   // Set center pixel.
+   tImage.setScaled(tCenter, 100.0);
+}
 
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
 }//namespace
-

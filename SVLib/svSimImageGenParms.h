@@ -64,6 +64,8 @@ public:
    // SimImage types.
    static const int cImageCircle       = 1;
    static const int cImageSquare       = 2;
+   static const int cImageImpulse      = 3;
+   static const int cImageGaussian     = 4;
 
    //***************************************************************************
    //***************************************************************************

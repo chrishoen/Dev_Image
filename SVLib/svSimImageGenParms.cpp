@@ -67,9 +67,11 @@ void SimImageGenParms::execute(Ris::CmdLineCmd* aCmd)
 
    if (aCmd->isCmd("ImageType"))
    {
-      if (aCmd->isArgString(1,asStringImageType(cNone)))              mImageType = cNone;
-      if (aCmd->isArgString(1,asStringImageType(cImageCircle)))       mImageType = cImageCircle;
-      if (aCmd->isArgString(1,asStringImageType(cImageSquare)))       mImageType = cImageSquare;
+      if (aCmd->isArgString(1, asStringImageType(cNone)))              mImageType = cNone;
+      if (aCmd->isArgString(1, asStringImageType(cImageCircle)))       mImageType = cImageCircle;
+      if (aCmd->isArgString(1, asStringImageType(cImageSquare)))      mImageType = cImageSquare;
+      if (aCmd->isArgString(1, asStringImageType(cImageImpulse)))     mImageType = cImageImpulse;
+      if (aCmd->isArgString(1, asStringImageType(cImageGaussian)))    mImageType = cImageGaussian;
    }
 
    if (aCmd->isCmd("ImageB"))       mImageB = aCmd->argInt(1);
@@ -87,6 +89,8 @@ char* SimImageGenParms::asStringImageType(int aX)
    case cNone               : return "None";
    case cImageCircle        : return "Circle";
    case cImageSquare        : return "Square";
+   case cImageImpulse       : return "Impulse";
+   case cImageGaussian      : return "Gaussian";
    default : return "UNKNOWN";
    }
 }

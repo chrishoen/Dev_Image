@@ -10,6 +10,8 @@ Description:
 
 #include "svSimImageGenCircle.h"
 #include "svSimImageGenSquare.h"
+#include "svSimImageGenImpulse.h"
+#include "svSimImageGenGaussian.h"
 
 #include "svSimImageGenerator.h"
 
@@ -66,7 +68,9 @@ void SimImageGenerator::initialize(SimImageGenParms* aParms)
    switch (mP->mImageType)
    {
    case SimImageGenParms::cImageCircle :   mSimImageGen = new SimImageGenCircle(mP); return;
-   case SimImageGenParms::cImageSquare :   mSimImageGen = new SimImageGenSquare(mP); return;
+   case SimImageGenParms::cImageSquare:    mSimImageGen = new SimImageGenSquare(mP); return;
+   case SimImageGenParms::cImageImpulse:   mSimImageGen = new SimImageGenImpulse(mP); return;
+   case SimImageGenParms::cImageGaussian:  mSimImageGen = new SimImageGenGaussian(mP); return;
    }
 }
 

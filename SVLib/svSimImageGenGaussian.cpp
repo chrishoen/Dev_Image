@@ -8,67 +8,76 @@ Description:
 
 #include "stdafx.h"
 
-#include "svDefs.h"
-#include "svImageWrapper.h"
+#include "prnPrint.h"
+#include "dsp_math.h"
 
-//******************************************************************************
-//******************************************************************************
-//******************************************************************************
+#include "svSysParms.h"
+#include "svDefs.h"
+
+#include "svSimImageGenGaussian.h"
 
 namespace SV
 {
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
 
-//******************************************************************************
-//******************************************************************************
-//******************************************************************************
-// Constructor.
+SimImageGenGaussian::SimImageGenGaussian()
+{
+   reset();
+}
 
-ImageWrapper::ImageWrapper(cv::Mat& aImage)
-   : mImage(aImage)
+SimImageGenGaussian::SimImageGenGaussian(SimImageGenParms* aParms)
+{
+   BaseClass::mP = aParms;
+   reset();
+}
+
+void SimImageGenGaussian::reset()
 {
 }
 
-ImageWrapper::ImageWrapper(cv::Mat* aImage)
-   : mImage(*aImage)
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+// Generate the image, depending on the parms.
+
+void SimImageGenGaussian::doGenerateImage(
+   cv::Mat&       aImage)          // Output
 {
+   Prn::print(0, "SimImageGenGaussian::doGenerateImage");
+   // Create an image filled with all zeros.
+   BaseClass::doCreateZeroImage(aImage);
+
+   // Gaussian variables. 
+   int tCenterRow     = mP->mImageSize.mRows / 2;
+   int tCenterCol     = mP->mImageSize.mCols / 2;
+   int tUpperLeftRow  = tCenterRow - mP->mImageB;
+   int tUpperLeftCol  = tCenterCol - mP->mImageB;
+   int tLowerRightRow = tCenterRow + mP->mImageB;
+   int tLowerRightCol = tCenterCol + mP->mImageB;
+
+   cv::Point tPoint1(tUpperLeftCol,  tUpperLeftRow);
+   cv::Point tPoint2(tLowerRightCol, tLowerRightRow);
+   int tRadius = mP->mImageB;
+   cv::Scalar tColor(255.0);
+   int tThickness = -1;
+   int tLineType = 8;
+   int tShift = 0;
+
+   // Draw circle.
+   cv::rectangle(
+      aImage,
+      tPoint1,
+      tPoint2,
+      tColor,
+      tThickness,
+      tLineType,
+      tShift);
 }
-
-
-//******************************************************************************
-//******************************************************************************
-//******************************************************************************
-// Element access.
-
-uchar& ImageWrapper::at(RCIndex aPixel)
-{
-   return mImage.at<uchar>(aPixel.mRow, aPixel.mCol);
-}
-
-//******************************************************************************
-//******************************************************************************
-//******************************************************************************
-// Return a scaled value such that 0..100.0 corresponds to 0..65535,
-// the minimum to maximum range.
-
-float ImageWrapper::getScaled(RCIndex aPixel)
-{
-   uchar tValue = mImage.at<uchar>(aPixel.mRow, aPixel.mCol);
-   return tValue*cImageScale;
-}
-
-//******************************************************************************
-//******************************************************************************
-//******************************************************************************
-// Set a scaled value such that 0..100.0 corresponds to 0..65535,
-// the minimum to maximum range.
-
-void ImageWrapper::setScaled(RCIndex aPixel, float aValue)
-{
-   float tFloatValue = aValue/cImageScale;
-   uchar tUCharValue = (uchar)round(tFloatValue);
-   mImage.at<uchar>(aPixel.mRow, aPixel.mCol) = tUCharValue;
-}
-
 
 //******************************************************************************
 //******************************************************************************
