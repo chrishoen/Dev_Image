@@ -8,86 +8,75 @@ Description:
 
 #include "stdafx.h"
 
-#include "svSimImageGenCircle.h"
-#include "svSimImageGenSquare.h"
+#include "prnPrint.h"
+#include "dsp_math.h"
 
-#include "svSimImageGenerator.h"
+#include "svSysParms.h"
+#include "svDefs.h"
+
+#include "svSimImageGenSquare.h"
 
 namespace SV
 {
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
 
-//******************************************************************************
-//******************************************************************************
-//******************************************************************************
-//******************************************************************************
-//******************************************************************************
-//******************************************************************************
-// Infastruccture.
-
-SimImageGenerator::SimImageGenerator()
+SimImageGenSquare::SimImageGenSquare()
 {
-   mSimImageGen = 0;
+   reset();
 }
 
-SimImageGenerator::~SimImageGenerator()
+SimImageGenSquare::SimImageGenSquare(SimImageGenParms* aParms)
 {
-   finalize();
+   BaseClass::mP = aParms;
+   reset();
 }
 
-SimImageGenerator::SimImageGenerator(SimImageGenParms* aParms)
+void SimImageGenSquare::reset()
 {
-   mSimImageGen = 0;
-   initialize(aParms);
-}
-
-void SimImageGenerator::finalize()
-{
-   if (mSimImageGen)
-   {
-      delete mSimImageGen;
-      mSimImageGen = 0;
-   }
 }
 
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
-
-void SimImageGenerator::initialize(SimImageGenParms* aParms)
-{
-   // Deallocate memory, if already allocated.
-   finalize();
-
-   // Store parms.
-   mP = aParms;
-
-   // Create specific image generator.
-   mSimImageGen = 0;
-   switch (mP->mImageType)
-   {
-   case SimImageGenParms::cImageCircle :   mSimImageGen = new SimImageGenCircle(mP); return;
-   case SimImageGenParms::cImageSquare :   mSimImageGen = new SimImageGenSquare(mP); return;
-   }
-}
-
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
 // Generate the image, depending on the parms.
 
-void SimImageGenerator::doGenerateImage(
-   cv::Mat&       aImage)     // Output
+void SimImageGenSquare::doGenerateImage(
+   cv::Mat&       aImage)          // Output
 {
-   // Guard.
-   if (mSimImageGen == 0)
-   {
-      Prn::print(0, "SimImageGenerator::doGenerateImage ERROR 101");
-      return;
-   }
+   Prn::print(0, "SimImageGenSquare::doGenerateImage");
+   // Create an image filled with all zeros.
+   BaseClass::doCreateZeroImage(aImage);
 
-   // Generate an image using the specific image generator.
-   mSimImageGen->doGenerateImage(
-      aImage);                // Output
+   // Square variables. 
+   int tCenterRow     = mP->mImageSize.mRows / 2;
+   int tCenterCol     = mP->mImageSize.mCols / 2;
+   int tUpperLeftRow  = tCenterRow - mP->mImageB;
+   int tUpperLeftCol  = tCenterCol - mP->mImageB;
+   int tLowerRightRow = tCenterRow + mP->mImageB;
+   int tLowerRightCol = tCenterCol + mP->mImageB;
+
+   cv::Point tPoint1(tUpperLeftCol,  tUpperLeftRow);
+   cv::Point tPoint2(tLowerRightCol, tLowerRightRow);
+   int tRadius = mP->mImageB;
+   cv::Scalar tColor(255.0);
+   int tThickness = -1;
+   int tLineType = 8;
+   int tShift = 0;
+
+   // Draw circle.
+   cv::rectangle(
+      aImage,
+      tPoint1,
+      tPoint2,
+      tColor,
+      tThickness,
+      tLineType,
+      tShift);
 }
 
 //******************************************************************************
