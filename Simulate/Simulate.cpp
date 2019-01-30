@@ -33,13 +33,20 @@ void Simulate::doRun1(int  aCode)
    Prn::print(Prn::View01,"RUN1********************************************************************%3d",aCode);
    Prn::print(Prn::View01,"RUN1********************************************************************");
    Prn::print(Prn::View01,"RUN1********************************************************************");
- 
+
+   // Generate simulated image.
    cv::Mat tSimImage;
    SV::SimImageGenerator tGenerator(&SV::gSimParms.mImageGenParms);
-
    tGenerator.doGenerateImage(tSimImage);
    SV::showImageInfo(0,"SimImage",tSimImage);
-   Display::showImage(tSimImage);
+
+   // Convert simulated image to target image.
+   cv::Mat tTargetImage;
+   SV::convertImageToTarget(tSimImage, tTargetImage);
+   SV::showImageInfo(0, "TargetImage", tTargetImage);
+
+   // Display target image.
+   Display::showImage(tTargetImage);
 }
 
 //******************************************************************************
