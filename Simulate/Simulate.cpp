@@ -9,6 +9,10 @@ Description:
 #include "stdafx.h"
 
 #include "svDefs.h"
+#include "svSimImageGenerator.h"
+#include "svSimParms.h"
+#include "svImageFunctions.h"
+#include "displayFunctions.h"
 #include "Simulate.h"
 
 //******************************************************************************
@@ -29,6 +33,13 @@ void Simulate::doRun1(int  aCode)
    Prn::print(Prn::View01,"RUN1********************************************************************%3d",aCode);
    Prn::print(Prn::View01,"RUN1********************************************************************");
    Prn::print(Prn::View01,"RUN1********************************************************************");
+ 
+   cv::Mat tSimImage;
+   SV::SimImageGenerator tGenerator(&SV::gSimParms.mImageGenParms);
+
+   tGenerator.doGenerateImage(tSimImage);
+   SV::showImageInfo(0,"SimImage",tSimImage);
+   Display::showImage(tSimImage);
 }
 
 //******************************************************************************

@@ -1,11 +1,11 @@
 
 #include "stdafx.h"
 
-#include "Simulate.h"
-
 #include "svSysParms.h"
 #include "svSimParms.h"
 #include "displayParms.h"
+
+#include "Simulate.h"
 
 #include "displayGraphicsThread.h"
 

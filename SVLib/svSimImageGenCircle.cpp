@@ -48,6 +48,7 @@ void SimImageGenCircle::reset()
 void SimImageGenCircle::doGenerateImage(
    cv::Mat&       aImage)          // Output
 {
+   Prn::print(0, "SimImageGenCircle::doGenerateImage");
    // Create an image filled with all zeros.
    BaseClass::doCreateZeroImage(aImage);
 }

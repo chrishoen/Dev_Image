@@ -36,7 +36,8 @@ SimImageGenerator::~SimImageGenerator()
 
 SimImageGenerator::SimImageGenerator(SimImageGenParms* aParms)
 {
-   initialize(mP);
+   mSimImageGen = 0;
+   initialize(aParms);
 }
 
 void SimImageGenerator::finalize()
@@ -60,7 +61,8 @@ void SimImageGenerator::initialize(SimImageGenParms* aParms)
    // Store parms.
    mP = aParms;
 
-   // Instantiate specific image generator type selected from the parms.
+   // Create specific image generator.
+   mSimImageGen = 0;
    switch (mP->mImageType)
    {
    case SimImageGenParms::cImageCircle :   mSimImageGen = new SimImageGenCircle(mP); return;
@@ -76,6 +78,14 @@ void SimImageGenerator::initialize(SimImageGenParms* aParms)
 void SimImageGenerator::doGenerateImage(
    cv::Mat&       aImage)     // Output
 {
+   // Guard.
+   if (mSimImageGen == 0)
+   {
+      Prn::print(0, "SimImageGenerator::doGenerateImage ERROR 101");
+      return;
+   }
+
+   // Generate an image using the specific image generator.
    mSimImageGen->doGenerateImage(
       aImage);                // Output
 }
