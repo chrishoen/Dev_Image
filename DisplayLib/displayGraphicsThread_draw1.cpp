@@ -47,11 +47,11 @@ void GraphicsThread::doVideoDraw1(SDL_Event* aEvent)
       // Create an intel image structure from the opencv image matrix.
       IplImage tIntelImage(*tImage);
 
-      Prn::print(Prn::Show1, "height        %4d", tIntelImage.height);
-      Prn::print(Prn::Show1, "width         %4d", tIntelImage.width);
-      Prn::print(Prn::Show1, "depth         %4d", tIntelImage.depth);
-      Prn::print(Prn::Show1, "nChannels     %4d", tIntelImage.nChannels);
-      Prn::print(Prn::Show1, "widthStep     %4d", tIntelImage.widthStep);
+      Prn::print(Prn::Show2, "height        %4d", tIntelImage.height);
+      Prn::print(Prn::Show2, "width         %4d", tIntelImage.width);
+      Prn::print(Prn::Show2, "depth         %4d", tIntelImage.depth);
+      Prn::print(Prn::Show2, "nChannels     %4d", tIntelImage.nChannels);
+      Prn::print(Prn::Show2, "widthStep     %4d", tIntelImage.widthStep);
 
       // Create a surface from the intel image.
       SDL_Surface* tSurface = SDL_CreateRGBSurfaceFrom(

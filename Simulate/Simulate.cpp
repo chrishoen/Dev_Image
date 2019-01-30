@@ -47,6 +47,9 @@ void Simulate::doRun1(int  aCode)
 
    // Display target image.
    Display::showImage(tTargetImage);
+
+   // Save simulated image.
+   SV::writeImageToFile(tSimImage, SV::gSimParms.mImageFileName1);
 }
 
 //******************************************************************************

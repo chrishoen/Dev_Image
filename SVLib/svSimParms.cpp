@@ -29,11 +29,10 @@ void SimParms::reset()
    BaseClass::reset();
    BaseClass::setFileName_RelAlphaFiles("Image/SV_Sim_Parms.txt");
 
-   mImageFileName[0] = 0;
+   mImageFileName1[0] = 0;
+   mImageFileName2[0] = 0;
 
-   mPulsePixelWidth = 0;
-   mPulseGaussianWidth = 0.0;
-   mPulseAmplitude = 0.0;
+   mNoiseSigma = 0.0;
 
    mImageGenParms.reset();
 }
@@ -62,15 +61,11 @@ void SimParms::show()
    printf("CenterPixel            %10d %10d\n", mCenterPixel.mRow, mCenterPixel.mCol);
 
    printf("\n");
-   printf("ImageFileName          %-10s\n", mImageFileName);
+   printf("ImageFileName1         %-10s\n", mImageFileName1);
+   printf("ImageFileName2         %-10s\n", mImageFileName2);
 
    printf("\n");
-   printf("PulsePixelWidth        %10d\n",   mPulsePixelWidth);
-   printf("PulseGaussianWidth     %10.2f\n", mPulseGaussianWidth);
-   printf("PulseAmplitude         %10.2f\n", mPulseAmplitude);
-
-   printf("\n");
-   printf("Sigma                  %10.2f\n", mSigma);
+   printf("NoiseSigma             %10.2f\n", mNoiseSigma);
 
    printf("\n");
    mImageGenParms.show();
@@ -88,13 +83,10 @@ void SimParms::execute(Ris::CmdLineCmd* aCmd)
    if (!isTargetSection(aCmd)) return;
 
    if (aCmd->isCmd("CenterPixel"))         mCenterPixel.execute(aCmd);
-   if (aCmd->isCmd("ImageFileName"))       aCmd->copyArgString(1, mImageFileName, cMaxStringSize);
+   if (aCmd->isCmd("ImageFileName1"))      aCmd->copyArgString(1, mImageFileName1, cMaxStringSize);
+   if (aCmd->isCmd("ImageFileName2"))      aCmd->copyArgString(1, mImageFileName2, cMaxStringSize);
 
-   if (aCmd->isCmd("PulsePixelWidth"))     mPulsePixelWidth    = aCmd->argInt(1);
-   if (aCmd->isCmd("PulseGaussianWidth"))  mPulseGaussianWidth = aCmd->argDouble(1);
-   if (aCmd->isCmd("PulseAmplitude"))      mPulseAmplitude     = aCmd->argDouble(1);
-
-   if (aCmd->isCmd("Sigma"))               mSigma = aCmd->argDouble(1);
+   if (aCmd->isCmd("NoiseSigma"))          mNoiseSigma = aCmd->argDouble(1);
 
    if (aCmd->isCmd("ImageGenParms"))       readSection(aCmd->argString(1), &mImageGenParms);
 }

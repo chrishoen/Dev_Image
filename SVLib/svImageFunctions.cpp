@@ -8,6 +8,7 @@ Description:
 
 #include "stdafx.h"
 
+#include "risAlphaDir.h"
 #include "svSysParms.h"
 
 #include "svPixelFunctions.h"
@@ -44,6 +45,20 @@ void convertImageToTarget(
 {
    cv::cvtColor(aInput, aOutput, CV_GRAY2RGB);
 }
+
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+// Write image to file.
+
+void writeImageToFile(
+   cv::Mat&      aImage,      // Input
+   const char*   aFileName)   // Input
+{
+   char tBuffer[100];
+   cv::imwrite(Ris::getAlphaFilePath_Image(tBuffer, aFileName), aImage);
+}
+
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************

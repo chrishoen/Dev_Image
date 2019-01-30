@@ -70,15 +70,11 @@ public:
    RCIndex mCenterPixel;
 
    // Image file name.
-   char mImageFileName[cMaxStringSize];
-
-   // Pulse parms.
-   int    mPulsePixelWidth;
-   double mPulseGaussianWidth;
-   double mPulseAmplitude;
+   char mImageFileName1[cMaxStringSize];
+   char mImageFileName2[cMaxStringSize];
 
    // Simulated error variables.
-   double   mSigma;
+   double   mNoiseSigma;
 
    //***************************************************************************
    //***************************************************************************

@@ -37,8 +37,8 @@ int main(int argc,char** argv)
    //***************************************************************************
    // Show program threads.
 
-   Ris::Threads::showCurrentThreadInfo();
-   if (Display::gGraphicsThread) Display::gGraphicsThread->showThreadInfo();
+   //Ris::Threads::showCurrentThreadInfo();
+   //if (Display::gGraphicsThread) Display::gGraphicsThread->showThreadInfo();
 
    //***************************************************************************
    //***************************************************************************
