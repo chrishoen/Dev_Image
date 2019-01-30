@@ -50,7 +50,7 @@ uchar& ImageWrapper::at(RCIndex aPixel)
 // Return a scaled value such that 0..100.0 corresponds to 0..65535,
 // the minimum to maximum range.
 
-float ImageWrapper::getScaled(RCIndex aPixel)
+double ImageWrapper::getScaled(RCIndex aPixel)
 {
    uchar tValue = mImage.at<uchar>(aPixel.mRow, aPixel.mCol);
    return tValue*cImageScale;
@@ -62,10 +62,10 @@ float ImageWrapper::getScaled(RCIndex aPixel)
 // Set a scaled value such that 0..100.0 corresponds to 0..65535,
 // the minimum to maximum range.
 
-void ImageWrapper::setScaled(RCIndex aPixel, float aValue)
+void ImageWrapper::setScaled(RCIndex aPixel, double aValue)
 {
-   float tFloatValue = aValue/cImageScale;
-   uchar tUCharValue = (uchar)round(tFloatValue);
+   double tDoubleValue = aValue/cImageScale;
+   uchar tUCharValue = (uchar)round(tDoubleValue);
    mImage.at<uchar>(aPixel.mRow, aPixel.mCol) = tUCharValue;
 }
 

@@ -59,11 +59,11 @@ public:
 
    // Return a scaled value such that 0..100.0 corresponds to 0..255,
    // the minimum to maximum range.
-   float getScaled(RCIndex aPixel);
+   double getScaled(RCIndex aPixel);
 
    // Set a scaled value such that 0..100.0 corresponds to 0..255,
    // the minimum to maximum range.
-   void setScaled(RCIndex aPixel,float aValue);
+   void setScaled(RCIndex aPixel,double aValue);
 
    //***************************************************************************
    //***************************************************************************

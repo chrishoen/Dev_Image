@@ -8,11 +8,10 @@ Description:
 
 #include "stdafx.h"
 
-#include "prnPrint.h"
-#include "dsp_math.h"
-
 #include "svSysParms.h"
 #include "svDefs.h"
+#include "svPixelFunctions.h"
+#include "svImageWrapper.h"
 
 #include "svSimImageGenGaussian.h"
 
@@ -52,31 +51,39 @@ void SimImageGenGaussian::doGenerateImage(
    // Create an image filled with all zeros.
    BaseClass::doCreateZeroImage(aImage);
 
-   // Gaussian variables. 
-   int tCenterRow     = mP->mImageSize.mRows / 2;
-   int tCenterCol     = mP->mImageSize.mCols / 2;
-   int tUpperLeftRow  = tCenterRow - mP->mImageB;
-   int tUpperLeftCol  = tCenterCol - mP->mImageB;
-   int tLowerRightRow = tCenterRow + mP->mImageB;
-   int tLowerRightCol = tCenterCol + mP->mImageB;
+   // Image wrapper.
+   ImageWrapper tImage(aImage);
 
-   cv::Point tPoint1(tUpperLeftCol,  tUpperLeftRow);
-   cv::Point tPoint2(tLowerRightCol, tLowerRightRow);
-   int tRadius = mP->mImageB;
-   cv::Scalar tColor(255.0);
-   int tThickness = -1;
-   int tLineType = 8;
-   int tShift = 0;
+   // Impulse variables. 
+   RCIndex tCenterPixel(mP->mImageSize.mRows / 2, mP->mImageSize.mCols / 2);
 
-   // Draw circle.
-   cv::rectangle(
-      aImage,
-      tPoint1,
-      tPoint2,
-      tColor,
-      tThickness,
-      tLineType,
-      tShift);
+   // Set center pixel.
+   tImage.setScaled(tCenterPixel, 100.0);
+
+
+   // Loop through all of the rows and columns of the pulse.
+   // Set pulse pixels in the image matrix.
+   for (int iRowY = -mP->mImageB; iRowY <= mP->mImageB; iRowY++)
+   {
+      for (int iColX = -mP->mImageB; iColX <= mP->mImageB; iColX++)
+      {
+         // Calculate indices of the pixel to set.
+         RCIndex tPixel(tCenterPixel.mRow + iRowY, tCenterPixel.mCol + iColX);
+         // Calculate the amplitude, based on a gaussian function.
+         double tTwoSigmaSq = 2.0*(mP->mGaussianWidth*mP->mGaussianWidth);
+         double tTermX = iColX;
+         double tTermY = iRowY;
+         double tTermG1 = exp(-(tTermX*tTermX + tTermY * tTermY) / tTwoSigmaSq);
+         double tTermG2 = mP->mGaussianAmplitude*tTermG1;
+
+         // Set the pixel.
+         if (isImagePixelInBounds(tPixel))
+         {
+            tImage.setScaled(tPixel,tTermG2);
+         }
+      }
+   }
+
 }
 
 //******************************************************************************

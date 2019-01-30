@@ -8,9 +8,6 @@ Description:
 
 #include "stdafx.h"
 
-#include "prnPrint.h"
-#include "dsp_math.h"
-
 #include "svSysParms.h"
 #include "svDefs.h"
 #include "svImageWrapper.h"

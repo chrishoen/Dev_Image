@@ -58,7 +58,7 @@ static const int cPnPCheckArgumentsError1 = -103;
 static const int cStage4NotReachedError1 = -104;
 
 // Image scale factor, 100.0 corresponds to max value 65535.
-static const float cImageScale    = (float)100.0/(float)255.0;
+static const double cImageScale    = 100.0/255.0;
 
 //******************************************************************************
 //******************************************************************************
