@@ -1,18 +1,11 @@
-/*==============================================================================
-Description:
-==============================================================================*/
-
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
 
 #include "stdafx.h"
 
-#include "risAlphaDir.h"
-#include "svSysParms.h"
+#define  _SVSIMULATIONPARMS_CPP_
 #include "svImageParms.h"
-
-#include "svPixelFunctions.h"
 
 //******************************************************************************
 //******************************************************************************
@@ -24,60 +17,70 @@ namespace SV
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
-// Show image info.
+// Constructor.
 
-void showImageInfo(
-   int           aPF,      // Input
-   const char*   aLabel,   // Input
-   cv::Mat&      aImage)   // Input
+ImageParms::ImageParms()
 {
-   Prn::print(aPF, "%-12s %4d %4d $ %3d %3d ", aLabel, aImage.rows, aImage.cols, aImage.depth(), aImage.channels());
-   Prn::print(aPF, "");
+   reset();
+}
+
+void ImageParms::reset()
+{
+   BaseClass::reset();
+   BaseClass::setFileName_RelAlphaFiles("Image/SV_Image_Parms.txt");
+
+   mImageFileName1[0] = 0;
+   mImageFileName2[0] = 0;
+
+   mRoiPixel.reset();
+   mRoiB = 0;
 }
 
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
-// Convert image to target format.
+// Simulate expanded member variables. This is called after the entire
+// section of the command file has been processed.
 
-void convertImageToTarget(
-   cv::Mat&      aInput,    // Input
-   cv::Mat&      aOutput)   // Output
+void ImageParms::expand()
 {
-   cv::cvtColor(aInput, aOutput, CV_GRAY2RGB);
 }
 
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
-// Write image to file.
+// Show.
 
-void writeImageToFile(
-   cv::Mat&      aImage,      // Input
-   const char*   aFileName)   // Input
+void ImageParms::show()
 {
-   char tBuffer[100];
-   cv::imwrite(Ris::getAlphaFilePath_Image(tBuffer, aFileName), aImage);
+   printf("\n");
+   printf("ImageParms****************************************** %s\n", mTargetSection);
+
+   printf("\n");
+   printf("RoiPixel               %10d %10d\n", mRoiPixel.mRow, mRoiPixel.mCol);
+   printf("RoiB                   %10d\n", mRoiB);
+
+   printf("\n");
+   printf("ImageFileName1         %-10s\n", mImageFileName1);
+   printf("ImageFileName2         %-10s\n", mImageFileName2);
 }
 
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
-// Extract an image region of interest.
+// Base class override: Execute a command from the command file to set a 
+// member variable.  Only process commands for the target section.This is
+// called by the associated command file object for each command in the file.
 
-void extractImageRoi(
-   cv::Mat&      aInput,    // Input
-   cv::Mat&      aOutput)   // Output
+void ImageParms::execute(Ris::CmdLineCmd* aCmd)
 {
-   // Roi variables.
-   int tUpperLeftRowY = gImageParms.mRoiPixel.mRow - gImageParms.mRoiB;
-   int tUpperLeftColX = gImageParms.mRoiPixel.mCol - gImageParms.mRoiB;
-   int tWidth = 2 * gImageParms.mRoiB + 1;
-   int tHeight = tWidth;
-   cv::Rect tRoiRect(tUpperLeftColX, tUpperLeftRowY, tWidth, tHeight);
+   if (!isTargetSection(aCmd)) return;
 
-   // Extract roi.
-   aOutput = aInput(tRoiRect);
+   if (aCmd->isCmd("RoiPixel"))            mRoiPixel.execute(aCmd);
+   if (aCmd->isCmd("RoiB"))                mRoiB = aCmd->argInt(1);
+
+   if (aCmd->isCmd("ImageFileName1"))      aCmd->copyArgString(1, mImageFileName1, cMaxStringSize);
+   if (aCmd->isCmd("ImageFileName2"))      aCmd->copyArgString(1, mImageFileName2, cMaxStringSize);
 }
 
 //******************************************************************************

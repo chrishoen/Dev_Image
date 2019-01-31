@@ -5,6 +5,7 @@
 #include "risThreadsProcess.h"
 
 #include "svSysParms.h"
+#include "svImageParms.h"
 #include "svSimParms.h"
 #include "displayParms.h"
 
@@ -71,6 +72,10 @@ void main_initialize(int argc,char** argv)
    // Read parameters files.
    SV::gSysParms.reset();
    SV::gSysParms.readSection("Default");
+
+   // Read parameters files.
+   SV::gImageParms.reset();
+   SV::gImageParms.readSection("Default");
 
    // Read parameters files.
    SV::gSimParms.reset();

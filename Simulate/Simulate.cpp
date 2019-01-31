@@ -10,6 +10,7 @@ Description:
 
 #include "svDefs.h"
 #include "svSimImageGenerator.h"
+#include "svImageParms.h"
 #include "svSimParms.h"
 #include "svImageFunctions.h"
 #include "displayFunctions.h"
@@ -49,7 +50,15 @@ void Simulate::doRun1(int  aCode)
    Display::showImage(tTargetImage);
 
    // Save simulated image.
-   SV::writeImageToFile(tSimImage, SV::gSimParms.mImageFileName1);
+   SV::writeImageToFile(tSimImage, SV::gImageParms.mImageFileName1);
+
+   // Extract region of interest from simulated image.
+   cv::Mat tRoiImage;
+   SV::extractImageRoi(tSimImage, tRoiImage);
+   SV::showImageInfo(0, "RoiImage", tRoiImage);
+
+   // Save roi image.
+   SV::writeImageToFile(tRoiImage, SV::gImageParms.mImageFileName2);
 }
 
 //******************************************************************************

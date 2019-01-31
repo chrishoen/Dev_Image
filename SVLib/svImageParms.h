@@ -1,6 +1,7 @@
 #pragma once
 
 /*==============================================================================
+SV namespace: sixdofs that are measured by a computer vision based system.
 Parameters class whose values are read from a command file. 
 ==============================================================================*/
 
@@ -9,12 +10,14 @@ Parameters class whose values are read from a command file.
 //******************************************************************************
 
 #include "risCmdLineParms.h"
+#include "svRCIndex.h"
+#include "svRCSize.h"
 
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
 
-namespace Some
+namespace SV
 {
 
 //******************************************************************************
@@ -60,36 +63,15 @@ public:
    //***************************************************************************
    //***************************************************************************
    //***************************************************************************
-   // Members.
+   // Parameter members.
 
-   //***************************************************************************
-   //***************************************************************************
-   //***************************************************************************
-   // Members.
-
-
-   //***************************************************************************
-   //***************************************************************************
-   //***************************************************************************
-   // Members.
+   // Center image point.
+   RCIndex mRoiPixel;
+   int     mRoiB;
 
    // Image file name.
-   char mImageFilename[cMaxStringSize];
-
-   // Size of the image.
-   int mImageWidth;
-   int mImageHeight;
-
-   // Image colors.
-   int   mForeColor[3];
-   int   mBackColor[3];
-
-   // Side variables.
-   int mSideX;
-   int mSideY;
-
-   // If true then draw a border.
-   bool mImageBorder;
+   char mImageFileName1[cMaxStringSize];
+   char mImageFileName2[cMaxStringSize];
 
    //***************************************************************************
    //***************************************************************************
@@ -112,7 +94,7 @@ public:
    // for each command in the file.
    void execute(Ris::CmdLineCmd* aCmd) override;
 
-   // Calculate expanded member variables. This is called after the entire
+   // Simulate expanded member variables. This is called after the entire
    // section of the command file has been processed.
    void expand() override;
 };
@@ -122,7 +104,7 @@ public:
 //******************************************************************************
 // Global instance.
 
-#ifdef _SOMEIMAGEPARMS_CPP_
+#ifdef _SVSIMULATIONPARMS_CPP_
    ImageParms gImageParms;
 #else
    extern ImageParms gImageParms;

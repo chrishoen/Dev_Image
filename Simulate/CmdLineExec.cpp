@@ -2,6 +2,7 @@
 #include "stdafx.h"
 
 #include "svSysParms.h"
+#include "svImageParms.h"
 #include "svSimParms.h"
 #include "displayParms.h"
 
@@ -49,6 +50,10 @@ void CmdLineExec::execute(Ris::CmdLineCmd* aCmd)
 void CmdLineExec::executeRun1(Ris::CmdLineCmd* aCmd)
 {
    aCmd->setArgDefault(1, 1);
+
+   // Read parameters files.
+   SV::gImageParms.reset();
+   SV::gImageParms.readSection("Default");
 
    SV::gSimParms.reset();
    SV::gSimParms.readSection("default");
@@ -122,6 +127,11 @@ void CmdLineExec::executeParms(Ris::CmdLineCmd* aCmd)
    Display::gParms.reset();
    Display::gParms.readSection("Default");
    Display::gParms.show();
+
+   // Read parameters files.
+   SV::gImageParms.reset();
+   SV::gImageParms.readSection("Default");
+   SV::gImageParms.show();
 
    SV::gSimParms.reset();
    SV::gSimParms.readSection("default");

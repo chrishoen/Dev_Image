@@ -67,22 +67,15 @@ public:
    // Parameter members.
 
    // Center image point.
-   RCIndex mCenterPixel;
-
-   // Image file name.
-   char mImageFileName1[cMaxStringSize];
-   char mImageFileName2[cMaxStringSize];
-
-   // Simulated error variables.
-   double   mNoiseSigma;
+   SimImageGenParms mImageGenParms;
 
    //***************************************************************************
    //***************************************************************************
    //***************************************************************************
    // Parameter members.
 
-   // Center image point.
-   SimImageGenParms mImageGenParms;
+   // Simulated error variables.
+   double   mNoiseSigma;
 
    //***************************************************************************
    //***************************************************************************
