@@ -33,8 +33,9 @@ void CmdLineExec::reset()
 
 void CmdLineExec::execute(Ris::CmdLineCmd* aCmd)
 {
-   if (aCmd->isCmd("D0"))        executeDraw0(aCmd);
    if (aCmd->isCmd("Run1"))      executeRun1(aCmd);
+   if (aCmd->isCmd("Run2"))      executeRun2(aCmd);
+   if (aCmd->isCmd("D0"))        executeDraw0(aCmd);
    if (aCmd->isCmd("GO1"))       executeGo1(aCmd);
    if (aCmd->isCmd("GO2"))       executeGo2(aCmd);
    if (aCmd->isCmd("GO3"))       executeGo3(aCmd);
@@ -58,8 +59,25 @@ void CmdLineExec::executeRun1(Ris::CmdLineCmd* aCmd)
    SV::gSimParms.reset();
    SV::gSimParms.readSection("default");
 
-   Simulate tSim;
-   tSim.doRun1();
+   mSim.doRun1();
+}
+
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+
+void CmdLineExec::executeRun2(Ris::CmdLineCmd* aCmd)
+{
+   aCmd->setArgDefault(1, 1);
+
+   // Read parameters files.
+   SV::gImageParms.reset();
+   SV::gImageParms.readSection("Default");
+
+   SV::gSimParms.reset();
+   SV::gSimParms.readSection("default");
+
+   mSim.doRun2();
 }
 
 //******************************************************************************

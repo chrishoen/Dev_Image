@@ -9,6 +9,7 @@ Program command line executive.
 //******************************************************************************
 
 #include "risCmdLineExec.h"
+#include "Simulate.h"
 
 //******************************************************************************
 //******************************************************************************
@@ -28,6 +29,7 @@ public:
    //***************************************************************************
    //***************************************************************************
    // Members.
+   Simulate mSim;
 
    //***************************************************************************
    //***************************************************************************
@@ -53,8 +55,9 @@ public:
    // Methods.
 
    // Execute specific commands.
-   void executeDraw0(Ris::CmdLineCmd* aCmd);
    void executeRun1(Ris::CmdLineCmd* aCmd);
+   void executeRun2(Ris::CmdLineCmd* aCmd);
+   void executeDraw0(Ris::CmdLineCmd* aCmd);
    void executeGo1(Ris::CmdLineCmd* aCmd);
    void executeGo2(Ris::CmdLineCmd* aCmd);
    void executeGo3(Ris::CmdLineCmd* aCmd);

@@ -71,8 +71,10 @@ public:
    int     mRoiB;
 
    // Image file name.
-   char mImageFileName1[cMaxStringSize];
-   char mImageFileName2[cMaxStringSize];
+   char mInputImageFileName[cMaxStringSize];
+   char mInputRoiFileName[cMaxStringSize];
+   char mOutputImageFileName[cMaxStringSize];
+   char mOutputRoiFileName[cMaxStringSize];
 
    // Image filter.
    ImageFilterParms mFilterParms;
