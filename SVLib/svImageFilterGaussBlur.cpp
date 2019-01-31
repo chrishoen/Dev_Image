@@ -43,10 +43,19 @@ void ImageFilterGaussBlur::reset()
 // Filter the image, depending on the parms.
 
 void ImageFilterGaussBlur::doFilterImage(
-   cv::Mat&       aInput,     // Input
-   cv::Mat&       aOutput)    // Output
+   cv::Mat&       aInputImage,     // Input
+   cv::Mat&       aOutputImage)    // Output
 {
    Prn::print(0, "ImageFilterGaussBlur::doFilterImage");
+
+   // Filter the input image to the output image.
+   cv::GaussianBlur(
+      aInputImage,
+      aOutputImage,
+      cv::Size(mP->mGaussBlurCode, mP->mGaussBlurCode),
+      0.0,
+      0.0);
+
 }
 
 //******************************************************************************
