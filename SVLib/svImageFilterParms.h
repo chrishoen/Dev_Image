@@ -1,7 +1,6 @@
 #pragma once
 
 /*==============================================================================
-SV namespace: sixdofs that are measured by a computer vision based system.
 Parameters class whose values are read from a command file. 
 ==============================================================================*/
 
@@ -9,10 +8,10 @@ Parameters class whose values are read from a command file.
 //******************************************************************************
 //******************************************************************************
 
-#include "risCmdLineParms.h"
+#include "risCmdLineExec.h"
 #include "svRCIndex.h"
+#include "svRCRect.h"
 #include "svRCSize.h"
-#include "svImageFilterParms.h"
 
 //******************************************************************************
 //******************************************************************************
@@ -50,7 +49,7 @@ namespace SV
 // structure. If so, then this class is the root.
 // 
 
-class ImageParms : public Ris::BaseCmdLineParms
+class ImageFilterParms : public Ris::BaseCmdLineExec
 {
 public:
 
@@ -59,28 +58,23 @@ public:
    //***************************************************************************
    // Constants.
 
-   static const int cMaxStringSize = 30;
+   // None.
+   static const int cNone              = 0;
+
+   // Filter types.
+   static const int cFilterGaussBlur = 1;
+   static const int cFilterSquare    = 2;
 
    //***************************************************************************
    //***************************************************************************
    //***************************************************************************
-   // Parameter members.
+   // Members that are read from the parms file.
 
-   // Center image point.
-   RCIndex mRoiPixel;
-   int     mRoiB;
+   // Filter type.
+   int mFilterType;
 
-   // Image file name.
-   char mImageFileName1[cMaxStringSize];
-   char mImageFileName2[cMaxStringSize];
-
-   // Image filter.
-   ImageFilterParms mFilterParms;
-
-   //***************************************************************************
-   //***************************************************************************
-   //***************************************************************************
-   // Expanded members that are not read from the parms file.
+   // Gaussian blur parameter.
+   int  mGaussBlurCode;
 
    //***************************************************************************
    //***************************************************************************
@@ -88,8 +82,8 @@ public:
    // Infrastucture.
 
    // Constructor,
-   typedef Ris::BaseCmdLineParms BaseClass;
-   ImageParms();
+   typedef Ris::BaseCmdLineExec BaseClass;
+   ImageFilterParms();
    void reset();
    void show();
 
@@ -98,9 +92,16 @@ public:
    // for each command in the file.
    void execute(Ris::CmdLineCmd* aCmd) override;
 
-   // Simulate expanded member variables. This is called after the entire
-   // section of the command file has been processed.
-   void expand() override;
+   //***************************************************************************
+   //***************************************************************************
+   //***************************************************************************
+   // Helpers.
+
+   static char* asStringFilterType (int aX);
+   char* asStringFilterType ();
+
+   bool isGaussBlur() { return mFilterType == cFilterGaussBlur; }
+   bool isSquare() { return mFilterType == cFilterSquare; }
 };
 
 //******************************************************************************
@@ -108,10 +109,10 @@ public:
 //******************************************************************************
 // Global instance.
 
-#ifdef _SVSIMULATIONPARMS_CPP_
-   ImageParms gImageParms;
+#ifdef _SVIMAGEFILTERPARMS_CPP_
+   ImageFilterParms gImageFilterParms;
 #else
-   extern ImageParms gImageParms;
+   extern ImageFilterParms gImageFilterParms;
 #endif
 
 //******************************************************************************

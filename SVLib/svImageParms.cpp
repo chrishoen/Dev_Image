@@ -32,6 +32,8 @@ void ImageParms::reset()
    mImageFileName1[0] = 0;
    mImageFileName2[0] = 0;
 
+   mFilterParms.reset();
+
    mRoiPixel.reset();
    mRoiB = 0;
 }
@@ -63,6 +65,9 @@ void ImageParms::show()
    printf("\n");
    printf("ImageFileName1         %-10s\n", mImageFileName1);
    printf("ImageFileName2         %-10s\n", mImageFileName2);
+
+   printf("\n");
+   mFilterParms.show();
 }
 
 //******************************************************************************
@@ -81,6 +86,8 @@ void ImageParms::execute(Ris::CmdLineCmd* aCmd)
 
    if (aCmd->isCmd("ImageFileName1"))      aCmd->copyArgString(1, mImageFileName1, cMaxStringSize);
    if (aCmd->isCmd("ImageFileName2"))      aCmd->copyArgString(1, mImageFileName2, cMaxStringSize);
+
+   if (aCmd->isCmd("FilterParms"))         readSection(aCmd->argString(1), &mFilterParms);
 }
 
 //******************************************************************************

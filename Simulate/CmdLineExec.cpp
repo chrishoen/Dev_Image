@@ -125,16 +125,15 @@ void CmdLineExec::executeParms(Ris::CmdLineCmd* aCmd)
    SV::gSysParms.show();
 
    Display::gParms.reset();
-   Display::gParms.readSection("Default");
+   Display::gParms.readSection("default");
    Display::gParms.show();
-
-   // Read parameters files.
-   SV::gImageParms.reset();
-   SV::gImageParms.readSection("Default");
-   SV::gImageParms.show();
 
    SV::gSimParms.reset();
    SV::gSimParms.readSection("default");
    SV::gSimParms.show();
+
+   SV::gImageParms.reset();
+   SV::gImageParms.readSection("default");
+   SV::gImageParms.show();
 }
 
