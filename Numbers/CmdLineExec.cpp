@@ -46,6 +46,10 @@ void CmdLineExec::execute(Ris::CmdLineCmd* aCmd)
    if (aCmd->isCmd("GO22"))  executeGo22(aCmd);
    if (aCmd->isCmd("GO23"))  executeGo23(aCmd);
    if (aCmd->isCmd("GO24"))  executeGo24(aCmd);
+   if (aCmd->isCmd("GO31"))  executeGo31(aCmd);
+   if (aCmd->isCmd("GO32"))  executeGo32(aCmd);
+   if (aCmd->isCmd("GO33"))  executeGo33(aCmd);
+   if (aCmd->isCmd("GO34"))  executeGo34(aCmd);
 
    if(aCmd->isCmd("Parms"  ))  executeParms(aCmd);
 }
@@ -311,6 +315,65 @@ void CmdLineExec::executeGo23(Ris::CmdLineCmd* aCmd)
 //******************************************************************************
 
 void CmdLineExec::executeGo24(Ris::CmdLineCmd* aCmd)
+{
+}
+
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+
+void CmdLineExec::executeGo31(Ris::CmdLineCmd* aCmd)
+{
+   aCmd->setArgDefault(1, 1);
+   int tCount = 0;
+
+   SV::RCCircuitLoop tCircuitLoop(aCmd->argInt(1));
+   do
+   {
+      Prn::print(0, "CircuitLoop %3d %3d $$ %3d %3d", tCount++, tCircuitLoop.mSide, tCircuitLoop.mRow, tCircuitLoop.mCol);
+   } while (tCircuitLoop.advance());
+}
+
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+
+void CmdLineExec::executeGo32(Ris::CmdLineCmd* aCmd)
+{
+   aCmd->setArgDefault(1, 1);
+   int tCount = 0;
+
+   SV::RCCircuitLoop tCircuitLoop(aCmd->argInt(1));
+   while (tCircuitLoop.loop())
+   {
+      Prn::print(0, "CircuitLoop %3d %3d %3d", tCount++, tCircuitLoop.mRow, tCircuitLoop.mCol);
+   }
+}
+
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+
+void CmdLineExec::executeGo33(Ris::CmdLineCmd* aCmd)
+{
+   aCmd->setArgDefault(1, 1);
+   int tCount = 0;
+
+   SV::RCCircuitLoop tCircuitLoop(aCmd->argInt(1));
+   for (tCircuitLoop.first(); tCircuitLoop.test(); tCircuitLoop.next())
+   {
+      Prn::print(0, "CircuitLoop %3d %3d %3d", tCount++, tCircuitLoop.mRow, tCircuitLoop.mCol);
+   }
+}
+
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+
+void CmdLineExec::executeGo34(Ris::CmdLineCmd* aCmd)
 {
 }
 

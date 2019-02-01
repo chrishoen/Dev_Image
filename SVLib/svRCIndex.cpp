@@ -490,4 +490,125 @@ void RCDitherLoop2::next()
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+// This class encapsulates an index loop iterator. It provides the
+// functionality to construct for loops with array indices.
+// It is used for loops that dither a square around a point.
+
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+// Infrastrucure.
+
+RCCircuitLoop::RCCircuitLoop(int aDelta)
+{
+   mFirst = true;
+   mSide = 0;
+   mRow = -aDelta;
+   mCol = -aDelta;
+   mDelta = aDelta;
+}
+
+RCIndex RCCircuitLoop::operator()()
+{
+   return RCIndex(mRow, mCol);
+}
+
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+// Methods.
+
+bool RCCircuitLoop::advance()
+{
+   if (mSide == 0)
+   {
+      if (mCol < mDelta)
+      {
+         mCol++;
+      }
+      else
+      {
+         mSide = 1;
+         mRow++;
+      }
+      return true;
+   }
+
+   if (mSide == 1)
+   {
+      if (mRow < mDelta)
+      {
+         mRow++;
+      }
+      else
+      {
+         mSide = 2;
+         mCol--;
+      }
+      return true;
+   }
+
+   if (mSide == 2)
+   {
+      if (mCol > -mDelta)
+      {
+         mCol--;
+      }
+      else
+      {
+         mSide = 3;
+         mRow--;
+      }
+      return true;
+   }
+
+   if (mSide == 3)
+   {
+      if (mRow > -mDelta + 1)
+      {
+         mRow--;
+      }
+      else
+      {
+         mSide = 4;
+         return false;
+      }
+      return true;
+   }
+   return false;
+}
+
+bool RCCircuitLoop::loop()
+{
+   if (mFirst)
+   {
+      mFirst = false;
+      return true;
+   }
+
+   return advance();
+}
+
+void RCCircuitLoop::first()
+{
+   mRow = -mDelta;
+   mCol = -mDelta;
+}
+
+bool RCCircuitLoop::test()
+{
+   return mSide != 4;
+}
+
+void RCCircuitLoop::next()
+{
+   advance();
+}
+
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
 }//namespace
