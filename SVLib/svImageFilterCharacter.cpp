@@ -62,6 +62,8 @@ void ImageFilterCharacter::doFilterImage(
    {
       // Count the number of neighbors that are occupied.
       int tNeighborSum = 0;
+      uchar tPixelCode = 0;
+      uchar tInputValue = tInputImage.at(tImageLoop());
       // Dither a neighborhood around each image pixel.
       SV::RCDitherLoop1 tNeighborDither(1, 1);
       do
@@ -87,8 +89,29 @@ void ImageFilterCharacter::doFilterImage(
             }
          }
       } while (tNeighborDither.advance());
-      // Set the output pixel value to the sum. 
-      tOutputImage.at(tImageLoop()) = tNeighborSum;
+
+      // Set the output pixel value. 
+      uchar tOutputValue = 0;
+      if (mP->mCharacterCode == 0)
+      {
+         // Set the output pixel value to the sum. 
+         tOutputValue = tNeighborSum;
+      }
+      if (mP->mCharacterCode == 1)
+      {
+         if (tInputValue == 255 && tNeighborSum != 8)
+         {
+            // Set the output pixel value to the sum. 
+            tOutputValue = 1;
+         }
+         if (tInputValue == 0 && tNeighborSum != 0)
+         {
+            // Set the output pixel value to the sum. 
+            tOutputValue = 2;
+         }
+      }
+      // Set the output pixel value. 
+      tOutputImage.at(tImageLoop()) = tOutputValue;
    }
 }
 

@@ -34,6 +34,7 @@ void ImageFilterParms::reset()
 {
    mFilterType    = cNone;
    mGaussBlurCode = 0;
+   mCharacterCode = 0;
 }
 
 //******************************************************************************
@@ -47,6 +48,7 @@ void ImageFilterParms::show()
    printf("ImageFilterParms*******************************************\n");
    printf("FilterType               %10s\n", asStringFilterType(mFilterType));
    printf("GaussBlurCode            %10d\n", mGaussBlurCode);
+   printf("CharacterCode            %10d\n", mCharacterCode);
    printf("ImageFilterParms*******************************************\n");
 }
 
@@ -67,6 +69,7 @@ void ImageFilterParms::execute(Ris::CmdLineCmd* aCmd)
    }
 
    if (aCmd->isCmd("GaussBlurCode"))       mGaussBlurCode = aCmd->argInt(1);
+   if (aCmd->isCmd("CharacterCode"))       mCharacterCode = aCmd->argInt(1);
 }
 
 //******************************************************************************
