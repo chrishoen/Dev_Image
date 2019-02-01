@@ -30,8 +30,13 @@ void showImageInfo(
 //******************************************************************************
 // Show functions.
 
-// Show image info.
-void showImageTable(
+// Show image in tabular form.
+void showImageTableFloat(
+   const char*   aLabel,   // Input
+   cv::Mat&      aImage);  // Input
+
+// Show image in tabular form.
+void showImageTableByte(
    const char*   aLabel,   // Input
    cv::Mat&      aImage);  // Input
 

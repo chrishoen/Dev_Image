@@ -40,7 +40,7 @@ void showImageInfo(
 //******************************************************************************
 // Show image info.
 
-void showImageTable(
+void showImageTableFloat(
    const char*   aLabel,   // Input
    cv::Mat&      aImage)   // Input
 {
@@ -48,20 +48,23 @@ void showImageTable(
    RCIndex tCenterPixel = gImageParms.mRoiPixel;
    int tB = gImageParms.mRoiB;
 
-   printf("************************************************************************************\n");
-   printf("%-12s %4d %4d $ %3d %3d\n", aLabel, aImage.rows, aImage.cols, aImage.depth(), aImage.channels());
-   printf("ROI          %4d %4d $ %3d\n", tCenterPixel.mRow, tCenterPixel.mRow, tB);
+   printf("\n");
+   printf("********************************************* %-12s %4d %4d $ %1d %1d $ %4d %4d\n",
+      aLabel, aImage.rows, aImage.cols, aImage.depth(), aImage.channels(),
+      tCenterPixel.mRow, tCenterPixel.mRow);
    printf("\n");
 
    // Image wrapper.
    ImageWrapper tImage(aImage);
    
+   // Print header.
    printf("     $ ");
    for (int iColX = -tB; iColX <= tB; iColX++)
    {
       printf(" %8d", tCenterPixel.mCol + iColX);
    }
    printf("\n");
+   printf("     $\n");
 
    // Loop through all of the rows and columns of the pulse.
    for (int iRowY = -tB; iRowY <= tB; iRowY++)
@@ -74,8 +77,50 @@ void showImageTable(
       }
       printf("\n");
    }
+}
 
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+// Show image info.
 
+void showImageTableByte(
+   const char*   aLabel,   // Input
+   cv::Mat&      aImage)   // Input
+{
+   // Region of interest variables.
+   RCIndex tCenterPixel = gImageParms.mRoiPixel;
+   int tB = gImageParms.mRoiB;
+
+   printf("\n");
+   printf("********************************************* %-12s %4d %4d $ %1d %1d $ %4d %4d\n",
+      aLabel, aImage.rows, aImage.cols, aImage.depth(), aImage.channels(),
+      tCenterPixel.mRow, tCenterPixel.mRow);
+   printf("\n");
+
+   // Image wrapper.
+   ImageWrapper tImage(aImage);
+
+   // Print header.
+   printf("     $ ");
+   for (int iColX = -tB; iColX <= tB; iColX++)
+   {
+      printf(" %8d", tCenterPixel.mCol + iColX);
+   }
+   printf("\n");
+   printf("     $\n");
+
+   // Loop through all of the rows and columns of the pulse.
+   for (int iRowY = -tB; iRowY <= tB; iRowY++)
+   {
+      printf("%4d $ ", tCenterPixel.mRow + iRowY);
+      for (int iColX = -tB; iColX <= tB; iColX++)
+      {
+         RCIndex tPixel(tCenterPixel.mRow + iRowY, tCenterPixel.mCol + iColX);
+         printf(" %8d", (int)tImage.at(tPixel));
+      }
+      printf("\n");
+   }
 }
 
 //******************************************************************************

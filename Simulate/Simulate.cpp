@@ -82,12 +82,37 @@ void Simulate::doRun2()
 //******************************************************************************
 // This runs a test.
 
+void Simulate::doRun3()
+{
+   Prn::print(Prn::View01, "RUN3********************************************************************");
+   Prn::print(Prn::View01, "RUN3********************************************************************");
+   Prn::print(Prn::View01, "RUN3********************************************************************");
+
+   // Generate simulated image.
+   SV::SimImageGenerator tGenerator(&SV::gSimParms.mImageGenParms);
+   tGenerator.doGenerateImage(mInputImage);
+   SV::showImageInfo("InputImage", mInputImage);
+
+   // Filter simulated image.
+   SV::ImageFilter tFilter(&SV::gImageParms.mFilterParms);
+   tFilter.doFilterImage(mInputImage, mOutputImage);
+   SV::showImageInfo("OutputImage", mOutputImage);
+
+}
+
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+// This runs a test.
+
 void Simulate::doShow(int aCode)
 {
    switch (aCode)
    {
-   case 1: SV::showImageTable("InputImage", mInputImage); break;
-   case 2: SV::showImageTable("OutputImage", mOutputImage); break;
+   case 1: SV::showImageTableFloat("InputImage", mInputImage); break;
+   case 2: SV::showImageTableFloat("OutputImage", mOutputImage); break;
+   case 3: SV::showImageTableByte("InputImage", mInputImage); break;
+   case 4: SV::showImageTableByte("OutputImage", mOutputImage); break;
    }
 }
 
