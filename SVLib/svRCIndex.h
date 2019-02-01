@@ -118,9 +118,13 @@ public:
    //***************************************************************************
    // Methods.
 
+   // Constructor.
    RCIndexLoop();
    RCIndexLoop(int aRows,int aCols);
    RCIndexLoop(RCSize aSize);
+
+   // Return the current row and column.
+   RCIndex operator()();
 
    //***************************************************************************
    //***************************************************************************
@@ -130,9 +134,6 @@ public:
    // Advance the loop. Return true if the loop is not finished.
    bool advance();
    bool loop();
-
-   // Return the current row and column.
-   RCIndex operator()();
 
    // These are used by for loops. See the examples at the end of the file.
    void first();
@@ -174,6 +175,7 @@ public:
    //***************************************************************************
    // Members:
 
+   bool mFirst;
    short int mRow;
    short int mCol;
    short int mLoop;
@@ -187,6 +189,9 @@ public:
    // Constructor.
    RCDitherLoop1(int aLoop,int aDelta);
 
+   // Return the current row and column.
+   RCIndex operator()();
+
    //***************************************************************************
    //***************************************************************************
    //***************************************************************************
@@ -194,9 +199,12 @@ public:
 
    // Advance the loop. Return true if the loop is not finished.
    bool advance();
+   bool loop();
 
-   // Return the current row and column.
-   RCIndex operator()();
+   // These are used by for loops. See the examples at the end of the file.
+   void first();
+   bool test();
+   void next();
 };
 
 //******************************************************************************
@@ -226,6 +234,7 @@ public:
    //***************************************************************************
    // Members:
 
+   bool mFirst;
    short int mRow;
    short int mCol;
    short int mLoop;
@@ -240,6 +249,9 @@ public:
    // Constructor.
    RCDitherLoop2(int aLoop,int aDelta);
 
+   // Return the current row and column.
+   RCIndex operator()();
+
    //***************************************************************************
    //***************************************************************************
    //***************************************************************************
@@ -247,9 +259,12 @@ public:
 
    // Advance the loop. Return true if the loop is not finished.
    bool advance();
+   bool loop();
 
-   // Return the current row and column.
-   RCIndex operator()();
+   // These are used by for loops. See the examples at the end of the file.
+   void first();
+   bool test();
+   void next();
 };
 
 //******************************************************************************

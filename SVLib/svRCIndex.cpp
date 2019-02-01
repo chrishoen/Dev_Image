@@ -157,15 +157,15 @@ RCIndexLoop::RCIndexLoop(RCSize aSize)
    mCols = aSize.mCols;
 }
 
+RCIndex RCIndexLoop::operator()()
+{
+   return RCIndex(mRow, mCol);
+}
+
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
 // Methods.
-
-RCIndex RCIndexLoop::operator()()
-{
-   return RCIndex(mRow,mCol);
-}
 
 void RCIndexLoop::first()
 {
@@ -237,15 +237,7 @@ bool RCIndexLoop::loop()
       return true;
    }
 
-   if (++mCol == mCols)
-   {
-      mCol = 0;
-      if (++mRow == mRows)
-      {
-         return false;
-      }
-   }
-   return true;
+   return advance();
 }
 
 //******************************************************************************
@@ -265,10 +257,16 @@ bool RCIndexLoop::loop()
 
 RCDitherLoop1::RCDitherLoop1(int aLoop,int aDelta)
 {
+   mFirst = true;
    mRow = -aLoop*aDelta;
    mCol = -aLoop*aDelta;
    mLoop = aLoop;
    mDelta = aDelta;
+}
+
+RCIndex RCDitherLoop1::operator()()
+{
+   return RCIndex(mRow, mCol);
 }
 
 //******************************************************************************
@@ -291,9 +289,39 @@ bool RCDitherLoop1::advance()
    return mRow <= mLoop*mDelta;
 }
 
-RCIndex RCDitherLoop1::operator()()
+bool RCDitherLoop1::loop()
 {
-   return RCIndex(mRow, mCol);
+   if (mFirst)
+   {
+      mFirst = false;
+      return true;
+   }
+
+   return advance();
+}
+
+void RCDitherLoop1::first()
+{
+   mRow = -mLoop * mDelta;
+   mCol = -mLoop * mDelta;
+}
+
+bool RCDitherLoop1::test()
+{
+   return mRow <= mLoop * mDelta;
+}
+
+void RCDitherLoop1::next()
+{
+   if (mCol != mLoop * mDelta)
+   {
+      mCol += mDelta;
+   }
+   else
+   {
+      mCol = -mLoop * mDelta;
+      mRow += mDelta;
+   }
 }
 
 //******************************************************************************
@@ -313,11 +341,17 @@ RCIndex RCDitherLoop1::operator()()
 
 RCDitherLoop2::RCDitherLoop2(int aLoop,int aDelta)
 {
+   mFirst = true;
    mRow = -aLoop*aDelta;
    mCol = -aLoop*aDelta;
    mLoop = aLoop;
    mDelta = aDelta;
    mMoveRight = true;
+}
+
+RCIndex RCDitherLoop2::operator()()
+{
+   return RCIndex(mRow, mCol);
 }
 
 //******************************************************************************
@@ -355,9 +389,54 @@ bool RCDitherLoop2::advance()
    return mRow <= mLoop*mDelta;
 }
 
-RCIndex RCDitherLoop2::operator()()
+bool RCDitherLoop2::loop()
 {
-   return RCIndex(mRow, mCol);
+   if (mFirst)
+   {
+      mFirst = false;
+      return true;
+   }
+
+   return advance();
+}
+
+void RCDitherLoop2::first()
+{
+   mRow = -mLoop * mDelta;
+   mCol = -mLoop * mDelta;
+}
+
+bool RCDitherLoop2::test()
+{
+   return mRow <= mLoop * mDelta;
+}
+
+void RCDitherLoop2::next()
+{
+   if (mMoveRight)
+   {
+      if (mCol != mLoop * mDelta)
+      {
+         mCol += mDelta;
+      }
+      else
+      {
+         mMoveRight = false;
+         mRow += mDelta;
+      }
+   }
+   else
+   {
+      if (mCol != -mLoop * mDelta)
+      {
+         mCol -= mDelta;
+      }
+      else
+      {
+         mMoveRight = true;
+         mRow += mDelta;
+      }
+   }
 }
 
 //******************************************************************************

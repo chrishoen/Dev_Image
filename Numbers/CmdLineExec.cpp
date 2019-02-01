@@ -208,6 +208,14 @@ void CmdLineExec::executeGo12(Ris::CmdLineCmd* aCmd)
 
 void CmdLineExec::executeGo13(Ris::CmdLineCmd* aCmd)
 {
+   aCmd->setArgDefault(1, 1);
+   aCmd->setArgDefault(2, 1);
+
+   SV::RCDitherLoop1 tDitherLoop(aCmd->argInt(1), aCmd->argInt(2));
+   while (tDitherLoop.loop())
+   {
+      Prn::print(0, "DitherLoop1 %3d %3d", tDitherLoop.mRow, tDitherLoop.mCol);
+   }
 }
 
 //******************************************************************************
@@ -216,6 +224,14 @@ void CmdLineExec::executeGo13(Ris::CmdLineCmd* aCmd)
 
 void CmdLineExec::executeGo14(Ris::CmdLineCmd* aCmd)
 {
+   aCmd->setArgDefault(1, 1);
+   aCmd->setArgDefault(2, 1);
+
+   SV::RCDitherLoop2 tDitherLoop(aCmd->argInt(1), aCmd->argInt(2));
+   while (tDitherLoop.loop())
+   {
+      Prn::print(0, "DitherLoop2 %3d %3d", tDitherLoop.mRow, tDitherLoop.mCol);
+   }
 }
 
 //******************************************************************************
@@ -227,15 +243,13 @@ void CmdLineExec::executeGo14(Ris::CmdLineCmd* aCmd)
 
 void CmdLineExec::executeGo21(Ris::CmdLineCmd* aCmd)
 {
-   aCmd->setArgDefault(1,3);
-   aCmd->setArgDefault(2,4);
+   aCmd->setArgDefault(1, 1);
+   aCmd->setArgDefault(2, 1);
 
-   SV::RCSize tSize(aCmd->argInt(1),aCmd->argInt(2));
-
-   SV::RCIndexLoop tIndex(tSize);
-   for (; tIndex.test(); tIndex.next())
+   SV::RCDitherLoop1 tDitherLoop(aCmd->argInt(1), aCmd->argInt(2));
+   for (tDitherLoop.first(); tDitherLoop.test(); tDitherLoop.next())
    {
-      printf("%3d %3d\n",tIndex.mRow,tIndex.mCol);
+      Prn::print(0, "DitherLoop1 %3d %3d", tDitherLoop.mRow, tDitherLoop.mCol);
    }
 }
 
@@ -245,19 +259,13 @@ void CmdLineExec::executeGo21(Ris::CmdLineCmd* aCmd)
 
 void CmdLineExec::executeGo22(Ris::CmdLineCmd* aCmd)
 {
-   aCmd->setArgDefault(1,3);
-   aCmd->setArgDefault(2,4);
+   aCmd->setArgDefault(1, 1);
+   aCmd->setArgDefault(2, 1);
 
-   SV::RCSize tSize(aCmd->argInt(1),aCmd->argInt(2));
-
-   SV::RCIndexLoop tIndex(tSize);
-   for (; tIndex.testRow(); tIndex.nextRow())
+   SV::RCDitherLoop2 tDitherLoop(aCmd->argInt(1), aCmd->argInt(2));
+   for (tDitherLoop.first(); tDitherLoop.test(); tDitherLoop.next())
    {
-      for (; tIndex.testCol(); tIndex.nextCol())
-      {
-         printf("%3d %3d .", tIndex.mRow, tIndex.mCol);
-      }
-      printf("\n");
+      Prn::print(0, "DitherLoop2 %3d %3d", tDitherLoop.mRow, tDitherLoop.mCol);
    }
 }
 
