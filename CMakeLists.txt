@@ -8,15 +8,14 @@ project ("Dev_Image")
 my_init_variables()
 my_init_import_variables()
 
-add_subdirectory ("Numbers")
-add_subdirectory ("SVLib")
-return()
-
 add_subdirectory ("DisplayLib")
 add_subdirectory ("Simulate")
 add_subdirectory ("SVLib")
 return()
 
+add_subdirectory ("Numbers")
+add_subdirectory ("SVLib")
+return()
 
 add_subdirectory ("CommonLib")
 add_subdirectory ("DisplayLib")

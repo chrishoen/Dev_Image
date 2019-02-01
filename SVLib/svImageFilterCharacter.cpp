@@ -58,7 +58,8 @@ void ImageFilterCharacter::doFilterImage(
    ImageWrapper tOutputImage(aOutputImage);
 
    // Loop through all of the pixels of the input image.
-   for (SV::RCIndexLoop tImageLoop(tInputImage.rcSize()); tImageLoop.test(); tImageLoop.next())
+   SV::RCIndexLoop tImageLoop(tInputImage.rcSize());
+   do
    {
       // Count the number of neighbors that are occupied.
       int tNeighborSum = 0;
@@ -88,6 +89,7 @@ void ImageFilterCharacter::doFilterImage(
                }
             }
          }
+      // Advance the neighborhood loop.
       } while (tNeighborDither.advance());
 
       // Set the output pixel value. 
@@ -99,20 +101,26 @@ void ImageFilterCharacter::doFilterImage(
       }
       if (mP->mCharacterCode == 1)
       {
+         if (tInputValue == 255 && tNeighborSum == 8)
+         {
+            // Set the output pixel value. 
+            tOutputValue = 3;
+         }
          if (tInputValue == 255 && tNeighborSum != 8)
          {
-            // Set the output pixel value to the sum. 
-            tOutputValue = 1;
+            // Set the output pixel value. 
+            tOutputValue = 2;
          }
          if (tInputValue == 0 && tNeighborSum != 0)
          {
-            // Set the output pixel value to the sum. 
-            tOutputValue = 2;
+            // Set the output pixel value. 
+            tOutputValue = 1;
          }
       }
       // Set the output pixel value. 
       tOutputImage.at(tImageLoop()) = tOutputValue;
-   }
+   // Advance the image pixel loop.
+   } while (tImageLoop.advance());
 }
 
 //******************************************************************************
