@@ -63,7 +63,7 @@ public:
 
    // Filter types.
    static const int cFilterGaussBlur = 1;
-   static const int cFilterSquare    = 2;
+   static const int cFilterCharacter    = 2;
 
    //***************************************************************************
    //***************************************************************************
@@ -101,7 +101,7 @@ public:
    char* asStringFilterType ();
 
    bool isGaussBlur() { return mFilterType == cFilterGaussBlur; }
-   bool isSquare() { return mFilterType == cFilterSquare; }
+   bool isCharacter() { return mFilterType == cFilterCharacter; }
 };
 
 //******************************************************************************

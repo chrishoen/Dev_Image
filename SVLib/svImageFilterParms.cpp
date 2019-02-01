@@ -63,7 +63,7 @@ void ImageFilterParms::execute(Ris::CmdLineCmd* aCmd)
    {
       if (aCmd->isArgString(1, asStringFilterType(cNone)))              mFilterType = cNone;
       if (aCmd->isArgString(1, asStringFilterType(cFilterGaussBlur)))   mFilterType = cFilterGaussBlur;
-      if (aCmd->isArgString(1, asStringFilterType(cFilterSquare)))      mFilterType = cFilterSquare;
+      if (aCmd->isArgString(1, asStringFilterType(cFilterCharacter)))   mFilterType = cFilterCharacter;
    }
 
    if (aCmd->isCmd("GaussBlurCode"))       mGaussBlurCode = aCmd->argInt(1);
@@ -80,7 +80,7 @@ char* ImageFilterParms::asStringFilterType(int aX)
    {
    case cNone                : return "None";
    case cFilterGaussBlur     : return "GaussBlur";
-   case cFilterSquare        : return "Square";
+   case cFilterCharacter     : return "Character";
    default : return "UNKNOWN";
    }
 }
