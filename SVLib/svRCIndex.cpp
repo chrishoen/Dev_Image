@@ -500,15 +500,32 @@ void RCDitherLoop2::next()
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
-// Infrastrucure.
+// Constructor.
 
 RCCircuitLoop::RCCircuitLoop(int aDelta)
 {
    mFirst = true;
    mSide = 0;
-   mRow = -aDelta;
-   mCol = -aDelta;
    mDelta = aDelta;
+   mRowA = -aDelta;
+   mColA = -aDelta;
+   mRowC = 0;
+   mColC = 0;
+   mRow = mRowA + mRowC;
+   mCol = mColA + mColC;
+}
+
+RCCircuitLoop::RCCircuitLoop(RCIndex aCenter,int aDelta)
+{
+   mFirst = true;
+   mSide = 0;
+   mDelta = aDelta;
+   mRowA = -aDelta;
+   mColA = -aDelta;
+   mRowC = aCenter.mRow;
+   mColC = aCenter.mCol;
+   mRow = mRowA + mRowC;
+   mCol = mColA + mColC;
 }
 
 RCIndex RCCircuitLoop::operator()()
@@ -525,57 +542,65 @@ bool RCCircuitLoop::advance()
 {
    if (mSide == 0)
    {
-      if (mCol < mDelta)
+      if (mColA < mDelta)
       {
-         mCol++;
+         mColA++;
       }
       else
       {
          mSide = 1;
-         mRow++;
+         mRowA++;
       }
+      mRow = mRowA + mRowC;
+      mCol = mColA + mColC;
       return true;
    }
 
    if (mSide == 1)
    {
-      if (mRow < mDelta)
+      if (mRowA < mDelta)
       {
-         mRow++;
+         mRowA++;
       }
       else
       {
          mSide = 2;
-         mCol--;
+         mColA--;
       }
+      mRow = mRowA + mRowC;
+      mCol = mColA + mColC;
       return true;
    }
 
    if (mSide == 2)
    {
-      if (mCol > -mDelta)
+      if (mColA > -mDelta)
       {
-         mCol--;
+         mColA--;
       }
       else
       {
          mSide = 3;
-         mRow--;
+         mRowA--;
       }
+      mRow = mRowA + mRowC;
+      mCol = mColA + mColC;
       return true;
    }
 
    if (mSide == 3)
    {
-      if (mRow > -mDelta + 1)
+      if (mRowA > -mDelta + 1)
       {
-         mRow--;
+         mRowA--;
       }
       else
       {
          mSide = 4;
          return false;
       }
+      mRow = mRowA + mRowC;
+      mCol = mColA + mColC;
       return true;
    }
    return false;
@@ -594,8 +619,10 @@ bool RCCircuitLoop::loop()
 
 void RCCircuitLoop::first()
 {
-   mRow = -mDelta;
-   mCol = -mDelta;
+   mRowA = -mDelta;
+   mColA = -mDelta;
+   mRow = mRowA + mRowC;
+   mCol = mColA + mColC;
 }
 
 bool RCCircuitLoop::test()

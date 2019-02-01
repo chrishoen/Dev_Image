@@ -300,9 +300,13 @@ public:
 
    bool mFirst;
    short int mSide;
+   short int mDelta;
    short int mRow;
    short int mCol;
-   short int mDelta;
+   short int mRowA;
+   short int mColA;
+   short int mRowC;
+   short int mColC;
 
    //***************************************************************************
    //***************************************************************************
@@ -311,6 +315,7 @@ public:
 
    // Constructor.
    RCCircuitLoop(int aDelta);
+   RCCircuitLoop(RCIndex aCenter,int aDelta);
 
    // Return the current row and column.
    RCIndex operator()();
