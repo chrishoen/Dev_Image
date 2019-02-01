@@ -349,7 +349,7 @@ void CmdLineExec::executeGo32(Ris::CmdLineCmd* aCmd)
    SV::RCCircuitLoop tCircuitLoop(aCmd->argInt(1));
    while (tCircuitLoop.loop())
    {
-      Prn::print(0, "CircuitLoop %3d %3d %3d", tCount++, tCircuitLoop.mRow, tCircuitLoop.mCol);
+      Prn::print(0, "CircuitLoop %3d %3d $$ %3d %3d", tCount++, tCircuitLoop.mSide, tCircuitLoop.mRow, tCircuitLoop.mCol);
    }
 }
 
@@ -365,7 +365,7 @@ void CmdLineExec::executeGo33(Ris::CmdLineCmd* aCmd)
    SV::RCCircuitLoop tCircuitLoop(aCmd->argInt(1));
    for (tCircuitLoop.first(); tCircuitLoop.test(); tCircuitLoop.next())
    {
-      Prn::print(0, "CircuitLoop %3d %3d %3d", tCount++, tCircuitLoop.mRow, tCircuitLoop.mCol);
+      Prn::print(0, "CircuitLoop %3d %3d $$ %3d %3d", tCount++, tCircuitLoop.mSide, tCircuitLoop.mRow, tCircuitLoop.mCol);
    }
 }
 
