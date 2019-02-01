@@ -57,21 +57,38 @@ void ImageFilterCharacter::doFilterImage(
    ImageWrapper tInputImage(aInputImage);
    ImageWrapper tOutputImage(aOutputImage);
 
-
-   // Loop through all of the rows and columns of the input image.
-   for (SV::RCIndexLoop tIndex(tInputImage.rcSize()); tIndex.test(); tIndex.next())
+   // Loop through all of the pixels of the input image.
+   for (SV::RCIndexLoop tImageLoop(tInputImage.rcSize()); tImageLoop.test(); tImageLoop.next())
    {
-      // Get the pixel value of the input image at the index.
-      uchar tValue = tInputImage.at(tIndex());
+      // Count the number of neighbors that are occupied.
+      int tNeighborSum = 0;
+      // Dither a neighborhood around each image pixel.
+      SV::RCDitherLoop1 tNeighborDither(1, 1);
+      do
+      {
+         // Test for not the center of the neighborhood
+         if (tNeighborDither() != RCIndex(0, 0))
+         {
+            // Get the neighbor pixel.
+            RCIndex tNeighborPixel = tImageLoop() + tNeighborDither();
 
-      if (tValue == 255)
-      {
-         tOutputImage.at(tIndex()) = 7;
-      }
-      else
-      {
-         tOutputImage.at(tIndex()) = 2;
-      }
+            // Test if in bounds.
+            if (isImagePixelInBounds(tNeighborPixel))
+            {
+               // Get the neighbor pixel value.
+               uchar tNeighborValue = tInputImage.at(tNeighborPixel);
+
+               // Test for occupied.
+               if (tNeighborValue == 255)
+               {
+                  // Count the number of neighbors that are occupied.
+                  tNeighborSum++;
+               }
+            }
+         }
+      } while (tNeighborDither.advance());
+      // Set the output pixel value to the sum. 
+      tOutputImage.at(tImageLoop()) = tNeighborSum;
    }
 }
 

@@ -100,6 +100,29 @@ void RCIndex::execute(Ris::CmdLineCmd* aCmd)
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
+// Sum, difference
+
+// Add two indices.
+RCIndex operator+(RCIndex aLeft, RCIndex aRight)
+{
+   RCIndex tIndex;
+   tIndex.mRow = aLeft.mRow + aRight.mRow;
+   tIndex.mCol = aLeft.mCol + aRight.mCol;
+   return tIndex;
+}
+
+// Subtract two indices.
+RCIndex operator-(RCIndex aLeft, RCIndex aRight)
+{
+   RCIndex tIndex;
+   tIndex.mRow = aLeft.mRow - aRight.mRow;
+   tIndex.mCol = aLeft.mCol - aRight.mCol;
+   return tIndex;
+}
+
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
@@ -217,11 +240,6 @@ RCDitherLoop1::RCDitherLoop1(int aLoop,int aDelta)
 //******************************************************************************
 // Methods.
 
-RCIndex RCDitherLoop1::index()
-{
-   return RCIndex(mRow,mCol);
-}
-
 bool RCDitherLoop1::advance()
 {
    if (mCol != mLoop*mDelta)
@@ -235,6 +253,11 @@ bool RCDitherLoop1::advance()
    }
 
    return mRow <= mLoop*mDelta;
+}
+
+RCIndex RCDitherLoop1::operator()()
+{
+   return RCIndex(mRow, mCol);
 }
 
 //******************************************************************************
@@ -266,11 +289,6 @@ RCDitherLoop2::RCDitherLoop2(int aLoop,int aDelta)
 //******************************************************************************
 // Methods.
 
-RCIndex RCDitherLoop2::index()
-{
-   return RCIndex(mRow,mCol);
-}
-
 bool RCDitherLoop2::advance()
 {
    if (mMoveRight)
@@ -299,6 +317,11 @@ bool RCDitherLoop2::advance()
    }
 
    return mRow <= mLoop*mDelta;
+}
+
+RCIndex RCDitherLoop2::operator()()
+{
+   return RCIndex(mRow, mCol);
 }
 
 //******************************************************************************
