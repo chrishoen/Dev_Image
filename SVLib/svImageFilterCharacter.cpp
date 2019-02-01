@@ -65,28 +65,24 @@ void ImageFilterCharacter::doFilterImage(
       int tNeighborSum = 0;
       uchar tPixelCode = 0;
       uchar tInputValue = tInputImage.at(tImageLoop());
-      // Dither a neighborhood around each image pixel.
-      SV::RCDitherLoop1 tNeighborDither(1, 1);
-      while(tNeighborDither.loop())
+      // Traverse a neighborhood circuit centered at the image pixel.
+      SV::RCCircuitLoop tNeighborLoop(tImageLoop(), 1);
+      while(tNeighborLoop.loop())
       {
-         // Test for not the center of the neighborhood
-         if (tNeighborDither() != RCIndex(0, 0))
+         // Get the neighbor pixel.
+         RCIndex tNeighborPixel = tNeighborLoop();
+
+         // Test if it is in bounds.
+         if (isImagePixelInBounds(tNeighborPixel))
          {
-            // Get the neighbor pixel.
-            RCIndex tNeighborPixel = tImageLoop() + tNeighborDither();
+            // Get the neighbor pixel value.
+            uchar tNeighborValue = tInputImage.at(tNeighborPixel);
 
-            // Test if in bounds.
-            if (isImagePixelInBounds(tNeighborPixel))
+            // Test for occupied.
+            if (tNeighborValue == 255)
             {
-               // Get the neighbor pixel value.
-               uchar tNeighborValue = tInputImage.at(tNeighborPixel);
-
-               // Test for occupied.
-               if (tNeighborValue == 255)
-               {
-                  // Count the number of neighbors that are occupied.
-                  tNeighborSum++;
-               }
+               // Count the number of neighbors that are occupied.
+               tNeighborSum++;
             }
          }
       }
