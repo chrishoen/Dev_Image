@@ -126,6 +126,9 @@ public:
    //***************************************************************************
    // Methods.
 
+   // Advance the loop. Return true if the loop is not finished.
+   bool advance();
+
    // Return the current row and column.
    RCIndex operator()();
 
@@ -137,8 +140,6 @@ public:
    void nextRow();
    void nextCol();
    void next();
-
-   RCIndex advance();
 };
 
 //******************************************************************************

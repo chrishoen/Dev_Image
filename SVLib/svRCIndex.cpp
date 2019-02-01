@@ -199,17 +199,17 @@ void RCIndexLoop::next()
    }
 }
 
-RCIndex RCIndexLoop::advance()
+bool RCIndexLoop::advance()
 {
    if (++mCol == mCols)      
    {
       mCol = 0;
       if (++mRow == mRows)
       {
-         mRow = 0;
+         return false;
       }
    }
-   return RCIndex(mRow,mCol);
+   return true;
 }
 
 //******************************************************************************

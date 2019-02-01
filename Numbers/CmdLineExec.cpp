@@ -65,6 +65,11 @@ void CmdLineExec::executeGo1(Ris::CmdLineCmd* aCmd)
 
 void CmdLineExec::executeGo2(Ris::CmdLineCmd* aCmd)
 {
+   SV::RCIndexLoop tLoop(4, 4);
+   do
+   {
+      Prn::print(0, "Loop %3d %3d", tLoop.mRow, tLoop.mCol);
+   } while (tLoop.advance());
 }
 
 //******************************************************************************
