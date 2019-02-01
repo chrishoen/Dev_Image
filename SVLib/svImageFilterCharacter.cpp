@@ -59,7 +59,7 @@ void ImageFilterCharacter::doFilterImage(
 
    // Loop through all of the pixels of the input image.
    SV::RCIndexLoop tImageLoop(tInputImage.rcSize());
-   do
+   while(tImageLoop.loop())
    {
       // Count the number of neighbors that are occupied.
       int tNeighborSum = 0;
@@ -67,7 +67,7 @@ void ImageFilterCharacter::doFilterImage(
       uchar tInputValue = tInputImage.at(tImageLoop());
       // Dither a neighborhood around each image pixel.
       SV::RCDitherLoop1 tNeighborDither(1, 1);
-      do
+      while(tNeighborDither.loop())
       {
          // Test for not the center of the neighborhood
          if (tNeighborDither() != RCIndex(0, 0))
@@ -89,8 +89,7 @@ void ImageFilterCharacter::doFilterImage(
                }
             }
          }
-      // Advance the neighborhood loop.
-      } while (tNeighborDither.advance());
+      }
 
       // Set the output pixel value. 
       uchar tOutputValue = 0;
@@ -119,8 +118,7 @@ void ImageFilterCharacter::doFilterImage(
       }
       // Set the output pixel value. 
       tOutputImage.at(tImageLoop()) = tOutputValue;
-   // Advance the image pixel loop.
-   } while (tImageLoop.advance());
+   }
 }
 
 //******************************************************************************
