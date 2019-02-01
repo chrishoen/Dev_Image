@@ -56,7 +56,12 @@ void CmdLineExec::execute(Ris::CmdLineCmd* aCmd)
 
 void CmdLineExec::executeGo1(Ris::CmdLineCmd* aCmd)
 {
+   aCmd->setArgDefault(1, true);
+   aCmd->setArgDefault(2, true);
+
    SV::RCIndexLoop tLoop(4, 4);
+   tLoop.mRowForward = aCmd->argBool(1);
+   tLoop.mColForward = aCmd->argBool(2);
    for (tLoop.first(); tLoop.test(); tLoop.next())
    {
       Prn::print(0, "Loop %3d %3d", tLoop.mRow, tLoop.mCol);
@@ -69,7 +74,10 @@ void CmdLineExec::executeGo1(Ris::CmdLineCmd* aCmd)
 
 void CmdLineExec::executeGo2(Ris::CmdLineCmd* aCmd)
 {
+   aCmd->setArgDefault(1, true);
+
    SV::RCIndexLoop tLoop(4, 4);
+   tLoop.mRowForward = aCmd->argBool(1);
    for (tLoop.firstRow(); tLoop.testRow(); tLoop.nextRow())
    {
       Prn::print(0, "Loop %3d %3d", tLoop.mRow, tLoop.mCol);
@@ -82,7 +90,10 @@ void CmdLineExec::executeGo2(Ris::CmdLineCmd* aCmd)
 
 void CmdLineExec::executeGo3(Ris::CmdLineCmd* aCmd)
 {
+   aCmd->setArgDefault(1, true);
+
    SV::RCIndexLoop tLoop(4, 4);
+   tLoop.mColForward = aCmd->argBool(1);
    for (tLoop.firstCol(); tLoop.testCol(); tLoop.nextCol())
    {
       Prn::print(0, "Loop %3d %3d", tLoop.mRow, tLoop.mCol);
@@ -95,7 +106,12 @@ void CmdLineExec::executeGo3(Ris::CmdLineCmd* aCmd)
 
 void CmdLineExec::executeGo4(Ris::CmdLineCmd* aCmd)
 {
+   aCmd->setArgDefault(1, true);
+   aCmd->setArgDefault(2, true);
+
    SV::RCIndexLoop tLoop(4, 4);
+   tLoop.mRowForward = aCmd->argBool(1);
+   tLoop.mColForward = aCmd->argBool(2);
    for (tLoop.firstRow(); tLoop.testRow(); tLoop.nextRow())
    {
       for (tLoop.firstCol(); tLoop.testCol(); tLoop.nextCol())
@@ -111,6 +127,19 @@ void CmdLineExec::executeGo4(Ris::CmdLineCmd* aCmd)
 
 void CmdLineExec::executeGo5(Ris::CmdLineCmd* aCmd)
 {
+   aCmd->setArgDefault(1, true);
+   aCmd->setArgDefault(2, true);
+
+   SV::RCIndexLoop tLoop(4, 4);
+   tLoop.mColForward = aCmd->argBool(1);
+   tLoop.mRowForward = aCmd->argBool(2);
+   for (tLoop.firstCol(); tLoop.testCol(); tLoop.nextCol())
+   {
+      for (tLoop.firstRow(); tLoop.testRow(); tLoop.nextRow())
+      {
+         Prn::print(0, "Loop %3d %3d", tLoop.mRow, tLoop.mCol);
+      }
+   }
 }
 
 //******************************************************************************

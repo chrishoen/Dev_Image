@@ -133,6 +133,8 @@ RCIndex operator-(RCIndex aLeft, RCIndex aRight)
 RCIndexLoop::RCIndexLoop()
 {
    mFirst = true;
+   mRowForward = true;
+   mColForward = true;
    mRow  = 0;
    mCol  = 0;
    mRows = 0;
@@ -142,6 +144,8 @@ RCIndexLoop::RCIndexLoop()
 RCIndexLoop::RCIndexLoop(int aRows,int aCols)
 {
    mFirst = true;
+   mRowForward = true;
+   mColForward = true;
    mRow = 0;
    mCol = 0;
    mRows = aRows;
@@ -151,6 +155,8 @@ RCIndexLoop::RCIndexLoop(int aRows,int aCols)
 RCIndexLoop::RCIndexLoop(RCSize aSize)
 {
    mFirst = true;
+   mRowForward = true;
+   mColForward = true;
    mRow = 0;
    mCol = 0;
    mRows = aSize.mRows;
@@ -169,50 +175,92 @@ RCIndex RCIndexLoop::operator()()
 
 void RCIndexLoop::first()
 {
-   mRow = 0;
-   mCol = 0;
+   firstRow();
+   firstCol();
 }
 void RCIndexLoop::firstRow()
 {
-   mRow = 0;
+   if (mRowForward)
+   {
+      mRow = 0;
+   }
+   else
+   {
+      mRow = mRows - 1;
+   }
 }
 void RCIndexLoop::firstCol()
 {
-   mCol = 0;
+   if (mColForward)
+   {
+      mCol = 0;
+   }
+   else
+   {
+      mCol = mCols - 1;
+   }
 }
 
 bool RCIndexLoop::test()
 {
-   return (mRow < mRows && mCol < mCols);
+   return testRow() && testCol();
 }
 
 bool RCIndexLoop::testRow()
 {
-   mCol = 0;
-   return (mRow < mRows);
+   if (mRowForward)
+   {
+      return (mRow < mRows);
+   }
+   else
+   {
+      return (mRow >= 0);
+   }
 }
 
 bool RCIndexLoop::testCol()
 {
-   return (mCol < mCols);
+   if (mColForward)
+   {
+      return (mCol < mCols);
+   }
+   else
+   {
+      return (mCol >= 0);
+   }
 }
 
 void RCIndexLoop::nextRow()
 {
-   mRow++;
+   if (mRowForward)
+   {
+      mRow++;
+   }
+   else
+   {
+      mRow--;
+   }
 }
 
 void RCIndexLoop::nextCol()
 {
-   mCol++;
+   if (mColForward)
+   {
+      mCol++;
+   }
+   else
+   {
+      mCol--;
+   }
 }
 
 void RCIndexLoop::next()
 {
-   if (++mCol == mCols)      
+   nextCol();
+   if (!testCol())
    {
-      mCol = 0;
-      mRow++;
+      firstCol();
+      nextRow();
    }
 }
 

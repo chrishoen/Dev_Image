@@ -108,6 +108,8 @@ public:
    // Members:
 
    bool mFirst;
+   bool mRowForward;
+   bool mColForward;
    short int mRow;
    short int mCol;
    short int mRows;
