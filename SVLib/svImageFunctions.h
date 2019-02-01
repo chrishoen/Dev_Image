@@ -22,7 +22,16 @@ namespace SV
 
 // Show image info.
 void showImageInfo(
-   int           aPF,      // Input
+   const char*   aLabel,   // Input
+   cv::Mat&      aImage);  // Input
+
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+// Show functions.
+
+// Show image info.
+void showImageTable(
    const char*   aLabel,   // Input
    cv::Mat&      aImage);  // Input
 

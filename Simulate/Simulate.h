@@ -26,9 +26,7 @@ public:
    // Members:
 
    cv::Mat mInputImage;
-   cv::Mat mInputRoi;
    cv::Mat mOutputImage;
-   cv::Mat mOutputRoi;
 
    //***************************************************************************
    //***************************************************************************
@@ -46,6 +44,9 @@ public:
    // These run sequences of operations.
    void doRun1();
    void doRun2();
+
+   // Show.
+   void doShow(int aCode);
 };
 
 //******************************************************************************

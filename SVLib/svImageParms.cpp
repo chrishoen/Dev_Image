@@ -30,9 +30,7 @@ void ImageParms::reset()
    BaseClass::setFileName_RelAlphaFiles("Image/SV_Image_Parms.txt");
 
    mInputImageFileName[0]=0;
-   mInputRoiFileName[0] = 0;
    mOutputImageFileName[0] = 0;
-   mOutputRoiFileName[0] = 0;
 
    mFilterParms.reset();
 
@@ -66,9 +64,7 @@ void ImageParms::show()
 
    printf("\n");
    printf("InputImageFileName     %-12s\n", mInputImageFileName);
-   printf("InputRoiFileName       %-12s\n", mInputRoiFileName);
    printf("OutputImageFileName    %-12s\n", mOutputImageFileName);
-   printf("OutputRoiFileName      %-12s\n", mOutputRoiFileName);
 
    printf("\n");
    mFilterParms.show();
@@ -89,9 +85,7 @@ void ImageParms::execute(Ris::CmdLineCmd* aCmd)
    if (aCmd->isCmd("RoiB"))                mRoiB = aCmd->argInt(1);
 
    if (aCmd->isCmd("InputImageFileName"))  aCmd->copyArgString(1, mInputImageFileName, cMaxStringSize);
-   if (aCmd->isCmd("InputRoiFileName"))    aCmd->copyArgString(1, mInputRoiFileName, cMaxStringSize);
    if (aCmd->isCmd("OutputImageFileName")) aCmd->copyArgString(1, mOutputImageFileName, cMaxStringSize);
-   if (aCmd->isCmd("OutputRoiFileName"))   aCmd->copyArgString(1, mOutputRoiFileName, cMaxStringSize);
 
    if (aCmd->isCmd("FilterParms"))         readSection(aCmd->argString(1), &mFilterParms);
 }

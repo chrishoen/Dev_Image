@@ -39,23 +39,16 @@ void Simulate::doRun1()
    // Generate simulated image.
    SV::SimImageGenerator tGenerator(&SV::gSimParms.mImageGenParms);
    tGenerator.doGenerateImage(mInputImage);
-   SV::showImageInfo(0,"InputImage", mInputImage);
+   SV::showImageInfo("InputImage", mInputImage);
 
    // Convert simulated image to target image and display.
    cv::Mat tTargetImage;
    SV::convertImageToTarget(mInputImage, tTargetImage);
-   SV::showImageInfo(0, "TargetImage", tTargetImage);
+   SV::showImageInfo("TargetImage", tTargetImage);
    Display::showImage(tTargetImage);
 
    // Save simulated image.
    SV::writeImageToFile(mInputImage, SV::gImageParms.mInputImageFileName);
-
-   // Extract region of interest from simulated image.
-   SV::extractImageRoi(mInputImage, mInputRoi);
-   SV::showImageInfo(0, "InputRoi", mInputRoi);
-
-   // Save roi image.
-   SV::writeImageToFile(mInputRoi, SV::gImageParms.mInputRoiFileName);
 }
 
 //******************************************************************************
@@ -72,23 +65,30 @@ void Simulate::doRun2()
    // Filter simulated image.
    SV::ImageFilter tFilter(&SV::gImageParms.mFilterParms);
    tFilter.doFilterImage(mInputImage,mOutputImage);
-   SV::showImageInfo(0, "OutputImage", mOutputImage);
+   SV::showImageInfo("OutputImage", mOutputImage);
 
    // Convert simulated image to target image and display.
    cv::Mat tTargetImage;
    SV::convertImageToTarget(mOutputImage, tTargetImage);
-   SV::showImageInfo(0, "TargetImage", tTargetImage);
+   SV::showImageInfo("TargetImage", tTargetImage);
    Display::showImage(tTargetImage);
 
    // Save simulated image.
    SV::writeImageToFile(mOutputImage, SV::gImageParms.mOutputImageFileName);
+}
 
-   // Extract region of interest from simulated image.
-   SV::extractImageRoi(mOutputImage, mOutputRoi);
-   SV::showImageInfo(0, "OutputRoi", mOutputRoi);
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+// This runs a test.
 
-   // Save roi image.
-   SV::writeImageToFile(mOutputRoi, SV::gImageParms.mOutputRoiFileName);
+void Simulate::doShow(int aCode)
+{
+   switch (aCode)
+   {
+   case 1: SV::showImageTable("InputImage", mInputImage); break;
+   case 2: SV::showImageTable("OutputImage", mOutputImage); break;
+   }
 }
 
 //******************************************************************************

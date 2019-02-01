@@ -35,6 +35,7 @@ void CmdLineExec::execute(Ris::CmdLineCmd* aCmd)
 {
    if (aCmd->isCmd("Run1"))      executeRun1(aCmd);
    if (aCmd->isCmd("Run2"))      executeRun2(aCmd);
+   if (aCmd->isCmd("Show"))      executeShow(aCmd);
    if (aCmd->isCmd("D0"))        executeDraw0(aCmd);
    if (aCmd->isCmd("GO1"))       executeGo1(aCmd);
    if (aCmd->isCmd("GO2"))       executeGo2(aCmd);
@@ -78,6 +79,17 @@ void CmdLineExec::executeRun2(Ris::CmdLineCmd* aCmd)
    SV::gSimParms.readSection("default");
 
    mSim.doRun2();
+}
+
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+
+void CmdLineExec::executeShow(Ris::CmdLineCmd* aCmd)
+{
+   aCmd->setArgDefault(1, 1);
+
+   mSim.doShow(aCmd->argInt(1));
 }
 
 //******************************************************************************

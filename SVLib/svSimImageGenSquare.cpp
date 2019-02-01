@@ -57,6 +57,10 @@ void SimImageGenSquare::doGenerateImage(
    int tLowerRightRow = tCenterRow + mP->mImageB;
    int tLowerRightCol = tCenterCol + mP->mImageB;
 
+   Prn::print(0, "Center     %4d %4d ", tCenterRow,     tCenterCol);
+   Prn::print(0, "UpperLeft  %4d %4d ", tUpperLeftRow,  tUpperLeftCol);
+   Prn::print(0, "LowerRight %4d %4d ", tLowerRightRow, tLowerRightCol);
+
    cv::Point tPoint1(tUpperLeftCol,  tUpperLeftRow);
    cv::Point tPoint2(tLowerRightCol, tLowerRightRow);
    int tRadius = mP->mImageB;
