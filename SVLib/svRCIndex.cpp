@@ -132,6 +132,7 @@ RCIndex operator-(RCIndex aLeft, RCIndex aRight)
 
 RCIndexLoop::RCIndexLoop()
 {
+   mFirst = true;
    mRow  = 0;
    mCol  = 0;
    mRows = 0;
@@ -140,6 +141,7 @@ RCIndexLoop::RCIndexLoop()
 
 RCIndexLoop::RCIndexLoop(int aRows,int aCols)
 {
+   mFirst = true;
    mRow = 0;
    mCol = 0;
    mRows = aRows;
@@ -148,6 +150,7 @@ RCIndexLoop::RCIndexLoop(int aRows,int aCols)
 
 RCIndexLoop::RCIndexLoop(RCSize aSize)
 {
+   mFirst = true;
    mRow = 0;
    mCol = 0;
    mRows = aSize.mRows;
@@ -162,6 +165,20 @@ RCIndexLoop::RCIndexLoop(RCSize aSize)
 RCIndex RCIndexLoop::operator()()
 {
    return RCIndex(mRow,mCol);
+}
+
+void RCIndexLoop::first()
+{
+   mRow = 0;
+   mCol = 0;
+}
+void RCIndexLoop::firstRow()
+{
+   mRow = 0;
+}
+void RCIndexLoop::firstCol()
+{
+   mCol = 0;
 }
 
 bool RCIndexLoop::test()
@@ -202,6 +219,25 @@ void RCIndexLoop::next()
 bool RCIndexLoop::advance()
 {
    if (++mCol == mCols)      
+   {
+      mCol = 0;
+      if (++mRow == mRows)
+      {
+         return false;
+      }
+   }
+   return true;
+}
+
+bool RCIndexLoop::loop()
+{
+   if (mFirst)
+   {
+      mFirst = false;
+      return true;
+   }
+
+   if (++mCol == mCols)
    {
       mCol = 0;
       if (++mRow == mRows)

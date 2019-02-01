@@ -107,6 +107,7 @@ public:
    //***************************************************************************
    // Members:
 
+   bool mFirst;
    short int mRow;
    short int mCol;
    short int mRows;
@@ -128,11 +129,16 @@ public:
 
    // Advance the loop. Return true if the loop is not finished.
    bool advance();
+   bool loop();
 
    // Return the current row and column.
    RCIndex operator()();
 
    // These are used by for loops. See the examples at the end of the file.
+   void first();
+   void firstRow();
+   void firstCol();
+
    bool test();
    bool testRow();
    bool testCol();
