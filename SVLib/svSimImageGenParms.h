@@ -81,6 +81,10 @@ public:
    // Sim generated image length parameter.
    int      mImageB;
 
+   // Region of interest parameters.
+   RCIndex mRoiPixel;
+   int     mRoiB;
+
    // Gaussian variables.
    double   mGaussianWidth;
    double   mGaussianAmplitude;
@@ -88,7 +92,7 @@ public:
    //***************************************************************************
    //***************************************************************************
    //***************************************************************************
-   // Infrastucture.
+   // Methods.
 
    // Constructor,
    typedef Ris::BaseCmdLineExec BaseClass;

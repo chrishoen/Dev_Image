@@ -13,6 +13,7 @@ Parameters class whose values are read from a command file.
 #include "svRCIndex.h"
 #include "svRCSize.h"
 #include "svImageFilterParms.h"
+#include "svSimParms.h"
 
 //******************************************************************************
 //******************************************************************************
@@ -66,7 +67,7 @@ public:
    //***************************************************************************
    // Parameter members.
 
-   // Center image point.
+   // Region of interest parameters.
    RCIndex mRoiPixel;
    int     mRoiB;
 
@@ -85,7 +86,7 @@ public:
    //***************************************************************************
    //***************************************************************************
    //***************************************************************************
-   // Infrastucture.
+   // Methods.
 
    // Constructor,
    typedef Ris::BaseCmdLineParms BaseClass;
@@ -101,6 +102,14 @@ public:
    // Simulate expanded member variables. This is called after the entire
    // section of the command file has been processed.
    void expand() override;
+
+   //***************************************************************************
+   //***************************************************************************
+   //***************************************************************************
+   // Methods.
+
+   // Override some variables with simulation parms variables.
+   void readOverrides(SimParms* aSimParms);
 };
 
 //******************************************************************************
@@ -108,7 +117,7 @@ public:
 //******************************************************************************
 // Global instance.
 
-#ifdef _SVSIMULATIONPARMS_CPP_
+#ifdef _SVIMAGEPARMS_CPP_
    ImageParms gImageParms;
 #else
    extern ImageParms gImageParms;

@@ -63,8 +63,11 @@ public:
    //***************************************************************************
    // Members.
 
+   // Display enable.
+   bool mDisplayEnable;
+
    // Display number, usually 1.
-   int mDisplay;
+   int mDisplayNum;
 
    // Size of the window.
    int mWindowWidth;

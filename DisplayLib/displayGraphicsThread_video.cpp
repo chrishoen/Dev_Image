@@ -83,12 +83,12 @@ void GraphicsThread::doVideoStart()
       //************************************************************************
       // Calculate variables.
 
-      if (mDisplay == -1)
+      if (mDisplayNum == -1)
       {
-         mDisplay = tNumVideoDisplays - 1;
+         mDisplayNum = tNumVideoDisplays - 1;
       }
 
-      int tRet = SDL_GetCurrentDisplayMode(mDisplay, &mDisplayMode);
+      int tRet = SDL_GetCurrentDisplayMode(mDisplayNum, &mDisplayMode);
       mWindowW = mDisplayMode.w;
       mWindowH = mDisplayMode.h;
 
@@ -130,7 +130,7 @@ void GraphicsThread::doVideoStart()
       }
 
       mWindow = SDL_CreateWindow("GraphicsThread",
-         SDL_WINDOWPOS_CENTERED_DISPLAY(mDisplay), SDL_WINDOWPOS_CENTERED_DISPLAY(mDisplay),
+         SDL_WINDOWPOS_CENTERED_DISPLAY(mDisplayNum), SDL_WINDOWPOS_CENTERED_DISPLAY(mDisplayNum),
          mWindowW, mWindowH, tWindowFlags);
       if (mWindow == 0) throw "SDL_CreateWindow";
 

@@ -85,7 +85,7 @@ public:
    //***************************************************************************
    //***************************************************************************
    //***************************************************************************
-   // Infrastucture.
+   // Methods.
 
    // Constructor,
    typedef Ris::BaseCmdLineParms BaseClass;
@@ -108,7 +108,7 @@ public:
 //******************************************************************************
 // Global instance.
 
-#ifdef _SVSIMULATIONPARMS_CPP_
+#ifdef _SVSIMPARMS_CPP_
    SimParms gSimParms;
 #else
    extern SimParms gSimParms;

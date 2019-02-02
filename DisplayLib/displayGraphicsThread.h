@@ -49,7 +49,7 @@ public:
    bool mValidFlag;
 
    // SDL window resources.
-   int              mDisplay;
+   int              mDisplayNum;
    SDL_DisplayMode  mDisplayMode;
    SDL_Window*      mWindow;
    SDL_Surface*     mSurface;

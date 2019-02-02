@@ -33,10 +33,11 @@ SimImageGenParms::SimImageGenParms()
 void SimImageGenParms::reset()
 {
    mImageType    = cNone;
-
    mImageSize = gSysParms.mImageSize;
-
    mImageB = 0;
+
+   mRoiPixel.reset();
+   mRoiB = 0;
 
    mGaussianWidth = 0.0;
    mGaussianAmplitude = 0.0;
@@ -55,6 +56,8 @@ void SimImageGenParms::show()
    printf("ImageType                %10s\n",        asStringImageType(mImageType));
    printf("ImageSize                %10d %10d\n",   mImageSize.mRows,mImageSize.mCols);
    printf("ImageB                   %10d\n", mImageB);
+   printf("RoiPixel                 %10d %10d\n", mRoiPixel.mRow, mRoiPixel.mCol);
+   printf("RoiB                     %10d\n", mRoiB);
    printf("GaussianWidth            %10.6f\n", mGaussianWidth);
    printf("GaussianAmplitude        %10.6f\n", mGaussianAmplitude);
    printf("SimImageGenParms*******************************************\n");
@@ -81,6 +84,8 @@ void SimImageGenParms::execute(Ris::CmdLineCmd* aCmd)
    }
 
    if (aCmd->isCmd("ImageB"))              mImageB = aCmd->argInt(1);
+   if (aCmd->isCmd("RoiPixel"))            mRoiPixel.execute(aCmd);
+   if (aCmd->isCmd("RoiB"))                mRoiB = aCmd->argInt(1);
    if (aCmd->isCmd("GaussianWidth"))       mGaussianWidth = aCmd->argDouble(1);
    if (aCmd->isCmd("GaussianAmplitude"))   mGaussianAmplitude = aCmd->argDouble(1);
 }

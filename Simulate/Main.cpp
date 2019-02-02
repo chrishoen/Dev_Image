@@ -6,9 +6,9 @@
 #include "risThreadsProcess.h"
 #include "CmdLineExec.h"
 
-//#define SDL_MAIN_HANDLED
 #include "SDL.h"
 
+#include "displayParms.h"
 #include "displayGraphicsThread.h"
 
 //******************************************************************************
@@ -29,8 +29,11 @@ int main(int argc,char** argv)
    //***************************************************************************
    // Launch program threads.
 
-   Display::gGraphicsThread = new Display::GraphicsThread;
-   Display::gGraphicsThread->launchThread();
+   if (Display::gParms.mDisplayEnable)
+   {
+      Display::gGraphicsThread = new Display::GraphicsThread;
+      Display::gGraphicsThread->launchThread();
+   }
 
    //***************************************************************************
    //***************************************************************************

@@ -27,6 +27,7 @@ namespace Display
 void showImage(
    cv::Mat&      aImage)   // Input
 {
+   if (Display::gGraphicsThread == 0) return;
    Display::gGraphicsThread->postDraw1(new cv::Mat(aImage));
 }
 

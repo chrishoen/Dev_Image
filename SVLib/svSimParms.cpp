@@ -4,7 +4,7 @@
 
 #include "stdafx.h"
 
-#define  _SVSIMULATIONPARMS_CPP_
+#define  _SVSIMPARMS_CPP_
 #include "svSimParms.h"
 
 //******************************************************************************

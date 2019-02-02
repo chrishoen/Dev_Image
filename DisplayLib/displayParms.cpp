@@ -34,7 +34,8 @@ void Parms::reset()
    BaseClass::reset();
    BaseClass::setFileName_RelAlphaFiles("Image/Display_Parms.txt");
 
-   mDisplay = 0;
+   mDisplayEnable = false;
+   mDisplayNum = 0;
 
    mWindowWidth = 0;
    mWindowHeight = 0;
@@ -66,7 +67,8 @@ void Parms::show()
    printf("Parms************************************************ %s\n", mTargetSection);
 
    printf("\n");
-   printf("Display               %-4d\n", mDisplay);
+   printf("DisplayEnable         %-4s\n", my_string_from_bool(mDisplayEnable));
+   printf("DisplayNum            %-4d\n", mDisplayNum);
 
    printf("\n");
    printf("WindowWidthHeight     %-4d %4d\n", mWindowWidth, mWindowHeight);
@@ -95,7 +97,8 @@ void Parms::execute(Ris::CmdLineCmd* aCmd)
 {
    if (!isTargetSection(aCmd)) return;
 
-   if (aCmd->isCmd("Display")) mDisplay = aCmd->argInt(1);
+   if (aCmd->isCmd("DisplayEnable")) mDisplayEnable = aCmd->argBool(1);
+   if (aCmd->isCmd("DisplayNum"))    mDisplayNum = aCmd->argInt(1);
 
    if (aCmd->isCmd("WindowWidthHeight"))
    {

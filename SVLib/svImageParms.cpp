@@ -4,7 +4,7 @@
 
 #include "stdafx.h"
 
-#define  _SVSIMULATIONPARMS_CPP_
+#define  _SVIMAGEPARMS_CPP_
 #include "svImageParms.h"
 
 //******************************************************************************
@@ -57,16 +57,10 @@ void ImageParms::show()
 {
    printf("\n");
    printf("ImageParms****************************************** %s\n", mTargetSection);
-
-   printf("\n");
    printf("RoiPixel               %10d %10d\n", mRoiPixel.mRow, mRoiPixel.mCol);
    printf("RoiB                   %10d\n", mRoiB);
-
-   printf("\n");
    printf("InputImageFileName     %-12s\n", mInputImageFileName);
    printf("OutputImageFileName    %-12s\n", mOutputImageFileName);
-
-   printf("\n");
    mFilterParms.show();
 }
 
@@ -88,6 +82,24 @@ void ImageParms::execute(Ris::CmdLineCmd* aCmd)
    if (aCmd->isCmd("OutputImageFileName")) aCmd->copyArgString(1, mOutputImageFileName, cMaxStringSize);
 
    if (aCmd->isCmd("FilterParms"))         readSection(aCmd->argString(1), &mFilterParms);
+}
+
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+// Override some variables with simulation parms variables.
+
+void ImageParms::readOverrides(SimParms* aSimParms)
+{
+   if (aSimParms->mImageGenParms.mRoiPixel.mRow != 0)
+   {
+      mRoiPixel = aSimParms->mImageGenParms.mRoiPixel;
+   }
+
+   if (aSimParms->mImageGenParms.mRoiB != 0)
+   {
+      mRoiB = aSimParms->mImageGenParms.mRoiB;
+   }
 }
 
 //******************************************************************************

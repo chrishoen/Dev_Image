@@ -29,7 +29,7 @@ GraphicsThread::GraphicsThread()
    // Set member variables.
    mValidFlag = false;
 
-   mDisplay = gParms.mDisplay;
+   mDisplayNum = gParms.mDisplayNum;
    mWindow = 0;
    mSurface = 0;
    mImage = 0;
