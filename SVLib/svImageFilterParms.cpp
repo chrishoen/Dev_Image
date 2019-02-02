@@ -66,7 +66,7 @@ void ImageFilterParms::show()
    }
    if (mCharacterTable2.mRows != 0)
    {
-      printf("CharacterTable1\n");
+      printf("CharacterTable2\n");
       for (int i = 0; i < 8; i++)
       {
          printf("%3d ", mCharacterTable2[0][i]);
