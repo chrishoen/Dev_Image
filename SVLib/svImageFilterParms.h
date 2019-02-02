@@ -81,7 +81,8 @@ public:
    int  mCharacterCode;
 
    // Character table, indexed by neighbor sum.
-   Ris::CmdLineTable2D<int, 2, 9>  mCharacterTable;
+   Ris::CmdLineTable2D<int, 2, 9>  mCharacterTable1;
+   Ris::CmdLineTable2D<int, 2, 9>  mCharacterTable2;
 
    //***************************************************************************
    //***************************************************************************

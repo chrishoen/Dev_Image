@@ -118,11 +118,24 @@ uchar ImageFilterCharacter::getOutputValue(
    {
       if (aInputValue == 0)
       {
-         tOutputValue = mP->mCharacterTable[0][aNeighborSum];
+         tOutputValue = mP->mCharacterTable1[0][aNeighborSum];
       }
       else
       {
-         tOutputValue = mP->mCharacterTable[1][aNeighborSum];
+         tOutputValue = mP->mCharacterTable1[1][aNeighborSum];
+      }
+   }
+
+   // Set the output pixel value to the table value. 
+   if (mP->mCharacterCode == 2)
+   {
+      if (aInputValue == 0)
+      {
+         tOutputValue = mP->mCharacterTable2[0][aNeighborSum];
+      }
+      else
+      {
+         tOutputValue = mP->mCharacterTable2[1][aNeighborSum];
       }
    }
 
