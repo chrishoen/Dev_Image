@@ -54,6 +54,16 @@ public:
    void doFilterImage(
       cv::Mat&       aInput,               // Input
       cv::Mat&       aOutput) override;    // Output
+
+   //***************************************************************************
+   //***************************************************************************
+   //***************************************************************************
+   // Methods.
+
+   // Get the output value.
+   uchar getOutputValue(
+      uchar  aInputValue,       // Input
+      int    aNeighborSum);     // Input
 };
 
 

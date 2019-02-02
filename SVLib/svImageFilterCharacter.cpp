@@ -39,9 +39,6 @@ void ImageFilterCharacter::reset()
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
-//******************************************************************************
-//******************************************************************************
-//******************************************************************************
 // Filter the image, depending on the parms.
 
 void ImageFilterCharacter::doFilterImage(
@@ -88,33 +85,48 @@ void ImageFilterCharacter::doFilterImage(
       }
 
       // Set the output pixel value. 
-      uchar tOutputValue = 0;
-      if (mP->mCharacterCode == 0)
-      {
-         // Set the output pixel value to the sum. 
-         tOutputValue = tNeighborSum;
-      }
-      if (mP->mCharacterCode == 1)
-      {
-         if (tInputValue == 255 && tNeighborSum == 8)
-         {
-            // Set the output pixel value. 
-            tOutputValue = 3;
-         }
-         if (tInputValue == 255 && tNeighborSum != 8)
-         {
-            // Set the output pixel value. 
-            tOutputValue = 2;
-         }
-         if (tInputValue == 0 && tNeighborSum != 0)
-         {
-            // Set the output pixel value. 
-            tOutputValue = 1;
-         }
-      }
-      // Set the output pixel value. 
-      tOutputImage.at(tImageLoop()) = tOutputValue;
+      tOutputImage.at(tImageLoop()) = getOutputValue(tInputValue,tNeighborSum);
    }
+}
+
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+// Get the output value.
+
+uchar ImageFilterCharacter::getOutputValue(
+   uchar  aInputValue,       // Input
+   int    aNeighborSum)      // Input
+{
+   uchar tOutputValue = 0;
+
+   // Set the output pixel value to the sum. 
+   if (mP->mCharacterCode == 0)
+   {
+      if (aInputValue == 0)
+      {
+         tOutputValue = aNeighborSum;
+      }
+      else
+      {
+         tOutputValue = 100 + aNeighborSum;
+      }
+   }
+
+   // Set the output pixel value to the table value. 
+   if (mP->mCharacterCode == 1)
+   {
+      if (aInputValue == 0)
+      {
+         tOutputValue = mP->mCharacterTable[0][aNeighborSum];
+      }
+      else
+      {
+         tOutputValue = mP->mCharacterTable[1][aNeighborSum];
+      }
+   }
+
+   return tOutputValue;
 }
 
 //******************************************************************************
