@@ -79,20 +79,3 @@ void SimImageGenPolygon::doGenerateImage(
 //******************************************************************************
 }//namespace
 
-
-#if 0
-cv::Point* tPoints = (cv::Point*)&mP->mPolygonPoints[0][0];
-int tNumPoints = mP->mPolygonPoints.mRows;
-cv::Scalar tColor(255.0);
-int tLineType = 8;
-int tShift = 0;
-
-// Draw polygon.
-cv::fillConvexPoly(
-   aImage,
-   tPoints,
-   tNumPoints,
-   tColor,
-   tLineType,
-   tShift);
-#endif
