@@ -9,6 +9,7 @@ Parameters class whose values are read from a command file.
 //******************************************************************************
 
 #include "risCmdLineExec.h"
+#include "risCmdLineTables.h"
 #include "svRCIndex.h"
 #include "svRCRect.h"
 #include "svRCSize.h"
@@ -78,6 +79,9 @@ public:
 
    // Character  parameter.
    int  mCharacterCode;
+
+   // Character table, indexed by neighbor sum.
+   Ris::CmdLineTable2D<int, 2, 9>  mCharacterTable;
 
    //***************************************************************************
    //***************************************************************************

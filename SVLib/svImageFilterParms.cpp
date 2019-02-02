@@ -35,6 +35,7 @@ void ImageFilterParms::reset()
    mFilterType    = cNone;
    mGaussBlurCode = 0;
    mCharacterCode = 0;
+   mCharacterTable.reset();
 }
 
 //******************************************************************************
@@ -48,6 +49,20 @@ void ImageFilterParms::show()
    printf("FilterType               %10s\n", asStringFilterType(mFilterType));
    printf("GaussBlurCode            %10d\n", mGaussBlurCode);
    printf("CharacterCode            %10d\n", mCharacterCode);
+   if (mCharacterTable.mRows != 0)
+   {
+      printf("CharacterTable\n");
+      for (int i = 0; i < 8;i++)
+      {
+         printf("%3d ", mCharacterTable[0][i]);
+      }
+      printf("\n");
+      for (int i = 0; i < 8; i++)
+      {
+         printf("%3d ", mCharacterTable[1][i]);
+      }
+      printf("\n");
+   }
    printf("ImageFilterParms*******************\n");
 }
 
@@ -69,6 +84,8 @@ void ImageFilterParms::execute(Ris::CmdLineCmd* aCmd)
 
    if (aCmd->isCmd("GaussBlurCode"))       mGaussBlurCode = aCmd->argInt(1);
    if (aCmd->isCmd("CharacterCode"))       mCharacterCode = aCmd->argInt(1);
+
+   if (aCmd->isCmd("CharacterTable"))      nestedPush(aCmd, &mCharacterTable);
 }
 
 //******************************************************************************
