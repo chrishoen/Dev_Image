@@ -62,16 +62,12 @@ void SysParms::show()
    printf("\n");
    printf("SysParms************************************************ %s\n", mTargetSection);
 
-   printf("ImagePixelPitch      %10.6f\n", mImagePixelPitch);
+   printf("ImageSize                %10d %10d\n", mImageSize.mRows, mImageSize.mCols);
+   return;
 
-   printf("\n");
-   printf("ImageSize            %10d %10d\n",  mImageSize.mRows,mImageSize.mCols);
-
-   printf("\n");
    printf("ImageRowLimit        %10d\n",  mImageRowLimit);
    printf("ImageColLimit        %10d\n",  mImageColLimit);
-
-   printf("\n");
+   printf("ImagePixelPitch      %10.6f\n", mImagePixelPitch);
    printf("ImagePixelPerMM      %10.6f\n", mImagePixelPerMM);
    printf("ImageMMPerPixel      %10.6f\n", mImageMMPerPixel);
 }

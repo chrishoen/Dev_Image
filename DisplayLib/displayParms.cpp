@@ -64,25 +64,17 @@ void Parms::show()
 {
    char tBuffer[40];
    printf("\n");
-   printf("Parms************************************************ %s\n", mTargetSection);
+   printf("DisplayParms******************************************** %s\n", mTargetSection);
 
-   printf("\n");
-   printf("DisplayEnable         %-4s\n", my_string_from_bool(mDisplayEnable));
-   printf("DisplayNum            %-4d\n", mDisplayNum);
+   printf("DisplayEnable            %10s\n", my_string_from_bool(mDisplayEnable));
+   printf("DisplayNum               %10d\n", mDisplayNum);
+   printf("WindowWidthHeight        %10d %10d\n", mWindowWidth, mWindowHeight);
+   return;
 
-   printf("\n");
-   printf("WindowWidthHeight     %-4d %4d\n", mWindowWidth, mWindowHeight);
-
-   printf("\n");
    printf("ForeColor             %-4d %4d %4d %4d\n", mForeColor[0], mForeColor[1], mForeColor[2], mForeColor[3]);
    printf("BackColor             %-4d %4d %4d %4d\n", mBackColor[0], mBackColor[1], mBackColor[2], mBackColor[3]);
-
-   printf("\n");
    printf("SideX                 %-4d\n", mSideX);
    printf("sideY                 %-4d\n", mSideY);
-   printf("\n");
-
-   printf("\n");
    printf("PrintLevel            %-10s\n", mPrintLevel.asString(tBuffer));
 }
 

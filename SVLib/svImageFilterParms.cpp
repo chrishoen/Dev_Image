@@ -44,12 +44,11 @@ void ImageFilterParms::reset()
 
 void ImageFilterParms::show()
 {
-   printf("\n");
-   printf("ImageFilterParms*******************************************\n");
+   printf("ImageFilterParms*******************\n");
    printf("FilterType               %10s\n", asStringFilterType(mFilterType));
    printf("GaussBlurCode            %10d\n", mGaussBlurCode);
    printf("CharacterCode            %10d\n", mCharacterCode);
-   printf("ImageFilterParms*******************************************\n");
+   printf("ImageFilterParms*******************\n");
 }
 
 //******************************************************************************

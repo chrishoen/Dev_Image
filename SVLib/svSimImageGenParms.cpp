@@ -7,7 +7,6 @@
 #include "svDefs.h"
 #include "svSysParms.h"
 
-#define  _SVSimImageGenParms_CPP_
 #include "svSimImageGenParms.h"
 
 //******************************************************************************
@@ -35,13 +34,11 @@ void SimImageGenParms::reset()
    mImageType    = cNone;
    mImageSize = gSysParms.mImageSize;
    mImageB = 0;
-
    mRoiPixel.reset();
    mRoiB = 0;
-
    mGaussianWidth = 0.0;
    mGaussianAmplitude = 0.0;
-
+   mPolygonPoints.reset();
 }
 
 //******************************************************************************
@@ -51,16 +48,16 @@ void SimImageGenParms::reset()
 
 void SimImageGenParms::show()
 {
-   printf("\n");
-   printf("SimImageGenParms*******************************************\n");
+   printf("SimImageGenParms*******************\n");
    printf("ImageType                %10s\n",        asStringImageType(mImageType));
    printf("ImageSize                %10d %10d\n",   mImageSize.mRows,mImageSize.mCols);
-   printf("ImageB                   %10d\n", mImageB);
-   printf("RoiPixel                 %10d %10d\n", mRoiPixel.mRow, mRoiPixel.mCol);
-   printf("RoiB                     %10d\n", mRoiB);
-   printf("GaussianWidth            %10.6f\n", mGaussianWidth);
-   printf("GaussianAmplitude        %10.6f\n", mGaussianAmplitude);
-   printf("SimImageGenParms*******************************************\n");
+   printf("ImageB                   %10d\n",        mImageB);
+   printf("GaussianWidth            %10.2f\n",      mGaussianWidth);
+   printf("GaussianAmplitude        %10.2f\n",      mGaussianAmplitude);
+   printf("RoiPixel                 %10d %10d\n",   mRoiPixel.mRow, mRoiPixel.mCol);
+   printf("RoiB                     %10d\n",        mRoiB);
+   mPolygonPoints.show("PolygonPoints");
+   printf("SimImageGenParms*******************\n");
 }
 
 //******************************************************************************
@@ -81,6 +78,7 @@ void SimImageGenParms::execute(Ris::CmdLineCmd* aCmd)
       if (aCmd->isArgString(1, asStringImageType(cImageSquare)))      mImageType = cImageSquare;
       if (aCmd->isArgString(1, asStringImageType(cImageImpulse)))     mImageType = cImageImpulse;
       if (aCmd->isArgString(1, asStringImageType(cImageGaussian)))    mImageType = cImageGaussian;
+      if (aCmd->isArgString(1, asStringImageType(cImagePolygon)))     mImageType = cImagePolygon;
    }
 
    if (aCmd->isCmd("ImageB"))              mImageB = aCmd->argInt(1);
@@ -88,6 +86,9 @@ void SimImageGenParms::execute(Ris::CmdLineCmd* aCmd)
    if (aCmd->isCmd("RoiB"))                mRoiB = aCmd->argInt(1);
    if (aCmd->isCmd("GaussianWidth"))       mGaussianWidth = aCmd->argDouble(1);
    if (aCmd->isCmd("GaussianAmplitude"))   mGaussianAmplitude = aCmd->argDouble(1);
+
+   if (aCmd->isCmd("PolygonPoints"))       nestedPush(aCmd, &mPolygonPoints);
+
 }
 
 //******************************************************************************
@@ -104,6 +105,7 @@ char* SimImageGenParms::asStringImageType(int aX)
    case cImageSquare        : return "Square";
    case cImageImpulse       : return "Impulse";
    case cImageGaussian      : return "Gaussian";
+   case cImagePolygon       : return "Polygon";
    default : return "UNKNOWN";
    }
 }

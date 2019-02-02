@@ -52,13 +52,10 @@ void SimParms::expand()
 void SimParms::show()
 {
    printf("\n");
-   printf("SimParms****************************************** %s\n", mTargetSection);
-
-   printf("\n");
-   printf("NoiseSigma             %10.2f\n", mNoiseSigma);
-
-   printf("\n");
+   printf("SimParms************************************************ %s\n", mTargetSection);
    mImageGenParms.show();
+   return;
+   printf("NoiseSigma             %10.2f\n", mNoiseSigma);
 }
 
 //******************************************************************************

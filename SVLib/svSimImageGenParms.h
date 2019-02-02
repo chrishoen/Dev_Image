@@ -9,8 +9,8 @@ Parameters class whose values are read from a command file.
 //******************************************************************************
 
 #include "risCmdLineExec.h"
+#include "risCmdLineTables.h"
 #include "svRCIndex.h"
-#include "svRCRect.h"
 #include "svRCSize.h"
 
 //******************************************************************************
@@ -66,6 +66,7 @@ public:
    static const int cImageSquare       = 2;
    static const int cImageImpulse      = 3;
    static const int cImageGaussian     = 4;
+   static const int cImagePolygon      = 5;
 
    //***************************************************************************
    //***************************************************************************
@@ -85,9 +86,12 @@ public:
    RCIndex mRoiPixel;
    int     mRoiB;
 
-   // Gaussian variables.
+   // Gaussian parameters.
    double   mGaussianWidth;
    double   mGaussianAmplitude;
+
+   // Polygon parameters.
+   Ris::CmdLineTable2D<int, 10, 2>  mPolygonPoints;
 
    //***************************************************************************
    //***************************************************************************
@@ -116,17 +120,6 @@ public:
    bool isCircle() { return mImageType == cImageCircle; }
    bool isSquare() { return mImageType == cImageSquare; }
 };
-
-//******************************************************************************
-//******************************************************************************
-//******************************************************************************
-// Global instance.
-
-#ifdef _SVSIMIMAGEPARMS_CPP_
-   SimImageGenParms gSimImageGenParms;
-#else
-   extern SimImageGenParms gSimImageGenParms;
-#endif
 
 //******************************************************************************
 //******************************************************************************

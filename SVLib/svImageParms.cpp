@@ -56,11 +56,11 @@ void ImageParms::expand()
 void ImageParms::show()
 {
    printf("\n");
-   printf("ImageParms****************************************** %s\n", mTargetSection);
-   printf("RoiPixel               %10d %10d\n", mRoiPixel.mRow, mRoiPixel.mCol);
-   printf("RoiB                   %10d\n", mRoiB);
-   printf("InputImageFileName     %-12s\n", mInputImageFileName);
-   printf("OutputImageFileName    %-12s\n", mOutputImageFileName);
+   printf("ImageParms********************************************** %s\n", mTargetSection);
+   printf("RoiPixel                 %10d %10d\n", mRoiPixel.mRow, mRoiPixel.mCol);
+   printf("RoiB                     %10d\n", mRoiB);
+   printf("InputImageFileName                %s\n", mInputImageFileName);
+   printf("OutputImageFileName               %s\n", mOutputImageFileName);
    mFilterParms.show();
 }
 
