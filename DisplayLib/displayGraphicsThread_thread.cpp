@@ -62,6 +62,8 @@ GraphicsThread::GraphicsThread()
 
 
    mDraw0EventType = 0;
+   mDraw1EventType = 0;
+   mDraw2EventType = 0;
 
    mStartTime = 0.0;
    mStopTime = 0.0;
@@ -121,6 +123,7 @@ void GraphicsThread::threadInitFunction()
    // Initialize event types.
    mDraw0EventType = SDL_RegisterEvents(1);
    mDraw1EventType = SDL_RegisterEvents(1);
+   mDraw2EventType = SDL_RegisterEvents(1);
 
    // Create the window and renderer.
    doVideoStart();
@@ -151,6 +154,7 @@ void GraphicsThread::threadRunFunction()
       // Draw something if a draw event was posted.
       if (tEvent.type == mDraw0EventType) doVideoDraw0(&tEvent);
       if (tEvent.type == mDraw1EventType) doVideoDraw1(&tEvent);
+      if (tEvent.type == mDraw2EventType) doVideoDraw2(&tEvent);
    }
 }
 
@@ -221,6 +225,24 @@ void GraphicsThread::postDraw1(cv::Mat* aImage)
    tEvent.user.code = 0;
    tEvent.user.data1 = aImage;
    tEvent.user.data2 = 0;
+   SDL_PushEvent(&tEvent);
+}
+
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+// Post an event to load a png file into the lcd hdmi graphics. Pass in
+// the png filepath and a completion notification. 
+
+void GraphicsThread::postDraw2(std::string* aFilePath, Ris::Threads::NotifyWrapper* mCompletionNotify)
+{
+   // Post the event.
+   SDL_Event tEvent;
+   SDL_memset(&tEvent, 0, sizeof(tEvent));
+   tEvent.type = mDraw2EventType;
+   tEvent.user.code = 0;
+   tEvent.user.data1 = aFilePath;
+   tEvent.user.data2 = mCompletionNotify;
    SDL_PushEvent(&tEvent);
 }
 

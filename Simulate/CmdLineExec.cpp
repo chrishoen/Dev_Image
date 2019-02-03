@@ -5,6 +5,7 @@
 #include "svImageParms.h"
 #include "svSimParms.h"
 #include "displayParms.h"
+#include "displayFunctions.h"
 
 #include "Simulate.h"
 
@@ -119,6 +120,7 @@ void CmdLineExec::executeDraw0(Ris::CmdLineCmd* aCmd)
 
 void CmdLineExec::executeGo1(Ris::CmdLineCmd* aCmd)
 {
+   Display::showImage(SV::gImageParms.mTestImageFileName);
 }
 
 //******************************************************************************

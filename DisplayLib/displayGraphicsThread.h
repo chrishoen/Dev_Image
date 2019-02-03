@@ -73,6 +73,7 @@ public:
    // Thread window specific event types.
    unsigned int mDraw0EventType;
    unsigned int mDraw1EventType;
+   unsigned int mDraw2EventType;
 
    // Metrics.
    double mStartTime;
@@ -135,12 +136,18 @@ public:
    // Post an event to draw a cv matrix image.
    void postDraw1(cv::Mat* aImage);
 
+   // Post an event to load a png file into the lcd hdmi graphics. Pass in
+   // the png filepath and a completion notification. 
+   void postDraw2(std::string* aFilePath, Ris::Threads::NotifyWrapper* mCompletionNotify = 0);
 
    // Draw the test image. This is called for the posted event.
    void doVideoDraw0(SDL_Event* aEvent);
 
    // Draw an opencv matrix image. This is called for the posted event.
    void doVideoDraw1(SDL_Event* aEvent);
+
+   // Draw a .png file image. This is called for the posted event.
+   void doVideoDraw2(SDL_Event* aEvent);
 
    //***************************************************************************
    //***************************************************************************
