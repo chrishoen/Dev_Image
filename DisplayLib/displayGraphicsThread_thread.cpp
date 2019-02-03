@@ -214,35 +214,35 @@ void GraphicsThread::postDraw0(int aCode)
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
-// Post an event to draw a test pattern.
+// Post an event to load a png file into the lcd hdmi graphics. Pass in
+// the png filepath and a completion notification. 
 
-void GraphicsThread::postDraw1(cv::Mat* aImage)
+void GraphicsThread::postDraw1(std::string* aFilePath, Ris::Threads::NotifyWrapper* mCompletionNotify)
 {
    // Post the event.
    SDL_Event tEvent;
    SDL_memset(&tEvent, 0, sizeof(tEvent));
    tEvent.type = mDraw1EventType;
    tEvent.user.code = 0;
-   tEvent.user.data1 = aImage;
-   tEvent.user.data2 = 0;
+   tEvent.user.data1 = aFilePath;
+   tEvent.user.data2 = mCompletionNotify;
    SDL_PushEvent(&tEvent);
 }
 
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
-// Post an event to load a png file into the lcd hdmi graphics. Pass in
-// the png filepath and a completion notification. 
+// Post an event to draw a test pattern.
 
-void GraphicsThread::postDraw2(std::string* aFilePath, Ris::Threads::NotifyWrapper* mCompletionNotify)
+void GraphicsThread::postDraw2(cv::Mat* aImage)
 {
    // Post the event.
    SDL_Event tEvent;
    SDL_memset(&tEvent, 0, sizeof(tEvent));
    tEvent.type = mDraw2EventType;
    tEvent.user.code = 0;
-   tEvent.user.data1 = aFilePath;
-   tEvent.user.data2 = mCompletionNotify;
+   tEvent.user.data1 = aImage;
+   tEvent.user.data2 = 0;
    SDL_PushEvent(&tEvent);
 }
 

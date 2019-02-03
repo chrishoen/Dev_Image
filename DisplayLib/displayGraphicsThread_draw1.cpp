@@ -22,7 +22,7 @@ namespace Display
 // Load the png file and notify the completion. This is called for the 
 // posted event.
 
-void GraphicsThread::doVideoDraw1(SDL_Event* aEvent)
+void GraphicsThread::doVideoDraw2(SDL_Event* aEvent)
 {
    // Metrics.
    mStartTime = Ris::getCurrentProgramTime();
@@ -30,7 +30,7 @@ void GraphicsThread::doVideoDraw1(SDL_Event* aEvent)
    int tRet = 0;
    cv::Mat* tImage = (cv::Mat*)aEvent->user.data1;
 
-   Prn::print(Prn::Show1, "doVideoDraw1  %4d %4d", tImage->rows, tImage->cols);
+   Prn::print(Prn::Show1, "doVideoDraw2  %4d %4d", tImage->rows, tImage->cols);
 
    //***************************************************************************
    //***************************************************************************

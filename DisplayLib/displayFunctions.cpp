@@ -26,10 +26,14 @@ namespace Display
 // Show image.
 
 void showImage(
-   cv::Mat&      aImage)   // Input
+   const char*   aFileName)   // Input
 {
    if (Display::gGraphicsThread == 0) return;
-   Display::gGraphicsThread->postDraw1(new cv::Mat(aImage));
+
+   char tBuffer[100];
+   std::string* tFilePath = new std::string(Ris::getAlphaFilePath_Image(tBuffer, aFileName));
+
+   Display::gGraphicsThread->postDraw1(tFilePath);
 }
 
 //******************************************************************************
@@ -38,14 +42,10 @@ void showImage(
 // Show image.
 
 void showImage(
-   const char*   aFileName)   // Input
+   cv::Mat&      aImage)   // Input
 {
    if (Display::gGraphicsThread == 0) return;
-
-   char tBuffer[100];
-   std::string* tFilePath = new std::string(Ris::getAlphaFilePath_Image(tBuffer, aFileName));
-
-   Display::gGraphicsThread->postDraw2(tFilePath);
+   Display::gGraphicsThread->postDraw2(new cv::Mat(aImage));
 }
 
 //******************************************************************************

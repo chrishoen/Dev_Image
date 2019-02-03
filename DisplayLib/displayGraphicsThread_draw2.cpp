@@ -25,7 +25,7 @@ namespace Display
 // Load the png file and notify the completion. This is called for the 
 // posted event.
 
-void GraphicsThread::doVideoDraw2(SDL_Event* aEvent)
+void GraphicsThread::doVideoDraw1(SDL_Event* aEvent)
 {
    // Metrics.
    mStartTime = Ris::getCurrentProgramTime();
@@ -49,7 +49,7 @@ void GraphicsThread::doVideoDraw2(SDL_Event* aEvent)
    // Copy the event completion notification into a local.
    Ris::Threads::NotifyWrapper* tCompletionNotify = (Ris::Threads::NotifyWrapper*)aEvent->user.data2;
 
-   Prn::print(Prn::Show1, "doVideoDraw2 %s", tFilePath);
+   Prn::print(Prn::Show1, "doVideoDraw1 %s", tFilePath);
 
    //***************************************************************************
    //***************************************************************************

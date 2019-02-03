@@ -133,20 +133,20 @@ public:
    // Post an event to draw a blank screen.
    void postDraw0(int aCode);
 
-   // Post an event to draw a cv matrix image.
-   void postDraw1(cv::Mat* aImage);
-
    // Post an event to load a png file into the lcd hdmi graphics. Pass in
    // the png filepath and a completion notification. 
-   void postDraw2(std::string* aFilePath, Ris::Threads::NotifyWrapper* mCompletionNotify = 0);
+   void postDraw1(std::string* aFilePath, Ris::Threads::NotifyWrapper* mCompletionNotify = 0);
+
+   // Post an event to draw a cv matrix image.
+   void postDraw2(cv::Mat* aImage);
 
    // Draw the test image. This is called for the posted event.
    void doVideoDraw0(SDL_Event* aEvent);
 
-   // Draw an opencv matrix image. This is called for the posted event.
+   // Draw a .png file image. This is called for the posted event.
    void doVideoDraw1(SDL_Event* aEvent);
 
-   // Draw a .png file image. This is called for the posted event.
+   // Draw an opencv matrix image. This is called for the posted event.
    void doVideoDraw2(SDL_Event* aEvent);
 
    //***************************************************************************
