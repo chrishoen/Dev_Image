@@ -45,11 +45,24 @@ void Simulate::doRun(int aCode)
 //******************************************************************************
 // This runs a test.
 
+void Simulate::doTest(int aCode)
+{
+   // Read test image.
+   SV::readImageFromFile(mTestImage, SV::gImageParms.mTestImageFileName);
+   SV::showImageInfo("TestImage", mTestImage);
+
+}
+
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+// This runs a test.
+
 void Simulate::doRun1()
 {
-   Prn::print(Prn::View01,"RUN1********************************************************************");
-   Prn::print(Prn::View01,"RUN1********************************************************************");
-   Prn::print(Prn::View01,"RUN1********************************************************************");
+   Prn::print(Prn::View01, "RUN1********************************************************************");
+   Prn::print(Prn::View01, "RUN1********************************************************************");
+   Prn::print(Prn::View01, "RUN1********************************************************************");
 
    // Generate simulated image.
    SV::SimImageGenerator tGenerator(&SV::gSimParms.mImageGenParms);

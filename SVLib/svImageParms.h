@@ -72,6 +72,7 @@ public:
    int     mRoiB;
 
    // Image file name.
+   char mTestImageFileName[cMaxStringSize];
    char mInputImageFileName[cMaxStringSize];
    char mOutputImageFileName[cMaxStringSize];
 

@@ -44,6 +44,9 @@ void showImageTableFloat(
    const char*   aLabel,   // Input
    cv::Mat&      aImage)   // Input
 {
+   // Guard.
+   if (aImage.rows == 0)return;
+
    // Region of interest variables.
    RCIndex tCenterPixel = gImageParms.mRoiPixel;
    int tB = gImageParms.mRoiB;
@@ -88,6 +91,9 @@ void showImageTableByte(
    const char*   aLabel,   // Input
    cv::Mat&      aImage)   // Input
 {
+   // Guard.
+   if (aImage.rows == 0)return;
+
    // Region of interest variables.
    RCIndex tCenterPixel = gImageParms.mRoiPixel;
    int tB = gImageParms.mRoiB;
@@ -144,8 +150,27 @@ void writeImageToFile(
    cv::Mat&      aImage,      // Input
    const char*   aFileName)   // Input
 {
+   // Guard.
+   if (aImage.rows == 0)return;
+
+   // Write the image to a file.
    char tBuffer[100];
    cv::imwrite(Ris::getAlphaFilePath_Image(tBuffer, aFileName), aImage);
+}
+
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+// Read image fro, file.
+
+void readImageFromFile(
+   cv::Mat&      aImage,      // Input
+   const char*   aFileName)   // Input
+{
+
+   // Write the image to a file.
+   char tBuffer[100];
+   aImage =  cv::imread(Ris::getAlphaFilePath_Image(tBuffer, aFileName));
 }
 
 //******************************************************************************
@@ -157,6 +182,9 @@ void extractImageRoi(
    cv::Mat&      aInput,    // Input
    cv::Mat&      aOutput)   // Output
 {
+   // Guard.
+   if (aInput.rows == 0)return;
+
    // Roi variables.
    int tUpperLeftRowY = gImageParms.mRoiPixel.mRow - gImageParms.mRoiB;
    int tUpperLeftColX = gImageParms.mRoiPixel.mCol - gImageParms.mRoiB;
