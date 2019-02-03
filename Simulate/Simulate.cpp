@@ -30,6 +30,15 @@ Simulate::Simulate()
 //******************************************************************************
 // This selects a test.
 
+void Simulate::doTest(int aCode)
+{
+   switch (aCode)
+   {
+   case 1: doTest1(); break;
+   case 2: doTest2(); break;
+   }
+}
+
 void Simulate::doRun(int aCode)
 {
    switch (aCode)
@@ -45,12 +54,24 @@ void Simulate::doRun(int aCode)
 //******************************************************************************
 // This runs a test.
 
-void Simulate::doTest(int aCode)
+void Simulate::doTest1()
 {
-   // Read test image.
-   SV::readImageFromFile(mTestImage, SV::gImageParms.mTestImageFileName);
-   SV::showImageInfo("TestImage", mTestImage);
+   // Read a test image file to the input image.
+   SV::readImageFromFile(mInputImage, SV::gImageParms.mTestImageFileName);
+   SV::showImageInfo("InputImage", mInputImage);
 
+   // Display the input image.
+   Display::showImage(mInputImage);
+}
+
+void Simulate::doTest2()
+{
+   // Read a test image file to the input image.
+   SV::readImageFromFile(mInputImage, SV::gImageParms.mTestImageFileName);
+   SV::showImageInfo("InputImage", mInputImage);
+
+   // Display the input image.
+   Display::showImage(SV::gImageParms.mTestImageFileName);
 }
 
 //******************************************************************************
@@ -69,11 +90,8 @@ void Simulate::doRun1()
    tGenerator.doGenerateImage(mInputImage);
    SV::showImageInfo("InputImage", mInputImage);
 
-   // Convert simulated image to target image and display.
-   cv::Mat tTargetImage;
-   SV::convertImageToTarget(mInputImage, tTargetImage);
-   SV::showImageInfo("TargetImage", tTargetImage);
-   Display::showImage(tTargetImage);
+   // Display the input image.
+   Display::showImage(mInputImage);
 
    // Save simulated image.
    SV::writeImageToFile(mInputImage, SV::gImageParms.mInputImageFileName);
@@ -96,10 +114,7 @@ void Simulate::doRun2()
    SV::showImageInfo("OutputImage", mOutputImage);
 
    // Convert simulated image to target image and display.
-   cv::Mat tTargetImage;
-   SV::convertImageToTarget(mOutputImage, tTargetImage);
-   SV::showImageInfo("TargetImage", tTargetImage);
-   Display::showImage(tTargetImage);
+   Display::showImage(mOutputImage);
 
    // Save simulated image.
    SV::writeImageToFile(mOutputImage, SV::gImageParms.mOutputImageFileName);

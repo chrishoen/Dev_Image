@@ -170,7 +170,7 @@ void readImageFromFile(
 
    // Write the image to a file.
    char tBuffer[100];
-   aImage =  cv::imread(Ris::getAlphaFilePath_Image(tBuffer, aFileName));
+   aImage =  cv::imread(Ris::getAlphaFilePath_Image(tBuffer, aFileName), CV_LOAD_IMAGE_GRAYSCALE);
 }
 
 //******************************************************************************
