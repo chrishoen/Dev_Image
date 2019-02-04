@@ -13,7 +13,7 @@ Description:
 #include "svPixelFunctions.h"
 #include "svImageWrapper.h"
 
-#include "svImageFilterCharacter.h"
+#include "svImageFilterClassify.h"
 
 namespace SV
 {
@@ -21,18 +21,18 @@ namespace SV
 //******************************************************************************
 //******************************************************************************
 
-ImageFilterCharacter::ImageFilterCharacter()
+ImageFilterClassify::ImageFilterClassify()
 {
    reset();
 }
 
-ImageFilterCharacter::ImageFilterCharacter(ImageFilterParms* aParms)
+ImageFilterClassify::ImageFilterClassify(ImageFilterParms* aParms)
 {
    BaseClass::mP = aParms;
    reset();
 }
 
-void ImageFilterCharacter::reset()
+void ImageFilterClassify::reset()
 {
 }
 
@@ -41,11 +41,11 @@ void ImageFilterCharacter::reset()
 //******************************************************************************
 // Filter the image, depending on the parms.
 
-void ImageFilterCharacter::doFilterImage(
+void ImageFilterClassify::doFilterImage(
    cv::Mat&       aInputImage,     // Input
    cv::Mat&       aOutputImage)    // Output
 {
-   Prn::print(0, "ImageFilterCharacter::doFilterImage");
+   Prn::print(0, "ImageFilterClassify::doFilterImage");
 
    // Create an output image filled with all zeros.
    aOutputImage = cv::Mat::zeros(aInputImage.size(), CV_8UC1);
@@ -94,14 +94,14 @@ void ImageFilterCharacter::doFilterImage(
 //******************************************************************************
 // Get the output value.
 
-uchar ImageFilterCharacter::getOutputValue(
+uchar ImageFilterClassify::getOutputValue(
    uchar  aInputValue,       // Input
    int    aNeighborSum)      // Input
 {
    uchar tOutputValue = 0;
 
    // Set the output pixel value to the sum. 
-   if (mP->mCharacterCode == 0)
+   if (mP->mClassifyCode == 0)
    {
       if (aInputValue == 0)
       {
@@ -114,28 +114,28 @@ uchar ImageFilterCharacter::getOutputValue(
    }
 
    // Set the output pixel value to the table value. 
-   if (mP->mCharacterCode == 1)
+   if (mP->mClassifyCode == 1)
    {
       if (aInputValue == 0)
       {
-         tOutputValue = mP->mCharacterTable1[0][aNeighborSum];
+         tOutputValue = mP->mClassifyTable1[0][aNeighborSum];
       }
       else
       {
-         tOutputValue = mP->mCharacterTable1[1][aNeighborSum];
+         tOutputValue = mP->mClassifyTable1[1][aNeighborSum];
       }
    }
 
    // Set the output pixel value to the table value. 
-   if (mP->mCharacterCode == 2)
+   if (mP->mClassifyCode == 2)
    {
       if (aInputValue == 0)
       {
-         tOutputValue = mP->mCharacterTable2[0][aNeighborSum];
+         tOutputValue = mP->mClassifyTable2[0][aNeighborSum];
       }
       else
       {
-         tOutputValue = mP->mCharacterTable2[1][aNeighborSum];
+         tOutputValue = mP->mClassifyTable2[1][aNeighborSum];
       }
    }
 

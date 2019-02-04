@@ -140,7 +140,6 @@ void Simulate::doRun3()
    SV::ImageFilter tFilter(&SV::gImageParms.mFilterParms);
    tFilter.doFilterImage(mInputImage, mOutputImage);
    SV::showImageInfo("OutputImage", mOutputImage);
-
 }
 
 //******************************************************************************

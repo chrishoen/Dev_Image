@@ -34,9 +34,9 @@ void ImageFilterParms::reset()
 {
    mFilterType    = cNone;
    mGaussBlurCode = 0;
-   mCharacterCode = 0;
-   mCharacterTable1.reset();
-   mCharacterTable2.reset();
+   mClassifyCode = 0;
+   mClassifyTable1.reset();
+   mClassifyTable2.reset();
 }
 
 //******************************************************************************
@@ -49,32 +49,32 @@ void ImageFilterParms::show()
    printf("ImageFilterParms*******************\n");
    printf("FilterType               %10s\n", asStringFilterType(mFilterType));
    printf("GaussBlurCode            %10d\n", mGaussBlurCode);
-   printf("CharacterCode            %10d\n", mCharacterCode);
-   if (mCharacterTable1.mRows != 0)
+   printf("ClassifyCode            %10d\n", mClassifyCode);
+   if (mClassifyTable1.mRows != 0)
    {
-      printf("CharacterTable1\n");
+      printf("ClassifyTable1\n");
       for (int i = 0; i < 8;i++)
       {
-         printf("%3d ", mCharacterTable1[0][i]);
+         printf("%3d ", mClassifyTable1[0][i]);
       }
       printf("\n");
       for (int i = 0; i < 8; i++)
       {
-         printf("%3d ", mCharacterTable1[1][i]);
+         printf("%3d ", mClassifyTable1[1][i]);
       }
       printf("\n");
    }
-   if (mCharacterTable2.mRows != 0)
+   if (mClassifyTable2.mRows != 0)
    {
-      printf("CharacterTable2\n");
+      printf("ClassifyTable2\n");
       for (int i = 0; i < 8; i++)
       {
-         printf("%3d ", mCharacterTable2[0][i]);
+         printf("%3d ", mClassifyTable2[0][i]);
       }
       printf("\n");
       for (int i = 0; i < 8; i++)
       {
-         printf("%3d ", mCharacterTable2[1][i]);
+         printf("%3d ", mClassifyTable2[1][i]);
       }
       printf("\n");
    }
@@ -94,14 +94,14 @@ void ImageFilterParms::execute(Ris::CmdLineCmd* aCmd)
    {
       if (aCmd->isArgString(1, asStringFilterType(cNone)))              mFilterType = cNone;
       if (aCmd->isArgString(1, asStringFilterType(cFilterGaussBlur)))   mFilterType = cFilterGaussBlur;
-      if (aCmd->isArgString(1, asStringFilterType(cFilterCharacter)))   mFilterType = cFilterCharacter;
+      if (aCmd->isArgString(1, asStringFilterType(cFilterClassify)))   mFilterType = cFilterClassify;
    }
 
    if (aCmd->isCmd("GaussBlurCode"))       mGaussBlurCode = aCmd->argInt(1);
-   if (aCmd->isCmd("CharacterCode"))       mCharacterCode = aCmd->argInt(1);
+   if (aCmd->isCmd("ClassifyCode"))       mClassifyCode = aCmd->argInt(1);
 
-   if (aCmd->isCmd("CharacterTable1"))     nestedPush(aCmd, &mCharacterTable1);
-   if (aCmd->isCmd("CharacterTable2"))     nestedPush(aCmd, &mCharacterTable2);
+   if (aCmd->isCmd("ClassifyTable1"))     nestedPush(aCmd, &mClassifyTable1);
+   if (aCmd->isCmd("ClassifyTable2"))     nestedPush(aCmd, &mClassifyTable2);
 }
 
 //******************************************************************************
@@ -115,7 +115,7 @@ char* ImageFilterParms::asStringFilterType(int aX)
    {
    case cNone                : return "None";
    case cFilterGaussBlur     : return "GaussBlur";
-   case cFilterCharacter     : return "Character";
+   case cFilterClassify     : return "Classify";
    default : return "UNKNOWN";
    }
 }

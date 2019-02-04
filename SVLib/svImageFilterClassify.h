@@ -2,7 +2,7 @@
 
 /*==============================================================================
 SV namespace: sixdofs that are measured by a computer vision based system.
-Character specific image filter.
+Classify specific image filter.
 ==============================================================================*/
 
 //******************************************************************************
@@ -25,7 +25,7 @@ namespace SV
 // It inherits from the image filter base class, which provides a common 
 // interface and a parameters member variable.
 
-class ImageFilterCharacter : public ImageFilterBase
+class ImageFilterClassify : public ImageFilterBase
 {
 public:
 
@@ -41,8 +41,8 @@ public:
 
    // Constructor.
    typedef ImageFilterBase BaseClass;
-   ImageFilterCharacter();
-   ImageFilterCharacter(ImageFilterParms* aParms);
+   ImageFilterClassify();
+   ImageFilterClassify(ImageFilterParms* aParms);
    void reset();
 
    //***************************************************************************

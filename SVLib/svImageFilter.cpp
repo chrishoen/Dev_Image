@@ -9,7 +9,7 @@ Description:
 #include "stdafx.h"
 
 #include "svImageFilterGaussBlur.h"
-#include "svImageFilterCharacter.h"
+#include "svImageFilterClassify.h"
 
 #include "svImageFilter.h"
 
@@ -66,7 +66,7 @@ void ImageFilter::initialize(ImageFilterParms* aParms)
    switch (mP->mFilterType)
    {
    case ImageFilterParms::cFilterGaussBlur:   mImageFilter = new ImageFilterGaussBlur(mP); return;
-   case ImageFilterParms::cFilterCharacter:   mImageFilter = new ImageFilterCharacter(mP); return;
+   case ImageFilterParms::cFilterClassify:   mImageFilter = new ImageFilterClassify(mP); return;
    }
 }
 

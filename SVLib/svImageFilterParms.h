@@ -64,7 +64,7 @@ public:
 
    // Filter types.
    static const int cFilterGaussBlur = 1;
-   static const int cFilterCharacter    = 2;
+   static const int cFilterClassify    = 2;
 
    //***************************************************************************
    //***************************************************************************
@@ -77,12 +77,12 @@ public:
    // Gaussian blur parameter.
    int  mGaussBlurCode;
 
-   // Character  parameter.
-   int  mCharacterCode;
+   // Classify  parameter.
+   int  mClassifyCode;
 
-   // Character table, indexed by neighbor sum.
-   Ris::CmdLineTable2D<int, 2, 9>  mCharacterTable1;
-   Ris::CmdLineTable2D<int, 2, 9>  mCharacterTable2;
+   // Classify table, indexed by neighbor sum.
+   Ris::CmdLineTable2D<int, 2, 9>  mClassifyTable1;
+   Ris::CmdLineTable2D<int, 2, 9>  mClassifyTable2;
 
    //***************************************************************************
    //***************************************************************************
@@ -109,7 +109,7 @@ public:
    char* asStringFilterType ();
 
    bool isGaussBlur() { return mFilterType == cFilterGaussBlur; }
-   bool isCharacter() { return mFilterType == cFilterCharacter; }
+   bool isClassify() { return mFilterType == cFilterClassify; }
 };
 
 //******************************************************************************
