@@ -66,7 +66,7 @@ void ImageFilter::initialize(ImageFilterParms* aParms)
    switch (mP->mFilterType)
    {
    case ImageFilterParms::cFilterGaussBlur:   mImageFilter = new ImageFilterGaussBlur(mP); return;
-   case ImageFilterParms::cFilterClassify:   mImageFilter = new ImageFilterClassify(mP); return;
+   case ImageFilterParms::cFilterClassify:    mImageFilter = new ImageFilterClassify(mP); return;
    }
 }
 

@@ -49,7 +49,7 @@ void ImageFilterParms::show()
    printf("ImageFilterParms*******************\n");
    printf("FilterType               %10s\n", asStringFilterType(mFilterType));
    printf("GaussBlurCode            %10d\n", mGaussBlurCode);
-   printf("ClassifyCode            %10d\n", mClassifyCode);
+   printf("ClassifyCode             %10d\n", mClassifyCode);
    if (mClassifyTable1.mRows != 0)
    {
       printf("ClassifyTable1\n");
@@ -94,10 +94,10 @@ void ImageFilterParms::execute(Ris::CmdLineCmd* aCmd)
    {
       if (aCmd->isArgString(1, asStringFilterType(cNone)))              mFilterType = cNone;
       if (aCmd->isArgString(1, asStringFilterType(cFilterGaussBlur)))   mFilterType = cFilterGaussBlur;
-      if (aCmd->isArgString(1, asStringFilterType(cFilterClassify)))   mFilterType = cFilterClassify;
+      if (aCmd->isArgString(1, asStringFilterType(cFilterClassify)))    mFilterType = cFilterClassify;
    }
 
-   if (aCmd->isCmd("GaussBlurCode"))       mGaussBlurCode = aCmd->argInt(1);
+   if (aCmd->isCmd("GaussBlurCode"))      mGaussBlurCode = aCmd->argInt(1);
    if (aCmd->isCmd("ClassifyCode"))       mClassifyCode = aCmd->argInt(1);
 
    if (aCmd->isCmd("ClassifyTable1"))     nestedPush(aCmd, &mClassifyTable1);
@@ -115,7 +115,7 @@ char* ImageFilterParms::asStringFilterType(int aX)
    {
    case cNone                : return "None";
    case cFilterGaussBlur     : return "GaussBlur";
-   case cFilterClassify     : return "Classify";
+   case cFilterClassify      : return "Classify";
    default : return "UNKNOWN";
    }
 }

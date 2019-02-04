@@ -63,7 +63,7 @@ public:
    static const int cNone              = 0;
 
    // Filter types.
-   static const int cFilterGaussBlur = 1;
+   static const int cFilterGaussBlur   = 1;
    static const int cFilterClassify    = 2;
 
    //***************************************************************************
@@ -109,7 +109,7 @@ public:
    char* asStringFilterType ();
 
    bool isGaussBlur() { return mFilterType == cFilterGaussBlur; }
-   bool isClassify() { return mFilterType == cFilterClassify; }
+   bool isClassify()  { return mFilterType == cFilterClassify; }
 };
 
 //******************************************************************************
