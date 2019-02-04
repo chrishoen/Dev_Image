@@ -53,9 +53,9 @@ void ImageFilterGaussBlur::doFilterImage(
       aInputImage,
       aOutputImage,
       cv::Size(mP->mGaussBlurCode, mP->mGaussBlurCode),
-      0.0,
-      0.0);
-
+      mP->mGaussBlurSigma,
+      mP->mGaussBlurSigma,
+      cv::BORDER_DEFAULT);
 }
 
 //******************************************************************************

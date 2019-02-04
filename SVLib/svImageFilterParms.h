@@ -75,7 +75,8 @@ public:
    int mFilterType;
 
    // Gaussian blur parameter.
-   int  mGaussBlurCode;
+   int     mGaussBlurCode;
+   double  mGaussBlurSigma;
 
    // Classify  parameter.
    int  mClassifyCode;

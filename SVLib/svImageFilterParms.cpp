@@ -34,6 +34,7 @@ void ImageFilterParms::reset()
 {
    mFilterType    = cNone;
    mGaussBlurCode = 0;
+   mGaussBlurSigma = 0.0;
    mClassifyCode = 0;
    mClassifyTable1.reset();
    mClassifyTable2.reset();
@@ -47,9 +48,10 @@ void ImageFilterParms::reset()
 void ImageFilterParms::show()
 {
    printf("ImageFilterParms*******************\n");
-   printf("FilterType               %10s\n", asStringFilterType(mFilterType));
-   printf("GaussBlurCode            %10d\n", mGaussBlurCode);
-   printf("ClassifyCode             %10d\n", mClassifyCode);
+   printf("FilterType               %10s\n",   asStringFilterType(mFilterType));
+   printf("GaussBlurCode            %10d\n",   mGaussBlurCode);
+   printf("GaussBlurSigma           %10.4f\n", mGaussBlurSigma);
+   printf("ClassifyCode             %10d\n",   mClassifyCode);
    if (mClassifyTable1.mRows != 0)
    {
       printf("ClassifyTable1\n");
@@ -98,6 +100,7 @@ void ImageFilterParms::execute(Ris::CmdLineCmd* aCmd)
    }
 
    if (aCmd->isCmd("GaussBlurCode"))      mGaussBlurCode = aCmd->argInt(1);
+   if (aCmd->isCmd("GaussBlurSigma"))     mGaussBlurSigma = aCmd->argDouble(1);
    if (aCmd->isCmd("ClassifyCode"))       mClassifyCode = aCmd->argInt(1);
 
    if (aCmd->isCmd("ClassifyTable1"))     nestedPush(aCmd, &mClassifyTable1);
