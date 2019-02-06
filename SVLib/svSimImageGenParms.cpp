@@ -39,6 +39,8 @@ void SimImageGenParms::reset()
    mGaussianWidth = 0.0;
    mGaussianAmplitude = 0.0;
    mPolygonPoints.reset();
+   mBitMapCorner.reset();
+   mBitMapTable.reset();
 }
 
 //******************************************************************************
@@ -57,6 +59,8 @@ void SimImageGenParms::show()
    printf("RoiPixel                 %10d %10d\n",   mRoiPixel.mRow, mRoiPixel.mCol);
    printf("RoiB                     %10d\n",        mRoiB);
    mPolygonPoints.show("PolygonPoints");
+   printf("BitMapCorner             %10d %10d\n",   mBitMapCorner.mRow, mBitMapCorner.mCol);
+   mBitMapTable.show("BitMapTable");
    printf("SimImageGenParms*******************\n");
 }
 
@@ -79,6 +83,7 @@ void SimImageGenParms::execute(Ris::CmdLineCmd* aCmd)
       if (aCmd->isArgString(1, asStringImageType(cImageImpulse)))     mImageType = cImageImpulse;
       if (aCmd->isArgString(1, asStringImageType(cImageGaussian)))    mImageType = cImageGaussian;
       if (aCmd->isArgString(1, asStringImageType(cImagePolygon)))     mImageType = cImagePolygon;
+      if (aCmd->isArgString(1, asStringImageType(cImageBitMap)))      mImageType = cImageBitMap;
    }
 
    if (aCmd->isCmd("ImageB"))              mImageB = aCmd->argInt(1);
@@ -89,6 +94,8 @@ void SimImageGenParms::execute(Ris::CmdLineCmd* aCmd)
 
    if (aCmd->isCmd("PolygonPoints"))       nestedPush(aCmd, &mPolygonPoints);
 
+   if (aCmd->isCmd("BitMapCorner"))        mBitMapCorner.execute(aCmd);
+   if (aCmd->isCmd("BitMapTable"))         nestedPush(aCmd, &mBitMapTable);
 }
 
 //******************************************************************************
@@ -106,6 +113,7 @@ char* SimImageGenParms::asStringImageType(int aX)
    case cImageImpulse       : return "Impulse";
    case cImageGaussian      : return "Gaussian";
    case cImagePolygon       : return "Polygon";
+   case cImageBitMap        : return "BitMap";
    default : return "UNKNOWN";
    }
 }

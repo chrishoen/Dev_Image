@@ -67,6 +67,7 @@ public:
    static const int cImageImpulse      = 3;
    static const int cImageGaussian     = 4;
    static const int cImagePolygon      = 5;
+   static const int cImageBitMap       = 6;
 
    //***************************************************************************
    //***************************************************************************
@@ -91,7 +92,11 @@ public:
    double   mGaussianAmplitude;
 
    // Polygon parameters.
-   Ris::CmdLineTable2D<int, 10, 2>  mPolygonPoints;
+   Ris::CmdLineTable2D<int, 10, 2>    mPolygonPoints;
+
+   // BitMap parameters.
+   RCIndex mBitMapCorner;
+   Ris::CmdLineTable2D<bool, 21, 21>  mBitMapTable;
 
    //***************************************************************************
    //***************************************************************************
