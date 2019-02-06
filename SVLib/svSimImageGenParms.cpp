@@ -40,7 +40,8 @@ void SimImageGenParms::reset()
    mGaussianAmplitude = 0.0;
    mPolygonPoints.reset();
    mBitMapCorner.reset();
-   mBitMapTable.reset();
+   mBitMap.reset();
+   mBitMapSize.reset();
 }
 
 //******************************************************************************
@@ -60,7 +61,8 @@ void SimImageGenParms::show()
    printf("RoiB                     %10d\n",        mRoiB);
    mPolygonPoints.show("PolygonPoints");
    printf("BitMapCorner             %10d %10d\n",   mBitMapCorner.mRow, mBitMapCorner.mCol);
-   mBitMapTable.show("BitMapTable");
+   printf("BitMapSize               %10d %10d\n",   mBitMapSize.mRows, mBitMapSize.mCols);
+   mBitMap.show("BitMap");
    printf("SimImageGenParms*******************\n");
 }
 
@@ -95,7 +97,18 @@ void SimImageGenParms::execute(Ris::CmdLineCmd* aCmd)
    if (aCmd->isCmd("PolygonPoints"))       nestedPush(aCmd, &mPolygonPoints);
 
    if (aCmd->isCmd("BitMapCorner"))        mBitMapCorner.execute(aCmd);
-   if (aCmd->isCmd("BitMapTable"))         nestedPush(aCmd, &mBitMapTable);
+   if (aCmd->isCmd("BitMap"))              nestedPush(aCmd, &mBitMap);
+}
+
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+// Helpers.
+
+void SimImageGenParms::expand()
+{
+   mBitMapSize.mRows = mBitMap.mRows;
+   mBitMapSize.mCols = mBitMap.mCols;
 }
 
 //******************************************************************************

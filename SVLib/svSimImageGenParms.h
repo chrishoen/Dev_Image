@@ -96,7 +96,8 @@ public:
 
    // BitMap parameters.
    RCIndex mBitMapCorner;
-   Ris::CmdLineTable2D<bool, 21, 21>  mBitMapTable;
+   Ris::CmdLineTable2D<bool, 21, 21>  mBitMap;
+   RCSize mBitMapSize;
 
    //***************************************************************************
    //***************************************************************************
@@ -113,6 +114,10 @@ public:
    // member variable. This is called by the associated command file object
    // for each command in the file.
    void execute(Ris::CmdLineCmd* aCmd) override;
+
+   // Calculate expanded member variables. This is called after the entire
+   // section of the command file has been processed.
+   void expand();
 
    //***************************************************************************
    //***************************************************************************

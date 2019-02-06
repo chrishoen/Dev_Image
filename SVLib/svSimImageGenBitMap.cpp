@@ -8,8 +8,7 @@ Description:
 
 #include "stdafx.h"
 
-#include "svSysParms.h"
-#include "svDefs.h"
+#include "svImageWrapper.h"
 
 #include "svSimImageGenBitMap.h"
 
@@ -49,25 +48,25 @@ void SimImageGenBitMap::doGenerateImage(
    // Create an image filled with all zeros.
    BaseClass::doCreateZeroImage(aImage);
 
-   // BitMap variables. 
-   int tCenterRow = mP->mImageSize.mRows / 2;
-   int tCenterCol = mP->mImageSize.mCols / 2;
-   cv::Point tCenter(tCenterCol,tCenterRow);
-   int tRadius = mP->mImageB;
-   cv::Scalar tColor(255.0);
-   int tThickness = -1;
-   int tLineType = 8;
-   int tShift = 0;
+   // Image wrappers.
+   ImageWrapper tImage(aImage);
 
-   // Draw circle.
-   cv::circle(
-      aImage,
-      tCenter,
-      tRadius,
-      tColor,
-      tThickness,
-      tLineType,
-      tShift);
+   // Loop through all of the pixels of the input image.
+   SV::RCIndexLoop tBitMapLoop(mP->mBitMapSize);
+   while (tBitMapLoop.loop())
+   {
+      // Image target pixel.
+      RCIndex tImagePixel = mP->mBitMapCorner + tBitMapLoop();
+
+      // If a bitmap pixel is true then set the corresponging
+      // image pixel.
+      if (mP->mBitMap[tBitMapLoop.mRow][tBitMapLoop.mCol])
+      {
+         //Prn::print(0, "SET PIXEL %4d %4d", tImagePixel.mRow, tImagePixel.mCol);
+         tImage.at(tImagePixel) = 255;
+      }
+   }
+
 }
 
 //******************************************************************************

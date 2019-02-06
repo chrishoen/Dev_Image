@@ -42,6 +42,7 @@ void SimParms::reset()
 
 void SimParms::expand()
 {
+   mImageGenParms.expand();
 }
 
 //******************************************************************************

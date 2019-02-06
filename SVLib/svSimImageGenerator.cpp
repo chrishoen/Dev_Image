@@ -13,6 +13,7 @@ Description:
 #include "svSimImageGenImpulse.h"
 #include "svSimImageGenGaussian.h"
 #include "svSimImageGenPolygon.h"
+#include "svSimImageGenBitMap.h"
 
 #include "svSimImageGenerator.h"
 
@@ -73,6 +74,7 @@ void SimImageGenerator::initialize(SimImageGenParms* aParms)
    case SimImageGenParms::cImageImpulse:   mSimImageGen = new SimImageGenImpulse(mP); return;
    case SimImageGenParms::cImageGaussian:  mSimImageGen = new SimImageGenGaussian(mP); return;
    case SimImageGenParms::cImagePolygon:   mSimImageGen = new SimImageGenPolygon(mP); return;
+   case SimImageGenParms::cImageBitMap:    mSimImageGen = new SimImageGenBitMap(mP); return;
    }
 }
 

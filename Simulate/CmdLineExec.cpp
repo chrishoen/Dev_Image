@@ -169,13 +169,13 @@ void CmdLineExec::executeParms(Ris::CmdLineCmd* aCmd)
    Display::gParms.readSection("default");
    Display::gParms.show();
 
-   SV::gSimParms.reset();
-   SV::gSimParms.readSection("default");
-   SV::gSimParms.show();
-
    SV::gImageParms.reset();
    SV::gImageParms.readSection("default");
    SV::gImageParms.readOverrides(&SV::gSimParms);
    SV::gImageParms.show();
+
+   SV::gSimParms.reset();
+   SV::gSimParms.readSection("default");
+   SV::gSimParms.show();
 }
 
