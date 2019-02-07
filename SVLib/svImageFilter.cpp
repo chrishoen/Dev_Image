@@ -10,6 +10,7 @@ Description:
 
 #include "svImageFilterGaussBlur.h"
 #include "svImageFilterClassify.h"
+#include "svImageFilterContour.h"
 
 #include "svImageFilter.h"
 
@@ -67,6 +68,7 @@ void ImageFilter::initialize(ImageFilterParms* aParms)
    {
    case ImageFilterParms::cFilterGaussBlur:   mImageFilter = new ImageFilterGaussBlur(mP); return;
    case ImageFilterParms::cFilterClassify:    mImageFilter = new ImageFilterClassify(mP); return;
+   case ImageFilterParms::cFilterContour:     mImageFilter = new ImageFilterContour(mP); return;
    }
 }
 

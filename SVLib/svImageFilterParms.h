@@ -65,6 +65,7 @@ public:
    // Filter types.
    static const int cFilterGaussBlur   = 1;
    static const int cFilterClassify    = 2;
+   static const int cFilterContour     = 3;
 
    //***************************************************************************
    //***************************************************************************

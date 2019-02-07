@@ -97,6 +97,7 @@ void ImageFilterParms::execute(Ris::CmdLineCmd* aCmd)
       if (aCmd->isArgString(1, asStringFilterType(cNone)))              mFilterType = cNone;
       if (aCmd->isArgString(1, asStringFilterType(cFilterGaussBlur)))   mFilterType = cFilterGaussBlur;
       if (aCmd->isArgString(1, asStringFilterType(cFilterClassify)))    mFilterType = cFilterClassify;
+      if (aCmd->isArgString(1, asStringFilterType(cFilterContour)))     mFilterType = cFilterContour;
    }
 
    if (aCmd->isCmd("GaussBlurCode"))      mGaussBlurCode = aCmd->argInt(1);
@@ -119,6 +120,7 @@ char* ImageFilterParms::asStringFilterType(int aX)
    case cNone                : return "None";
    case cFilterGaussBlur     : return "GaussBlur";
    case cFilterClassify      : return "Classify";
+   case cFilterContour       : return "Contour";
    default : return "UNKNOWN";
    }
 }
