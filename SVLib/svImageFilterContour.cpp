@@ -73,6 +73,7 @@ void ImageFilterContour::doFilterImage(
    for (int i = 0; i < tContours.size(); i++)
    {
       std::vector<cv::Point>& tContour = tContours[i];
+      Prn::print(Prn::View11, "**************************************Contour %d", tContour.size());
       for (int j = 0; j < tContour.size(); j++)
       {
          RCIndex tPixel = RCIndex(tContour[j].y, tContour[j].x);
