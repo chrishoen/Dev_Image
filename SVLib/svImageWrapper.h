@@ -30,40 +30,84 @@ public:
    //***************************************************************************
    //***************************************************************************
    //***************************************************************************
-   // Members:
+   // Constants.
+
+   // Image scale factor, 100.0 corresponds to max value 255.
+   static constexpr double cImageScale = 100.0 / 255.0;
+
+   //***************************************************************************
+   //***************************************************************************
+   //***************************************************************************
+   // Members.
 
    // Image matrix.
-   cv::Mat& mImage;
+   cv::Mat* mImage;
 
    //***************************************************************************
    //***************************************************************************
    //***************************************************************************
-   // Infrastrucure:
+   // Methods.
 
    // Constructor.
-   ImageWrapper(cv::Mat& aImage);
-   ImageWrapper(cv::Mat* aImage);
+   ImageWrapper()
+   {
+      mImage = 0;
+   }
+
+   // Constructor.
+   ImageWrapper(cv::Mat& aImage)
+   {
+      mImage = &aImage;
+   }
+
+   // Constructor.
+   ImageWrapper(cv::Mat* aImage)
+   {
+      mImage = aImage;
+   }
+
+   void set(cv::Mat& aImage)
+   {
+      mImage = &aImage;
+   }
+
+   void set(cv::Mat* aImage)
+   {
+      mImage = aImage;
+   }
 
    //***************************************************************************
    //***************************************************************************
    //***************************************************************************
-   // Methods:
+   // Methods
 
    // Element access.
-   uchar& at(RCIndex aPixel);
+   uchar& at(RCIndex aPixel)
+   {
+      return mImage->at<uchar>(aPixel.mRow, aPixel.mCol);
+   }
 
    //***************************************************************************
    //***************************************************************************
    //***************************************************************************
-   // Methods:
+   // Methods
 
    // Return a scaled value such that 0..100.0 corresponds to 0..255,
    // the minimum to maximum range.
-   double getScaled(RCIndex aPixel);
+   double getScaled(RCIndex aPixel)
+   {
+      uchar tValue = mImage->at<uchar>(aPixel.mRow, aPixel.mCol);
+      return tValue * cImageScale;
+   }
 
    // Set a scaled value such that 0..100.0 corresponds to 0..255,
    // the minimum to maximum range.
-   void setScaled(RCIndex aPixel,double aValue);
+   void setScaled(RCIndex aPixel,double aValue)
+   {
+      double tDoubleValue = aValue / cImageScale;
+      uchar tUCharValue = (uchar)round(tDoubleValue);
+      mImage->at<uchar>(aPixel.mRow, aPixel.mCol) = tUCharValue;
+   }
 
    //***************************************************************************
    //***************************************************************************
@@ -73,7 +117,7 @@ public:
    // Return size.
    RCSize rcSize()
    {
-      return RCSize(mImage.rows,mImage.cols);
+      return RCSize(mImage->rows,mImage->cols);
    }
 };
 
