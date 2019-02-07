@@ -8,6 +8,7 @@ Description:
 
 #include "stdafx.h"
 
+#include "svRCLoop.h"
 #include "svImageWrapper.h"
 
 #include "svSimImageGenBitMap.h"

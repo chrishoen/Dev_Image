@@ -3,6 +3,7 @@
 
 #include "svPixelFunctions.h"
 #include "svRCIndex.h"
+#include "svRCLoop.h"
 #include "CmdLineExec.h"
 
 using namespace std;
