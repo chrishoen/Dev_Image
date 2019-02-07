@@ -32,8 +32,17 @@ ImageWrapper::ImageWrapper(cv::Mat* aImage)
    : mImage(*aImage)
 {
 }
+#if 0
+void ImageWrapper::set(cv::Mat& aImage)
+{
+   mImage = aImage;
+}
 
-
+void ImageWrapper::set(cv::Mat* aImage)
+{
+   mImage = *aImage;
+}
+#endif
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
