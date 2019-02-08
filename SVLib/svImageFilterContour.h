@@ -35,6 +35,18 @@ public:
    //***************************************************************************
    // Members.
 
+   // Input and output image wrappers.
+   ImageWrapper mInputImage;
+   ImageWrapper mOutputImage;
+
+   // Number of pixels in the contour that is being filtered.
+   int mNumPixels;
+
+   // Current pixel that is being filtered.
+   RCIndex mXM1;       // X0 - 1  previous pixel.
+   RCIndex mX0;        // X0      current pixel.
+   RCIndex mXP1;       // X0 + 1  next pixel.
+
    //***************************************************************************
    //***************************************************************************
    //***************************************************************************
@@ -55,6 +67,18 @@ public:
    void doFilterImage(
       cv::Mat&       aInput,               // Input
       cv::Mat&       aOutput) override;    // Output
+
+   //***************************************************************************
+   //***************************************************************************
+   //***************************************************************************
+   // Methods.
+
+   // Filter all of the pixels in a contour.
+   void doFilterContour(
+      std::vector<cv::Point>& aContour);
+
+   // Filter an image pixel that is contained in a contour.
+   void doFilterContourPixel(int aN);
 };
 
 
