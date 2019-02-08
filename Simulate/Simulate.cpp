@@ -10,7 +10,7 @@ Description:
 
 #include "svDefs.h"
 #include "svSimImageGenerator.h"
-#include "svImageFilter.h"
+#include "svContourFilter.h"
 #include "svImageParms.h"
 #include "svSimParms.h"
 #include "svImageFunctions.h"
@@ -109,7 +109,7 @@ void Simulate::doRun2()
    Prn::print(Prn::View01, "RUN2********************************************************************");
 
    // Filter simulated image.
-   SV::ImageFilter tFilter(&SV::gImageParms.mFilterParms);
+   SV::ContourFilter tFilter(&SV::gImageParms.mContourFilterParms);
    tFilter.doFilterImage(mInputImage,mOutputImage);
    SV::showImageInfo("OutputImage", mOutputImage);
 
@@ -137,7 +137,7 @@ void Simulate::doRun3()
    SV::showImageInfo("InputImage", mInputImage);
 
    // Filter simulated image.
-   SV::ImageFilter tFilter(&SV::gImageParms.mFilterParms);
+   SV::ContourFilter tFilter(&SV::gImageParms.mContourFilterParms);
    tFilter.doFilterImage(mInputImage, mOutputImage);
    SV::showImageInfo("OutputImage", mOutputImage);
 }
