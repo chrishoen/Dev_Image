@@ -18,42 +18,27 @@ namespace SV
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
-// Conversion functions.
+// Show functions.
 
-// Convert image to target format.
-void convertImageToTarget(
-   cv::Mat&      aInput,    // Input
-   cv::Mat&      aOutput);  // Output
-
-//******************************************************************************
-//******************************************************************************
-//******************************************************************************
-// Region of interest functions.
-
-// Extract an image region of interest.
-void extractImageRoi(
-   cv::Mat&      aInput,    // Input
-   cv::Mat&      aOutput);  // Output
+// Show image info.
+void showImageInfo(
+   const char*   aLabel,   // Input
+   cv::Mat&      aImage);  // Input
 
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
-// Conversion functions.
+// Show functions.
 
-// Write image to file.
-void writeImageToFile(
-   cv::Mat&      aImage,      // Input
-   const char*   aFileName);  // Input
+// Show image in tabular form.
+void showImageTableFloat(
+   const char*   aLabel,   // Input
+   cv::Mat&      aImage);  // Input
 
-//******************************************************************************
-//******************************************************************************
-//******************************************************************************
-// Conversion functions.
-
-// Write image to file.
-void readImageFromFile(
-   cv::Mat&      aImage,      // Input
-   const char*   aFileName);  // Input
+// Show image in tabular form.
+void showImageTableByte(
+   const char*   aLabel,   // Input
+   cv::Mat&      aImage);  // Input
 
 //******************************************************************************
 //******************************************************************************

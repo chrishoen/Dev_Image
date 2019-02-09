@@ -14,6 +14,7 @@ Description:
 #include "svImageParms.h"
 #include "svSimParms.h"
 #include "svImageFunctions.h"
+#include "svImageShow.h"
 #include "displayFunctions.h"
 #include "Simulate.h"
 
