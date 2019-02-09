@@ -241,10 +241,14 @@ public:
    // Members:
 
    bool mFirst;
-   short int mRow;
-   short int mCol;
    short int mLoop;
    short int mDelta;
+   short int mRow;
+   short int mCol;
+   short int mRowA;
+   short int mColA;
+   short int mRowC;
+   short int mColC;
 
    //***************************************************************************
    //***************************************************************************
@@ -255,10 +259,28 @@ public:
    RCDitherLoop1(int aLoop, int aDelta)
    {
       mFirst = true;
-      mRow = -aLoop * aDelta;
-      mCol = -aLoop * aDelta;
       mLoop = aLoop;
       mDelta = aDelta;
+      mRowA = -aLoop * aDelta;
+      mColA = -aLoop * aDelta;
+      mRowC = 0;
+      mColC = 0;
+      mRow = mRowA + mRowC;
+      mCol = mColA + mColC;
+   }
+
+   // Constructor.
+   RCDitherLoop1(RCIndex aCenter,int aLoop, int aDelta)
+   {
+      mFirst = true;
+      mLoop = aLoop;
+      mDelta = aDelta;
+      mRowA = -aLoop * aDelta;
+      mColA = -aLoop * aDelta;
+      mRowC = aCenter.mRow;
+      mColC = aCenter.mCol;
+      mRow = mRowA + mRowC;
+      mCol = mColA + mColC;
    }
 
    // Return the current row and column.
@@ -275,17 +297,19 @@ public:
    // Advance the loop. Return true if the loop is not finished.
    bool advance()
    {
-      if (mCol != mLoop * mDelta)
+      if (mColA != mLoop * mDelta)
       {
-         mCol += mDelta;
+         mColA += mDelta;
       }
       else
       {
-         mCol = -mLoop * mDelta;
-         mRow += mDelta;
+         mColA = -mLoop * mDelta;
+         mRowA += mDelta;
       }
+      mRow = mRowA + mRowC;
+      mCol = mColA + mColC;
 
-      return mRow <= mLoop * mDelta;
+      return mRowA <= mLoop * mDelta;
    }
 
    bool loop()
@@ -301,56 +325,64 @@ public:
 
    void first()
    {
-      mRow = -mLoop * mDelta;
-      mCol = -mLoop * mDelta;
+      mRowA = -mLoop * mDelta;
+      mColA = -mLoop * mDelta;
+      mRow = mRowA + mRowC;
+      mCol = mColA + mColC;
    }
 
    void firstRow()
    {
-      mRow = -mLoop * mDelta;
+      mRowA = -mLoop * mDelta;
+      mRow = mRowA + mRowC;
    }
 
    void firstCol()
    {
-      mCol = -mLoop * mDelta;
+      mColA = -mLoop * mDelta;
+      mCol = mColA + mColC;
    }
 
    bool test()
    {
-      return mRow <= mLoop * mDelta;
+      return mRowA <= mLoop * mDelta;
    }
 
    bool testRow()
    {
-      return mRow <= mLoop * mDelta;
+      return mRowA <= mLoop * mDelta;
    }
 
    bool testCol()
    {
-      return mCol <= mLoop * mDelta;
+      return mColA <= mLoop * mDelta;
    }
 
    void next()
    {
-      if (mCol != mLoop * mDelta)
+      if (mColA != mLoop * mDelta)
       {
-         mCol += mDelta;
+         mColA += mDelta;
       }
       else
       {
-         mCol = -mLoop * mDelta;
-         mRow += mDelta;
+         mColA = -mLoop * mDelta;
+         mRowA += mDelta;
       }
+      mRow = mRowA + mRowC;
+      mCol = mColA + mColC;
    }
 
    void nextRow()
    {
-      mRow += mDelta;
+      mRowA += mDelta;
+      mRow = mRowA + mRowC;
    }
 
    void nextCol()
    {
-      mCol += mDelta;
+      mColA += mDelta;
+      mCol = mColA + mColC;
    }
 };
 
