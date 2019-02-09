@@ -13,7 +13,7 @@ Description:
 #include "svImageParms.h"
 #include "svImageWrapper.h"
 
-#include "svPixelFunctions.h"
+#include "svImageFunctions.h"
 
 //******************************************************************************
 //******************************************************************************

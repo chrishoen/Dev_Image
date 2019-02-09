@@ -20,7 +20,7 @@ namespace SV
 //******************************************************************************
 // This encapsualtes a contour pixel description record.
 
-class ContourPixelRecord
+class ContourRecord
 {
 public:
 
@@ -38,7 +38,7 @@ public:
    // Methods.
 
    // Constructor.
-   ContourPixelRecord()
+   ContourRecord()
    {
       reset();
    }
@@ -54,16 +54,9 @@ public:
 //******************************************************************************
 // This encapsualtes a list of contour pixel description records.
 
-class ContourPixelRecordList : public std::vector<ContourPixelRecord>
+class ContourRecordList : public std::vector<ContourRecord>
 {
 public:
-   //***************************************************************************
-   //***************************************************************************
-   //***************************************************************************
-   // Methods.
-
-   // Show.
-   void show(int aPF);
 };
 
 //******************************************************************************
@@ -71,10 +64,10 @@ public:
 //******************************************************************************
 // This encapsualtes an array of contour pixel description records.
 
-class ContourPixelRecordArray : public RCArray<ContourPixelRecord>
+class ContourRecordArray : public RCArray<ContourRecord>
 {
 public:
-   typedef RCArray<ContourPixelRecord> BaseClass;
+   typedef RCArray<ContourRecord> BaseClass;
 
    //***************************************************************************
    //***************************************************************************
@@ -82,8 +75,6 @@ public:
    // Methods.
 
    void initialize(int aRows, int aCols) override;
-   // Show.
-   void show(int aPF);
 };
 
 //******************************************************************************

@@ -9,7 +9,7 @@ Simulation calculations test one
 //******************************************************************************
 
 #include <opencv2/core/core.hpp>
-#include "svContourPixelRecord.h"
+#include "svContourRecord.h"
 
 //******************************************************************************
 //******************************************************************************
@@ -28,7 +28,7 @@ public:
 
    cv::Mat mInputImage;
    cv::Mat mOutputImage;
-   SV::ContourPixelRecordList mRecordList;
+   SV::ContourRecordList mRecordList;
 
    //***************************************************************************
    //***************************************************************************

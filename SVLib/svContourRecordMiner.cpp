@@ -11,7 +11,7 @@ Description:
 #include "svSysParms.h"
 #include "svDefs.h"
 
-#include "svContourPixelMiner.h"
+#include "svContourRecordMiner.h"
 
 namespace SV
 {
@@ -19,18 +19,18 @@ namespace SV
 //******************************************************************************
 //******************************************************************************
 
-ContourPixelMiner::ContourPixelMiner()
+ContourRecordMiner::ContourRecordMiner()
 {
    reset();
 }
 
-ContourPixelMiner::ContourPixelMiner(ContourFilterParms* aParms)
+ContourRecordMiner::ContourRecordMiner(ContourFilterParms* aParms)
 {
    mP = aParms;
    reset();
 }
 
-void ContourPixelMiner::reset()
+void ContourRecordMiner::reset()
 {
 }
 
@@ -43,11 +43,11 @@ void ContourPixelMiner::reset()
 // Filter the image, depending on the parms.
 
    // Mine the contour pixels from an input image.
-void ContourPixelMiner::doMineImage(
+void ContourRecordMiner::doMineImage(
    cv::Mat&                   aInputImage,          // Input
-   ContourPixelRecordList&    aRecordList)          // Output
+   ContourRecordList&    aRecordList)          // Output
 {
-   Prn::print(0, "ContourPixelMiner::doMineImage");
+   Prn::print(0, "ContourRecordMiner::doMineImage");
 
    // Set the image wrapper.
    mInputImage.set(aInputImage);
@@ -80,9 +80,9 @@ void ContourPixelMiner::doMineImage(
 //******************************************************************************
 // Mine all of the pixels in a contour.
 
-void ContourPixelMiner::doMineContour(
+void ContourRecordMiner::doMineContour(
    std::vector<cv::Point>&   aContour,             // Input
-   ContourPixelRecordList&   aRecordList)          // Output
+   ContourRecordList&   aRecordList)          // Output
 {
    Prn::print(Prn::View11, "**************************************Contour %d", aContour.size());
 
@@ -122,7 +122,7 @@ void ContourPixelMiner::doMineContour(
       doFilterContourPixel(j);
 
       // Transfer the results to the record list.
-      ContourPixelRecord tRecord;
+      ContourRecord tRecord;
       tRecord.mXX = mX0;
       aRecordList.push_back(tRecord);
    }
@@ -133,8 +133,9 @@ void ContourPixelMiner::doMineContour(
 //******************************************************************************
 // Filter an image pixel that is contained in a contour.
 
-void ContourPixelMiner::doFilterContourPixel(int aN)
+void ContourRecordMiner::doFilterContourPixel(int aN)
 {
+   return;
    Prn::print(Prn::View11, "Contour Pixel %4d $ %4d %4d", aN, mX0.mRow, mX0.mCol);
 }
 

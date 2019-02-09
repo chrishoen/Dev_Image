@@ -10,7 +10,8 @@ Description:
 
 #include "svDefs.h"
 #include "svSimImageGenerator.h"
-#include "svContourPixelMiner.h"
+#include "svContourRecordMiner.h"
+#include "svContourShow.h"
 #include "svImageParms.h"
 #include "svSimParms.h"
 #include "svImageFunctions.h"
@@ -110,11 +111,11 @@ void Simulate::doRun2()
    Prn::print(Prn::View01, "RUN2********************************************************************");
 
    // Mine contour pixels from the simulated image.
-   SV::ContourPixelMiner tMiner(&SV::gImageParms.mContourFilterParms);
+   SV::ContourRecordMiner tMiner(&SV::gImageParms.mContourFilterParms);
    tMiner.doMineImage(mInputImage,mRecordList);
 
    // Show the record list.
-   mRecordList.show(0);
+   showRecordList(Prn::View11, "Run2", mRecordList);
 }
 
 //******************************************************************************

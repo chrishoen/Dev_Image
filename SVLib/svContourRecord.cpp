@@ -9,7 +9,7 @@ Description:
 #include "stdafx.h"
 
 #include "svRCLoop.h"
-#include "svContourPixelRecord.h"
+#include "svContourRecord.h"
 
 namespace SV
 {
@@ -17,26 +17,9 @@ namespace SV
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
-// Show list.
-
-void ContourPixelRecordList::show(int aPF)
-{
-   Prn::print(aPF, "ContourPixelRecordList******************************* %4d", size());
-   for (int i = 0; i < size(); i++)
-   {
-      Prn::print(aPF, "PixelRecord %4d $ %4d %4d",
-         i,
-         this->operator[](i).mXX.mRow,
-         this->operator[](i).mXX.mCol);
-   }
-}
-
-//******************************************************************************
-//******************************************************************************
-//******************************************************************************
 // Initialize array.
 
-void ContourPixelRecordArray::initialize(int aRows, int aCols)
+void ContourRecordArray::initialize(int aRows, int aCols)
 {
    // Initialize the array memory and variables.
    BaseClass::initialize(aRows, aCols);

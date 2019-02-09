@@ -9,7 +9,7 @@ Contour pixel record array writer.
 //******************************************************************************
 
 #include "svContourFilterParms.h"
-#include "svContourPixelRecord.h"
+#include "svContourRecord.h"
 
 namespace SV
 {
@@ -57,8 +57,8 @@ public:
    // Write a pixel record list to a pixel record array.
    void doWriteArray(
       cv::Mat&                   aInputImage,          // Input
-      ContourPixelRecordList&    aRecordList,          // Input
-      ContourPixelRecordArray&   aRecordArray);        // Output
+      ContourRecordList&    aRecordList,          // Input
+      ContourRecordArray&   aRecordArray);        // Output
 };
 
 

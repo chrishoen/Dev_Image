@@ -11,7 +11,7 @@ Contour specific image filter.
 
 #include "svImageWrapper.h"
 #include "svContourFilterParms.h"
-#include "svContourPixelRecord.h"
+#include "svContourRecord.h"
 
 namespace SV
 {

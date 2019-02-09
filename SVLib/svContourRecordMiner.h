@@ -11,7 +11,7 @@ Contour specific image filter.
 
 #include "svImageWrapper.h"
 #include "svContourFilterParms.h"
-#include "svContourPixelRecord.h"
+#include "svContourRecord.h"
 
 namespace SV
 {
@@ -25,7 +25,7 @@ namespace SV
 // This is an image filter that filters pixels in the contours of an image.
 //
 
-class ContourPixelMiner
+class ContourRecordMiner
 {
 public:
 
@@ -58,8 +58,8 @@ public:
    // Methods.
 
    // Constructor.
-   ContourPixelMiner();
-   ContourPixelMiner(ContourFilterParms* aParms);
+   ContourRecordMiner();
+   ContourRecordMiner(ContourFilterParms* aParms);
    void reset();
 
    //***************************************************************************
@@ -70,7 +70,7 @@ public:
    // Mine the contour pixels from an input image.
    void doMineImage(
       cv::Mat&                   aInputImage,          // Input
-      ContourPixelRecordList&    aRecordList);         // Output
+      ContourRecordList&    aRecordList);         // Output
 
    //***************************************************************************
    //***************************************************************************
@@ -80,7 +80,7 @@ public:
    // Mine all of the pixels in a contour.
    void doMineContour(
       std::vector<cv::Point>&   aContour,             // Input
-      ContourPixelRecordList&   aRecordList);         // Output
+      ContourRecordList&   aRecordList);         // Output
 
    // Filter an image pixel that is contained in a contour.
    void doFilterContourPixel(int aN);

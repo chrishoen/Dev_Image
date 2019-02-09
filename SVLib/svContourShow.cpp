@@ -8,53 +8,34 @@ Description:
 
 #include "stdafx.h"
 
-#include "svContourArrayWriter.h"
+#include "svImageParms.h"
+
+#include "svContourShow.h"
+
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
 
 namespace SV
 {
-//******************************************************************************
-//******************************************************************************
-//******************************************************************************
 
-ContourArrayWriter::ContourArrayWriter()
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+// Show record list.
+
+void showRecordList(
+   int                  aPF,           // Input
+   const char*          aLabel,        // Input
+   ContourRecordList&   aRecordList)   // Input
 {
-   reset();
-}
-
-ContourArrayWriter::ContourArrayWriter(ContourFilterParms* aParms)
-{
-   mP = aParms;
-   reset();
-}
-
-void ContourArrayWriter::reset()
-{
-}
-
-//******************************************************************************
-//******************************************************************************
-//******************************************************************************
-//******************************************************************************
-//******************************************************************************
-//******************************************************************************
-// Write a pixel record list to a pixel record array.
-
-void ContourArrayWriter::doWriteArray(
-   cv::Mat&                   aInputImage,          // Input
-   ContourRecordList&    aRecordList,          // Input
-   ContourRecordArray&   aRecordArray)         // Output
-{
-   Prn::print(0, "ContourArrayWriter::doMineImage");
-
-   // Initialize the output array.
-   aRecordArray.initialize(aInputImage.rows, aInputImage.cols);
-
-   // Copy each record in the input list to the corresponding position
-   // in the output array.
+   Prn::print(aPF, "RecordList %-12s %4d", aLabel, aRecordList.size());
    for (int i = 0; i < aRecordList.size(); i++)
    {
-      RCIndex tIndex = aRecordList[i].mXX;
-      aRecordArray.at(tIndex) = aRecordList[i];
+      Prn::print(aPF, "Record %4d $ %4d %4d",
+         i,
+         aRecordList[i].mXX.mRow,
+         aRecordList[i].mXX.mCol);
    }
 }
 
