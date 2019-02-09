@@ -50,7 +50,7 @@ void showRecordArray(
    ContourRecordArray&  aArray)        // Input
 {
    printf("RecordArray %-12s %4d %4d\n", aLabel, aArray.mRows, aArray.mCols);
-
+   if (aArray.mRows == 0) return;
 
    // Region of interest variables.
    RCIndex tCenterPixel = gImageParms.mRoiPixel;

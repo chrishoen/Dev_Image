@@ -86,15 +86,12 @@ void Simulate::doRun2()
    // Show the record list.
    showRecordList(Prn::View11, "Run2", mRecordList);
 
-   // Mine contour pixel records from the simulated image.
+   // Copy the record list to the record array.
    SV::ContourArrayWriter tArrayWriter(&SV::gImageParms.mContourFilterParms);
    tArrayWriter.doWriteArray(
       mInputImage,
       mRecordList,
       mRecordArray);
-
-   // Show the record list.
-   showRecordArray("Run2", mRecordArray);
 }
 
 //******************************************************************************
@@ -104,7 +101,6 @@ void Simulate::doRun2()
 
 void Simulate::doRun3()
 {
-#if 0
    Prn::print(Prn::View01, "RUN3********************************************************************");
    Prn::print(Prn::View01, "RUN3********************************************************************");
    Prn::print(Prn::View01, "RUN3********************************************************************");
@@ -114,11 +110,18 @@ void Simulate::doRun3()
    tGenerator.doGenerateImage(mInputImage);
    SV::showImageInfo("InputImage", mInputImage);
 
-   // Filter simulated image.
-   SV::ContourFilter tFilter(&SV::gImageParms.mContourFilterParms);
-   tFilter.doFilterImage(mInputImage, mOutputImage);
-   SV::showImageInfo("OutputImage", mOutputImage);
-#endif
+   // Mine contour pixel records from the simulated image.
+   SV::ContourRecordMiner tMiner(&SV::gImageParms.mContourFilterParms);
+   tMiner.doMineImage(
+      mInputImage,
+      mRecordList);
+
+   // Copy the record list to the record array.
+   SV::ContourArrayWriter tArrayWriter(&SV::gImageParms.mContourFilterParms);
+   tArrayWriter.doWriteArray(
+      mInputImage,
+      mRecordList,
+      mRecordArray);
 }
 
 //******************************************************************************
@@ -130,10 +133,9 @@ void Simulate::doShow(int aCode)
 {
    switch (aCode)
    {
-   case 1: SV::showImageTableFloat("InputImage", mInputImage); break;
-   case 2: SV::showImageTableFloat("OutputImage", mOutputImage); break;
-   case 3: SV::showImageTableByte("InputImage", mInputImage); break;
-   case 4: SV::showImageTableByte("OutputImage", mOutputImage); break;
+   case 1: SV::showImageTableByte("InputImage", mInputImage); break;
+   case 2: SV::showRecordArray("InputImage", mRecordArray); break;
+   case 3: SV::showImageTableByte("OutputImage", mOutputImage); break;
    }
 }
 
