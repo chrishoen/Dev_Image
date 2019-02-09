@@ -10,7 +10,7 @@ Description:
 
 #include "svDefs.h"
 #include "svSimImageGenerator.h"
-#include "svContourFilter.h"
+#include "svContourPixelMiner.h"
 #include "svImageParms.h"
 #include "svSimParms.h"
 #include "svImageFunctions.h"
@@ -108,16 +108,12 @@ void Simulate::doRun2()
    Prn::print(Prn::View01, "RUN2********************************************************************");
    Prn::print(Prn::View01, "RUN2********************************************************************");
 
-   // Filter simulated image.
-   SV::ContourFilter tFilter(&SV::gImageParms.mContourFilterParms);
-   tFilter.doFilterImage(mInputImage,mOutputImage);
-   SV::showImageInfo("OutputImage", mOutputImage);
+   // Mine contour pixels from the simulated image.
+   SV::ContourPixelMiner tMiner(&SV::gImageParms.mContourFilterParms);
+   tMiner.doMineImage(mInputImage,mRecordList);
 
-   // Convert simulated image to target image and display.
-   Display::showImage(mOutputImage);
-
-   // Save simulated image.
-   SV::writeImageToFile(mOutputImage, SV::gImageParms.mOutputImageFileName);
+   // Show the record list.
+   mRecordList.show(0);
 }
 
 //******************************************************************************
@@ -127,6 +123,7 @@ void Simulate::doRun2()
 
 void Simulate::doRun3()
 {
+#if 0
    Prn::print(Prn::View01, "RUN3********************************************************************");
    Prn::print(Prn::View01, "RUN3********************************************************************");
    Prn::print(Prn::View01, "RUN3********************************************************************");
@@ -140,6 +137,7 @@ void Simulate::doRun3()
    SV::ContourFilter tFilter(&SV::gImageParms.mContourFilterParms);
    tFilter.doFilterImage(mInputImage, mOutputImage);
    SV::showImageInfo("OutputImage", mOutputImage);
+#endif
 }
 
 //******************************************************************************
@@ -161,3 +159,7 @@ void Simulate::doShow(int aCode)
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
+// Convert simulated image to target image and display.
+//Display::showImage(mOutputImage);
+// Save simulated image.
+//SV::writeImageToFile(mOutputImage, SV::gImageParms.mOutputImageFileName);

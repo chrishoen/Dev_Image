@@ -25,7 +25,7 @@ namespace SV
 // This is an image filter that filters pixels in the contours of an image.
 //
 
-class ContourFilter
+class ContourPixelMiner
 {
 public:
 
@@ -41,9 +41,8 @@ public:
    //***************************************************************************
    // Members.
 
-   // Input and output image wrappers.
+   // Input image wrapper.
    ImageWrapper mInputImage;
-   ImageWrapper mOutputImage;
 
    // Number of pixels in the contour that is being filtered.
    int mNumPixels;
@@ -59,8 +58,8 @@ public:
    // Methods.
 
    // Constructor.
-   ContourFilter();
-   ContourFilter(ContourFilterParms* aParms);
+   ContourPixelMiner();
+   ContourPixelMiner(ContourFilterParms* aParms);
    void reset();
 
    //***************************************************************************
@@ -68,19 +67,20 @@ public:
    //***************************************************************************
    // Methods.
 
-   // Filter an image according to the parms.
-   void doFilterImage(
-      cv::Mat&       aInput,               // Input
-      cv::Mat&       aOutput);             // Output
+   // Mine the contour pixels from an input image.
+   void doMineImage(
+      cv::Mat&                   aInputImage,          // Input
+      ContourPixelRecordList&    aRecordList);         // Output
 
    //***************************************************************************
    //***************************************************************************
    //***************************************************************************
    // Methods.
 
-   // Filter all of the pixels in a contour.
-   void doFilterContour(
-      std::vector<cv::Point>& aContour);
+   // Mine all of the pixels in a contour.
+   void doMineContour(
+      std::vector<cv::Point>&   aContour,             // Input
+      ContourPixelRecordList&   aRecordList);         // Output
 
    // Filter an image pixel that is contained in a contour.
    void doFilterContourPixel(int aN);
