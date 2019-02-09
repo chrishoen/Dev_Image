@@ -133,9 +133,10 @@ void Simulate::doShow(int aCode)
 {
    switch (aCode)
    {
-   case 1: SV::showImageTableByte("InputImage", mInputImage); break;
-   case 2: SV::showRecordArray("InputImage", mRecordArray); break;
-   case 3: SV::showImageTableByte("OutputImage", mOutputImage); break;
+   case 1:  SV::showImageTableByte("InputImage", mInputImage); break;
+   case 20: SV::showRecordArray(0, "InputImage", mRecordArray); break;
+   case 21: SV::showRecordArray(1, "InputImage", mRecordArray); break;
+   case 3:  SV::showImageTableByte("OutputImage", mOutputImage); break;
    }
 }
 

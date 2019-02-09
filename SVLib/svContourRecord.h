@@ -30,8 +30,10 @@ public:
    // Members.
 
    bool    mValidFlag;
+   int     mK;
    RCIndex mXX;
-   RCIndex mVX;
+   RCIndex mXV;
+   RCIndex mXA;
 
    //***************************************************************************
    //***************************************************************************
@@ -46,8 +48,10 @@ public:
    void reset()
    {
       mValidFlag = false;
+      mK = 0;
       mXX.reset();
-      mVX.reset();
+      mXV.reset();
+      mXA.reset();
    }
 };
 

@@ -46,26 +46,72 @@ void showRecordList(
 // Show record list.
 
 void showRecordArray(
+   int                  aCode,         // Input
    const char*          aLabel,        // Input
    ContourRecordArray&  aArray)        // Input
 {
-   printf("RecordArray %-12s %4d %4d\n", aLabel, aArray.mRows, aArray.mCols);
-   if (aArray.mRows == 0) return;
+   // Guard.
+   if (aArray.mRows == 0)return;
 
    // Region of interest variables.
    RCIndex tCenterPixel = gImageParms.mRoiPixel;
    int tB = gImageParms.mRoiB;
 
+   printf("\n");
+   printf("********************************************* %-12s %4d %4d $ %4d %4d\n",
+      aLabel, aArray.mRows, aArray.mCols,
+      tCenterPixel.mRow, tCenterPixel.mRow);
+   printf("\n");
+
    SV::RCDitherLoop1 tLoop(tCenterPixel, tB, 1);
+
+   // Print header.
+   printf("     $ ");
+   for (tLoop.firstCol(); tLoop.testCol(); tLoop.nextCol())
+   {
+      printf(" %8d", tLoop.mCol);
+   }
+   printf("\n");
+   printf("     $\n");
+
+   // Loop through all of the rows and columns of the pulse.
    for (tLoop.firstRow(); tLoop.testRow(); tLoop.nextRow())
    {
-      for (tLoop.firstCol(); tLoop.testCol(); tLoop.nextCol())
+      if (true)
       {
-         printf("$%4d %4d", tLoop.mRow, tLoop.mCol);
+         printf("%4d V ", tLoop().mRow);
+         for (tLoop.firstCol(); tLoop.testCol(); tLoop.nextCol())
+         {
+            ContourRecord tRecord = aArray.at(tLoop());
+            if (tRecord.mValidFlag)
+            {
+               printf(" %2d: %2d%2d", tRecord.mK, tRecord.mXV.mRow, tRecord.mXV.mCol);
+            }
+            else
+            {
+               printf("        .");
+            }
+         }
+         printf("\n");
       }
-      printf("\n");
+      if (aCode == 1)
+      {
+         printf("     A ");
+         for (tLoop.firstCol(); tLoop.testCol(); tLoop.nextCol())
+         {
+            ContourRecord tRecord = aArray.at(tLoop());
+            if (tRecord.mValidFlag)
+            {
+               printf("   : %2d%2d", tRecord.mXA.mRow, tRecord.mXA.mCol);
+            }
+            else
+            {
+               printf("        .");
+            }
+         }
+         printf("\n");
+      }
    }
-
 }
 
 //******************************************************************************

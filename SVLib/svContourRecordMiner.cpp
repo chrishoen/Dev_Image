@@ -32,6 +32,13 @@ ContourRecordMiner::ContourRecordMiner(ContourFilterParms* aParms)
 
 void ContourRecordMiner::reset()
 {
+   mNumPixels = 0;
+   mXM1.reset();
+   mX0.reset();
+   mXP1.reset();
+   mXV.reset();
+   mXA.reset();
+
 }
 
 //******************************************************************************
@@ -124,7 +131,10 @@ void ContourRecordMiner::doMineContour(
       // Transfer the results to the record list.
       ContourRecord tRecord;
       tRecord.mValidFlag = true;
+      tRecord.mK = j;
       tRecord.mXX = mX0;
+      tRecord.mXV = mXV;
+      tRecord.mXA = mXA;
       aRecordList.push_back(tRecord);
    }
 }
@@ -136,8 +146,11 @@ void ContourRecordMiner::doMineContour(
 
 void ContourRecordMiner::doFilterContourPixel(int aN)
 {
-   return;
-   Prn::print(Prn::View11, "Contour Pixel %4d $ %4d %4d", aN, mX0.mRow, mX0.mCol);
+   mXV.mRow = mXP1.mRow - mXM1.mRow;
+   mXV.mCol = mXP1.mCol - mXM1.mCol;
+
+   mXA.mRow = mXP1.mRow + mXM1.mRow - 2 * mX0.mRow;
+   mXA.mCol = mXP1.mCol + mXM1.mCol - 2 * mX0.mCol;
 }
 
 //******************************************************************************
