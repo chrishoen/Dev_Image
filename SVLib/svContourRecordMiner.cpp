@@ -123,6 +123,7 @@ void ContourRecordMiner::doMineContour(
 
       // Transfer the results to the record list.
       ContourRecord tRecord;
+      tRecord.mValidFlag = true;
       tRecord.mXX = mX0;
       aRecordList.push_back(tRecord);
    }

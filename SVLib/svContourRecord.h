@@ -29,6 +29,7 @@ public:
    //***************************************************************************
    // Members.
 
+   bool    mValidFlag;
    RCIndex mXX;
    RCIndex mVX;
 
@@ -44,6 +45,7 @@ public:
    }
    void reset()
    {
+      mValidFlag = false;
       mXX.reset();
       mVX.reset();
    }

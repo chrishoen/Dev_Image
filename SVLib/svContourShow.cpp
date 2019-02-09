@@ -8,6 +8,7 @@ Description:
 
 #include "stdafx.h"
 
+#include "svRCLoop.h"
 #include "svImageParms.h"
 
 #include "svContourShow.h"
@@ -50,6 +51,15 @@ void showRecordArray(
    ContourRecordArray&  aArray)        // Input
 {
    Prn::print(aPF, "RecordArray %-12s %4d %4d", aLabel, aArray.mRows, aArray.mCols);
+
+   SV::RCIndexLoop tLoop(4, 4);
+   for (tLoop.firstRow(); tLoop.testRow(); tLoop.nextRow())
+   {
+      for (tLoop.firstCol(); tLoop.testCol(); tLoop.nextCol())
+      {
+         Prn::print(0, "Loop %3d %3d", tLoop.mRow, tLoop.mCol);
+      }
+   }
 }
 
 //******************************************************************************
