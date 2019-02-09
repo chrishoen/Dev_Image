@@ -56,7 +56,7 @@ public:
 
    // Write a pixel record list to a pixel record array.
    void doWriteArray(
-      cv::Mat&                   aInputImage,          // Input
+      cv::Mat&              aInputImage,          // Input
       ContourRecordList&    aRecordList,          // Input
       ContourRecordArray&   aRecordArray);        // Output
 };

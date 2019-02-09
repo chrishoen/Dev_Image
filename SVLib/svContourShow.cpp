@@ -27,16 +27,29 @@ namespace SV
 void showRecordList(
    int                  aPF,           // Input
    const char*          aLabel,        // Input
-   ContourRecordList&   aRecordList)   // Input
+   ContourRecordList&   aList)         // Input
 {
-   Prn::print(aPF, "RecordList %-12s %4d", aLabel, aRecordList.size());
-   for (int i = 0; i < aRecordList.size(); i++)
+   Prn::print(aPF, "RecordList %-12s %4d", aLabel, aList.size());
+   for (int i = 0; i < aList.size(); i++)
    {
       Prn::print(aPF, "Record %4d $ %4d %4d",
          i,
-         aRecordList[i].mXX.mRow,
-         aRecordList[i].mXX.mCol);
+         aList[i].mXX.mRow,
+         aList[i].mXX.mCol);
    }
+}
+
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+// Show record list.
+
+void showRecordArray(
+   int                  aPF,           // Input
+   const char*          aLabel,        // Input
+   ContourRecordArray&  aArray)        // Input
+{
+   Prn::print(aPF, "RecordArray %-12s %4d %4d", aLabel, aArray.mRows, aArray.mCols);
 }
 
 //******************************************************************************
