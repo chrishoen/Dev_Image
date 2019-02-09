@@ -8,7 +8,7 @@ Description:
 
 #include "stdafx.h"
 
-#include "svContourArrayWriter.h"
+#include "svContourConjugateWriter.h"
 
 namespace SV
 {
@@ -16,46 +16,38 @@ namespace SV
 //******************************************************************************
 //******************************************************************************
 
-ContourArrayWriter::ContourArrayWriter()
+ContourConjugateWriter::ContourConjugateWriter()
 {
    reset();
 }
 
-ContourArrayWriter::ContourArrayWriter(ContourFilterParms* aParms)
+ContourConjugateWriter::ContourConjugateWriter(ContourFilterParms* aParms)
 {
    mP = aParms;
    reset();
 }
 
-void ContourArrayWriter::reset()
+void ContourConjugateWriter::reset()
 {
 }
 
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
-// Write a pixel record list to a pixel record array.
-
-void ContourArrayWriter::doInitializeArray(
-   cv::Mat&              aInputImage,          // Input
-   ContourRecordArray&   aRecordArray)         // Output
-{
-   Prn::print(0, "ContourArrayWriter::doInitializeArray");
-
-   // Initialize the output array to empty.
-   aRecordArray.initialize(aInputImage.rows, aInputImage.cols);
-}
-
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
 // Write a pixel record list to a pixel record array.
 
-void ContourArrayWriter::doWriteArray(
+void ContourConjugateWriter::doWriteArray(
+   cv::Mat&                   aInputImage,          // Input
    ContourRecordList&    aRecordList,          // Input
    ContourRecordArray&   aRecordArray)         // Output
 {
-   Prn::print(0, "ContourArrayWriter::doWriteArray");
+   Prn::print(0, "ContourConjugateWriter::doMineImage");
+
+   // Initialize the output array.
+   aRecordArray.initialize(aInputImage.rows, aInputImage.cols);
 
    // Copy each record in the input list to the corresponding position
    // in the output array.

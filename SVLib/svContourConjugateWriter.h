@@ -23,7 +23,7 @@ namespace SV
 // This is a parameterized function that writes to a pixel record array.
 //
 
-class ContourArrayWriter
+class ContourConjugateWriter
 {
 public:
 
@@ -45,8 +45,8 @@ public:
    // Methods.
 
    // Constructor.
-   ContourArrayWriter();
-   ContourArrayWriter(ContourFilterParms* aParms);
+   ContourConjugateWriter();
+   ContourConjugateWriter(ContourFilterParms* aParms);
    void reset();
 
    //***************************************************************************
@@ -54,13 +54,9 @@ public:
    //***************************************************************************
    // Methods.
 
-   // Initialize a pixel record array.
-   void doInitializeArray(
-      cv::Mat&              aInputImage,          // Input
-      ContourRecordArray&   aRecordArray);        // Output
-
    // Write a pixel record list to a pixel record array.
    void doWriteArray(
+      cv::Mat&              aInputImage,          // Input
       ContourRecordList&    aRecordList,          // Input
       ContourRecordArray&   aRecordArray);        // Output
 };

@@ -8,7 +8,7 @@ Description:
 
 #include "stdafx.h"
 
-#include "svContourArrayWriter.h"
+#include "svContourImageWriter.h"
 
 namespace SV
 {
@@ -16,54 +16,44 @@ namespace SV
 //******************************************************************************
 //******************************************************************************
 
-ContourArrayWriter::ContourArrayWriter()
+ContourImageWriter::ContourImageWriter()
 {
    reset();
 }
 
-ContourArrayWriter::ContourArrayWriter(ContourFilterParms* aParms)
+ContourImageWriter::ContourImageWriter(ContourFilterParms* aParms)
 {
    mP = aParms;
    reset();
 }
 
-void ContourArrayWriter::reset()
+void ContourImageWriter::reset()
 {
 }
 
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
-// Write a pixel record list to a pixel record array.
+// Initialize an output image.
 
-void ContourArrayWriter::doInitializeArray(
+void ContourImageWriter::doInitializeImage(
    cv::Mat&              aInputImage,          // Input
-   ContourRecordArray&   aRecordArray)         // Output
+   cv::Mat&              aOutputImage)         // Output
 {
-   Prn::print(0, "ContourArrayWriter::doInitializeArray");
-
-   // Initialize the output array to empty.
-   aRecordArray.initialize(aInputImage.rows, aInputImage.cols);
+   // Copy the input to the output.
+   aOutputImage = aInputImage.clone();
 }
 
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
-// Write a pixel record list to a pixel record array.
+// Write a pixel record list to an output image.
 
-void ContourArrayWriter::doWriteArray(
+void ContourImageWriter::doWriteImage(
    ContourRecordList&    aRecordList,          // Input
-   ContourRecordArray&   aRecordArray)         // Output
+   cv::Mat&              aOutputImage)         // Input
 {
-   Prn::print(0, "ContourArrayWriter::doWriteArray");
 
-   // Copy each record in the input list to the corresponding position
-   // in the output array.
-   for (int i = 0; i < aRecordList.size(); i++)
-   {
-      RCIndex tIndex = aRecordList[i].mXX;
-      aRecordArray.at(tIndex) = aRecordList[i];
-   }
 }
 
 //******************************************************************************

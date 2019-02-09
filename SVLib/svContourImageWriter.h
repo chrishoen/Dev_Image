@@ -1,7 +1,7 @@
 #pragma once
 
 /*==============================================================================
-Contour pixel record array writer.
+Contour output image writer.
 ==============================================================================*/
 
 //******************************************************************************
@@ -20,10 +20,10 @@ namespace SV
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
-// This is a parameterized function that writes to a pixel record array.
+// This is a parameterized function that writes to the output image.
 //
 
-class ContourArrayWriter
+class ContourImageWriter
 {
 public:
 
@@ -45,8 +45,8 @@ public:
    // Methods.
 
    // Constructor.
-   ContourArrayWriter();
-   ContourArrayWriter(ContourFilterParms* aParms);
+   ContourImageWriter();
+   ContourImageWriter(ContourFilterParms* aParms);
    void reset();
 
    //***************************************************************************
@@ -54,15 +54,15 @@ public:
    //***************************************************************************
    // Methods.
 
-   // Initialize a pixel record array.
-   void doInitializeArray(
+   // Initialize an output image.
+   void doInitializeImage(
       cv::Mat&              aInputImage,          // Input
-      ContourRecordArray&   aRecordArray);        // Output
+      cv::Mat&              aOutputImage);        // Output
 
-   // Write a pixel record list to a pixel record array.
-   void doWriteArray(
+   // Write a pixel record list to an output image.
+   void doWriteImage(
       ContourRecordList&    aRecordList,          // Input
-      ContourRecordArray&   aRecordArray);        // Output
+      cv::Mat&              aOutputImage);        // Input
 };
 
 

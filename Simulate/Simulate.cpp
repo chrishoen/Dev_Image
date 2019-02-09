@@ -8,16 +8,21 @@ Description:
 
 #include "stdafx.h"
 
-#include "svDefs.h"
-#include "svSimImageGenerator.h"
-#include "svContourRecordMiner.h"
-#include "svContourArrayWriter.h"
-#include "svContourShow.h"
 #include "svImageParms.h"
 #include "svSimParms.h"
+
+#include "svSimImageGenerator.h"
+
+#include "svContourRecordMiner.h"
+#include "svContourArrayWriter.h"
+#include "svContourImageWriter.h"
+#include "svContourShow.h"
+
 #include "svImageFunctions.h"
 #include "svImageShow.h"
+
 #include "displayFunctions.h"
+
 #include "Simulate.h"
 
 //******************************************************************************
@@ -85,13 +90,6 @@ void Simulate::doRun2()
 
    // Show the record list.
    showRecordList(Prn::View11, "Run2", mRecordList);
-
-   // Copy the record list to the record array.
-   SV::ContourArrayWriter tArrayWriter(&SV::gImageParms.mContourFilterParms);
-   tArrayWriter.doWriteArray(
-      mInputImage,
-      mRecordList,
-      mRecordArray);
 }
 
 //******************************************************************************
@@ -105,21 +103,35 @@ void Simulate::doRun3()
    Prn::print(Prn::View01, "RUN3********************************************************************");
    Prn::print(Prn::View01, "RUN3********************************************************************");
 
+   // Parameterized functions.
+   SV::SimImageGenerator  tGenerator(&SV::gSimParms.mImageGenParms);
+   SV::ContourImageWriter tImageWriter(&SV::gImageParms.mContourFilterParms);
+   SV::ContourRecordMiner tMiner(&SV::gImageParms.mContourFilterParms);
+   SV::ContourArrayWriter tArrayWriter(&SV::gImageParms.mContourFilterParms);
+
    // Generate simulated image.
-   SV::SimImageGenerator tGenerator(&SV::gSimParms.mImageGenParms);
-   tGenerator.doGenerateImage(mInputImage);
+   tGenerator.doGenerateImage(
+      mInputImage);
+
    SV::showImageInfo("InputImage", mInputImage);
 
+   // Initialize the output image.
+   tImageWriter.doInitializeImage(
+      mInputImage,
+      mOutputImage);
+
+   // Initialize the output array. 
+   tArrayWriter.doInitializeArray(
+      mOutputImage,
+      mRecordArray);
+
    // Mine contour pixel records from the simulated image.
-   SV::ContourRecordMiner tMiner(&SV::gImageParms.mContourFilterParms);
    tMiner.doMineImage(
       mInputImage,
       mRecordList);
 
    // Copy the record list to the record array.
-   SV::ContourArrayWriter tArrayWriter(&SV::gImageParms.mContourFilterParms);
    tArrayWriter.doWriteArray(
-      mInputImage,
       mRecordList,
       mRecordArray);
 }
