@@ -9,7 +9,7 @@ Description:
 #include "stdafx.h"
 
 #include "risAlphaDir.h"
-#include "svSysParms.h"
+#include "svRCLoop.h"
 #include "svImageParms.h"
 #include "svImageWrapper.h"
 
@@ -85,7 +85,7 @@ void showImageTableFloat(
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
-// Show image info.
+// Show image in tabular form.
 
 void showImageTableByte(
    const char*   aLabel,   // Input
@@ -107,23 +107,24 @@ void showImageTableByte(
    // Image wrapper.
    ImageWrapper tImage(aImage);
 
+   SV::RCDitherLoop1 tLoop(tCenterPixel, tB, 1);
+
    // Print header.
    printf("     $ ");
-   for (int iColX = -tB; iColX <= tB; iColX++)
+   for (tLoop.firstCol(); tLoop.testCol(); tLoop.nextCol())
    {
-      printf(" %8d", tCenterPixel.mCol + iColX);
+      printf(" %8d", tLoop.mCol);
    }
    printf("\n");
    printf("     $\n");
 
    // Loop through all of the rows and columns of the pulse.
-   for (int iRowY = -tB; iRowY <= tB; iRowY++)
+   for (tLoop.firstRow(); tLoop.testRow(); tLoop.nextRow())
    {
-      printf("%4d $ ", tCenterPixel.mRow + iRowY);
-      for (int iColX = -tB; iColX <= tB; iColX++)
+      printf("%4d $ ", tLoop().mRow);
+      for (tLoop.firstCol(); tLoop.testCol(); tLoop.nextCol())
       {
-         RCIndex tPixel(tCenterPixel.mRow + iRowY, tCenterPixel.mCol + iColX);
-         printf(" %8d", (int)tImage.at(tPixel));
+         printf(" %8d", (int)tImage.at(tLoop()));
       }
       printf("\n");
    }
