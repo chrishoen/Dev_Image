@@ -86,6 +86,9 @@ void ContourPixelMiner::doMineContour(
 {
    Prn::print(Prn::View11, "**************************************Contour %d", aContour.size());
 
+   // Clear the output.
+   aRecordList.clear();
+
    // Loop for each pixel in the contour.
    mNumPixels = (int)aContour.size();
    int jM1 = 0;  // Previous pixel array index.

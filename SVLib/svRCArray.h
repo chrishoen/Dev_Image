@@ -127,7 +127,7 @@ public:
    // Methods.
 
    // Initialize.
-   void initialize(int aRows,int aCols)
+   virtual void initialize(int aRows,int aCols)
    {
       // If memory has already been allocated then deallocate it.
       decrementResourceCount();
@@ -151,7 +151,7 @@ public:
    }
 
    // Initialize.
-   void initialize(RCSize aSize)
+   virtual void initialize(RCSize aSize)
    {
       initialize(aSize.mRows,aSize.mCols);
    }
