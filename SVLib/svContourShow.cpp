@@ -46,20 +46,26 @@ void showRecordList(
 // Show record list.
 
 void showRecordArray(
-   int                  aPF,           // Input
    const char*          aLabel,        // Input
    ContourRecordArray&  aArray)        // Input
 {
-   Prn::print(aPF, "RecordArray %-12s %4d %4d", aLabel, aArray.mRows, aArray.mCols);
+   printf("RecordArray %-12s %4d %4d\n", aLabel, aArray.mRows, aArray.mCols);
 
-   SV::RCIndexLoop tLoop(4, 4);
+
+   // Region of interest variables.
+   RCIndex tCenterPixel = gImageParms.mRoiPixel;
+   int tB = gImageParms.mRoiB;
+
+   SV::RCDitherLoop1 tLoop(tCenterPixel, tB, 1);
    for (tLoop.firstRow(); tLoop.testRow(); tLoop.nextRow())
    {
       for (tLoop.firstCol(); tLoop.testCol(); tLoop.nextCol())
       {
-         Prn::print(0, "Loop %3d %3d", tLoop.mRow, tLoop.mCol);
+         printf("$%4d %4d", tLoop.mRow, tLoop.mCol);
       }
+      printf("\n");
    }
+
 }
 
 //******************************************************************************

@@ -28,7 +28,6 @@ void showRecordList(
 
 // Show record array.
 void showRecordArray(
-   int                  aPF,           // Input
    const char*          aLabel,        // Input
    ContourRecordArray&  aRecordArray); // Input
 

@@ -94,7 +94,7 @@ void Simulate::doRun2()
       mRecordArray);
 
    // Show the record list.
-   showRecordArray(Prn::View11, "Run2", mRecordArray);
+   showRecordArray("Run2", mRecordArray);
 }
 
 //******************************************************************************
