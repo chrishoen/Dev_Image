@@ -43,6 +43,7 @@ void CmdLineExec::execute(Ris::CmdLineCmd* aCmd)
    if (aCmd->isCmd("GO12"))  executeGo12(aCmd);
    if (aCmd->isCmd("GO13"))  executeGo13(aCmd);
    if (aCmd->isCmd("GO14"))  executeGo14(aCmd);
+   if (aCmd->isCmd("GO15"))  executeGo15(aCmd);
    if (aCmd->isCmd("GO21"))  executeGo21(aCmd);
    if (aCmd->isCmd("GO22"))  executeGo22(aCmd);
    if (aCmd->isCmd("GO23"))  executeGo23(aCmd);
@@ -265,6 +266,25 @@ void CmdLineExec::executeGo14(Ris::CmdLineCmd* aCmd)
    while (tDitherLoop.loop())
    {
       Prn::print(0, "DitherLoop2 %3d %3d", tDitherLoop.mRow, tDitherLoop.mCol);
+   }
+}
+
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+
+void CmdLineExec::executeGo15(Ris::CmdLineCmd* aCmd)
+{
+   aCmd->setArgDefault(1, 1);
+   aCmd->setArgDefault(2, 1);
+
+   SV::RCDitherLoop1 tLoop(aCmd->argInt(1), aCmd->argInt(2));
+   for (tLoop.firstRow(); tLoop.testRow(); tLoop.nextRow())
+   {
+      for (tLoop.firstCol(); tLoop.testCol(); tLoop.nextCol())
+      {
+         Prn::print(0, "Loop %3d %3d", tLoop.mRow, tLoop.mCol);
+      }
    }
 }
 

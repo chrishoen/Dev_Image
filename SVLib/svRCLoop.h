@@ -305,9 +305,29 @@ public:
       mCol = -mLoop * mDelta;
    }
 
+   void firstRow()
+   {
+      mRow = -mLoop * mDelta;
+   }
+
+   void firstCol()
+   {
+      mCol = -mLoop * mDelta;
+   }
+
    bool test()
    {
       return mRow <= mLoop * mDelta;
+   }
+
+   bool testRow()
+   {
+      return mRow <= mLoop * mDelta;
+   }
+
+   bool testCol()
+   {
+      return mCol <= mLoop * mDelta;
    }
 
    void next()
@@ -321,6 +341,16 @@ public:
          mCol = -mLoop * mDelta;
          mRow += mDelta;
       }
+   }
+
+   void nextRow()
+   {
+      mRow += mDelta;
+   }
+
+   void nextCol()
+   {
+      mCol += mDelta;
    }
 };
 
