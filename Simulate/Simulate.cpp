@@ -109,10 +109,11 @@ void Simulate::doRun3()
    SV::ContourRecordMiner tMiner(&SV::gImageParms.mContourFilterParms);
    SV::ContourArrayWriter tArrayWriter(&SV::gImageParms.mContourFilterParms);
 
-   // Generate simulated image.
+   // Generate a simulated input image.
    tGenerator.doGenerateImage(
       mInputImage);
 
+   // Show.
    SV::showImageInfo("InputImage", mInputImage);
 
    // Initialize the output image.
@@ -125,7 +126,7 @@ void Simulate::doRun3()
       mOutputImage,
       mRecordArray);
 
-   // Mine contour pixel records from the simulated image.
+   // Mine contour pixel records from the input image.
    tMiner.doMineImage(
       mInputImage,
       mRecordList);
