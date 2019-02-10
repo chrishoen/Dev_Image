@@ -1,17 +1,20 @@
 #pragma once
 
 /*==============================================================================
-SV namespace: sixdofs that are measured by a computer vision based system.
-Contour specific image filter.
+Contour filter - pixel description records, lists and arrays of records.
 ==============================================================================*/
 
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
 
-#include "svImageWrapper.h"
-#include "svContourFilterParms.h"
-#include "svContourRecord.h"
+#include <vector>
+#include "svRCIndex.h"
+#include "svRCArray.h"
+
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
 
 namespace SV
 {
@@ -19,42 +22,22 @@ namespace SV
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
-//******************************************************************************
-//******************************************************************************
-//******************************************************************************
-// This is a parameterized function that writes to a high pixel record list.
-//
+// This encapsualtes a contour pixel description record.
 
-class ContourHiListWriter
+class ConRecord
 {
 public:
 
    //***************************************************************************
    //***************************************************************************
    //***************************************************************************
-   // Parameters. These are read from a parms file.
-
-   ContourFilterParms* mP;
-
-   //***************************************************************************
-   //***************************************************************************
-   //***************************************************************************
    // Members.
 
-   // Input image wrapper.
-   ImageWrapper mInputImage;
-
-   // Number of pixels in the contour that is being filtered.
-   int mNumPixels;
-
-   // Current pixel that is being filtered.
-   RCIndex mXM1;       // X0 - 1  previous pixel.
-   RCIndex mX0;        // X0      current pixel.
-   RCIndex mXP1;       // X0 + 1  next pixel.
-
-   // Filter outputs
-   RCIndex mXV;        // Velocity, tangent.
-   RCIndex mXA;        // Acceleration, normal.
+   bool    mValidFlag;
+   int     mK;
+   RCIndex mXX;
+   RCIndex mXV;
+   RCIndex mXA;
 
    //***************************************************************************
    //***************************************************************************
@@ -62,38 +45,49 @@ public:
    // Methods.
 
    // Constructor.
-   ContourHiListWriter();
-   ContourHiListWriter(ContourFilterParms* aParms);
-   void reset();
-
-   //***************************************************************************
-   //***************************************************************************
-   //***************************************************************************
-   // Methods.
-
-   // Write to a high pixel record list.
-   void doWriteHiList(
-      cv::Mat&                  aInputImage,          // Input
-      ContourRecordList&        aRecordList);         // Output
-
-   //***************************************************************************
-   //***************************************************************************
-   //***************************************************************************
-   // Methods.
-
-   // Write to a high pixel record list.
-   void doWriteHiList(
-      std::vector<cv::Point>&   aContour,             // Input
-      ContourRecordList&        aRecordList);         // Output
-
-   // Filter an image pixel that is contained in a contour.
-   void doFilterContourPixel(int aN);
+   ConRecord()
+   {
+      reset();
+   }
+   void reset()
+   {
+      mValidFlag = false;
+      mK = 0;
+      mXX.reset();
+      mXV.reset();
+      mXA.reset();
+   }
 };
 
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+// This encapsualtes a list of contour pixel description records.
+
+class ConRecordList : public std::vector<ConRecord>
+{
+public:
+};
+
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+// This encapsualtes an array of contour pixel description records.
+
+class ConRecordArray : public RCArray<ConRecord>
+{
+public:
+   typedef RCArray<ConRecord> BaseClass;
+
+   //***************************************************************************
+   //***************************************************************************
+   //***************************************************************************
+   // Methods.
+
+   void initialize(int aRows, int aCols) override;
+};
 
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
 }//namespace
-
-

@@ -9,7 +9,7 @@ Description:
 #include "stdafx.h"
 
 #include "svRCLoop.h"
-#include "svContourRecord.h"
+#include "svConRecord.h"
 
 namespace SV
 {
@@ -19,7 +19,7 @@ namespace SV
 //******************************************************************************
 // Initialize array.
 
-void ContourRecordArray::initialize(int aRows, int aCols)
+void ConRecordArray::initialize(int aRows, int aCols)
 {
    // Initialize the array memory and variables.
    BaseClass::initialize(aRows, aCols);

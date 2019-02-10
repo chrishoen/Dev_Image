@@ -8,7 +8,7 @@ Description:
 
 #include "stdafx.h"
 
-#include "svContourLoListWriter.h"
+#include "svConArrayWriter.h"
 
 namespace SV
 {
@@ -16,39 +16,60 @@ namespace SV
 //******************************************************************************
 //******************************************************************************
 
-ContourLoListWriter::ContourLoListWriter()
+ConArrayWriter::ConArrayWriter()
 {
    reset();
 }
 
-ContourLoListWriter::ContourLoListWriter(ContourFilterParms* aParms)
+ConArrayWriter::ConArrayWriter(ConParms* aParms)
 {
    mP = aParms;
    reset();
 }
 
-void ContourLoListWriter::reset()
+void ConArrayWriter::initialize(ConParms* aParms)
+{
+   mP = aParms;
+   reset();
+}
+
+void ConArrayWriter::reset()
 {
 }
 
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
-//******************************************************************************
-//******************************************************************************
-//******************************************************************************
-// Write a pixel low record list.
+// Write a pixel record list to a pixel record array.
 
-void ContourLoListWriter::doWriteLoList(
-   cv::Mat&              aInputImage,          // Input
-   ContourRecordList&    aHiList,              // Input
-   ContourRecordArray&   aLoList)              // Output
+void ConArrayWriter::doInitializeArray(
+   cv::Mat&          aInputImage,          // Input
+   ConRecordArray&   aRecordArray)         // Output
 {
-   Prn::print(0, "ContourLoListWriter::doMineImage");
+   Prn::print(0, "ConArrayWriter::doInitializeArray");
 
-   // Set the image wrapper.
-   mInputImage.set(aInputImage);
+   // Initialize the output array to empty.
+   aRecordArray.initialize(aInputImage.rows, aInputImage.cols);
+}
 
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+// Write a pixel record list to a pixel record array.
+
+void ConArrayWriter::doWriteArray(
+   ConRecordList&    aRecordList,          // Input
+   ConRecordArray&   aRecordArray)         // Output
+{
+   Prn::print(0, "ConArrayWriter::doWriteArray");
+
+   // Copy each record in the input list to the corresponding position
+   // in the output array.
+   for (int i = 0; i < aRecordList.size(); i++)
+   {
+      RCIndex tIndex = aRecordList[i].mXX;
+      aRecordArray.at(tIndex) = aRecordList[i];
+   }
 }
 
 //******************************************************************************

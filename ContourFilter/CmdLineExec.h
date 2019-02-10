@@ -1,52 +1,42 @@
 #pragma once
 
 /*==============================================================================
-Contour pixel record array writer.
+Program command line executive.
 ==============================================================================*/
 
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
 
-#include "svContourFilterParms.h"
-#include "svContourRecord.h"
-
-namespace SV
-{
+#include "risCmdLineExec.h"
+#include "Simulate.h"
 
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
-//******************************************************************************
-//******************************************************************************
-//******************************************************************************
-// This is a parameterized function that writes to a pixel record array.
-//
+// This class is the program command line executive. It processes user
+// command line inputs and executes them. It inherits from the command line
+// command executive base class, which provides an interface for executing
+// command line commands. It provides an override execute function that is
+// called by a console executive when it receives a console command line input.
+// The execute function then executes the command.
 
-class ContourArrayWriter
+class CmdLineExec : public Ris::BaseCmdLineExec
 {
 public:
 
    //***************************************************************************
    //***************************************************************************
    //***************************************************************************
-   // Parameters. These are read from a parms file.
-
-   ContourFilterParms* mP;
-
-   //***************************************************************************
-   //***************************************************************************
-   //***************************************************************************
    // Members.
+   Simulate mSim;
 
    //***************************************************************************
    //***************************************************************************
    //***************************************************************************
    // Methods.
 
-   // Constructor.
-   ContourArrayWriter();
-   ContourArrayWriter(ContourFilterParms* aParms);
+   CmdLineExec();
    void reset();
 
    //***************************************************************************
@@ -54,21 +44,30 @@ public:
    //***************************************************************************
    // Methods.
 
-   // Initialize a pixel record array.
-   void doInitializeArray(
-      cv::Mat&              aInputImage,          // Input
-      ContourRecordArray&   aRecordArray);        // Output
+   // Base class override. Execute a command line command. It calls one of
+   // the following specific command execution functions. This is called by
+   // the owner of this object to pass command line commands to it. 
+   void execute(Ris::CmdLineCmd* aCmd) override;
 
-   // Write a pixel record list to a pixel record array.
-   void doWriteArray(
-      ContourRecordList&    aRecordList,          // Input
-      ContourRecordArray&   aRecordArray);        // Output
+   //***************************************************************************
+   //***************************************************************************
+   //***************************************************************************
+   // Methods.
+
+   // Execute specific commands.
+   void executeRun(Ris::CmdLineCmd* aCmd);
+   void executeShow(Ris::CmdLineCmd* aCmd);
+   void executeTest(Ris::CmdLineCmd* aCmd);
+   void executeDraw0(Ris::CmdLineCmd* aCmd);
+   void executeGo1(Ris::CmdLineCmd* aCmd);
+   void executeGo2(Ris::CmdLineCmd* aCmd);
+   void executeGo3(Ris::CmdLineCmd* aCmd);
+   void executeGo4(Ris::CmdLineCmd* aCmd);
+   void executeGo5(Ris::CmdLineCmd* aCmd);
+   void executeParms(Ris::CmdLineCmd* aCmd);
 };
 
-
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
-}//namespace
-
 

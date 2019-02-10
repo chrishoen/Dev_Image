@@ -11,6 +11,9 @@ Description:
 #include "svSysParms.h"
 #include "svContourFilter.h"
 
+#include "svImageFunctions.h"
+#include "svImageShow.h"
+
 namespace SV
 {
 //******************************************************************************
@@ -22,14 +25,40 @@ ContourFilter::ContourFilter()
    reset();
 }
 
-ContourFilter::ContourFilter(ContourFilterParms* aParms)
+ContourFilter::ContourFilter(ConParms* aParms)
 {
    mP = aParms;
    reset();
 }
 
+void ContourFilter::initialize(ConParms* aParms)
+{
+   mP = aParms;
+   mIndexListListWriter.initialize(aParms);
+   mLoIndexListWriter.initialize(aParms);
+   mRecordListWriter.initialize(aParms);
+   mArrayWriter.initialize(aParms);
+   mImageWriter.initialize(aParms);
+   reset();
+}
+
 void ContourFilter::reset()
 {
+   mIndexListListWriter.reset();
+   mLoIndexListWriter.reset();
+   mRecordListWriter.reset();
+   mArrayWriter.reset();
+   mImageWriter.reset();
+
+   mInputImage.deallocate();
+   mOutputImage.deallocate();
+
+   mIndexListList.clear();
+   mHiIndexList.clear();
+   mLoIndexList.clear();
+   mHiRecordList.clear();
+   mLoRecordList.clear();
+   mRecordArray.finalize();
 }
 
 //******************************************************************************
@@ -44,91 +73,49 @@ void ContourFilter::doFilterImage(
    cv::Mat&       aInputImage,     // Input
    cv::Mat&       aOutputImage)    // Output
 {
-   Prn::print(0, "ContourFilter::doFilterImage");
+   // Copy the input image.
+   mInputImage = aInputImage;
 
-   // Copy the input to the output.
-   aOutputImage = aInputImage.clone();
+   // Initialize the output image.
+   mImageWriter.doInitializeImage(
+      mInputImage,
+      mOutputImage);
 
-   // Set the image wrappers.
-   mInputImage.set(aInputImage);
-   mOutputImage.set(aOutputImage);
+   // Initialize the output array. 
+   mArrayWriter.doInitializeArray(
+      mOutputImage,
+      mRecordArray);
 
-   // Contour variables.
-   std::vector<std::vector<cv::Point>> tContours;
-// std::vector<std::vector<int>> tHierarchy;
-   int tMode = cv::RetrievalModes::RETR_EXTERNAL;
-   int tMethod = cv::ContourApproximationModes::CHAIN_APPROX_NONE;
-   cv::Point tOffset(0, 0);
+   // Read from an image, extract a list of all contours, and convert the 
+   // contours to a list of row column index lists.
+   mIndexListListWriter.doWriteIndexListList(
+      mInputImage,
+      mIndexListList);
 
-   // Find a list of lists of contour points.
-   cv::findContours(
-      aInputImage,
-      tContours,
-//    tHierarchy,
-      tMode,
-      tMethod,
-      tOffset);
-   Prn::print(0, "findContours %d", tContours.size());
+   // Extract the first index list.
+   mHiIndexList = mIndexListList[0];
 
-   // Loop for each contour.
-   for (int i = 0; i < tContours.size(); i++)
-   {
-      // Filter each contour.
-      doFilterContour(tContours[i]);
-   }
+   // Copy the record list to the record array.
+   mArrayWriter.doWriteArray(
+      mHiRecordList,
+      mRecordArray);
 }
 
-//******************************************************************************
-//******************************************************************************
-//******************************************************************************
-// Filter all of the pixels in a contour.
 
-void ContourFilter::doFilterContour(
-   std::vector<cv::Point>& aContour)
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+// This runs a test.
+
+void ContourFilter::doShow(int aCode)
 {
-   Prn::print(Prn::View11, "**************************************Contour %d", aContour.size());
-
-   // Loop for each pixel in the contour.
-   mNumPixels = (int)aContour.size();
-   int jM1 = 0;  // Previous pixel array index.
-   int jP1 = 0;  // Next pixel array index.
-   for (int j = 0; j < aContour.size(); j++)
+   switch (aCode)
    {
-      // First pixel indices.
-      if (j == 0)
-      {
-         jM1 = mNumPixels - 1;       // Previous pixel array index.
-         jP1 = j + 1;                // Next pixel array index. 
-      }
-      // Last pixel indices.
-      else if (j == mNumPixels - 1)
-      {
-         jM1 = j - 1;                // Previous pixel array index. 
-         jP1 = 0;                    // Next pixel array index.
-      }
-      // Otherwise pixel indices.
-      else
-      {
-         jM1 = j - 1;                // Previous pixel array index.
-         jP1 = j + 1;                // Next pixel array index.
-      }
-      // Extract the previous, current, and next pixels.
-      mXM1 = RCIndex(aContour[jM1].y, aContour[jM1].x);   // Previous pixel.
-      mX0  = RCIndex(aContour[j].y,   aContour[j].x);     // Current pixel.  
-      mXP1 = RCIndex(aContour[jP1].y, aContour[jP1].x);   // Nexy pixel.
-      // Filter the current pixel.
-      doFilterContourPixel(j);
+   case 1:  SV::showImageTableByte("InputImage", mInputImage); break;
+   case 20: SV::showRecordArray(0, "InputImage", mRecordArray); break;
+   case 21: SV::showRecordArray(1, "InputImage", mRecordArray); break;
+   case 3:  SV::showImageTableByte("OutputImage", mOutputImage); break;
    }
-}
-
-//******************************************************************************
-//******************************************************************************
-//******************************************************************************
-// Filter an image pixel that is contained in a contour.
-
-void ContourFilter::doFilterContourPixel(int aN)
-{
-   Prn::print(Prn::View11, "Contour Pixel %4d $ %4d %4d", aN, mX0.mRow, mX0.mCol);
 }
 
 //******************************************************************************

@@ -11,7 +11,7 @@ Description:
 #include "svRCLoop.h"
 #include "svImageParms.h"
 
-#include "svContourShow.h"
+#include "svConShow.h"
 
 //******************************************************************************
 //******************************************************************************
@@ -28,7 +28,7 @@ namespace SV
 void showRecordList(
    int                  aPF,           // Input
    const char*          aLabel,        // Input
-   ContourRecordList&   aList)         // Input
+   ConRecordList&   aList)         // Input
 {
    Prn::print(aPF, "RecordList %-12s %4d", aLabel, aList.size());
    for (int i = 0; i < aList.size(); i++)
@@ -48,7 +48,7 @@ void showRecordList(
 void showRecordArray(
    int                  aCode,         // Input
    const char*          aLabel,        // Input
-   ContourRecordArray&  aArray)        // Input
+   ConRecordArray&  aArray)        // Input
 {
    // Guard.
    if (aArray.mRows == 0)return;
@@ -82,7 +82,7 @@ void showRecordArray(
          printf("%4d V ", tLoop().mRow);
          for (tLoop.firstCol(); tLoop.testCol(); tLoop.nextCol())
          {
-            ContourRecord tRecord = aArray.at(tLoop());
+            ConRecord tRecord = aArray.at(tLoop());
             if (tRecord.mValidFlag)
             {
                printf(" %2d: %2d%2d", tRecord.mK, tRecord.mXV.mRow, tRecord.mXV.mCol);
@@ -99,7 +99,7 @@ void showRecordArray(
          printf("     A ");
          for (tLoop.firstCol(); tLoop.testCol(); tLoop.nextCol())
          {
-            ContourRecord tRecord = aArray.at(tLoop());
+            ConRecord tRecord = aArray.at(tLoop());
             if (tRecord.mValidFlag)
             {
                printf("   : %2d%2d", tRecord.mXA.mRow, tRecord.mXA.mCol);

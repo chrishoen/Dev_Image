@@ -1,23 +1,16 @@
 #pragma once
 
 /*==============================================================================
-Contour filter.
+Contour filter - index list writer.
 ==============================================================================*/
 
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
 
-#include "svConArrayWriter.h"
-#include "svConImageWriter.h"
-#include "svConIndexListListWriter.h"
-#include "svConLoIndexListWriter.h"
+#include "svImageWrapper.h"
 #include "svConParms.h"
 #include "svConRecord.h"
-#include "svConRecordListWriter.h"
-#include "svConShow.h"
-
-#include "svRCIndexList.h"
 
 namespace SV
 {
@@ -25,13 +18,10 @@ namespace SV
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
-//******************************************************************************
-//******************************************************************************
-//******************************************************************************
-// This is an image filter that filters pixels in the contours of an image.
+// This is a parameterized function that writes to a low pixel record list.
 //
 
-class ContourFilter
+class ConLoIndexListWriter
 {
 public:
 
@@ -45,31 +35,10 @@ public:
    //***************************************************************************
    //***************************************************************************
    //***************************************************************************
-   // Members. Variables, according to the main diagram.
+   // Members.
 
-   // Images.
-   cv::Mat mInputImage;
-   cv::Mat mOutputImage;
-
-   // Containers.
-   RCIndexListList   mIndexListList;
-   RCIndexList       mHiIndexList;
-   RCIndexList       mLoIndexList;
-   ConRecordList     mHiRecordList;
-   ConRecordList     mLoRecordList;
-   ConRecordArray    mRecordArray;
-
-   //***************************************************************************
-   //***************************************************************************
-   //***************************************************************************
-   // Members. Parameterized Functions, according to the main diagram.
-
-   // Functions.
-   ConIndexListListWriter  mIndexListListWriter;
-   ConLoIndexListWriter    mLoIndexListWriter;
-   ConRecordListWriter     mRecordListWriter;
-   ConArrayWriter          mArrayWriter;
-   ConImageWriter          mImageWriter;
+   // Input image wrapper.
+   ImageWrapper mInputImage;
 
    //***************************************************************************
    //***************************************************************************
@@ -77,8 +46,8 @@ public:
    // Methods.
 
    // Constructor.
-   ContourFilter();
-   ContourFilter(ConParms* aParms);
+   ConLoIndexListWriter();
+   ConLoIndexListWriter(ConParms* aParms);
    void initialize(ConParms* aParms);
    void reset();
 
@@ -87,18 +56,11 @@ public:
    //***************************************************************************
    // Methods.
 
-   // Filter an image according to the parms.
-   void doFilterImage(
-      cv::Mat&       aInput,               // Input
-      cv::Mat&       aOutput);             // Output
-
-   //***************************************************************************
-   //***************************************************************************
-   //***************************************************************************
-   // Methods.
-
-   // Show.
-   void doShow(int aCode);
+   // Write a pixel low record list.
+   void doWriteLoList(
+      cv::Mat&          aInputImage,          // Input
+      ConRecordList&    aHiList,              // Input
+      ConRecordArray&   aLoList);             // Output
 };
 
 

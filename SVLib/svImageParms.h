@@ -12,7 +12,7 @@ Parameters class whose values are read from a command file.
 #include "risCmdLineParms.h"
 #include "svRCIndex.h"
 #include "svRCSize.h"
-#include "svContourFilterParms.h"
+#include "svConParms.h"
 #include "svSimParms.h"
 
 //******************************************************************************
@@ -77,7 +77,7 @@ public:
    char mOutputImageFileName[cMaxStringSize];
 
    // Image filter.
-   ContourFilterParms mContourFilterParms;
+   ConParms mContourFilterParms;
 
    //***************************************************************************
    //***************************************************************************

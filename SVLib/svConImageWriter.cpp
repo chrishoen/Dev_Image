@@ -8,7 +8,7 @@ Description:
 
 #include "stdafx.h"
 
-#include "svContourImageWriter.h"
+#include "svConImageWriter.h"
 
 namespace SV
 {
@@ -16,18 +16,24 @@ namespace SV
 //******************************************************************************
 //******************************************************************************
 
-ContourImageWriter::ContourImageWriter()
+ConImageWriter::ConImageWriter()
 {
    reset();
 }
 
-ContourImageWriter::ContourImageWriter(ContourFilterParms* aParms)
+ConImageWriter::ConImageWriter(ConParms* aParms)
 {
    mP = aParms;
    reset();
 }
 
-void ContourImageWriter::reset()
+void ConImageWriter::initialize(ConParms* aParms)
+{
+   mP = aParms;
+   reset();
+}
+
+void ConImageWriter::reset()
 {
 }
 
@@ -36,9 +42,9 @@ void ContourImageWriter::reset()
 //******************************************************************************
 // Initialize an output image.
 
-void ContourImageWriter::doInitializeImage(
-   cv::Mat&              aInputImage,          // Input
-   cv::Mat&              aOutputImage)         // Output
+void ConImageWriter::doInitializeImage(
+   cv::Mat&          aInputImage,          // Input
+   cv::Mat&          aOutputImage)         // Output
 {
    // Copy the input to the output.
    aOutputImage = aInputImage.clone();
@@ -49,11 +55,10 @@ void ContourImageWriter::doInitializeImage(
 //******************************************************************************
 // Write a pixel record list to an output image.
 
-void ContourImageWriter::doWriteImage(
-   ContourRecordList&    aRecordList,          // Input
-   cv::Mat&              aOutputImage)         // Input
+void ConImageWriter::doWriteImage(
+   ConRecordList&    aRecordList,          // Input
+   cv::Mat&          aOutputImage)         // Input
 {
-
 }
 
 //******************************************************************************

@@ -4,7 +4,7 @@
 
 #include "stdafx.h"
 
-#include "svContourFilterParms.h"
+#include "svConParms.h"
 
 //******************************************************************************
 //******************************************************************************
@@ -21,12 +21,12 @@ namespace SV
 //******************************************************************************
 // Constructor.
 
-ContourFilterParms::ContourFilterParms()
+ConParms::ConParms()
 {
    reset();
 }
 
-void ContourFilterParms::reset()
+void ConParms::reset()
 {
    mClassifyCode = 0;
    mClassifyTable1.reset();
@@ -37,9 +37,9 @@ void ContourFilterParms::reset()
 //******************************************************************************
 // Show.
 
-void ContourFilterParms::show()
+void ConParms::show()
 {
-   printf("ContourFilterParms*******************\n");
+   printf("ConParms*******************\n");
    printf("ClassifyCode             %10d\n",   mClassifyCode);
    if (mClassifyTable1.mRows != 0)
    {
@@ -55,7 +55,7 @@ void ContourFilterParms::show()
       }
       printf("\n");
    }
-   printf("ContourFilterParms*******************\n");
+   printf("ConParms*******************\n");
 }
 
 //******************************************************************************
@@ -65,7 +65,7 @@ void ContourFilterParms::show()
 // member variable.  Only process commands for the target section.This is
 // called by the associated command file object for each command in the file.
 
-void ContourFilterParms::execute(Ris::CmdLineCmd* aCmd)
+void ConParms::execute(Ris::CmdLineCmd* aCmd)
 {
    if (aCmd->isCmd("ClassifyCode"))       mClassifyCode = aCmd->argInt(1);
    if (aCmd->isCmd("ClassifyTable1"))     nestedPush(aCmd, &mClassifyTable1);

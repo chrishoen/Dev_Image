@@ -1,15 +1,15 @@
 #pragma once
 
 /*==============================================================================
-Contour output image writer.
+Contour filter - array writer.
 ==============================================================================*/
 
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
 
-#include "svContourFilterParms.h"
-#include "svContourRecord.h"
+#include "svConParms.h"
+#include "svConRecord.h"
 
 namespace SV
 {
@@ -20,10 +20,10 @@ namespace SV
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
-// This is a parameterized function that writes to the output image.
+// This is a parameterized function that writes to a pixel record array.
 //
 
-class ContourImageWriter
+class ConArrayWriter
 {
 public:
 
@@ -32,7 +32,7 @@ public:
    //***************************************************************************
    // Parameters. These are read from a parms file.
 
-   ContourFilterParms* mP;
+   ConParms* mP;
 
    //***************************************************************************
    //***************************************************************************
@@ -45,8 +45,9 @@ public:
    // Methods.
 
    // Constructor.
-   ContourImageWriter();
-   ContourImageWriter(ContourFilterParms* aParms);
+   ConArrayWriter();
+   ConArrayWriter(ConParms* aParms);
+   void initialize(ConParms* aParms);
    void reset();
 
    //***************************************************************************
@@ -54,15 +55,15 @@ public:
    //***************************************************************************
    // Methods.
 
-   // Initialize an output image.
-   void doInitializeImage(
-      cv::Mat&              aInputImage,          // Input
-      cv::Mat&              aOutputImage);        // Output
+   // Initialize a pixel record array.
+   void doInitializeArray(
+      cv::Mat&          aInputImage,          // Input
+      ConRecordArray&   aRecordArray);        // Output
 
-   // Write a pixel record list to an output image.
-   void doWriteImage(
-      ContourRecordList&    aRecordList,          // Input
-      cv::Mat&              aOutputImage);        // Input
+   // Write a pixel record list to a pixel record array.
+   void doWriteArray(
+      ConRecordList&    aRecordList,          // Input
+      ConRecordArray&   aRecordArray);        // Output
 };
 
 

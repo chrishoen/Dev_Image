@@ -1,22 +1,14 @@
 #pragma once
 
 /*==============================================================================
-Contour filter.
+Contour filter - index list list writer.
 ==============================================================================*/
 
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
 
-#include "svConArrayWriter.h"
-#include "svConImageWriter.h"
-#include "svConIndexListListWriter.h"
-#include "svConLoIndexListWriter.h"
 #include "svConParms.h"
-#include "svConRecord.h"
-#include "svConRecordListWriter.h"
-#include "svConShow.h"
-
 #include "svRCIndexList.h"
 
 namespace SV
@@ -28,10 +20,11 @@ namespace SV
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
-// This is an image filter that filters pixels in the contours of an image.
+// This is a parameterized function that reads from an input image and
+// writes contours to a list of row column index lists.
 //
 
-class ContourFilter
+class ConIndexListListWriter
 {
 public:
 
@@ -45,31 +38,7 @@ public:
    //***************************************************************************
    //***************************************************************************
    //***************************************************************************
-   // Members. Variables, according to the main diagram.
-
-   // Images.
-   cv::Mat mInputImage;
-   cv::Mat mOutputImage;
-
-   // Containers.
-   RCIndexListList   mIndexListList;
-   RCIndexList       mHiIndexList;
-   RCIndexList       mLoIndexList;
-   ConRecordList     mHiRecordList;
-   ConRecordList     mLoRecordList;
-   ConRecordArray    mRecordArray;
-
-   //***************************************************************************
-   //***************************************************************************
-   //***************************************************************************
-   // Members. Parameterized Functions, according to the main diagram.
-
-   // Functions.
-   ConIndexListListWriter  mIndexListListWriter;
-   ConLoIndexListWriter    mLoIndexListWriter;
-   ConRecordListWriter     mRecordListWriter;
-   ConArrayWriter          mArrayWriter;
-   ConImageWriter          mImageWriter;
+   // Members.
 
    //***************************************************************************
    //***************************************************************************
@@ -77,8 +46,8 @@ public:
    // Methods.
 
    // Constructor.
-   ContourFilter();
-   ContourFilter(ConParms* aParms);
+   ConIndexListListWriter();
+   ConIndexListListWriter(ConParms* aParms);
    void initialize(ConParms* aParms);
    void reset();
 
@@ -87,18 +56,11 @@ public:
    //***************************************************************************
    // Methods.
 
-   // Filter an image according to the parms.
-   void doFilterImage(
-      cv::Mat&       aInput,               // Input
-      cv::Mat&       aOutput);             // Output
-
-   //***************************************************************************
-   //***************************************************************************
-   //***************************************************************************
-   // Methods.
-
-   // Show.
-   void doShow(int aCode);
+   // Read from an image, extract a list of all contours, and convert the 
+   // contours to a list of row column index lists.
+   void doWriteIndexListList(
+      cv::Mat&              aInputImage,          // Input
+      RCIndexListList&      aIndexListList);      // Output
 };
 
 

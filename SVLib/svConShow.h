@@ -1,12 +1,15 @@
 #pragma once
 
 /*==============================================================================
-SV namespace: sixdofs that are measured by a computer vision based system.
-Miscellaneous support functions
+Contour filter - show functions.
 ==============================================================================*/
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+
 #include <opencv2/core/core.hpp>
 #include "svRCIndex.h"
-#include "svContourRecord.h"
+#include "svConRecord.h"
 
 //******************************************************************************
 //******************************************************************************
@@ -24,13 +27,13 @@ namespace SV
 void showRecordList(
    int                  aPF,           // Input
    const char*          aLabel,        // Input
-   ContourRecordList&   aRecordList);  // Input
+   ConRecordList&   aRecordList);  // Input
 
 // Show record array.
 void showRecordArray(
    int                  aCode,         // Input
    const char*          aLabel,        // Input
-   ContourRecordArray&  aRecordArray); // Input
+   ConRecordArray&  aRecordArray); // Input
 
 //******************************************************************************
 //******************************************************************************

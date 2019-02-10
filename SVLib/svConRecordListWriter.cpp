@@ -8,7 +8,7 @@ Description:
 
 #include "stdafx.h"
 
-#include "svContourHiListWriter.h"
+#include "svConRecordListWriter.h"
 
 namespace SV
 {
@@ -16,18 +16,24 @@ namespace SV
 //******************************************************************************
 //******************************************************************************
 
-ContourHiListWriter::ContourHiListWriter()
+ConRecordListWriter::ConRecordListWriter()
 {
    reset();
 }
 
-ContourHiListWriter::ContourHiListWriter(ContourFilterParms* aParms)
+ConRecordListWriter::ConRecordListWriter(ConParms* aParms)
 {
    mP = aParms;
    reset();
 }
 
-void ContourHiListWriter::reset()
+void ConRecordListWriter::initialize(ConParms* aParms)
+{
+   mP = aParms;
+   reset();
+}
+
+void ConRecordListWriter::reset()
 {
    mNumPixels = 0;
    mXM1.reset();
@@ -46,11 +52,11 @@ void ContourHiListWriter::reset()
 //******************************************************************************
 // Write to a high pixel record list.
 
-void ContourHiListWriter::doWriteHiList(
+void ConRecordListWriter::doWriteHiList(
    cv::Mat&             aInputImage,          // Input
-   ContourRecordList&   aRecordList)          // Output
+   ConRecordList&       aRecordList)          // Output
 {
-   Prn::print(0, "ContourHiListWriter::doMineImage");
+   Prn::print(0, "ConRecordListWriter::doMineImage");
 
    // Set the image wrapper.
    mInputImage.set(aInputImage);
@@ -83,9 +89,9 @@ void ContourHiListWriter::doWriteHiList(
 //******************************************************************************
 // Write to a high pixel record list.
 
-void ContourHiListWriter::doWriteHiList(
+void ConRecordListWriter::doWriteHiList(
    std::vector<cv::Point>&   aContour,             // Input
-   ContourRecordList&        aRecordList)          // Output
+   ConRecordList&            aRecordList)          // Output
 {
    Prn::print(Prn::View11, "**************************************Contour %d", aContour.size());
 
@@ -125,7 +131,7 @@ void ContourHiListWriter::doWriteHiList(
       doFilterContourPixel(j);
 
       // Transfer the results to the record list.
-      ContourRecord tRecord;
+      ConRecord tRecord;
       tRecord.mValidFlag = true;
       tRecord.mK = j;
       tRecord.mXX = mX0;
@@ -140,7 +146,7 @@ void ContourHiListWriter::doWriteHiList(
 //******************************************************************************
 // Filter an image pixel that is contained in a contour.
 
-void ContourHiListWriter::doFilterContourPixel(int aN)
+void ConRecordListWriter::doFilterContourPixel(int aN)
 {
    mXV.mRow = mXP1.mRow - mXM1.mRow;
    mXV.mCol = mXP1.mCol - mXM1.mCol;

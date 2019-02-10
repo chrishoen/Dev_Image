@@ -50,7 +50,7 @@ namespace SV
 // structure. If so, then this class is the root.
 // 
 
-class ContourFilterParms : public Ris::BaseCmdLineExec
+class ConParms : public Ris::BaseCmdLineExec
 {
 public:
 
@@ -72,7 +72,7 @@ public:
 
    // Constructor,
    typedef Ris::BaseCmdLineExec BaseClass;
-   ContourFilterParms();
+   ConParms();
    void reset();
    void show();
 
