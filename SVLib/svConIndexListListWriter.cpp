@@ -8,6 +8,9 @@ Description:
 
 #include "stdafx.h"
 
+#include "svImageWrapper.h"
+#include "svPixelFunctions.h"
+#include "svRCLoop.h"
 #include "svConIndexListListWriter.h"
 
 namespace SV
@@ -44,10 +47,76 @@ void ConIndexListListWriter::reset()
 // contours to a list of row column index lists.
 
 void ConIndexListListWriter::doWriteIndexListList(
+   bool                  aHiFlag,              // Control
    cv::Mat&              aInputImage,          // Input
    RCIndexListList&      aIndexListList)       // Output
 {
    Prn::print(0, "doWriteIndexListList");
+
+   //***************************************************************************
+   //***************************************************************************
+   //***************************************************************************
+   // Input image.
+
+   // Contours will be found on this image.
+   cv::Mat tContourImage;
+
+   // If high image then use the input image.
+   if (aHiFlag)
+   {
+      tContourImage = aInputImage;
+   }
+   // If low image then use the input image with pixels added around
+   // the high contour edges.
+   else
+   {
+      // Clone the input image.
+      tContourImage = aInputImage.clone();
+
+      // Image wrapper.
+      ImageWrapper tInputWrapper(aInputImage);
+      ImageWrapper tContourWrapper(tContourImage);
+
+      // Loop through all of the pixels of the input image.
+      SV::RCIndexLoop tImageLoop(tInputWrapper.rcSize());
+      while (tImageLoop.loop())
+      {
+         // If the pixel is low.
+         if (tInputWrapper.at(tImageLoop()) == 0)
+         {
+            // Count the number of neighbors that are occupied.
+            int tNeighborSum = 0;
+            // Traverse a neighborhood circuit centered at the image pixel.
+            SV::RCCircuitLoop tNeighborLoop(tImageLoop(), 1);
+            while (tNeighborLoop.loop())
+            {
+               // Get the neighbor pixel.
+               RCIndex tNeighborPixel = tNeighborLoop();
+
+               // Test if it is in bounds.
+               if (isImagePixelInBounds(tNeighborPixel))
+               {
+                  // Test for occupied.
+                  if (tInputWrapper.at(tNeighborPixel) == 255)
+                  {
+                     // Count the number of neighbors that are occupied.
+                     tNeighborSum++;
+                  }
+               }
+            }
+            // If any neighbors are occupied then set the pixel high. 
+            if (tNeighborSum != 0)
+            {
+               tContourWrapper.at(tImageLoop()) = 255;
+            }
+         }
+      }
+   }
+
+   //***************************************************************************
+   //***************************************************************************
+   //***************************************************************************
+   // Find contours.
 
    // Contour variables.
    std::vector<std::vector<cv::Point>> tContours;
@@ -57,7 +126,7 @@ void ConIndexListListWriter::doWriteIndexListList(
 
    // Find a list of lists of contour points.
    cv::findContours(
-      aInputImage,
+      tContourImage,
       tContours,
       tMode,
       tMethod,

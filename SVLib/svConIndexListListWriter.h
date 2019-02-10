@@ -59,6 +59,7 @@ public:
    // Read from an image, extract a list of all contours, and convert the 
    // contours to a list of row column index lists.
    void doWriteIndexListList(
+      bool                  aHiFlag,              // Control
       cv::Mat&              aInputImage,          // Input
       RCIndexListList&      aIndexListList);      // Output
 };

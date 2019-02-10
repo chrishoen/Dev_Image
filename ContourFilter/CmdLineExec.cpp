@@ -53,6 +53,7 @@ void CmdLineExec::execute(Ris::CmdLineCmd* aCmd)
 void CmdLineExec::executeRun(Ris::CmdLineCmd* aCmd)
 {
    aCmd->setArgDefault(1, 1);
+   int tCode = aCmd->argInt(1);
 
    // Read parameters files.
    SV::gSimParms.reset();
@@ -64,7 +65,7 @@ void CmdLineExec::executeRun(Ris::CmdLineCmd* aCmd)
    // Run.
    mSim.doRun(1);
    mFilter.initialize(&SV::gImageParms.mContourFilterParms);
-   mFilter.doFilterImage(mSim.mInputImage, mSim.mOutputImage);
+   mFilter.doFilterImage(tCode,mSim.mInputImage, mSim.mOutputImage);
 }
 
 //******************************************************************************

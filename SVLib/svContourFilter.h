@@ -90,6 +90,7 @@ public:
 
    // Filter an image according to the parms.
    void doFilterImage(
+      int            aCode,                // Control
       cv::Mat&       aInput,               // Input
       cv::Mat&       aOutput);             // Output
 

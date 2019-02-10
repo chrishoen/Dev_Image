@@ -70,6 +70,7 @@ void ContourFilter::reset()
 // Filter the image, depending on the parms.
 
 void ContourFilter::doFilterImage(
+   int            aCode,           // Control
    cv::Mat&       aInputImage,     // Input
    cv::Mat&       aOutputImage)    // Output
 {
@@ -89,6 +90,7 @@ void ContourFilter::doFilterImage(
    // Read from an image, extract a list of all contours, and convert the 
    // contours to a list of row column index lists.
    mIndexListListWriter.doWriteIndexListList(
+      aCode == 1,             // Control
       mInputImage,            // Input
       mIndexListList);        // Output
 
