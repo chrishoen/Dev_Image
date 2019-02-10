@@ -11,7 +11,7 @@ Description:
 #include "svSysParms.h"
 #include "svDefs.h"
 
-#include "svContourRecordMiner.h"
+#include "svContourHiListWriter.h"
 
 namespace SV
 {
@@ -19,18 +19,18 @@ namespace SV
 //******************************************************************************
 //******************************************************************************
 
-ContourRecordMiner::ContourRecordMiner()
+ContourHiListWriter::ContourHiListWriter()
 {
    reset();
 }
 
-ContourRecordMiner::ContourRecordMiner(ContourFilterParms* aParms)
+ContourHiListWriter::ContourHiListWriter(ContourFilterParms* aParms)
 {
    mP = aParms;
    reset();
 }
 
-void ContourRecordMiner::reset()
+void ContourHiListWriter::reset()
 {
    mNumPixels = 0;
    mXM1.reset();
@@ -47,14 +47,13 @@ void ContourRecordMiner::reset()
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
-// Filter the image, depending on the parms.
+// Write to a high pixel record list.
 
-   // Mine the contour pixels from an input image.
-void ContourRecordMiner::doMineImage(
-   cv::Mat&                   aInputImage,          // Input
-   ContourRecordList&    aRecordList)          // Output
+void ContourHiListWriter::doWriteHiList(
+   cv::Mat&             aInputImage,          // Input
+   ContourRecordList&   aRecordList)          // Output
 {
-   Prn::print(0, "ContourRecordMiner::doMineImage");
+   Prn::print(0, "ContourHiListWriter::doMineImage");
 
    // Set the image wrapper.
    mInputImage.set(aInputImage);
@@ -78,18 +77,18 @@ void ContourRecordMiner::doMineImage(
    for (int i = 0; i < tContours.size(); i++)
    {
       // Filter each contour.
-      doMineContour(tContours[i],aRecordList);
+      doWriteHiList(tContours[i],aRecordList);
    }
 }
 
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
-// Mine all of the pixels in a contour.
+// Write to a high pixel record list.
 
-void ContourRecordMiner::doMineContour(
+void ContourHiListWriter::doWriteHiList(
    std::vector<cv::Point>&   aContour,             // Input
-   ContourRecordList&   aRecordList)          // Output
+   ContourRecordList&        aRecordList)          // Output
 {
    Prn::print(Prn::View11, "**************************************Contour %d", aContour.size());
 
@@ -144,7 +143,7 @@ void ContourRecordMiner::doMineContour(
 //******************************************************************************
 // Filter an image pixel that is contained in a contour.
 
-void ContourRecordMiner::doFilterContourPixel(int aN)
+void ContourHiListWriter::doFilterContourPixel(int aN)
 {
    mXV.mRow = mXP1.mRow - mXM1.mRow;
    mXV.mCol = mXP1.mCol - mXM1.mCol;

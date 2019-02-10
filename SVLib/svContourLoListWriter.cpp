@@ -8,7 +8,7 @@ Description:
 
 #include "stdafx.h"
 
-#include "svContourConjugateWriter.h"
+#include "svContourLoListWriter.h"
 
 namespace SV
 {
@@ -16,18 +16,18 @@ namespace SV
 //******************************************************************************
 //******************************************************************************
 
-ContourConjugateWriter::ContourConjugateWriter()
+ContourLoListWriter::ContourLoListWriter()
 {
    reset();
 }
 
-ContourConjugateWriter::ContourConjugateWriter(ContourFilterParms* aParms)
+ContourLoListWriter::ContourLoListWriter(ContourFilterParms* aParms)
 {
    mP = aParms;
    reset();
 }
 
-void ContourConjugateWriter::reset()
+void ContourLoListWriter::reset()
 {
 }
 
@@ -39,12 +39,12 @@ void ContourConjugateWriter::reset()
 //******************************************************************************
 // Write a pixel record list to a pixel record array.
 
-void ContourConjugateWriter::doWriteArray(
+void ContourLoListWriter::doWriteArray(
    cv::Mat&                   aInputImage,          // Input
    ContourRecordList&    aRecordList,          // Input
    ContourRecordArray&   aRecordArray)         // Output
 {
-   Prn::print(0, "ContourConjugateWriter::doMineImage");
+   Prn::print(0, "ContourLoListWriter::doMineImage");
 
    // Initialize the output array.
    aRecordArray.initialize(aInputImage.rows, aInputImage.cols);

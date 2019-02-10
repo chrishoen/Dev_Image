@@ -1,13 +1,15 @@
 #pragma once
 
 /*==============================================================================
-Contour pixel record array writer.
+SV namespace: sixdofs that are measured by a computer vision based system.
+Contour specific image filter.
 ==============================================================================*/
 
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
 
+#include "svImageWrapper.h"
 #include "svContourFilterParms.h"
 #include "svContourRecord.h"
 
@@ -20,10 +22,10 @@ namespace SV
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
-// This is a parameterized function that writes to a pixel record array.
+// This is a parameterized function that writes to a high pixel record list.
 //
 
-class ContourConjugateWriter
+class ContourHiListWriter
 {
 public:
 
@@ -39,14 +41,29 @@ public:
    //***************************************************************************
    // Members.
 
+   // Input image wrapper.
+   ImageWrapper mInputImage;
+
+   // Number of pixels in the contour that is being filtered.
+   int mNumPixels;
+
+   // Current pixel that is being filtered.
+   RCIndex mXM1;       // X0 - 1  previous pixel.
+   RCIndex mX0;        // X0      current pixel.
+   RCIndex mXP1;       // X0 + 1  next pixel.
+
+   // Filter outputs
+   RCIndex mXV;        // Velocity, tangent.
+   RCIndex mXA;        // Acceleration, normal.
+
    //***************************************************************************
    //***************************************************************************
    //***************************************************************************
    // Methods.
 
    // Constructor.
-   ContourConjugateWriter();
-   ContourConjugateWriter(ContourFilterParms* aParms);
+   ContourHiListWriter();
+   ContourHiListWriter(ContourFilterParms* aParms);
    void reset();
 
    //***************************************************************************
@@ -54,11 +71,23 @@ public:
    //***************************************************************************
    // Methods.
 
-   // Write a pixel record list to a pixel record array.
-   void doWriteArray(
-      cv::Mat&              aInputImage,          // Input
-      ContourRecordList&    aRecordList,          // Input
-      ContourRecordArray&   aRecordArray);        // Output
+   // Write to a high pixel record list.
+   void doWriteHiList(
+      cv::Mat&                  aInputImage,          // Input
+      ContourRecordList&        aRecordList);         // Output
+
+   //***************************************************************************
+   //***************************************************************************
+   //***************************************************************************
+   // Methods.
+
+   // Write to a high pixel record list.
+   void doWriteHiList(
+      std::vector<cv::Point>&   aContour,             // Input
+      ContourRecordList&        aRecordList);         // Output
+
+   // Filter an image pixel that is contained in a contour.
+   void doFilterContourPixel(int aN);
 };
 
 

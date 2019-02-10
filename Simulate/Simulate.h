@@ -28,8 +28,8 @@ public:
 
    cv::Mat mInputImage;
    cv::Mat mOutputImage;
-   SV::ContourRecordList  mRecordList;
-   SV::ContourRecordArray mRecordArray;
+   SV::ContourRecordList  mHiList;
+   SV::ContourRecordArray mOutputArray;
 
    //***************************************************************************
    //***************************************************************************
