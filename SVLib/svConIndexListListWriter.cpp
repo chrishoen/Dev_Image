@@ -90,14 +90,12 @@ void ConIndexListListWriter::doWriteIndexListList(
             SV::RCCircuitLoop tNeighborLoop(tImageLoop(), 1);
             while (tNeighborLoop.loop())
             {
-               // Get the neighbor pixel.
-               RCIndex tNeighborPixel = tNeighborLoop();
-
-               // Test if it is in bounds.
-               if (isImagePixelInBounds(tNeighborPixel))
+               // If the neighbor pixel is in bounds then test its value.
+               uchar tNeighborValue = 0;
+               if (tInputWrapper.getValue(tNeighborLoop(),tNeighborValue))
                {
                   // Test for occupied.
-                  if (tInputWrapper.at(tNeighborPixel) == 255)
+                  if (tNeighborValue == 255)
                   {
                      // Count the number of neighbors that are occupied.
                      tNeighborSum++;

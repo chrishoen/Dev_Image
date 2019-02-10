@@ -87,6 +87,19 @@ public:
       return mImage->at<uchar>(aPixel.mRow, aPixel.mCol);
    }
 
+   // Element access.
+   bool getValue(RCIndex aPixel, uchar& aValue)
+   {
+      aValue = 0;
+      if (aPixel.mRow < 0) return false;
+      if (aPixel.mRow > mImage->rows - 1) return false;
+      if (aPixel.mCol < 0) return false;
+      if (aPixel.mCol > mImage->cols - 1) return false;
+
+      aValue = mImage->at<uchar>(aPixel.mRow, aPixel.mCol);
+      return true;
+   }
+
    //***************************************************************************
    //***************************************************************************
    //***************************************************************************
