@@ -89,16 +89,21 @@ void ContourFilter::doFilterImage(
    // Read from an image, extract a list of all contours, and convert the 
    // contours to a list of row column index lists.
    mIndexListListWriter.doWriteIndexListList(
-      mInputImage,
-      mIndexListList);
+      mInputImage,            // Input
+      mIndexListList);        // Output
 
    // Extract the first index list.
    mHiIndexList = mIndexListList[0];
 
+   // Write to a pixel record list.
+   mRecordListWriter.doWriteRecordList(
+      mHiIndexList,           // Input
+      mHiRecordList);         // Output
+
    // Copy the record list to the record array.
    mArrayWriter.doWriteArray(
-      mHiRecordList,
-      mRecordArray);
+      mHiRecordList,          // Input
+      mRecordArray);          // Output
 }
 
 

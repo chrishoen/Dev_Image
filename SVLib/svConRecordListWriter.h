@@ -80,11 +80,6 @@ public:
    //***************************************************************************
    // Methods.
 
-   // Write to a high pixel record list.
-   void doWriteHiList(
-      std::vector<cv::Point>&   aContour,             // Input
-      ConRecordList&            aRecordList);         // Output
-
    // Filter an image pixel that is contained in a contour.
    void doFilterContourPixel(int aN);
 };

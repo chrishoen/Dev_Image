@@ -47,7 +47,7 @@ void ConIndexListListWriter::doWriteIndexListList(
    cv::Mat&              aInputImage,          // Input
    RCIndexListList&      aIndexListList)       // Output
 {
-   Prn::print(0, "ConIndexListListWriter::doMineImage");
+   Prn::print(0, "doWriteIndexListList");
 
    // Contour variables.
    std::vector<std::vector<cv::Point>> tContours;
@@ -62,13 +62,14 @@ void ConIndexListListWriter::doWriteIndexListList(
       tMode,
       tMethod,
       tOffset);
-   Prn::print(0, "findContours %d", tContours.size());
 
    // Convert the list of lists of contour points to a list of lists
    // of corresponding row column indices.
    convert(
       tContours,          // Input
       aIndexListList);    // Output
+
+   Prn::print(0, "findContours %d %d", tContours.size(), aIndexListList.size());
 }
 
 //******************************************************************************

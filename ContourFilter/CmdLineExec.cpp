@@ -62,7 +62,9 @@ void CmdLineExec::executeRun(Ris::CmdLineCmd* aCmd)
    SV::gImageParms.readOverrides(&SV::gSimParms);
 
    // Run.
-   mSim.doRun(aCmd->argInt(1));
+   mSim.doRun(1);
+   mFilter.initialize(&SV::gImageParms.mContourFilterParms);
+   mFilter.doFilterImage(mSim.mInputImage, mSim.mOutputImage);
 }
 
 //******************************************************************************
@@ -80,7 +82,7 @@ void CmdLineExec::executeShow(Ris::CmdLineCmd* aCmd)
    SV::gImageParms.readSection("default");
    SV::gImageParms.readOverrides(&SV::gSimParms);
 
-   mSim.doShow(aCmd->argInt(1));
+   mFilter.doShow(aCmd->argInt(1));
 }
 
 //******************************************************************************
@@ -129,6 +131,10 @@ void CmdLineExec::executeGo1(Ris::CmdLineCmd* aCmd)
 
 void CmdLineExec::executeGo2(Ris::CmdLineCmd* aCmd)
 {
+   std::vector<int> tList(10);
+   tList.clear();
+   tList.reserve(10);
+   Prn::print(0, "size %d", tList.size());
 }
 
 //******************************************************************************

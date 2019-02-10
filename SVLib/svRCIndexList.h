@@ -43,13 +43,13 @@ public:
 
 // Convert a contour to an index list.
 void convert(
-   std::vector<cv::Point2i>              aContour,         // Input
-   RCIndexList                           aIndexList);      // Output
+   std::vector<cv::Point2i>&               aContour,         // Input
+   RCIndexList&                            aIndexList);      // Output
 
 // Convert a list of contours to a list of index lists.
 void convert(
-   std::vector<std::vector<cv::Point2i>> aContours,        // Input
-   RCIndexListList                       aIndexListList);  // Output
+   std::vector<std::vector<cv::Point2i>>&  aContours,        // Input
+   RCIndexListList&                        aIndexListList);  // Output
 
 //******************************************************************************
 //******************************************************************************
