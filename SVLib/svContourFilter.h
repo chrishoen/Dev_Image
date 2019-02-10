@@ -13,7 +13,8 @@ Contour filter.
 #include "svConIndexListListWriter.h"
 #include "svConLoIndexListWriter.h"
 #include "svConParms.h"
-#include "svConRecord.h"
+#include "svConRecordArray.h"
+#include "svConRecordList.h"
 #include "svConRecordListWriter.h"
 #include "svConShow.h"
 

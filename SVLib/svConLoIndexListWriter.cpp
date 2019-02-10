@@ -45,16 +45,15 @@ void ConLoIndexListWriter::reset()
 //******************************************************************************
 // Write a pixel low record list.
 
-void ConLoIndexListWriter::doWriteLoList(
+void ConLoIndexListWriter::doWriteLoIndexList(
    cv::Mat&          aInputImage,          // Input
-   ConRecordList&    aHiList,              // Input
-   ConRecordArray&   aLoList)              // Output
+   RCIndexList&      aHiList,              // Input
+   RCIndexList&      aLoList)              // Output
 {
-   Prn::print(0, "ConLoIndexListWriter::doMineImage");
+   Prn::print(0, "ConLoIndexListWriter::doWriteLoIndexList");
 
    // Set the image wrapper.
    mInputImage.set(aInputImage);
-
 }
 
 //******************************************************************************

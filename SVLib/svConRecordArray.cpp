@@ -1,20 +1,15 @@
-#pragma once
-
 /*==============================================================================
-Contour filter - show functions.
+Description:
 ==============================================================================*/
+
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
 
-#include <opencv2/core/core.hpp>
-#include "svRCIndex.h"
+#include "stdafx.h"
+
+#include "svRCLoop.h"
 #include "svConRecordArray.h"
-#include "svConRecordList.h"
-
-//******************************************************************************
-//******************************************************************************
-//******************************************************************************
 
 namespace SV
 {
@@ -22,19 +17,20 @@ namespace SV
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
-// Show functions.
+// Initialize array.
 
-// Show record list.
-void showRecordList(
-   int                  aPF,           // Input
-   const char*          aLabel,        // Input
-   ConRecordList&   aRecordList);  // Input
+void ConRecordArray::initialize(int aRows, int aCols)
+{
+   // Initialize the array memory and variables.
+   BaseClass::initialize(aRows, aCols);
 
-// Show record array.
-void showRecordArray(
-   int                  aCode,         // Input
-   const char*          aLabel,        // Input
-   ConRecordArray&  aRecordArray); // Input
+   // Reset each array element.
+   SV::RCIndexLoop tLoop(4, 4);
+   while (tLoop.loop())
+   {
+      BaseClass::at(tLoop()).reset();
+   }
+}
 
 //******************************************************************************
 //******************************************************************************

@@ -9,7 +9,7 @@ Contour filter - image writer.
 //******************************************************************************
 
 #include "svConParms.h"
-#include "svConRecord.h"
+#include "svConRecordList.h"
 
 namespace SV
 {

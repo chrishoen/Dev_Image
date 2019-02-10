@@ -10,7 +10,7 @@ Contour filter - index list writer.
 
 #include "svImageWrapper.h"
 #include "svConParms.h"
-#include "svConRecord.h"
+#include "svRCIndexList.h"
 
 namespace SV
 {
@@ -57,10 +57,10 @@ public:
    // Methods.
 
    // Write a pixel low record list.
-   void doWriteLoList(
+   void doWriteLoIndexList(
       cv::Mat&          aInputImage,          // Input
-      ConRecordList&    aHiList,              // Input
-      ConRecordArray&   aLoList);             // Output
+      RCIndexList&      aHiList,              // Input
+      RCIndexList&      aLoList);             // Output
 };
 
 

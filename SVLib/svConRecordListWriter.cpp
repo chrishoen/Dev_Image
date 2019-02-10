@@ -50,59 +50,22 @@ void ConRecordListWriter::reset()
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
-// Write to a high pixel record list.
+// Write to a pixel record list.
 
-void ConRecordListWriter::doWriteHiList(
-   cv::Mat&             aInputImage,          // Input
-   ConRecordList&       aRecordList)          // Output
-{
-   Prn::print(0, "ConRecordListWriter::doMineImage");
-
-   // Set the image wrapper.
-   mInputImage.set(aInputImage);
-
-   // Contour variables.
-   std::vector<std::vector<cv::Point>> tContours;
-   int tMode = cv::RetrievalModes::RETR_EXTERNAL;
-   int tMethod = cv::ContourApproximationModes::CHAIN_APPROX_NONE;
-   cv::Point tOffset(0, 0);
-
-   // Find a list of lists of contour points.
-   cv::findContours(
-      aInputImage,
-      tContours,
-      tMode,
-      tMethod,
-      tOffset);
-   Prn::print(0, "findContours %d", tContours.size());
-
-   // Loop for each contour.
-   for (int i = 0; i < tContours.size(); i++)
-   {
-      // Filter each contour.
-      doWriteHiList(tContours[i],aRecordList);
-   }
-}
-
-//******************************************************************************
-//******************************************************************************
-//******************************************************************************
-// Write to a high pixel record list.
-
-void ConRecordListWriter::doWriteHiList(
-   std::vector<cv::Point>&   aContour,             // Input
+void ConRecordListWriter::doWriteRecordList(
+   RCIndexList&              aIndexList,           // Input
    ConRecordList&            aRecordList)          // Output
 {
-   Prn::print(Prn::View11, "**************************************Contour %d", aContour.size());
+   Prn::print(Prn::View11, "**************************************Contour %d", aIndexList.size());
 
    // Clear the output.
    aRecordList.clear();
 
    // Loop for each pixel in the contour.
-   mNumPixels = (int)aContour.size();
+   mNumPixels = (int)aIndexList.size();
    int jM1 = 0;  // Previous pixel array index.
    int jP1 = 0;  // Next pixel array index.
-   for (int j = 0; j < aContour.size(); j++)
+   for (int j = 0; j < aIndexList.size(); j++)
    {
       // First pixel indices.
       if (j == 0)
@@ -123,9 +86,9 @@ void ConRecordListWriter::doWriteHiList(
          jP1 = j + 1;                // Next pixel array index.
       }
       // Extract the previous, current, and next pixels.
-      mXM1 = RCIndex(aContour[jM1].y, aContour[jM1].x);   // Previous pixel.
-      mX0  = RCIndex(aContour[j].y,   aContour[j].x);     // Current pixel.  
-      mXP1 = RCIndex(aContour[jP1].y, aContour[jP1].x);   // Nexy pixel.
+      mXM1 = aIndexList[jM1];   // Previous pixel.
+      mX0  = aIndexList[j];     // Current pixel.  
+      mXP1 = aIndexList[jP1];   // Nexy pixel.
 
       // Filter the current pixel.
       doFilterContourPixel(j);

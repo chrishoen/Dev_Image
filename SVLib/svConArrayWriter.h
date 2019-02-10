@@ -9,7 +9,8 @@ Contour filter - array writer.
 //******************************************************************************
 
 #include "svConParms.h"
-#include "svConRecord.h"
+#include "svConRecordList.h"
+#include "svConRecordArray.h"
 
 namespace SV
 {

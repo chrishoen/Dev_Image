@@ -11,7 +11,8 @@ Contour specific image filter.
 
 #include "svImageWrapper.h"
 #include "svConParms.h"
-#include "svConRecord.h"
+#include "svRCIndexList.h"
+#include "svConRecordList.h"
 
 namespace SV
 {
@@ -69,9 +70,9 @@ public:
    //***************************************************************************
    // Methods.
 
-   // Write to a high pixel record list.
-   void doWriteHiList(
-      cv::Mat&                  aInputImage,          // Input
+   // Write to a pixel record list.
+   void doWriteRecordList(
+      RCIndexList&              aIndexList,           // Input
       ConRecordList&            aRecordList);         // Output
 
    //***************************************************************************
