@@ -9,7 +9,6 @@ Description:
 #include "stdafx.h"
 
 #include "svSysParms.h"
-#include "svDefs.h"
 #include "svImageWrapper.h"
 
 #include "svSimImageGenImpulse.h"

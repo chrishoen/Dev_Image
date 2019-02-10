@@ -4,9 +4,6 @@
 
 #include "stdafx.h"
 
-#include "svDefs.h"
-#include "svSysParms.h"
-
 #include "svContourFilterParms.h"
 
 //******************************************************************************

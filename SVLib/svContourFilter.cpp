@@ -9,8 +9,6 @@ Description:
 #include "stdafx.h"
 
 #include "svSysParms.h"
-#include "svDefs.h"
-
 #include "svContourFilter.h"
 
 namespace SV

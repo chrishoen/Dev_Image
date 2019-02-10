@@ -5,7 +5,7 @@ SV namespace: sixdofs that are measured by a computer vision based system.
 Miscellaneous support functions
 ==============================================================================*/
 #include <opencv2/core/core.hpp>
-#include "svDefs.h"
+
 #include "svRCIndex.h"
 
 //******************************************************************************
