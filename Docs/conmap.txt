@@ -1,0 +1,18 @@
+
+
+      +-------------InputImage----------------+
+      |                 |                     |
+      |                 |                     |
+      |                 |                     |
+      |                 |                     |
+      |  [HiListWriter] |                     | [LoListWriter]
+      |                 v                     v     
+      |              HiList--------------->LoList    
+      |                 | |               |   |
+      |                 | +-----------------+ |
+      |                 |                 | | |   
+      |                 | +---------------+ | |
+      |   [ImageWriter] | |                 | | [ArrayWriter]  
+      |                 v v                 v v 
+      +----------->OutputImage---------->OutputArray
+      
