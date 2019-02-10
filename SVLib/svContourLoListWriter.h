@@ -8,6 +8,7 @@ Contour pixel record array writer.
 //******************************************************************************
 //******************************************************************************
 
+#include "svImageWrapper.h"
 #include "svContourFilterParms.h"
 #include "svContourRecord.h"
 
@@ -39,6 +40,9 @@ public:
    //***************************************************************************
    // Members.
 
+   // Input image wrapper.
+   ImageWrapper mInputImage;
+
    //***************************************************************************
    //***************************************************************************
    //***************************************************************************
@@ -54,11 +58,11 @@ public:
    //***************************************************************************
    // Methods.
 
-   // Write a pixel record list to a pixel record array.
-   void doWriteArray(
+   // Write a pixel low record list.
+   void doWriteLoList(
       cv::Mat&              aInputImage,          // Input
-      ContourRecordList&    aRecordList,          // Input
-      ContourRecordArray&   aRecordArray);        // Output
+      ContourRecordList&    aHiList,              // Input
+      ContourRecordArray&   aLoList);             // Output
 };
 
 

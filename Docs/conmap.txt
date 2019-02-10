@@ -1,18 +1,33 @@
 
 
-      +-------------InputImage----------------+
-      |                 |                     |
-      |                 |                     |
-      |                 |                     |
-      |                 |                     |
-      |  [HiListWriter] |                     | [LoListWriter]
-      |                 v                     v     
-      |              HiList--------------->LoList    
-      |                 | |               |   |
-      |                 | +-----------------+ |
-      |                 |                 | | |   
-      |                 | +---------------+ | |
-      |   [ImageWriter] | |                 | | [ArrayWriter]  
-      |                 v v                 v v 
-      +----------->OutputImage---------->OutputArray
       
+      +-------------------InputImage------------------+
+      |                       |                       |
+      |                       |                       |
+      |                       |                       |
+      |                       |                       |
+      | [IndexListListWriter] |                       |
+      |                       v                       |
+      |                 IndexListList                 |
+      |                       |                       |
+      |                       |                       |
+      |                       |                       |
+      |                       |                       |
+      |                       |                       | [LoIndexListWriter]
+      |                       v                       v     
+      |                  HiIndexList------------>LoIndexList    
+      |                       |                       |
+      |                       |                       |
+      |                       |                       |
+      |                       |                       |
+      |    [RecordListWriter] |                       | [RecordListWriter]
+      |                       v                       v     
+      |                 HiRecordList             LoRecordList    
+      |                       |                       |   
+      |                       |                       |
+      |                       +-----------------------+
+      |                       |                       |
+      |         [ImageWriter] |                       | [ArrayWriter]  
+      |                       v                       v 
+      +----------------->OutputImage------------>RecordArray
+            
