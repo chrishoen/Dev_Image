@@ -37,11 +37,6 @@ void showImageTableFloat(
    cv::Mat&      aImage);  // Input
 
 // Show image in tabular form.
-void showImageTableByte(
-   const char*   aLabel,   // Input
-   cv::Mat&      aImage);  // Input
-
-// Show image in tabular form.
 void showImageTable1(
    const char*   aLabel,   // Input
    cv::Mat&      aImage);  // Input

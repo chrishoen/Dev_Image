@@ -108,6 +108,11 @@ void ContourFilter::doFilterImage(
    mArrayWriter.doWriteArray(
       mHiRecordList,          // Input
       mRecordArray);          // Output
+
+   // Copy the record list to the output image.
+   mImageWriter.doWriteImage(
+      mHiRecordList,          // Input
+      mOutputImage);          // Output
 }
 
 
@@ -123,9 +128,13 @@ void ContourFilter::doShow(int aCode)
    case 11: SV::showImageTable1("InputImage", mInputImage); break;
    case 12: SV::showImageTable2("InputImage", mInputImage); break;
    case 13: SV::showImageTable3("InputImage", mInputImage); break;
+
    case 21: SV::showRecordArray(1, "InputImage", mRecordArray); break;
    case 22: SV::showRecordArray2("InputImage", mRecordArray); break;
-   case 3:  SV::showImageTableByte("OutputImage", mOutputImage); break;
+
+   case 31: SV::showImageTable1("OutputImage", mOutputImage); break;
+   case 32: SV::showImageTable2("OutputImage", mOutputImage); break;
+   case 33: SV::showImageTable3("OutputImage", mOutputImage); break;
    }
 }
 

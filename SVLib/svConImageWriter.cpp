@@ -59,6 +59,19 @@ void ConImageWriter::doWriteImage(
    ConRecordList&    aRecordList,          // Input
    cv::Mat&          aOutputImage)         // Input
 {
+   // Guard.
+   if (aRecordList.size() == 0) return;
+
+   // Image wrapper.
+   mOutputWrapper.set(aOutputImage);
+
+
+   // Loop through all of the records in the record list.
+   for (auto &tRecord : aRecordList)
+   {
+      RCIndex tXX = tRecord.mXX;
+      mOutputWrapper.at(tXX) = 9;
+   }
 }
 
 //******************************************************************************

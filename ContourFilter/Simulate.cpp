@@ -100,7 +100,7 @@ void Simulate::doShow(int aCode)
 {
    switch (aCode)
    {
-   case 1:  SV::showImageTableByte("InputImage",  mInputImage); break;
+   case 1:  SV::showImageTable1("InputImage",  mInputImage); break;
    }
 }
 
