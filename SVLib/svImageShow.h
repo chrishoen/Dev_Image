@@ -51,6 +51,11 @@ void showImageTable2(
    const char*   aLabel,   // Input
    cv::Mat&      aImage);  // Input
 
+// Show image in tabular form.
+void showImageTable3(
+   const char*   aLabel,   // Input
+   cv::Mat&      aImage);  // Input
+
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
