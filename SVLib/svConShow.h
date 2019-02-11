@@ -26,14 +26,19 @@ namespace SV
 
 // Show record list.
 void showRecordList(
-   int                  aPF,           // Input
-   const char*          aLabel,        // Input
+   int              aPF,           // Input
+   const char*      aLabel,        // Input
    ConRecordList&   aRecordList);  // Input
 
 // Show record array.
 void showRecordArray(
-   int                  aCode,         // Input
-   const char*          aLabel,        // Input
+   int              aCode,         // Input
+   const char*      aLabel,        // Input
+   ConRecordArray&  aRecordArray); // Input
+
+// Show record array.
+void showRecordArray2(
+   const char*      aLabel,        // Input
    ConRecordArray&  aRecordArray); // Input
 
 //******************************************************************************

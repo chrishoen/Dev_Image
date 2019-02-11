@@ -120,9 +120,10 @@ void ContourFilter::doShow(int aCode)
 {
    switch (aCode)
    {
-   case 1:  SV::showImageTableByte("InputImage", mInputImage); break;
-   case 20: SV::showRecordArray(0, "InputImage", mRecordArray); break;
+   case 11: SV::showImageTable1("InputImage", mInputImage); break;
+   case 12: SV::showImageTable2("InputImage", mInputImage); break;
    case 21: SV::showRecordArray(1, "InputImage", mRecordArray); break;
+   case 22: SV::showRecordArray2("InputImage", mRecordArray); break;
    case 3:  SV::showImageTableByte("OutputImage", mOutputImage); break;
    }
 }
