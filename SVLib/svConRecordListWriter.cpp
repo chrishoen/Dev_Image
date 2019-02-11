@@ -56,7 +56,7 @@ void ConRecordListWriter::doWriteRecordList(
    RCIndexList&              aIndexList,           // Input
    ConRecordList&            aRecordList)          // Output
 {
-   Prn::print(Prn::View11, "**************************************Contour %d", aIndexList.size());
+   Prn::print(Prn::View11, "doWriteRecordList %d", aIndexList.size());
 
    // Clear the output.
    aRecordList.clear();

@@ -46,7 +46,7 @@ void ConArrayWriter::doInitializeArray(
    cv::Mat&          aInputImage,          // Input
    ConRecordArray&   aRecordArray)         // Output
 {
-   Prn::print(0, "ConArrayWriter::doInitializeArray");
+   Prn::print(Prn::View11, "ConArrayWriter::doInitializeArray");
 
    // Initialize the output array to empty.
    aRecordArray.initialize(aInputImage.rows, aInputImage.cols);
@@ -61,7 +61,7 @@ void ConArrayWriter::doWriteArray(
    ConRecordList&    aRecordList,          // Input
    ConRecordArray&   aRecordArray)         // Output
 {
-   Prn::print(0, "ConArrayWriter::doWriteArray");
+   Prn::print(Prn::View11, "ConArrayWriter::doWriteArray");
 
    // Copy each record in the input list to the corresponding position
    // in the output array.

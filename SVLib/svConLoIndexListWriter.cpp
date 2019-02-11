@@ -50,7 +50,7 @@ void ConLoIndexListWriter::doWriteLoIndexList(
    RCIndexList&      aHiList,              // Input
    RCIndexList&      aLoList)              // Output
 {
-   Prn::print(0, "ConLoIndexListWriter::doWriteLoIndexList");
+   Prn::print(Prn::View11, "ConLoIndexListWriter::doWriteLoIndexList");
 
    // Set the image wrapper.
    mInputImage.set(aInputImage);

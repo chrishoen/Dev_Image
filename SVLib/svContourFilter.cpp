@@ -74,6 +74,8 @@ void ContourFilter::doFilterImage(
    cv::Mat&       aInputImage,     // Input
    cv::Mat&       aOutputImage)    // Output
 {
+   Prn::print(Prn::View11, "doFilterImage %4d %4d", aInputImage.rows, aInputImage.cols);
+
    // Copy the input image.
    mInputImage = aInputImage;
 

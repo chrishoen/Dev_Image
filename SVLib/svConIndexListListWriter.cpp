@@ -51,7 +51,7 @@ void ConIndexListListWriter::doWriteIndexListList(
    cv::Mat&              aInputImage,          // Input
    RCIndexListList&      aIndexListList)       // Output
 {
-   Prn::print(0, "doWriteIndexListList");
+   Prn::print(Prn::View11, "doWriteIndexListList");
 
    //***************************************************************************
    //***************************************************************************
@@ -136,7 +136,7 @@ void ConIndexListListWriter::doWriteIndexListList(
       tContours,          // Input
       aIndexListList);    // Output
 
-   Prn::print(0, "findContours %d %d", tContours.size(), aIndexListList.size());
+   Prn::print(Prn::View11, "findContours %d %d", tContours.size(), aIndexListList.size());
 }
 
 //******************************************************************************

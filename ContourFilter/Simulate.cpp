@@ -50,14 +50,14 @@ void Simulate::doRun(int aCode)
 
 void Simulate::doRun1()
 {
-   Prn::print(Prn::View01, "RUN1********************************************************************");
-   Prn::print(Prn::View01, "RUN1********************************************************************");
-   Prn::print(Prn::View01, "RUN1********************************************************************");
+   Prn::print(Prn::View11, "RUN1********************************************************************");
+   Prn::print(Prn::View11, "RUN1********************************************************************");
+   Prn::print(Prn::View11, "RUN1********************************************************************");
 
    // Generate simulated image.
    SV::SimImageGenerator tGenerator(&SV::gSimParms.mImageGenParms);
    tGenerator.doGenerateImage(mInputImage);
-   SV::showImageInfo("InputImage", mInputImage);
+   SV::showImageInfo(Prn::View11,"InputImage", mInputImage);
 
    // Display the input image.
    Display::showImage(mInputImage);
@@ -127,7 +127,7 @@ void Simulate::doTest1()
 {
    // Read a test image file to the input image.
    SV::readImageFromFile(mInputImage, SV::gImageParms.mTestImageFileName);
-   SV::showImageInfo("InputImage", mInputImage);
+   SV::showImageInfo(Prn::View11, "InputImage", mInputImage);
 
    // Display the input image.
    Display::showImage(mInputImage);
@@ -137,7 +137,7 @@ void Simulate::doTest2()
 {
    // Read a test image file to the input image.
    SV::readImageFromFile(mInputImage, SV::gImageParms.mTestImageFileName);
-   SV::showImageInfo("InputImage", mInputImage);
+   SV::showImageInfo(Prn::View11, "InputImage", mInputImage);
 
    // Display the input image.
    Display::showImage(SV::gImageParms.mTestImageFileName);

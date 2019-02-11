@@ -28,11 +28,12 @@ namespace SV
 // Show image info.
 
 void showImageInfo(
+   int           aPF,      // Input
    const char*   aLabel,   // Input
    cv::Mat&      aImage)   // Input
 {
-   Prn::print(0, "%-12s %4d %4d $ %3d %3d ", aLabel, aImage.rows, aImage.cols, aImage.depth(), aImage.channels());
-   Prn::print(0, "");
+   Prn::print(aPF, "%-12s %4d %4d $ %3d %3d ", aLabel, aImage.rows, aImage.cols, aImage.depth(), aImage.channels());
+   Prn::print(aPF, "");
 }
 
 //******************************************************************************

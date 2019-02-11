@@ -45,7 +45,7 @@ void SimImageGenBitMap::reset()
 void SimImageGenBitMap::doGenerateImage(
    cv::Mat&       aImage)          // Output
 {
-   Prn::print(0, "SimImageGenBitMap::doGenerateImage");
+   Prn::print(Prn::View11, "SimImageGenBitMap::doGenerateImage");
    // Create an image filled with all zeros.
    BaseClass::doCreateZeroImage(aImage);
 
