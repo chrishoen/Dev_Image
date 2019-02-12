@@ -132,15 +132,13 @@ void NNRuleFilter::doFilterHighPixel(RCIndex aX)
    // Rule 1.
    if (tLL && tRR)
    {
-      tCode = 0;
-      goto endtest;
+      return;
    }
 
    // Rule 2.
    if (tUU && tDD)
    {
-      tCode = 0;
-      goto endtest;
+      return;
    }
 
    // Count the number of nearest neighbors that are occupied.
@@ -155,12 +153,12 @@ void NNRuleFilter::doFilterHighPixel(RCIndex aX)
    if (tNNSum < 4)
    {
       tCode = 1;
-      goto endtest;
    }
-
-   tCode = 2;
-
-endtest:
+   // Rule 3.
+   else
+   {
+      tCode = 2;
+   }
 
    //***************************************************************************
    //***************************************************************************
