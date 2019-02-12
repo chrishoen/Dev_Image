@@ -15,6 +15,9 @@ Description:
 #include "svImageFunctions.h"
 #include "svImageShow.h"
 
+#pragma warning(push)
+#pragma warning(disable:4533 )
+
 namespace SV
 {
 //******************************************************************************
@@ -126,11 +129,36 @@ void NNRuleFilter::doFilterHighPixel(RCIndex aX)
 
    tCode = 0;
 
-   if (tLL && tRR) goto endtest;
+   // Rule 1.
+   if (tLL && tRR)
+   {
+      tCode = 0;
+      goto endtest;
+   }
 
-   if (tUU && tDD) goto endtest;
+   // Rule 2.
+   if (tUU && tDD)
+   {
+      tCode = 0;
+      goto endtest;
+   }
 
-   tCode = 1;
+   // Count the number of nearest neighbors that are occupied.
+   int tNNSum = 0;
+   SV::RCCircuitLoop tNNLoop(aX, 1);
+   while (tNNLoop.loop())
+   {
+      if (mInput.at(tNNLoop()) != 0) tNNSum++;
+   }
+
+   // Rule 3.
+   if (tNNSum < 4)
+   {
+      tCode = 1;
+      goto endtest;
+   }
+
+   tCode = 2;
 
 endtest:
 
@@ -143,9 +171,16 @@ endtest:
    {
       mOutput.at(aX) = mP->mHC1;
    }
+
+   if (tCode == 2)
+   {
+      mOutput.at(aX) = mP->mHC2;
+   }
 }
 
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
 }//namespace
+
+#pragma warning(pop)
