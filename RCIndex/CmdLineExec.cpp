@@ -66,7 +66,7 @@ void CmdLineExec::executeGo1(Ris::CmdLineCmd* aCmd)
    aCmd->setArgDefault(1, true);
    aCmd->setArgDefault(2, true);
 
-   SV::RCIndexLoop tLoop(4, 4);
+   SV::RCIndexLoop tLoop(SV::RCIndex(100,200),4, 4);
    tLoop.mRowForward = aCmd->argBool(1);
    tLoop.mColForward = aCmd->argBool(2);
    for (tLoop.first(); tLoop.test(); tLoop.next())

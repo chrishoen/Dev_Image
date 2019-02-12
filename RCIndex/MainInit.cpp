@@ -44,7 +44,7 @@ void main_initialize(int argc,char** argv)
    Prn::setFilter(Prn::QCallRun3,  false);
    Prn::setFilter(Prn::QCallRun4,  false);
 
-   Prn::print(0,"Numbers*******************************************BEGIN");
+   Prn::print(0,"RCIndex*******************************************BEGIN");
 
 }
 
@@ -55,7 +55,7 @@ void main_initialize(int argc,char** argv)
 
 void main_finalize()
 {
-   Prn::print(0,"Numbers*******************************************END");
+   Prn::print(0,"RCIndex*******************************************END");
 
    // Close print
    Prn::finalizePrint();

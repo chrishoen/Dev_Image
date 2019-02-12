@@ -39,7 +39,11 @@ public:
    bool mFirst;
    bool mRowForward;
    bool mColForward;
+   short int mRowA;
+   short int mRowB;
    short int mRow;
+   short int mColA;
+   short int mColB;
    short int mCol;
    short int mRows;
    short int mCols;
@@ -55,8 +59,12 @@ public:
       mFirst = true;
       mRowForward = true;
       mColForward = true;
-      mRow = 0;
-      mCol = 0;
+      mRowA = 0;
+      mRowB = 0;
+      mRow  = 0;
+      mColA = 0;
+      mColB = 0;
+      mCol  = 0;
       mRows = 0;
       mCols = 0;
    }
@@ -67,7 +75,27 @@ public:
       mFirst = true;
       mRowForward = true;
       mColForward = true;
+      mRowA = 0;
+      mRowB = 0;
       mRow = 0;
+      mColA = 0;
+      mColB = 0;
+      mCol = 0;
+      mRows = aRows;
+      mCols = aCols;
+   }
+
+   // Constructor.
+   RCIndexLoop(RCIndex aOffset,int aRows, int aCols)
+   {
+      mFirst = true;
+      mRowForward = true;
+      mColForward = true;
+      mRowA = 0;
+      mRowB = aOffset.mRow;
+      mRow = 0;
+      mColA = 0;
+      mColB = aOffset.mCol;
       mCol = 0;
       mRows = aRows;
       mCols = aCols;
@@ -79,7 +107,27 @@ public:
       mFirst = true;
       mRowForward = true;
       mColForward = true;
+      mRowA = 0;
+      mRowB = 0;
       mRow = 0;
+      mColA = 0;
+      mColB = 0;
+      mCol = 0;
+      mRows = aSize.mRows;
+      mCols = aSize.mCols;
+   }
+
+   // Constructor.
+   RCIndexLoop(RCIndex aOffset, RCSize aSize)
+   {
+      mFirst = true;
+      mRowForward = true;
+      mColForward = true;
+      mRowA = 0;
+      mRowB = aOffset.mRow;
+      mRow = 0;
+      mColA = 0;
+      mColB = aOffset.mRow;
       mCol = 0;
       mRows = aSize.mRows;
       mCols = aSize.mCols;
@@ -100,24 +148,26 @@ public:
    {
       if (mRowForward)
       {
-         mRow = 0;
+         mRowA = 0;
       }
       else
       {
-         mRow = mRows - 1;
+         mRowA = mRows - 1;
       }
+      mRow = mRowA + mRowB;
    }
 
    void firstCol()
    {
       if (mColForward)
       {
-         mCol = 0;
+         mColA = 0;
       }
       else
       {
-         mCol = mCols - 1;
+         mColA = mCols - 1;
       }
+      mCol = mColA + mColB;
    }
 
    void first()
@@ -130,11 +180,11 @@ public:
    {
       if (mRowForward)
       {
-         return (mRow < mRows);
+         return (mRowA < mRows);
       }
       else
       {
-         return (mRow >= 0);
+         return (mRowA >= 0);
       }
    }
 
@@ -142,11 +192,11 @@ public:
    {
       if (mColForward)
       {
-         return (mCol < mCols);
+         return (mColA < mCols);
       }
       else
       {
-         return (mCol >= 0);
+         return (mColA >= 0);
       }
    }
 
@@ -159,24 +209,26 @@ public:
    {
       if (mRowForward)
       {
-         mRow++;
+         mRowA++;
       }
       else
       {
-         mRow--;
+         mRowA--;
       }
+      mRow = mRowA + mRowB;
    }
 
    void nextCol()
    {
       if (mColForward)
       {
-         mCol++;
+         mColA++;
       }
       else
       {
-         mCol--;
+         mColA--;
       }
+      mCol = mColA + mColB;
    }
 
    void next()
@@ -191,14 +243,18 @@ public:
 
    bool advance()
    {
-      if (++mCol == mCols)
+      if (++mColA == mCols)
       {
-         mCol = 0;
-         if (++mRow == mRows)
+         mColA = 0;
+         if (++mRowA == mRows)
          {
+            mRow = mRowA + mRowB;
+            mCol = mColA + mColB;
             return false;
          }
       }
+      mRow = mRowA + mRowB;
+      mCol = mColA + mColB;
       return true;
    }
 

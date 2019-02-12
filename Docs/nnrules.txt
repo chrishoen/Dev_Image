@@ -1,0 +1,34 @@
+. . . 
+. x . 
+. . . 
+
+x . .   x . .   x . .   x . .   x . .   x . .     
+. x .   x x .   x x .   x x .   x x .   x x x
+. . .   . . .   x . .   x x .   x x x   x x x
+
+. x .   . x .   . x .   . x .   . x .   . x .
+. x .   x x .   x x .   x x .   x x .   x x x
+. . .   . . .   x . .   x x .   x x x   x x x
+
+x x .   x x .   x x .   x x .   x x .   x x .
+. x .   x x .   x x .   x x .   x x .   x x x
+. . .   . . .   x . .   x x .   x x x   x x x
+
+x x x   x x x   x x x   x x x   x x x   x x x
+. x .   x x .   x x .   x x .   x x .   x x x
+. . .   . . .   x . .   x x .   x x x   x x x 
+
+
+
+UL UU UR
+LL XX RR
+DL DD DR
+
+if LL and RR:
+   return false
+   
+if UU and DD:
+   return false
+   
+return true
+
