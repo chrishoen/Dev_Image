@@ -18,29 +18,20 @@ Description:
 
 #include "displayFunctions.h"
 
-#include "Simulate.h"
+#include "ImageSet.h"
 
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
 
-Simulate::Simulate()
+ImageSet::ImageSet()
 {
 }
 
-//******************************************************************************
-//******************************************************************************
-//******************************************************************************
-// This selects a test.
-
-void Simulate::doRun(int aCode)
+void ImageSet::reset()
 {
-   switch (aCode)
-   {
-   case 1: doRun1(); break;
-   case 2: doRun2(); break;
-   case 3: doRun3(); break;
-   }
+   mInputImage.release();
+   mOutputImage.release();
 }
 
 //******************************************************************************
@@ -48,7 +39,7 @@ void Simulate::doRun(int aCode)
 //******************************************************************************
 // This runs a test.
 
-void Simulate::doRun1()
+void ImageSet::doSimInput()
 {
    Prn::print(Prn::View11, "RUN1********************************************************************");
    Prn::print(Prn::View11, "RUN1********************************************************************");
@@ -58,84 +49,41 @@ void Simulate::doRun1()
    SV::SimImageGenerator tGenerator(&SV::gSimParms.mImageGenParms);
    tGenerator.doGenerateImage(mInputImage);
    SV::showImageInfo(Prn::View11,"InputImage", mInputImage);
+}
 
-   // Display the input image.
-   Display::showImage(mInputImage);
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+// Read and write images.
 
-   // Save simulated image.
+void ImageSet::doReadInput()
+{
+   // Read a test image file to the input image.
+   SV::readImageFromFile(mInputImage, SV::gImageParms.mTestImageFileName);
+   SV::showImageInfo(Prn::View11, "InputImage", mInputImage);
+}
+
+void ImageSet::doWriteInput()
+{
+   // Save image.
+   SV::showImageInfo(Prn::View11, "InputImage", mInputImage);
    SV::writeImageToFile(mInputImage, SV::gImageParms.mInputImageFileName);
 }
 
-//******************************************************************************
-//******************************************************************************
-//******************************************************************************
-// This runs a test.
-
-void Simulate::doRun2()
+void ImageSet::doWriteOutput()
 {
-   Prn::print(Prn::View01, "RUN2********************************************************************");
-   Prn::print(Prn::View01, "RUN2********************************************************************");
-   Prn::print(Prn::View01, "RUN2********************************************************************");
+   // Save image.
+   SV::showImageInfo(Prn::View11, "OutputImage", mOutputImage);
+   SV::writeImageToFile(mOutputImage, SV::gImageParms.mOutputImageFileName);
 }
 
-//******************************************************************************
-//******************************************************************************
-//******************************************************************************
-// This runs a test.
-
-void Simulate::doRun3()
-{
-   Prn::print(Prn::View01, "RUN3********************************************************************");
-   Prn::print(Prn::View01, "RUN3********************************************************************");
-   Prn::print(Prn::View01, "RUN3********************************************************************");
-
-}
 
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
-// This runs a test.
+// Show images.
 
-void Simulate::doTest(int aCode)
-{
-   switch (aCode)
-   {
-   case 1: doTest1(); break;
-   case 2: doTest2(); break;
-   }
-}
-
-//******************************************************************************
-//******************************************************************************
-//******************************************************************************
-// This runs a test.
-
-void Simulate::doTest1()
-{
-   // Read a test image file to the input image.
-   SV::readImageFromFile(mInputImage, SV::gImageParms.mTestImageFileName);
-   SV::showImageInfo(Prn::View11, "InputImage", mInputImage);
-
-   // Display the input image.
-   Display::showImage(mInputImage);
-}
-
-void Simulate::doTest2()
-{
-   // Read a test image file to the input image.
-   SV::readImageFromFile(mInputImage, SV::gImageParms.mTestImageFileName);
-   SV::showImageInfo(Prn::View11, "InputImage", mInputImage);
-
-   // Display the input image.
-   Display::showImage(SV::gImageParms.mTestImageFileName);
-}
-
-//******************************************************************************
-//******************************************************************************
-//******************************************************************************
-// This runs a test.
-
-void Simulate::doShow(int aCode)
+void ImageSet::doShow(int aCode)
 {
    switch (aCode)
    {
@@ -154,7 +102,16 @@ void Simulate::doShow(int aCode)
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
-// Convert simulated image to target image and display.
-//Display::showImage(mOutputImage);
-// Save simulated image.
-//SV::writeImageToFile(mOutputImage, SV::gImageParms.mOutputImageFileName);
+// 
+
+void ImageSet::doDraw(int aCode)
+{
+   switch (aCode)
+   {
+   case 11:  Display::showImage(mInputImage); break;
+   case 12:  Display::showImage(SV::gImageParms.mInputImageFileName); break;
+   case 21:  Display::showImage(mOutputImage); break;
+   case 22:  Display::showImage(SV::gImageParms.mOutputImageFileName); break;
+   case 9:   Display::showImage(SV::gImageParms.mTestImageFileName); break;
+   }
+}

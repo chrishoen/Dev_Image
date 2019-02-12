@@ -7,8 +7,6 @@
 #include "displayParms.h"
 #include "displayFunctions.h"
 
-#include "Simulate.h"
-
 #include "displayGraphicsThread.h"
 
 #include "CmdLineExec.h"
@@ -23,6 +21,7 @@ CmdLineExec::CmdLineExec()
 
 void CmdLineExec::reset()
 {
+   mImageSet.reset();
 }
 
 //******************************************************************************
@@ -36,8 +35,11 @@ void CmdLineExec::execute(Ris::CmdLineCmd* aCmd)
 {
    if (aCmd->isCmd("Run"))       executeRun(aCmd);
    if (aCmd->isCmd("Show"))      executeShow(aCmd);
-   if (aCmd->isCmd("Test"))      executeTest(aCmd);
-   if (aCmd->isCmd("D0"))        executeDraw0(aCmd);
+   if (aCmd->isCmd("Draw"))      executeDraw(aCmd);
+   if (aCmd->isCmd("ReadIn"))    executeReadInput(aCmd);
+   if (aCmd->isCmd("Write"))     executeWrite(aCmd);
+   if (aCmd->isCmd("WriteOut"))  executeWriteOutput(aCmd);
+
    if (aCmd->isCmd("GO1"))       executeGo1(aCmd);
    if (aCmd->isCmd("GO2"))       executeGo2(aCmd);
    if (aCmd->isCmd("GO3"))       executeGo3(aCmd);
@@ -62,9 +64,11 @@ void CmdLineExec::executeRun(Ris::CmdLineCmd* aCmd)
    SV::gImageParms.readOverrides(&SV::gSimParms);
 
    // Run.
-   mSim.doRun(1);
+   mImageSet.doSimInput();
    mFilter.initialize(&SV::gImageParms.mNNRuleFilterParms);
-   mFilter.doFilterImage(mSim.mInputImage, mSim.mOutputImage);
+   mFilter.doFilterImage(mImageSet.mInputImage, mImageSet.mOutputImage);
+
+   Prn::print(0, "done");
 }
 
 //******************************************************************************
@@ -74,22 +78,24 @@ void CmdLineExec::executeRun(Ris::CmdLineCmd* aCmd)
 void CmdLineExec::executeShow(Ris::CmdLineCmd* aCmd)
 {
    aCmd->setArgDefault(1, 1);
-
-   // Read parameters files.
-   SV::gSimParms.reset();
-   SV::gSimParms.readSection("default");
-   SV::gImageParms.reset();
-   SV::gImageParms.readSection("default");
-   SV::gImageParms.readOverrides(&SV::gSimParms);
-
-   mSim.doShow(aCmd->argInt(1));
+   mImageSet.doShow(aCmd->argInt(1));
 }
 
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
 
-void CmdLineExec::executeTest(Ris::CmdLineCmd* aCmd)
+void CmdLineExec::executeDraw(Ris::CmdLineCmd* aCmd)
+{
+   aCmd->setArgDefault(1, 1);
+   mImageSet.doDraw(aCmd->argInt(1));
+}
+
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+
+void CmdLineExec::executeReadInput(Ris::CmdLineCmd* aCmd)
 {
    aCmd->setArgDefault(1, 1);
 
@@ -101,19 +107,29 @@ void CmdLineExec::executeTest(Ris::CmdLineCmd* aCmd)
    SV::gImageParms.readOverrides(&SV::gSimParms);
 
    // Run.
-   mSim.doTest(aCmd->argInt(1));
+   mImageSet.doReadInput();
+   mFilter.initialize(&SV::gImageParms.mNNRuleFilterParms);
+   mFilter.doFilterImage(mImageSet.mInputImage, mImageSet.mOutputImage);
+   Prn::print(0, "done");
 }
 
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
 
-void CmdLineExec::executeDraw0(Ris::CmdLineCmd* aCmd)
+void CmdLineExec::executeWrite(Ris::CmdLineCmd* aCmd)
 {
-   aCmd->setArgDefault(1, 0);
-   int tCode = aCmd->argInt(1);
+   mImageSet.doWriteInput();
+   mImageSet.doWriteOutput();
+}
 
-   Display::gGraphicsThread->postDraw0(tCode);
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+
+void CmdLineExec::executeWriteOutput(Ris::CmdLineCmd* aCmd)
+{
+   mImageSet.doWriteOutput();
 }
 
 //******************************************************************************

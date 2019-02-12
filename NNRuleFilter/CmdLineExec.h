@@ -9,7 +9,7 @@ Program command line executive.
 //******************************************************************************
 
 #include "risCmdLineExec.h"
-#include "Simulate.h"
+#include "ImageSet.h"
 #include "svNNRuleFilter.h"
 
 //******************************************************************************
@@ -30,7 +30,8 @@ public:
    //***************************************************************************
    //***************************************************************************
    // Members.
-   Simulate mSim;
+
+   ImageSet mImageSet;
    SV::NNRuleFilter mFilter;
 
    //***************************************************************************
@@ -57,10 +58,13 @@ public:
    // Methods.
 
    // Execute specific commands.
-   void executeRun(Ris::CmdLineCmd* aCmd);
-   void executeShow(Ris::CmdLineCmd* aCmd);
-   void executeTest(Ris::CmdLineCmd* aCmd);
-   void executeDraw0(Ris::CmdLineCmd* aCmd);
+   void executeRun         (Ris::CmdLineCmd* aCmd);
+   void executeShow        (Ris::CmdLineCmd* aCmd);
+   void executeDraw        (Ris::CmdLineCmd* aCmd);
+   void executeReadInput   (Ris::CmdLineCmd* aCmd);
+   void executeWrite       (Ris::CmdLineCmd* aCmd);
+   void executeWriteOutput (Ris::CmdLineCmd* aCmd);
+
    void executeGo1(Ris::CmdLineCmd* aCmd);
    void executeGo2(Ris::CmdLineCmd* aCmd);
    void executeGo3(Ris::CmdLineCmd* aCmd);
