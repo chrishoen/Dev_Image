@@ -33,6 +33,7 @@ void ImageParms::reset()
    mOutputImageFileName[0] = 0;
    mTestImageFileName[0] = 0;
 
+   mNNRuleFilterParms.reset();
    mContourFilterParms.reset();
 
    mRoiPixel.reset();
@@ -63,6 +64,8 @@ void ImageParms::show()
    printf("InputImageFileName                %s\n", mInputImageFileName);
    printf("OutputImageFileName               %s\n", mOutputImageFileName);
    printf("TestImageFileName                 %s\n", mTestImageFileName);
+   mNNRuleFilterParms.show();
+   return;
    mContourFilterParms.show();
 }
 
@@ -84,6 +87,7 @@ void ImageParms::execute(Ris::CmdLineCmd* aCmd)
    if (aCmd->isCmd("OutputImageFileName")) aCmd->copyArgString(1, mOutputImageFileName, cMaxStringSize);
    if (aCmd->isCmd("TestImageFileName"))   aCmd->copyArgString(1, mTestImageFileName, cMaxStringSize);
 
+   if (aCmd->isCmd("NNRuleFilterParms"))   readSection(aCmd->argString(1), &mNNRuleFilterParms);
    if (aCmd->isCmd("ContourFilterParms"))  readSection(aCmd->argString(1), &mContourFilterParms);
 }
 
