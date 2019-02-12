@@ -8,7 +8,8 @@ Description:
 
 #include "stdafx.h"
 
-#include "svSysParms.h"
+#include "svRCIndex.h"
+#include "svRCLoop.h"
 #include "svNNRuleFilter.h"
 
 #include "svImageFunctions.h"
@@ -53,6 +54,11 @@ void NNRuleFilter::doFilterImage(
    cv::Mat&       aInputImage,     // Input
    cv::Mat&       aOutputImage)    // Output
 {
+   //***************************************************************************
+   //***************************************************************************
+   //***************************************************************************
+   // Initialize.
+
    Prn::print(Prn::View11, "doFilterImage %4d %4d", aInputImage.rows, aInputImage.cols);
 
    // Copy the input image to the output image.
@@ -61,6 +67,82 @@ void NNRuleFilter::doFilterImage(
    // Set the image wrappers.
    mInput.set(aInputImage);
    mOutput.set(aOutputImage);
+
+   //***************************************************************************
+   //***************************************************************************
+   //***************************************************************************
+   // Loop through the image.
+
+   // Loop through the image. Ignore the top and bottom rows and ignore
+   // the left and right edge columns.
+   SV::RCIndexLoop tLoop(RCIndex(1, 1),mInput.rcSize());
+   while (tLoop.loop())
+   {
+      // Filter each pixel that is high.
+      if (mInput.at(tLoop()) != 0)
+      {
+         doFilterHighPixel(tLoop());
+      }
+   }
+
+}
+
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+// Filter a pixel that is high.
+// 
+// UL UU UR
+// LL XX RR
+// DL DD DR
+
+
+void NNRuleFilter::doFilterHighPixel(RCIndex aX)
+{
+   //***************************************************************************
+   //***************************************************************************
+   //***************************************************************************
+   // Local variables.
+
+   // Nearest neighbor variables.
+   bool tUL = mInput.at(aX.mRow - 1, aX.mCol - 1) != 0;
+   bool tUU = mInput.at(aX.mRow - 1, aX.mCol    ) != 0;
+   bool tUR = mInput.at(aX.mRow - 1, aX.mCol + 1) != 0;
+
+   bool tLL = mInput.at(aX.mRow    , aX.mCol - 1) != 0;
+   bool tXX = mInput.at(aX.mRow    , aX.mCol    ) != 0;
+   bool tRR = mInput.at(aX.mRow    , aX.mCol + 1) != 0;
+
+   bool tDL = mInput.at(aX.mRow + 1, aX.mCol - 1) != 0;
+   bool tDD = mInput.at(aX.mRow + 1, aX.mCol    ) != 0;
+   bool tDR = mInput.at(aX.mRow + 1, aX.mCol + 1) != 0;
+
+   int tCode = 0;
+
+   //***************************************************************************
+   //***************************************************************************
+   //***************************************************************************
+   // Nearest neighbor rule testing.
+
+   tCode = 0;
+
+   if (tLL && tRR) goto endtest;
+
+   if (tUU && tDD) goto endtest;
+
+   tCode = 1;
+
+endtest:
+
+   //***************************************************************************
+   //***************************************************************************
+   //***************************************************************************
+   // Set the high pixel, based on the rule tesing results.
+
+   if (tCode == 1)
+   {
+      mOutput.at(aX) = mP->mHC1;
+   }
 }
 
 //******************************************************************************
