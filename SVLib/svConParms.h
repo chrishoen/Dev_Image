@@ -63,7 +63,7 @@ public:
    int  mClassifyCode;
 
    // Classify table, indexed by neighbor sum.
-   Ris::CmdLineTable2D<int, 2, 9>  mClassifyTable1;
+   Ris::CmdLineTable2D<int, 3, 3>  mMapXVTable;
 
    //***************************************************************************
    //***************************************************************************

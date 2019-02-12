@@ -29,7 +29,7 @@ ConParms::ConParms()
 void ConParms::reset()
 {
    mClassifyCode = 0;
-   mClassifyTable1.reset();
+   mMapXVTable.reset();
 }
 
 //******************************************************************************
@@ -41,20 +41,7 @@ void ConParms::show()
 {
    printf("ConParms*******************\n");
    printf("ClassifyCode             %10d\n",   mClassifyCode);
-   if (mClassifyTable1.mRows != 0)
-   {
-      printf("ClassifyTable1\n");
-      for (int i = 0; i < 8;i++)
-      {
-         printf("%3d ", mClassifyTable1[0][i]);
-      }
-      printf("\n");
-      for (int i = 0; i < 8; i++)
-      {
-         printf("%3d ", mClassifyTable1[1][i]);
-      }
-      printf("\n");
-   }
+   mMapXVTable.show("mMapXVTable");
    printf("ConParms*******************\n");
 }
 
@@ -68,7 +55,7 @@ void ConParms::show()
 void ConParms::execute(Ris::CmdLineCmd* aCmd)
 {
    if (aCmd->isCmd("ClassifyCode"))       mClassifyCode = aCmd->argInt(1);
-   if (aCmd->isCmd("ClassifyTable1"))     nestedPush(aCmd, &mClassifyTable1);
+   if (aCmd->isCmd("MapXVTable"))         nestedPush(aCmd, &mMapXVTable);
 }
 
 //******************************************************************************

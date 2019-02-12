@@ -69,8 +69,13 @@ void ConImageWriter::doWriteImage(
    // Loop through all of the records in the record list.
    for (auto &tRecord : aRecordList)
    {
-      RCIndex tXX = tRecord.mXX;
-      mOutputWrapper.at(tXX) = 9;
+      int tXVRow = abs(tRecord.mXV.mRow);
+      int tXVCol = abs(tRecord.mXV.mCol);
+      int tOutputValue = mP->mMapXVTable[tXVRow][tXVCol];
+      if (tOutputValue != 0)
+      {
+         mOutputWrapper.at(tRecord.mXX) = tOutputValue;
+      }
    }
 }
 

@@ -170,7 +170,7 @@ void showImageTable2(
          }
          else
          {
-            printf(" %1d",tValue);
+            printf(" %1x",tValue);
          }
       }
       printf("\n");
@@ -246,7 +246,7 @@ void showImageTable3(
          }
          else
          {
-            printf("  %1d",tValue);
+            printf("  %1x",tValue);
          }
       }
       printf("\n");
