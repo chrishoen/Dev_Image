@@ -78,7 +78,7 @@ void NNRuleFilter::doFilterImage(
 
    // Loop through the image. Ignore the top and bottom rows and ignore
    // the left and right edge columns.
-   SV::RCIndexLoop tLoop(RCIndex(1, 1),mInput.rcSize());
+   SV::RCIndexLoop tLoop(RCIndex(1, 1),aInputImage.rows - 2, aInputImage.cols - 2);
    while (tLoop.loop())
    {
       // Filter each pixel that is high.
