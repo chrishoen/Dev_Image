@@ -138,7 +138,19 @@ void CmdLineExec::executeWriteOutput(Ris::CmdLineCmd* aCmd)
 
 void CmdLineExec::executeGo1(Ris::CmdLineCmd* aCmd)
 {
-   Display::showImage(SV::gImageParms.mTestImageFileName);
+   aCmd->setArgDefault(1, 1);
+
+   // Read parameters files.
+   SV::gSimParms.reset();
+   SV::gSimParms.readSection("default");
+   SV::gImageParms.reset();
+   SV::gImageParms.readSection("default");
+   SV::gImageParms.readOverrides(&SV::gSimParms);
+
+   // Run.
+   mImageSet.doSimInput();
+   mImageSet.doWriteInput();
+   mImageSet.doDraw(12);
 }
 
 //******************************************************************************

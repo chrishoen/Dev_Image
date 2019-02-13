@@ -92,7 +92,7 @@ public:
    double   mGaussianAmplitude;
 
    // Polygon parameters.
-   Ris::CmdLineTable2D<int, 10, 2>    mPolygonPoints;
+   Ris::CmdLineTable2D<int, 40, 2>    mPolygonPoints;
 
    // BitMap parameters.
    RCIndex mBitMapCorner;
