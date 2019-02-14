@@ -41,14 +41,10 @@ void ImageSet::reset()
 
 void ImageSet::doSimInput()
 {
-   Prn::print(Prn::View11, "RUN1********************************************************************");
-   Prn::print(Prn::View11, "RUN1********************************************************************");
-   Prn::print(Prn::View11, "RUN1********************************************************************");
-
    // Generate simulated image.
    SV::SimImageGenerator tGenerator(&SV::gSimParms.mImageGenParmsC);
    tGenerator.doGenerateImage(mInputImageC);
-   SV::showImageInfo(Prn::View11,"InputImage", mInputImageC);
+   SV::showImageInfo(Prn::View11,"InputImageC", mInputImageC);
 }
 
 //******************************************************************************
