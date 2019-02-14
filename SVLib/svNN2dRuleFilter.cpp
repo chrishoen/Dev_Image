@@ -10,7 +10,7 @@ Description:
 
 #include "svRCIndex.h"
 #include "svRCLoop.h"
-#include "svNNRuleFilter2d.h"
+#include "svNN2dRuleFilter.h"
 
 #include "svImageFunctions.h"
 #include "svImageShow.h"
@@ -24,24 +24,24 @@ namespace SV
 //******************************************************************************
 //******************************************************************************
 
-NNRuleFilter2d::NNRuleFilter2d()
+NN2dRuleFilter::NN2dRuleFilter()
 {
    reset();
 }
 
-NNRuleFilter2d::NNRuleFilter2d(NNRuleParms* aParms)
-{
-   mP = aParms;
-   reset();
-}
-
-void NNRuleFilter2d::initialize(NNRuleParms* aParms)
+NN2dRuleFilter::NN2dRuleFilter(NN2dRuleParms* aParms)
 {
    mP = aParms;
    reset();
 }
 
-void NNRuleFilter2d::reset()
+void NN2dRuleFilter::initialize(NN2dRuleParms* aParms)
+{
+   mP = aParms;
+   reset();
+}
+
+void NN2dRuleFilter::reset()
 {
 }
 
@@ -53,7 +53,7 @@ void NNRuleFilter2d::reset()
 //******************************************************************************
 // Filter the image, depending on the parms.
 
-void NNRuleFilter2d::doFilterImage(
+void NN2dRuleFilter::doFilterImage(
    cv::Mat&       aInputImage,     // Input
    cv::Mat&       aOutputImage)    // Output
 {
@@ -100,7 +100,7 @@ void NNRuleFilter2d::doFilterImage(
 // SW SS SE
 
 
-void NNRuleFilter2d::doFilterHighPixel(RCIndex aX)
+void NN2dRuleFilter::doFilterHighPixel(RCIndex aX)
 {
    //***************************************************************************
    //***************************************************************************

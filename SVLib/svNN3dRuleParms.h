@@ -50,7 +50,7 @@ namespace SV
 // structure. If so, then this class is the root.
 // 
 
-class NNRuleParms : public Ris::BaseCmdLineExec
+class NN3dRuleParms : public Ris::BaseCmdLineExec
 {
 public:
 
@@ -73,7 +73,7 @@ public:
 
    // Constructor,
    typedef Ris::BaseCmdLineExec BaseClass;
-   NNRuleParms();
+   NN3dRuleParms();
    void reset();
    void show();
 

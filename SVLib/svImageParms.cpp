@@ -29,11 +29,13 @@ void ImageParms::reset()
    BaseClass::reset();
    BaseClass::setFileName_RelAlphaFiles("Image/SV_Image_Parms.txt");
 
-   mInputImageFileName[0] = 0;
+   mInputImageDFileName[0] = 0;
+   mInputImageCFileName[0] = 0;
+   mInputImageUFileName[0] = 0;
    mOutputImageFileName[0] = 0;
-   mTestImageFileName[0] = 0;
 
-   mNNRuleFilterParms.reset();
+   mNN2dRuleFilterParms.reset();
+   mNN3dRuleFilterParms.reset();
    mContourFilterParms.reset();
 
    mRoiPixel.reset();
@@ -61,10 +63,12 @@ void ImageParms::show()
    printf("ImageParms********************************************** %s\n", mTargetSection);
    printf("RoiPixel                 %10d %10d\n", mRoiPixel.mRow, mRoiPixel.mCol);
    printf("RoiB                     %10d\n", mRoiB);
-   printf("InputImageFileName                %s\n", mInputImageFileName);
+   printf("InputImageDFileName               %s\n", mInputImageDFileName);
+   printf("InputImageCFileName               %s\n", mInputImageCFileName);
+   printf("InputImageUFileName               %s\n", mInputImageUFileName);
    printf("OutputImageFileName               %s\n", mOutputImageFileName);
-   printf("TestImageFileName                 %s\n", mTestImageFileName);
-   mNNRuleFilterParms.show();
+   mNN2dRuleFilterParms.show();
+   mNN3dRuleFilterParms.show();
    return;
    mContourFilterParms.show();
 }
@@ -83,12 +87,14 @@ void ImageParms::execute(Ris::CmdLineCmd* aCmd)
    if (aCmd->isCmd("RoiPixel"))            mRoiPixel.execute(aCmd);
    if (aCmd->isCmd("RoiB"))                mRoiB = aCmd->argInt(1);
 
-   if (aCmd->isCmd("InputImageFileName"))  aCmd->copyArgString(1, mInputImageFileName, cMaxStringSize);
-   if (aCmd->isCmd("OutputImageFileName")) aCmd->copyArgString(1, mOutputImageFileName, cMaxStringSize);
-   if (aCmd->isCmd("TestImageFileName"))   aCmd->copyArgString(1, mTestImageFileName, cMaxStringSize);
+   if (aCmd->isCmd("InputImageDFileName"))  aCmd->copyArgString(1, mInputImageDFileName, cMaxStringSize);
+   if (aCmd->isCmd("InputImageCFileName"))  aCmd->copyArgString(1, mInputImageCFileName, cMaxStringSize);
+   if (aCmd->isCmd("InputImageUFileName"))  aCmd->copyArgString(1, mInputImageUFileName, cMaxStringSize);
+   if (aCmd->isCmd("OutputImageFileName"))  aCmd->copyArgString(1, mOutputImageFileName, cMaxStringSize);
 
-   if (aCmd->isCmd("NNRuleFilterParms"))   readSection(aCmd->argString(1), &mNNRuleFilterParms);
-   if (aCmd->isCmd("ContourFilterParms"))  readSection(aCmd->argString(1), &mContourFilterParms);
+   if (aCmd->isCmd("NN2dRuleFilterParms"))   readSection(aCmd->argString(1), &mNN2dRuleFilterParms);
+   if (aCmd->isCmd("NN3dRuleFilterParms"))   readSection(aCmd->argString(1), &mNN3dRuleFilterParms);
+   if (aCmd->isCmd("ContourFilterParms"))    readSection(aCmd->argString(1), &mContourFilterParms);
 }
 
 //******************************************************************************

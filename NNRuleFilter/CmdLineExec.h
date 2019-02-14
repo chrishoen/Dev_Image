@@ -10,7 +10,7 @@ Program command line executive.
 
 #include "risCmdLineExec.h"
 #include "ImageSet.h"
-#include "svNNRuleFilter2d.h"
+#include "svNN2dRuleFilter.h"
 
 //******************************************************************************
 //******************************************************************************
@@ -32,7 +32,7 @@ public:
    // Members.
 
    ImageSet mImageSet;
-   SV::NNRuleFilter2d mFilter2d;
+   SV::NN2dRuleFilter mFilter2d;
 
    //***************************************************************************
    //***************************************************************************
@@ -59,7 +59,7 @@ public:
 
    // Execute specific commands.
    void executeRun         (Ris::CmdLineCmd* aCmd);
-   void executeShow        (Ris::CmdLineCmd* aCmd);
+   void executeShow2d      (Ris::CmdLineCmd* aCmd);
    void executeDraw        (Ris::CmdLineCmd* aCmd);
    void executeRead        (Ris::CmdLineCmd* aCmd);
    void executeReadInput   (Ris::CmdLineCmd* aCmd);

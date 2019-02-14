@@ -34,7 +34,7 @@ void CmdLineExec::reset()
 void CmdLineExec::execute(Ris::CmdLineCmd* aCmd)
 {
    if (aCmd->isCmd("Run"))       executeRun(aCmd);
-   if (aCmd->isCmd("Show"))      executeShow(aCmd);
+   if (aCmd->isCmd("Show2d"))    executeShow2d(aCmd);
    if (aCmd->isCmd("Draw"))      executeDraw(aCmd);
    if (aCmd->isCmd("Read"))      executeRead(aCmd);
    if (aCmd->isCmd("ReadIn"))    executeReadInput(aCmd);
@@ -66,8 +66,8 @@ void CmdLineExec::executeRun(Ris::CmdLineCmd* aCmd)
 
    // Run.
    mImageSet.doSimInput();
-   mFilter2d.initialize(&SV::gImageParms.mNNRuleFilterParms);
-   mFilter2d.doFilterImage(mImageSet.mInputImage, mImageSet.mOutputImage);
+   mFilter2d.initialize(&SV::gImageParms.mNN2dRuleFilterParms);
+   mFilter2d.doFilterImage(mImageSet.mInputImageC, mImageSet.mOutputImage);
 
    Prn::print(0, "done");
 }
@@ -76,7 +76,7 @@ void CmdLineExec::executeRun(Ris::CmdLineCmd* aCmd)
 //******************************************************************************
 //******************************************************************************
 
-void CmdLineExec::executeShow(Ris::CmdLineCmd* aCmd)
+void CmdLineExec::executeShow2d(Ris::CmdLineCmd* aCmd)
 {
    // Read parameters files.
    SV::gSimParms.reset();
@@ -86,7 +86,7 @@ void CmdLineExec::executeShow(Ris::CmdLineCmd* aCmd)
    SV::gImageParms.readOverrides(&SV::gSimParms);
 
    aCmd->setArgDefault(1, 1);
-   mImageSet.doShow(aCmd->argInt(1));
+   mImageSet.doShow2d(aCmd->argInt(1));
 }
 
 //******************************************************************************
@@ -136,8 +136,8 @@ void CmdLineExec::executeReadInput(Ris::CmdLineCmd* aCmd)
 
    // Run.
    mImageSet.doReadInput();
-   mFilter2d.initialize(&SV::gImageParms.mNNRuleFilterParms);
-   mFilter2d.doFilterImage(mImageSet.mInputImage, mImageSet.mOutputImage);
+   mFilter2d.initialize(&SV::gImageParms.mNN2dRuleFilterParms);
+   mFilter2d.doFilterImage(mImageSet.mInputImageC, mImageSet.mOutputImage);
    Prn::print(0, "done");
 }
 

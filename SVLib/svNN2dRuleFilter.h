@@ -11,7 +11,7 @@ Nearest neighbor rule filter.
 #include <opencv2/core/core.hpp>
 
 #include "svImageWrapper.h"
-#include "svNNRuleParms.h"
+#include "svNN2dRuleParms.h"
 
 namespace SV
 {
@@ -26,7 +26,7 @@ namespace SV
 // that pertain to the nearest neighbors of the pixel.
 //
 
-class NNRuleFilter3d
+class NN2dRuleFilter
 {
 public:
 
@@ -35,7 +35,7 @@ public:
    //***************************************************************************
    // Parameters. These are read from a parms file.
 
-   NNRuleParms* mP;
+   NN2dRuleParms* mP;
 
    //***************************************************************************
    //***************************************************************************
@@ -52,9 +52,9 @@ public:
    // Methods.
 
    // Constructor.
-   NNRuleFilter3d();
-   NNRuleFilter3d(NNRuleParms* aParms);
-   void initialize(NNRuleParms* aParms);
+   NN2dRuleFilter();
+   NN2dRuleFilter(NN2dRuleParms* aParms);
+   void initialize(NN2dRuleParms* aParms);
    void reset();
 
    //***************************************************************************

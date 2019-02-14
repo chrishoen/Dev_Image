@@ -30,7 +30,7 @@ ImageSet::ImageSet()
 
 void ImageSet::reset()
 {
-   mInputImage.release();
+   mInputImageC.release();
    mOutputImage.release();
 }
 
@@ -47,8 +47,8 @@ void ImageSet::doSimInput()
 
    // Generate simulated image.
    SV::SimImageGenerator tGenerator(&SV::gSimParms.mImageGenParms);
-   tGenerator.doGenerateImage(mInputImage);
-   SV::showImageInfo(Prn::View11,"InputImage", mInputImage);
+   tGenerator.doGenerateImage(mInputImageC);
+   SV::showImageInfo(Prn::View11,"InputImage", mInputImageC);
 }
 
 //******************************************************************************
@@ -59,9 +59,9 @@ void ImageSet::doSimInput()
 void ImageSet::doReadInput()
 {
    // Read a test image file to the input image.
-   SV::readImageFromFile(mInputImage, SV::gImageParms.mInputImageFileName);
-   SV::showImageInfo(Prn::View11, "InputImage", mInputImage);
-   SV::showImageInfo(0, SV::gImageParms.mInputImageFileName, mInputImage);
+   SV::readImageFromFile(mInputImageC, SV::gImageParms.mInputImageCFileName);
+   SV::showImageInfo(Prn::View11, "InputImage", mInputImageC);
+   SV::showImageInfo(0, SV::gImageParms.mInputImageCFileName, mInputImageC);
 }
 
 void ImageSet::doReadOutput()
@@ -75,8 +75,8 @@ void ImageSet::doReadOutput()
 void ImageSet::doWriteInput()
 {
    // Save image.
-   SV::showImageInfo(Prn::View11, "InputImage", mInputImage);
-   SV::writeImageToFile(mInputImage, SV::gImageParms.mInputImageFileName);
+   SV::showImageInfo(Prn::View11, "InputImage", mInputImageC);
+   SV::writeImageToFile(mInputImageC, SV::gImageParms.mInputImageCFileName);
 }
 
 void ImageSet::doWriteOutput()
@@ -92,13 +92,13 @@ void ImageSet::doWriteOutput()
 //******************************************************************************
 // Show images.
 
-void ImageSet::doShow(int aCode)
+void ImageSet::doShow2d(int aCode)
 {
    switch (aCode)
    {
-   case 1:  SV::showImageTable1("InputImage", mInputImage); break;
+   case 1:  SV::showImage2d("InputImage", mInputImageC); break;
 
-   case 2:  SV::showImageTable1("OutputImage", mOutputImage); break;
+   case 2:  SV::showImage2d("OutputImage", mOutputImage); break;
    }
 }
 
@@ -111,10 +111,9 @@ void ImageSet::doDraw(int aCode)
 {
    switch (aCode)
    {
-   case 11:  Display::showImage(mInputImage); break;
-   case 12:  Display::showImage(SV::gImageParms.mInputImageFileName); break;
+   case 11:  Display::showImage(mInputImageC); break;
+   case 12:  Display::showImage(SV::gImageParms.mInputImageCFileName); break;
    case 21:  Display::showImage(mOutputImage); break;
    case 22:  Display::showImage(SV::gImageParms.mOutputImageFileName); break;
-   case 9:   Display::showImage(SV::gImageParms.mTestImageFileName); break;
    }
 }

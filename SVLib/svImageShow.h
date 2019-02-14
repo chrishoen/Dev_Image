@@ -32,7 +32,7 @@ void showImageInfo(
 // Show functions.
 
 // Show image in tabular form.
-void showImageTable1(
+void showImage2d(
    const char*   aLabel,   // Input
    cv::Mat&      aImage);  // Input
 

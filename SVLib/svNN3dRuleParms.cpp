@@ -4,7 +4,7 @@
 
 #include "stdafx.h"
 
-#include "svNNRuleParms.h"
+#include "svNN3dRuleParms.h"
 
 //******************************************************************************
 //******************************************************************************
@@ -21,12 +21,12 @@ namespace SV
 //******************************************************************************
 // Constructor.
 
-NNRuleParms::NNRuleParms()
+NN3dRuleParms::NN3dRuleParms()
 {
    reset();
 }
 
-void NNRuleParms::reset()
+void NN3dRuleParms::reset()
 {
    mClassifyCode = 0;
    mHC1 = 0;
@@ -38,13 +38,13 @@ void NNRuleParms::reset()
 //******************************************************************************
 // Show.
 
-void NNRuleParms::show()
+void NN3dRuleParms::show()
 {
-   printf("NNRuleParms*******************\n");
+   printf("NN3dRuleParms*******************\n");
    printf("ClassifyCode             %10d\n", mClassifyCode);
    printf("HC1                      %10d\n", mHC1);
    printf("HC2                      %10d\n", mHC2);
-   printf("NNRuleParms*******************\n");
+   printf("NN3dRuleParms*******************\n");
 }
 
 //******************************************************************************
@@ -54,7 +54,7 @@ void NNRuleParms::show()
 // member variable.  Only process commands for the target section.This is
 // called by the associated command file object for each command in the file.
 
-void NNRuleParms::execute(Ris::CmdLineCmd* aCmd)
+void NN3dRuleParms::execute(Ris::CmdLineCmd* aCmd)
 {
    if (aCmd->isCmd("ClassifyCode"))   mClassifyCode = aCmd->argInt(1);
    if (aCmd->isCmd("HC1"))            mHC1 = aCmd->argInt(1);

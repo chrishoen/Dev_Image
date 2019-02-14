@@ -25,7 +25,7 @@ public:
    //***************************************************************************
    // Members:
 
-   cv::Mat mInputImage;
+   cv::Mat mInputImageC;
    cv::Mat mOutputImage;
 
    //***************************************************************************
@@ -52,7 +52,7 @@ public:
    void doWriteOutput();
 
    // Show.
-   void doShow(int aCode);
+   void doShow2d(int aCode);
 
    // Draw.
    void doDraw(int aCode);

@@ -1,7 +1,6 @@
 #pragma once
 
 /*==============================================================================
-SV namespace: sixdofs that are measured by a computer vision based system.
 Parameters class whose values are read from a command file. 
 ==============================================================================*/
 
@@ -9,13 +8,11 @@ Parameters class whose values are read from a command file.
 //******************************************************************************
 //******************************************************************************
 
-#include "risCmdLineParms.h"
+#include "risCmdLineExec.h"
+#include "risCmdLineTables.h"
 #include "svRCIndex.h"
+#include "svRCRect.h"
 #include "svRCSize.h"
-#include "svNN2dRuleParms.h"
-#include "svNN3dRuleParms.h"
-#include "svSimParms.h"
-#include "svConParms.h"
 
 //******************************************************************************
 //******************************************************************************
@@ -53,43 +50,21 @@ namespace SV
 // structure. If so, then this class is the root.
 // 
 
-class ImageParms : public Ris::BaseCmdLineParms
+class NN2dRuleParms : public Ris::BaseCmdLineExec
 {
 public:
 
    //***************************************************************************
    //***************************************************************************
    //***************************************************************************
-   // Constants.
+   // Members that are read from the parms file.
 
-   static const int cMaxStringSize = 30;
+   // Classify  parameter.
+   int  mClassifyCode;
 
-   //***************************************************************************
-   //***************************************************************************
-   //***************************************************************************
-   // Parameter members.
-
-   // Region of interest parameters.
-   RCIndex mRoiPixel;
-   int     mRoiB;
-
-   // Image file name.
-   char mInputImageDFileName[cMaxStringSize];
-   char mInputImageCFileName[cMaxStringSize];
-   char mInputImageUFileName[cMaxStringSize];
-   char mOutputImageFileName[cMaxStringSize];
-
-   // Image filter.
-   NN2dRuleParms mNN2dRuleFilterParms;
-   NN3dRuleParms mNN3dRuleFilterParms;
-
-   // Image filter.
-   ConParms mContourFilterParms;
-
-   //***************************************************************************
-   //***************************************************************************
-   //***************************************************************************
-   // Expanded members that are not read from the parms file.
+   // High masking parameters.
+   int mHC1;
+   int mHC2;
 
    //***************************************************************************
    //***************************************************************************
@@ -97,8 +72,8 @@ public:
    // Methods.
 
    // Constructor,
-   typedef Ris::BaseCmdLineParms BaseClass;
-   ImageParms();
+   typedef Ris::BaseCmdLineExec BaseClass;
+   NN2dRuleParms();
    void reset();
    void show();
 
@@ -106,30 +81,7 @@ public:
    // member variable. This is called by the associated command file object
    // for each command in the file.
    void execute(Ris::CmdLineCmd* aCmd) override;
-
-   // Simulate expanded member variables. This is called after the entire
-   // section of the command file has been processed.
-   void expand() override;
-
-   //***************************************************************************
-   //***************************************************************************
-   //***************************************************************************
-   // Methods.
-
-   // Override some variables with simulation parms variables.
-   void readOverrides(SimParms* aSimParms);
 };
-
-//******************************************************************************
-//******************************************************************************
-//******************************************************************************
-// Global instance.
-
-#ifdef _SVIMAGEPARMS_CPP_
-   ImageParms gImageParms;
-#else
-   extern ImageParms gImageParms;
-#endif
 
 //******************************************************************************
 //******************************************************************************
