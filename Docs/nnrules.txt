@@ -3,47 +3,47 @@ output_image = input_image.clone()
 
 # loop through all of the pixels in the input image
 # to filter the high pixels.
-for all pixel x in input_image:
-   if input_image.at(x) != 0
-      filter_high_pixel(x)
+for xpixel in input_image:
+   if input_image.at(xpixel) != 0
+      filter_high_pixel(xpixel)
       
 # filter a high pixel based on nearest neighbor rules.
 def filter_high_pixel(x):
    # extract nearest neighbors
-   # UL UU UR
-   # LL XX RR
-   # DL DD DR
+   # NW NN NE
+   # WW XX EE
+   # SW SS SE
    
-   UL = input_image(x.row-1,x.col-1) != 0 # up left
-   UU = input_image(x.row-1,x.col  ) != 0 # up upper
-   UR = input_image(x.row-1,x.col+1) != 0 # up right
-   LL = input_image(x.row  ,x.col-1) != 0 # left
+   NW = input_image(x.row-1,x.col-1) != 0 # up left
+   NN = input_image(x.row-1,x.col  ) != 0 # up upper
+   NE = input_image(x.row-1,x.col+1) != 0 # up right
+   WW = input_image(x.row  ,x.col-1) != 0 # left
    XX = input_image(x.row  ,x.col  ) != 0 # center
-   RR = input_image(x.row  ,x.col+1) != 0 # right
-   DL = input_image(x.row+1,x.col-1) != 0 # down left
+   EE = input_image(x.row  ,x.col+1) != 0 # right
+   SW = input_image(x.row+1,x.col-1) != 0 # down left
    DU = input_image(x.row+1,x.col  ) != 0 # down upper
-   DR = input_image(x.row+1,x.col+1) != 0 # down right
+   SE = input_image(x.row+1,x.col+1) != 0 # down right
 
    # rule 1.
    # x x x   . . .   x . .
    # x x x   x x x   x x x
    # x x x   x x x   x x .
    
-   if LL and RR:
+   if WW and EE:
       return
       
    # rule 2.
    # . x x   . x x   . x .
    # . x x   x x x   x x x
    # . x x   x x x   x x x
-   if UU and DD:
+   if NN and SS:
       return 
 
    # count the number of nearest neighbors that are occupied.
    # . . x   . x x   . x .
    # . x x   . x x   x x x
    # . . x   . x x   x x x
-   NN_sum = UL + UU + UR + LL + RR + DL + DD + DR
+   NN_sum = NW + NN + NE + WW + EE + SW + SS + SE
 
    # rule 3.
    if NN_sum <= 3:

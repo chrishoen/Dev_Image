@@ -96,15 +96,9 @@ void ImageSet::doShow(int aCode)
 {
    switch (aCode)
    {
-   case 11: SV::showImageTable1("InputImage", mInputImage); break;
-   case 12: SV::showImageTable2("InputImage", mInputImage); break;
-   case 13: SV::showImageTable3("InputImage", mInputImage); break;
-   case 1:  SV::showImageTable2("InputImage", mInputImage); break;
+   case 1:  SV::showImageTable1("InputImage", mInputImage); break;
 
-   case 21: SV::showImageTable1("OutputImage", mOutputImage); break;
-   case 22: SV::showImageTable2("OutputImage", mOutputImage); break;
-   case 23: SV::showImageTable3("OutputImage", mOutputImage); break;
-   case 2:  SV::showImageTable2("OutputImage", mOutputImage); break;
+   case 2:  SV::showImageTable1("OutputImage", mOutputImage); break;
    }
 }
 

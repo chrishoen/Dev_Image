@@ -95,9 +95,9 @@ void NNRuleFilter::doFilterImage(
 //******************************************************************************
 // Filter a pixel that is high.
 // 
-// UL UU UR
-// LL XX RR
-// DL DD DR
+// NW NN NE
+// WW XX EE
+// SW SS SE
 
 
 void NNRuleFilter::doFilterHighPixel(RCIndex aX)
@@ -108,17 +108,17 @@ void NNRuleFilter::doFilterHighPixel(RCIndex aX)
    // Local variables.
 
    // Nearest neighbor variables.
-   bool tUL = mInput.at(aX.mRow - 1, aX.mCol - 1) != 0;
-   bool tUU = mInput.at(aX.mRow - 1, aX.mCol    ) != 0;
-   bool tUR = mInput.at(aX.mRow - 1, aX.mCol + 1) != 0;
+   bool tNW = mInput.at(aX.mRow - 1, aX.mCol - 1) != 0;
+   bool tNN = mInput.at(aX.mRow - 1, aX.mCol    ) != 0;
+   bool tNE = mInput.at(aX.mRow - 1, aX.mCol + 1) != 0;
 
-   bool tLL = mInput.at(aX.mRow    , aX.mCol - 1) != 0;
+   bool tWW = mInput.at(aX.mRow    , aX.mCol - 1) != 0;
    bool tXX = mInput.at(aX.mRow    , aX.mCol    ) != 0;
-   bool tRR = mInput.at(aX.mRow    , aX.mCol + 1) != 0;
+   bool tEE = mInput.at(aX.mRow    , aX.mCol + 1) != 0;
 
-   bool tDL = mInput.at(aX.mRow + 1, aX.mCol - 1) != 0;
-   bool tDD = mInput.at(aX.mRow + 1, aX.mCol    ) != 0;
-   bool tDR = mInput.at(aX.mRow + 1, aX.mCol + 1) != 0;
+   bool tSW = mInput.at(aX.mRow + 1, aX.mCol - 1) != 0;
+   bool tSS = mInput.at(aX.mRow + 1, aX.mCol    ) != 0;
+   bool tSE = mInput.at(aX.mRow + 1, aX.mCol + 1) != 0;
 
    int tCode = 0;
 
@@ -130,13 +130,13 @@ void NNRuleFilter::doFilterHighPixel(RCIndex aX)
    tCode = 0;
 
    // Rule 1.
-   if (tLL && tRR)
+   if (tWW && tEE)
    {
       return;
    }
 
    // Rule 2.
-   if (tUU && tDD)
+   if (tNN && tSS)
    {
       return;
    }
@@ -150,30 +150,14 @@ void NNRuleFilter::doFilterHighPixel(RCIndex aX)
    }
 
    // Rule 3.
-   if (tNNSum < 4)
-   {
-      tCode = 1;
-   }
-   // Rule 3.
-   else
-   {
-      tCode = 2;
-   }
-
-   //***************************************************************************
-   //***************************************************************************
-   //***************************************************************************
-   // Set the high pixel, based on the rule tesing results.
-
-   if (tCode == 1)
+   if (tNNSum <= 3)
    {
       mOutput.at(aX) = mP->mHC1;
+      return;
    }
 
-   if (tCode == 2)
-   {
-      mOutput.at(aX) = mP->mHC2;
-   }
+   // Rule 4.
+   mOutput.at(aX) = mP->mHC2;
 }
 
 //******************************************************************************
