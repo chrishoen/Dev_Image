@@ -10,7 +10,7 @@ Description:
 
 #include "svRCIndex.h"
 #include "svRCLoop.h"
-#include "svNNRuleFilter.h"
+#include "svNNRuleFilter3d.h"
 
 #include "svImageFunctions.h"
 #include "svImageShow.h"
@@ -24,24 +24,24 @@ namespace SV
 //******************************************************************************
 //******************************************************************************
 
-NNRuleFilter::NNRuleFilter()
+NNRuleFilter3d::NNRuleFilter3d()
 {
    reset();
 }
 
-NNRuleFilter::NNRuleFilter(NNRuleParms* aParms)
-{
-   mP = aParms;
-   reset();
-}
-
-void NNRuleFilter::initialize(NNRuleParms* aParms)
+NNRuleFilter3d::NNRuleFilter3d(NNRuleParms* aParms)
 {
    mP = aParms;
    reset();
 }
 
-void NNRuleFilter::reset()
+void NNRuleFilter3d::initialize(NNRuleParms* aParms)
+{
+   mP = aParms;
+   reset();
+}
+
+void NNRuleFilter3d::reset()
 {
 }
 
@@ -53,7 +53,7 @@ void NNRuleFilter::reset()
 //******************************************************************************
 // Filter the image, depending on the parms.
 
-void NNRuleFilter::doFilterImage(
+void NNRuleFilter3d::doFilterImage(
    cv::Mat&       aInputImage,     // Input
    cv::Mat&       aOutputImage)    // Output
 {
@@ -100,7 +100,7 @@ void NNRuleFilter::doFilterImage(
 // SW SS SE
 
 
-void NNRuleFilter::doFilterHighPixel(RCIndex aX)
+void NNRuleFilter3d::doFilterHighPixel(RCIndex aX)
 {
    //***************************************************************************
    //***************************************************************************

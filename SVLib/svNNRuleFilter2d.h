@@ -1,45 +1,60 @@
 #pragma once
 
 /*==============================================================================
-Program command line executive.
+Nearest neighbor rule filter.
 ==============================================================================*/
 
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
 
-#include "risCmdLineExec.h"
-#include "ImageSet.h"
-#include "svNNRuleFilter2d.h"
+#include <opencv2/core/core.hpp>
+
+#include "svImageWrapper.h"
+#include "svNNRuleParms.h"
+
+namespace SV
+{
 
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
-// This class is the program command line executive. It processes user
-// command line inputs and executes them. It inherits from the command line
-// command executive base class, which provides an interface for executing
-// command line commands. It provides an override execute function that is
-// called by a console executive when it receives a console command line input.
-// The execute function then executes the command.
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+// This is an image filter that filters pixels according to a set of rules
+// that pertain to the nearest neighbors of the pixel.
+//
 
-class CmdLineExec : public Ris::BaseCmdLineExec
+class NNRuleFilter2d
 {
 public:
 
    //***************************************************************************
    //***************************************************************************
    //***************************************************************************
-   // Members.
+   // Parameters. These are read from a parms file.
 
-   ImageSet mImageSet;
-   SV::NNRuleFilter2d mFilter2d;
+   NNRuleParms* mP;
+
+   //***************************************************************************
+   //***************************************************************************
+   //***************************************************************************
+   // Members. Variables, according to the main diagram.
+
+   // Images.
+   ImageWrapper mInput;
+   ImageWrapper mOutput;
 
    //***************************************************************************
    //***************************************************************************
    //***************************************************************************
    // Methods.
 
-   CmdLineExec();
+   // Constructor.
+   NNRuleFilter2d();
+   NNRuleFilter2d(NNRuleParms* aParms);
+   void initialize(NNRuleParms* aParms);
    void reset();
 
    //***************************************************************************
@@ -47,34 +62,24 @@ public:
    //***************************************************************************
    // Methods.
 
-   // Base class override. Execute a command line command. It calls one of
-   // the following specific command execution functions. This is called by
-   // the owner of this object to pass command line commands to it. 
-   void execute(Ris::CmdLineCmd* aCmd) override;
+   // Filter an image according to the parms.
+   void doFilterImage(
+      cv::Mat&       aInput,               // Input
+      cv::Mat&       aOutput);             // Output
 
    //***************************************************************************
    //***************************************************************************
    //***************************************************************************
    // Methods.
 
-   // Execute specific commands.
-   void executeRun         (Ris::CmdLineCmd* aCmd);
-   void executeShow        (Ris::CmdLineCmd* aCmd);
-   void executeDraw        (Ris::CmdLineCmd* aCmd);
-   void executeRead        (Ris::CmdLineCmd* aCmd);
-   void executeReadInput   (Ris::CmdLineCmd* aCmd);
-   void executeWrite       (Ris::CmdLineCmd* aCmd);
-   void executeWriteOutput (Ris::CmdLineCmd* aCmd);
-
-   void executeGo1(Ris::CmdLineCmd* aCmd);
-   void executeGo2(Ris::CmdLineCmd* aCmd);
-   void executeGo3(Ris::CmdLineCmd* aCmd);
-   void executeGo4(Ris::CmdLineCmd* aCmd);
-   void executeGo5(Ris::CmdLineCmd* aCmd);
-   void executeParms(Ris::CmdLineCmd* aCmd);
+   // Filter a pixel.
+   void doFilterHighPixel(RCIndex aX);
 };
 
+
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
+}//namespace
+
 

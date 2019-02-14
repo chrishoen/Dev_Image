@@ -1,0 +1,5 @@
+# D           C           U
+# NW NN NE    NW NN NE    NW NN NE
+# WW XX EE    WW XX EE    WW XX EE
+# SW SS SE    SW SS SE    SW SS SE
+   

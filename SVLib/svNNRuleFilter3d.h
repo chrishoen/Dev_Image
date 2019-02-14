@@ -26,7 +26,7 @@ namespace SV
 // that pertain to the nearest neighbors of the pixel.
 //
 
-class NNRuleFilter
+class NNRuleFilter3d
 {
 public:
 
@@ -52,8 +52,8 @@ public:
    // Methods.
 
    // Constructor.
-   NNRuleFilter();
-   NNRuleFilter(NNRuleParms* aParms);
+   NNRuleFilter3d();
+   NNRuleFilter3d(NNRuleParms* aParms);
    void initialize(NNRuleParms* aParms);
    void reset();
 

@@ -9,7 +9,7 @@ for xpixel in input_image:
       
 # filter a high pixel based on nearest neighbor rules.
 def filter_high_pixel(x):
-   # extract nearest neighbors
+   # extract nearest neighbors.
    # NW NN NE
    # WW XX EE
    # SW SS SE
