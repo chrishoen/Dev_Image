@@ -129,6 +129,8 @@ void CmdLineExec::executeShow2d(Ris::CmdLineCmd* aCmd)
 
 void CmdLineExec::executeShow3d(Ris::CmdLineCmd* aCmd)
 {
+   aCmd->setArgDefault(1, 1);
+
    // Read parameters files.
    SV::gParmParms.reset();
    SV::gParmParms.readSection("default");

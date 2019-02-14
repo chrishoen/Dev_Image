@@ -141,26 +141,60 @@ void showImage3d(
    printf("\n");
 
    // Image wrapper.
-   ImageWrapper tImage(aImageC);
+   ImageWrapper tImageD(aImageD);
+   ImageWrapper tImageC(aImageC);
+   ImageWrapper tImageU(aImageU);
 
    SV::RCDitherLoop1 tLoop(tCenterPixel, tB, 1);
 
-   // Print header.
+   // Print header 1.
    printf("     $ ");
+   for (tLoop.firstCol(); tLoop.testCol(); tLoop.nextCol())
+   {
+      printf(" %1d", (tLoop.mCol / 100) % 10);
+   }
+   printf("     ");
+   for (tLoop.firstCol(); tLoop.testCol(); tLoop.nextCol())
+   {
+      printf(" %1d", (tLoop.mCol / 100) % 10);
+   }
+   printf("     ");
    for (tLoop.firstCol(); tLoop.testCol(); tLoop.nextCol())
    {
       printf(" %1d", (tLoop.mCol / 100) % 10);
    }
    printf("\n");
 
+   // Print header 2.
    printf("     $ ");
+   for (tLoop.firstCol(); tLoop.testCol(); tLoop.nextCol())
+   {
+      printf(" %1d", (tLoop.mCol / 10) % 10);
+   }
+   printf("     ");
+   for (tLoop.firstCol(); tLoop.testCol(); tLoop.nextCol())
+   {
+      printf(" %1d", (tLoop.mCol / 10) % 10);
+   }
+   printf("     ");
    for (tLoop.firstCol(); tLoop.testCol(); tLoop.nextCol())
    {
       printf(" %1d", (tLoop.mCol / 10) % 10);
    }
    printf("\n");
 
+   // Print header 3.
    printf("     $ ");
+   for (tLoop.firstCol(); tLoop.testCol(); tLoop.nextCol())
+   {
+      printf(" %1d", tLoop.mCol % 10);
+   }
+   printf("     ");
+   for (tLoop.firstCol(); tLoop.testCol(); tLoop.nextCol())
+   {
+      printf(" %1d", tLoop.mCol % 10);
+   }
+   printf("     ");
    for (tLoop.firstCol(); tLoop.testCol(); tLoop.nextCol())
    {
       printf(" %1d", tLoop.mCol % 10);
@@ -176,19 +210,26 @@ void showImage3d(
       printf("%4d $ ", tLoop().mRow);
       for (tLoop.firstCol(); tLoop.testCol(); tLoop.nextCol())
       {
-         int tValue = (int)tImage.at(tLoop());
-         if (tValue == 0)
-         {
-            printf(" .");
-         }
-         else if (tValue == 255)
-         {
-            printf(" x");
-         }
-         else
-         {
-            printf(" %1x", tValue / 16);
-         }
+         int tValue = (int)tImageD.at(tLoop());
+         if (tValue == 0)           printf(" .");
+         else if (tValue == 255)    printf(" x");
+         else                       printf(" %1x", tValue / 16);
+      }
+      printf("     ");
+      for (tLoop.firstCol(); tLoop.testCol(); tLoop.nextCol())
+      {
+         int tValue = (int)tImageC.at(tLoop());
+         if (tValue == 0)           printf(" .");
+         else if (tValue == 255)    printf(" x");
+         else                       printf(" %1x", tValue / 16);
+      }
+      printf("     ");
+      for (tLoop.firstCol(); tLoop.testCol(); tLoop.nextCol())
+      {
+         int tValue = (int)tImageU.at(tLoop());
+         if (tValue == 0)           printf(" .");
+         else if (tValue == 255)    printf(" x");
+         else                       printf(" %1x", tValue / 16);
       }
       printf("\n");
    }
