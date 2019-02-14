@@ -61,6 +61,7 @@ public:
    void executeRun         (Ris::CmdLineCmd* aCmd);
    void executeShow        (Ris::CmdLineCmd* aCmd);
    void executeDraw        (Ris::CmdLineCmd* aCmd);
+   void executeRead        (Ris::CmdLineCmd* aCmd);
    void executeReadInput   (Ris::CmdLineCmd* aCmd);
    void executeWrite       (Ris::CmdLineCmd* aCmd);
    void executeWriteOutput (Ris::CmdLineCmd* aCmd);

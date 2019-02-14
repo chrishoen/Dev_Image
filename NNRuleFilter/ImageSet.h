@@ -45,6 +45,7 @@ public:
    // Input images.
    void doSimInput();
    void doReadInput();
+   void doReadOutput();
 
    // Outut images.
    void doWriteInput();

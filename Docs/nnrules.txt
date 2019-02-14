@@ -1,34 +1,58 @@
-. . . 
-. x . 
-. . . 
+# copy the input image to the output image.
+output_image = input_image.clone()
 
-x . .   x . .   x . .   x . .   x . .   x . .     
-. x .   x x .   x x .   x x .   x x .   x x x
-. . .   . . .   x . .   x x .   x x x   x x x
-
-. x .   . x .   . x .   . x .   . x .   . x .
-. x .   x x .   x x .   x x .   x x .   x x x
-. . .   . . .   x . .   x x .   x x x   x x x
-
-x x .   x x .   x x .   x x .   x x .   x x .
-. x .   x x .   x x .   x x .   x x .   x x x
-. . .   . . .   x . .   x x .   x x x   x x x
-
-x x x   x x x   x x x   x x x   x x x   x x x
-. x .   x x .   x x .   x x .   x x .   x x x
-. . .   . . .   x . .   x x .   x x x   x x x 
-
-
-
-UL UU UR
-LL XX RR
-DL DD DR
-
-if LL and RR:
-   return false
+# loop through all of the pixels in the input image
+# to filter the high pixels.
+for all pixel x in input_image:
+   if input_image.at(x) != 0
+      filter_high_pixel(x)
+      
+# filter a high pixel based on nearest neighbor rules.
+def filter_high_pixel(x):
+   # extract nearest neighbors
+   # UL UU UR
+   # LL XX RR
+   # DL DD DR
    
-if UU and DD:
-   return false
+   UL = input_image(x.row-1,x.col-1) != 0 # up left
+   UU = input_image(x.row-1,x.col  ) != 0 # up upper
+   UR = input_image(x.row-1,x.col+1) != 0 # up right
+   LL = input_image(x.row  ,x.col-1) != 0 # left
+   XX = input_image(x.row  ,x.col  ) != 0 # center
+   RR = input_image(x.row  ,x.col+1) != 0 # right
+   DL = input_image(x.row+1,x.col-1) != 0 # down left
+   DU = input_image(x.row+1,x.col  ) != 0 # down upper
+   DR = input_image(x.row+1,x.col+1) != 0 # down right
+
+   # rule 1.
+   # x x x   . . .   x . .
+   # x x x   x x x   x x x
+   # x x x   x x x   x x .
    
-return true
+   if LL and RR:
+      return
+      
+   # rule 2.
+   # . x x   . x x   . x .
+   # . x x   x x x   x x x
+   # . x x   x x x   x x x
+   if UU and DD:
+      return 
+
+   # count the number of nearest neighbors that are occupied.
+   # . . x   . x x   . x .
+   # . x x   . x x   x x x
+   # . . x   . x x   x x x
+   NN_sum = UL + UU + UR + LL + RR + DL + DD + DR
+
+   # rule 3.
+   if NN_sum <= 3:
+      output_image.at(x) = parms.hc1
+      return
+     
+   # rule 4.  
+   # . . x   . . x   . x .
+   # . x x   . x x   . x x
+   # x x x   . x x   . x x
+   output_image.at(x) = parms.hc2
 

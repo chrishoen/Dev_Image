@@ -36,6 +36,7 @@ void CmdLineExec::execute(Ris::CmdLineCmd* aCmd)
    if (aCmd->isCmd("Run"))       executeRun(aCmd);
    if (aCmd->isCmd("Show"))      executeShow(aCmd);
    if (aCmd->isCmd("Draw"))      executeDraw(aCmd);
+   if (aCmd->isCmd("Read"))      executeRead(aCmd);
    if (aCmd->isCmd("ReadIn"))    executeReadInput(aCmd);
    if (aCmd->isCmd("Write"))     executeWrite(aCmd);
    if (aCmd->isCmd("WriteOut"))  executeWriteOutput(aCmd);
@@ -77,6 +78,13 @@ void CmdLineExec::executeRun(Ris::CmdLineCmd* aCmd)
 
 void CmdLineExec::executeShow(Ris::CmdLineCmd* aCmd)
 {
+   // Read parameters files.
+   SV::gSimParms.reset();
+   SV::gSimParms.readSection("default");
+   SV::gImageParms.reset();
+   SV::gImageParms.readSection("default");
+   SV::gImageParms.readOverrides(&SV::gSimParms);
+
    aCmd->setArgDefault(1, 1);
    mImageSet.doShow(aCmd->argInt(1));
 }
@@ -89,6 +97,26 @@ void CmdLineExec::executeDraw(Ris::CmdLineCmd* aCmd)
 {
    aCmd->setArgDefault(1, 1);
    mImageSet.doDraw(aCmd->argInt(1));
+}
+
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+
+void CmdLineExec::executeRead(Ris::CmdLineCmd* aCmd)
+{
+   aCmd->setArgDefault(1, 1);
+
+   // Read parameters files.
+   SV::gSimParms.reset();
+   SV::gSimParms.readSection("default");
+   SV::gImageParms.reset();
+   SV::gImageParms.readSection("default");
+   SV::gImageParms.readOverrides(&SV::gSimParms);
+
+   // Run.
+   mImageSet.doReadInput();
+   mImageSet.doReadOutput();
 }
 
 //******************************************************************************

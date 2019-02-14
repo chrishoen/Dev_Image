@@ -59,8 +59,17 @@ void ImageSet::doSimInput()
 void ImageSet::doReadInput()
 {
    // Read a test image file to the input image.
-   SV::readImageFromFile(mInputImage, SV::gImageParms.mTestImageFileName);
+   SV::readImageFromFile(mInputImage, SV::gImageParms.mInputImageFileName);
    SV::showImageInfo(Prn::View11, "InputImage", mInputImage);
+   SV::showImageInfo(0, SV::gImageParms.mInputImageFileName, mInputImage);
+}
+
+void ImageSet::doReadOutput()
+{
+   // Read a test image file to the Output image.
+   SV::readImageFromFile(mOutputImage, SV::gImageParms.mOutputImageFileName);
+   SV::showImageInfo(Prn::View11, "OutputImage", mOutputImage);
+   SV::showImageInfo(0, SV::gImageParms.mOutputImageFileName, mOutputImage);
 }
 
 void ImageSet::doWriteInput()
