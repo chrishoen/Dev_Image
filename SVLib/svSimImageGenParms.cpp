@@ -48,9 +48,9 @@ void SimImageGenParms::reset()
 //******************************************************************************
 // Show.
 
-void SimImageGenParms::show()
+void SimImageGenParms::show(const char* aLabel)
 {
-   printf("SimImageGenParms*******************\n");
+   printf("SimImageGenParms******************* %s\n",aLabel);
    printf("ImageType                %10s\n",        asStringImageType(mImageType));
    printf("ImageSize                %10d %10d\n",   mImageSize.mRows,mImageSize.mCols);
    printf("ImageB                   %10d\n",        mImageB);

@@ -67,7 +67,9 @@ public:
    // Parameter members.
 
    // Center image point.
-   SimImageGenParms mImageGenParms;
+   SimImageGenParms mImageGenParmsD;
+   SimImageGenParms mImageGenParmsC;
+   SimImageGenParms mImageGenParmsU;
 
    //***************************************************************************
    //***************************************************************************

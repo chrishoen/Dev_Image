@@ -58,7 +58,7 @@ public:
    // Methods.
 
    // Execute specific commands.
-   void executeRun         (Ris::CmdLineCmd* aCmd);
+   void executeRun2d       (Ris::CmdLineCmd* aCmd);
    void executeShow2d      (Ris::CmdLineCmd* aCmd);
    void executeDraw        (Ris::CmdLineCmd* aCmd);
    void executeRead        (Ris::CmdLineCmd* aCmd);

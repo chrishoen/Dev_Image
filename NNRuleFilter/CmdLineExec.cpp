@@ -33,7 +33,7 @@ void CmdLineExec::reset()
 
 void CmdLineExec::execute(Ris::CmdLineCmd* aCmd)
 {
-   if (aCmd->isCmd("Run"))       executeRun(aCmd);
+   if (aCmd->isCmd("Run2d"))     executeRun2d(aCmd);
    if (aCmd->isCmd("Show2d"))    executeShow2d(aCmd);
    if (aCmd->isCmd("Draw"))      executeDraw(aCmd);
    if (aCmd->isCmd("Read"))      executeRead(aCmd);
@@ -53,7 +53,7 @@ void CmdLineExec::execute(Ris::CmdLineCmd* aCmd)
 //******************************************************************************
 //******************************************************************************
 
-void CmdLineExec::executeRun(Ris::CmdLineCmd* aCmd)
+void CmdLineExec::executeRun2d(Ris::CmdLineCmd* aCmd)
 {
    aCmd->setArgDefault(1, 1);
 

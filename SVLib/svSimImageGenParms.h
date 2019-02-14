@@ -108,7 +108,7 @@ public:
    typedef Ris::BaseCmdLineExec BaseClass;
    SimImageGenParms();
    void reset();
-   void show();
+   void show(const char* aLabel);
 
    // Base class override: Execute a command from the command file to set a 
    // member variable. This is called by the associated command file object

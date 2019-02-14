@@ -31,7 +31,9 @@ void SimParms::reset()
 
    mNoiseSigma = 0.0;
 
-   mImageGenParms.reset();
+   mImageGenParmsD.reset();
+   mImageGenParmsC.reset();
+   mImageGenParmsU.reset();
 }
 
 //******************************************************************************
@@ -42,7 +44,9 @@ void SimParms::reset()
 
 void SimParms::expand()
 {
-   mImageGenParms.expand();
+   mImageGenParmsD.expand();
+   mImageGenParmsC.expand();
+   mImageGenParmsU.expand();
 }
 
 //******************************************************************************
@@ -54,7 +58,9 @@ void SimParms::show()
 {
    printf("\n");
    printf("SimParms************************************************ %s\n", mTargetSection);
-   mImageGenParms.show();
+   mImageGenParmsD.show("D");
+   mImageGenParmsC.show("C");
+   mImageGenParmsU.show("U");
    return;
    printf("NoiseSigma             %10.2f\n", mNoiseSigma);
 }
@@ -72,7 +78,9 @@ void SimParms::execute(Ris::CmdLineCmd* aCmd)
 
    if (aCmd->isCmd("NoiseSigma"))          mNoiseSigma = aCmd->argDouble(1);
 
-   if (aCmd->isCmd("ImageGenParms"))       readSection(aCmd->argString(1), &mImageGenParms);
+   if (aCmd->isCmd("ImageGenParmsD"))      readSection(aCmd->argString(1), &mImageGenParmsD);
+   if (aCmd->isCmd("ImageGenParmsC"))      readSection(aCmd->argString(1), &mImageGenParmsC);
+   if (aCmd->isCmd("ImageGenParmsU"))      readSection(aCmd->argString(1), &mImageGenParmsU);
 }
 
 //******************************************************************************
