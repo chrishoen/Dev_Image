@@ -4,6 +4,7 @@
 #include "svSysParms.h"
 #include "svImageParms.h"
 #include "svSimParms.h"
+#include "svParmParms.h"
 #include "displayParms.h"
 #include "displayFunctions.h"
 
@@ -58,11 +59,9 @@ void CmdLineExec::executeRun2d(Ris::CmdLineCmd* aCmd)
    aCmd->setArgDefault(1, 1);
 
    // Read parameters files.
-   SV::gSimParms.reset();
-   SV::gSimParms.readSection("default");
-   SV::gImageParms.reset();
-   SV::gImageParms.readSection("default");
-   SV::gImageParms.readOverrides(&SV::gSimParms);
+   SV::gParmParms.reset();
+   SV::gParmParms.readSection("default");
+   SV::gParmParms.readMoreParms("default");
 
    // Run.
    mImageSet.doSimInput();
@@ -79,11 +78,9 @@ void CmdLineExec::executeRun2d(Ris::CmdLineCmd* aCmd)
 void CmdLineExec::executeShow2d(Ris::CmdLineCmd* aCmd)
 {
    // Read parameters files.
-   SV::gSimParms.reset();
-   SV::gSimParms.readSection("default");
-   SV::gImageParms.reset();
-   SV::gImageParms.readSection("default");
-   SV::gImageParms.readOverrides(&SV::gSimParms);
+   SV::gParmParms.reset();
+   SV::gParmParms.readSection("default");
+   SV::gParmParms.readMoreParms("default");
 
    aCmd->setArgDefault(1, 1);
    mImageSet.doShow2d(aCmd->argInt(1));
@@ -108,11 +105,9 @@ void CmdLineExec::executeRead(Ris::CmdLineCmd* aCmd)
    aCmd->setArgDefault(1, 1);
 
    // Read parameters files.
-   SV::gSimParms.reset();
-   SV::gSimParms.readSection("default");
-   SV::gImageParms.reset();
-   SV::gImageParms.readSection("default");
-   SV::gImageParms.readOverrides(&SV::gSimParms);
+   SV::gParmParms.reset();
+   SV::gParmParms.readSection("default");
+   SV::gParmParms.readMoreParms("default");
 
    // Run.
    mImageSet.doReadInput();
@@ -128,11 +123,9 @@ void CmdLineExec::executeReadInput(Ris::CmdLineCmd* aCmd)
    aCmd->setArgDefault(1, 1);
 
    // Read parameters files.
-   SV::gSimParms.reset();
-   SV::gSimParms.readSection("default");
-   SV::gImageParms.reset();
-   SV::gImageParms.readSection("default");
-   SV::gImageParms.readOverrides(&SV::gSimParms);
+   SV::gParmParms.reset();
+   SV::gParmParms.readSection("default");
+   SV::gParmParms.readMoreParms("default");
 
    // Run.
    mImageSet.doReadInput();
@@ -169,11 +162,9 @@ void CmdLineExec::executeGo1(Ris::CmdLineCmd* aCmd)
    aCmd->setArgDefault(1, 1);
 
    // Read parameters files.
-   SV::gSimParms.reset();
-   SV::gSimParms.readSection("default");
-   SV::gImageParms.reset();
-   SV::gImageParms.readSection("default");
-   SV::gImageParms.readOverrides(&SV::gSimParms);
+   SV::gParmParms.reset();
+   SV::gParmParms.readSection("default");
+   SV::gParmParms.readMoreParms("default");
 
    // Run.
    mImageSet.doSimInput();
@@ -231,13 +222,11 @@ void CmdLineExec::executeParms(Ris::CmdLineCmd* aCmd)
    Display::gParms.readSection("default");
    Display::gParms.show();
 
-   SV::gImageParms.reset();
-   SV::gImageParms.readSection("default");
-   SV::gImageParms.readOverrides(&SV::gSimParms);
-   SV::gImageParms.show();
+   SV::gParmParms.reset();
+   SV::gParmParms.readSection("default");
+   SV::gParmParms.readMoreParms("default");
 
-   SV::gSimParms.reset();
-   SV::gSimParms.readSection("default");
+   SV::gImageParms.show();
    SV::gSimParms.show();
 }
 
