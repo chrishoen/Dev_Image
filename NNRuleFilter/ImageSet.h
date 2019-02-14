@@ -25,7 +25,9 @@ public:
    //***************************************************************************
    // Members:
 
+   cv::Mat mInputImageD;
    cv::Mat mInputImageC;
+   cv::Mat mInputImageU;
    cv::Mat mOutputImage;
 
    //***************************************************************************
@@ -43,7 +45,9 @@ public:
    // Methods:
 
    // Input images.
-   void doSimInput();
+   void doSimInput2d();
+   void doSimInput3d();
+
    void doReadInput();
    void doReadOutput();
 
@@ -53,6 +57,7 @@ public:
 
    // Show.
    void doShow2d(int aCode);
+   void doShow3d(int aCode);
 
    // Draw.
    void doDraw(int aCode);

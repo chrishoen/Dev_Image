@@ -59,8 +59,10 @@ public:
 
    // Execute specific commands.
    void executeSim2d       (Ris::CmdLineCmd* aCmd);
+   void executeSim3d       (Ris::CmdLineCmd* aCmd);
    void executeRun2d       (Ris::CmdLineCmd* aCmd);
    void executeShow2d      (Ris::CmdLineCmd* aCmd);
+   void executeShow3d      (Ris::CmdLineCmd* aCmd);
    void executeDraw        (Ris::CmdLineCmd* aCmd);
    void executeRead        (Ris::CmdLineCmd* aCmd);
    void executeReadInput   (Ris::CmdLineCmd* aCmd);

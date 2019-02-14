@@ -37,14 +37,35 @@ void ImageSet::reset()
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
-// This runs a test.
+// This simulates an input image.
 
-void ImageSet::doSimInput()
+void ImageSet::doSimInput2d()
 {
    // Generate simulated image.
    SV::SimImageGenerator tGenerator(&SV::gSimParms.mImageGenParmsC);
    tGenerator.doGenerateImage(mInputImageC);
-   SV::showImageInfo(Prn::View11,"InputImageC", mInputImageC);
+   SV::showImageInfo(Prn::View01,"InputImageC", mInputImageC);
+}
+
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+// This simulates an input image.
+
+void ImageSet::doSimInput3d()
+{
+   // Generate simulated image.
+   SV::SimImageGenerator tGenerator;
+   tGenerator.initialize(&SV::gSimParms.mImageGenParmsD);
+   tGenerator.doGenerateImage(mInputImageD);
+   tGenerator.initialize(&SV::gSimParms.mImageGenParmsC);
+   tGenerator.doGenerateImage(mInputImageC);
+   tGenerator.initialize(&SV::gSimParms.mImageGenParmsU);
+   tGenerator.doGenerateImage(mInputImageU);
+
+   SV::showImageInfo(Prn::View01, "InputImageD", mInputImageD);
+   SV::showImageInfo(Prn::View01, "InputImageC", mInputImageC);
+   SV::showImageInfo(Prn::View01, "InputImageU", mInputImageU);
 }
 
 //******************************************************************************
@@ -93,7 +114,20 @@ void ImageSet::doShow2d(int aCode)
    switch (aCode)
    {
    case 1:  SV::showImage2d("InputImage", mInputImageC); break;
+   case 2:  SV::showImage2d("OutputImage", mOutputImage); break;
+   }
+}
 
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+// Show images.
+
+void ImageSet::doShow3d(int aCode)
+{
+   switch (aCode)
+   {
+   case 1:  SV::showImage3d("InputImage", mInputImageD, mInputImageC, mInputImageU); break;
    case 2:  SV::showImage2d("OutputImage", mOutputImage); break;
    }
 }
