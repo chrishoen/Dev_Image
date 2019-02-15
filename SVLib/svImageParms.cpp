@@ -40,6 +40,7 @@ void ImageParms::reset()
 
    mRoiPixel.reset();
    mRoiB = 0;
+   mRoiCode = 0;
 }
 
 //******************************************************************************
@@ -63,6 +64,7 @@ void ImageParms::show()
    printf("ImageParms********************************************** %s\n", mTargetSection);
    printf("RoiPixel                 %10d %10d\n", mRoiPixel.mRow, mRoiPixel.mCol);
    printf("RoiB                     %10d\n", mRoiB);
+   printf("RoiCode                  %10d\n", mRoiCode);
    printf("InputImageDFileName               %s\n", mInputImageDFileName);
    printf("InputImageCFileName               %s\n", mInputImageCFileName);
    printf("InputImageUFileName               %s\n", mInputImageUFileName);
@@ -86,6 +88,7 @@ void ImageParms::execute(Ris::CmdLineCmd* aCmd)
 
    if (aCmd->isCmd("RoiPixel"))            mRoiPixel.execute(aCmd);
    if (aCmd->isCmd("RoiB"))                mRoiB = aCmd->argInt(1);
+   if (aCmd->isCmd("RoiCode"))             mRoiCode = aCmd->argInt(1);
 
    if (aCmd->isCmd("InputImageDFileName"))  aCmd->copyArgString(1, mInputImageDFileName, cMaxStringSize);
    if (aCmd->isCmd("InputImageCFileName"))  aCmd->copyArgString(1, mInputImageCFileName, cMaxStringSize);

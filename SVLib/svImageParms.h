@@ -72,6 +72,7 @@ public:
    // Region of interest parameters.
    RCIndex mRoiPixel;
    int     mRoiB;
+   int     mRoiCode;
 
    // Image file name.
    char mInputImageDFileName[cMaxStringSize];

@@ -44,12 +44,18 @@ void showImage2d(
    const char*   aLabel,   // Input
    cv::Mat&      aImage)   // Input
 {
+   //***************************************************************************
+   //***************************************************************************
+   //***************************************************************************
+   // Initialize.
+
    // Guard.
    if (aImage.rows == 0)return;
 
    // Region of interest variables.
    RCIndex tCenterPixel = gImageParms.mRoiPixel;
    int tB = gImageParms.mRoiB;
+   int tCode = gImageParms.mRoiCode;
 
    printf("\n");
    printf("********************************************* %-12s %4d %4d $ %1d %1d $ %4d %4d\n",
@@ -60,34 +66,49 @@ void showImage2d(
    // Image wrapper.
    ImageWrapper tImage(aImage);
 
+   // Dither loop.
    SV::RCDitherLoop1 tLoop(tCenterPixel, tB, 1);
 
+   //***************************************************************************
+   //***************************************************************************
+   //***************************************************************************
    // Print header.
-   printf("     $ ");
-   for (tLoop.firstCol(); tLoop.testCol(); tLoop.nextCol())
+
+   if (tCode == 0)
    {
-      printf(" %1d", (tLoop.mCol / 100) % 10);
+      // Print header 1.
+      printf("     $ ");
+      for (tLoop.firstCol(); tLoop.testCol(); tLoop.nextCol())
+      {
+         printf(" %1d", (tLoop.mCol / 100) % 10);
+      }
+      printf("\n");
+
+      // Print header 2.
+      printf("     $ ");
+      for (tLoop.firstCol(); tLoop.testCol(); tLoop.nextCol())
+      {
+         printf(" %1d", (tLoop.mCol / 10) % 10);
+      }
+      printf("\n");
+
+      // Print header 3.
+      printf("     $ ");
+      for (tLoop.firstCol(); tLoop.testCol(); tLoop.nextCol())
+      {
+         printf(" %1d", tLoop.mCol % 10);
+      }
+      printf("\n");
+
+      printf("     $\n");
    }
-   printf("\n");
 
-   printf("     $ ");
-   for (tLoop.firstCol(); tLoop.testCol(); tLoop.nextCol())
-   {
-      printf(" %1d", (tLoop.mCol / 10) % 10);
-   }
-   printf("\n");
+   //***************************************************************************
+   //***************************************************************************
+   //***************************************************************************
+   // Print roi.
 
-   printf("     $ ");
-   for (tLoop.firstCol(); tLoop.testCol(); tLoop.nextCol())
-   {
-      printf(" %1d", tLoop.mCol % 10);
-   }
-   printf("\n");
-
-
-   printf("     $\n");
-
-   // Loop through all of the rows and columns of the pulse.
+   // Loop through all of the rows and columns of the roi.
    for (tLoop.firstRow(); tLoop.testRow(); tLoop.nextRow())
    {
       printf("%4d $ ", tLoop().mRow);
@@ -125,6 +146,11 @@ void showImage3d(
    cv::Mat&      aImageC,  // Input
    cv::Mat&      aImageU)  // Input
 {
+   //***************************************************************************
+   //***************************************************************************
+   //***************************************************************************
+   // Initialize.
+
    // Guard.
    if (aImageD.rows == 0)return;
    if (aImageC.rows == 0)return;
@@ -133,6 +159,7 @@ void showImage3d(
    // Region of interest variables.
    RCIndex tCenterPixel = gImageParms.mRoiPixel;
    int tB = gImageParms.mRoiB;
+   int tCode = gImageParms.mRoiCode;
 
    printf("\n");
    printf("********************************************* %-12s %4d %4d $ %1d %1d $ %4d %4d\n",
@@ -145,66 +172,79 @@ void showImage3d(
    ImageWrapper tImageC(aImageC);
    ImageWrapper tImageU(aImageU);
 
+   // Dither loop.
    SV::RCDitherLoop1 tLoop(tCenterPixel, tB, 1);
 
-   // Print header 1.
-   printf("     $ ");
-   for (tLoop.firstCol(); tLoop.testCol(); tLoop.nextCol())
-   {
-      printf(" %1d", (tLoop.mCol / 100) % 10);
-   }
-   printf("     ");
-   for (tLoop.firstCol(); tLoop.testCol(); tLoop.nextCol())
-   {
-      printf(" %1d", (tLoop.mCol / 100) % 10);
-   }
-   printf("     ");
-   for (tLoop.firstCol(); tLoop.testCol(); tLoop.nextCol())
-   {
-      printf(" %1d", (tLoop.mCol / 100) % 10);
-   }
-   printf("\n");
+   //***************************************************************************
+   //***************************************************************************
+   //***************************************************************************
+   // Print header.
 
-   // Print header 2.
-   printf("     $ ");
-   for (tLoop.firstCol(); tLoop.testCol(); tLoop.nextCol())
+   if (tCode == 0)
    {
-      printf(" %1d", (tLoop.mCol / 10) % 10);
-   }
-   printf("     ");
-   for (tLoop.firstCol(); tLoop.testCol(); tLoop.nextCol())
-   {
-      printf(" %1d", (tLoop.mCol / 10) % 10);
-   }
-   printf("     ");
-   for (tLoop.firstCol(); tLoop.testCol(); tLoop.nextCol())
-   {
-      printf(" %1d", (tLoop.mCol / 10) % 10);
-   }
-   printf("\n");
+      // Print header 1.
+      printf("     $ ");
+      for (tLoop.firstCol(); tLoop.testCol(); tLoop.nextCol())
+      {
+         printf(" %1d", (tLoop.mCol / 100) % 10);
+      }
+      printf("     ");
+      for (tLoop.firstCol(); tLoop.testCol(); tLoop.nextCol())
+      {
+         printf(" %1d", (tLoop.mCol / 100) % 10);
+      }
+      printf("     ");
+      for (tLoop.firstCol(); tLoop.testCol(); tLoop.nextCol())
+      {
+         printf(" %1d", (tLoop.mCol / 100) % 10);
+      }
+      printf("\n");
 
-   // Print header 3.
-   printf("     $ ");
-   for (tLoop.firstCol(); tLoop.testCol(); tLoop.nextCol())
-   {
-      printf(" %1d", tLoop.mCol % 10);
-   }
-   printf("     ");
-   for (tLoop.firstCol(); tLoop.testCol(); tLoop.nextCol())
-   {
-      printf(" %1d", tLoop.mCol % 10);
-   }
-   printf("     ");
-   for (tLoop.firstCol(); tLoop.testCol(); tLoop.nextCol())
-   {
-      printf(" %1d", tLoop.mCol % 10);
-   }
-   printf("\n");
+      // Print header 2.
+      printf("     $ ");
+      for (tLoop.firstCol(); tLoop.testCol(); tLoop.nextCol())
+      {
+         printf(" %1d", (tLoop.mCol / 10) % 10);
+      }
+      printf("     ");
+      for (tLoop.firstCol(); tLoop.testCol(); tLoop.nextCol())
+      {
+         printf(" %1d", (tLoop.mCol / 10) % 10);
+      }
+      printf("     ");
+      for (tLoop.firstCol(); tLoop.testCol(); tLoop.nextCol())
+      {
+         printf(" %1d", (tLoop.mCol / 10) % 10);
+      }
+      printf("\n");
 
+      // Print header 3.
+      printf("     $ ");
+      for (tLoop.firstCol(); tLoop.testCol(); tLoop.nextCol())
+      {
+         printf(" %1d", tLoop.mCol % 10);
+      }
+      printf("     ");
+      for (tLoop.firstCol(); tLoop.testCol(); tLoop.nextCol())
+      {
+         printf(" %1d", tLoop.mCol % 10);
+      }
+      printf("     ");
+      for (tLoop.firstCol(); tLoop.testCol(); tLoop.nextCol())
+      {
+         printf(" %1d", tLoop.mCol % 10);
+      }
+      printf("\n");
 
-   printf("     $\n");
+      printf("     $\n");
+   }
 
-   // Loop through all of the rows and columns of the pulse.
+   //***************************************************************************
+   //***************************************************************************
+   //***************************************************************************
+   // Print roi.
+
+   // Loop through all of the rows and columns of the roi.
    for (tLoop.firstRow(); tLoop.testRow(); tLoop.nextRow())
    {
       printf("%4d $ ", tLoop().mRow);
