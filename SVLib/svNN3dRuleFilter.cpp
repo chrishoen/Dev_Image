@@ -67,7 +67,9 @@ void NN3dRuleFilter::doFilterImage(
    aOutputImage = aInputImageC.clone();
 
    // Set the image wrappers.
+   mInputD.set(aInputImageC);
    mInputC.set(aInputImageC);
+   mInputU.set(aInputImageC);
    mOutput.set(aOutputImage);
 
    //***************************************************************************
@@ -106,52 +108,64 @@ void NN3dRuleFilter::doFilterHighPixel(RCIndex aX)
    // Local variables.
 
    // Nearest neighbor variables.
-   bool tNW = mInputC.at(aX.mRow - 1, aX.mCol - 1) != 0;
-   bool tNN = mInputC.at(aX.mRow - 1, aX.mCol    ) != 0;
-   bool tNE = mInputC.at(aX.mRow - 1, aX.mCol + 1) != 0;
+   int tCNW = mInputC.at(aX.mRow - 1, aX.mCol - 1) != 0 ? 1 : 0;
+   int tCNN = mInputC.at(aX.mRow - 1, aX.mCol    ) != 0 ? 1 : 0;
+   int tCNE = mInputC.at(aX.mRow - 1, aX.mCol + 1) != 0 ? 1 : 0;
 
-   bool tWW = mInputC.at(aX.mRow    , aX.mCol - 1) != 0;
-   bool tXX = mInputC.at(aX.mRow    , aX.mCol    ) != 0;
-   bool tEE = mInputC.at(aX.mRow    , aX.mCol + 1) != 0;
+   int tCWW = mInputC.at(aX.mRow    , aX.mCol - 1) != 0 ? 1 : 0;
+   int tCXX = mInputC.at(aX.mRow    , aX.mCol    ) != 0 ? 1 : 0;
+   int tCEE = mInputC.at(aX.mRow    , aX.mCol + 1) != 0 ? 1 : 0;
 
-   bool tSW = mInputC.at(aX.mRow + 1, aX.mCol - 1) != 0;
-   bool tSS = mInputC.at(aX.mRow + 1, aX.mCol    ) != 0;
-   bool tSE = mInputC.at(aX.mRow + 1, aX.mCol + 1) != 0;
+   int tCSW = mInputC.at(aX.mRow + 1, aX.mCol - 1) != 0 ? 1 : 0;
+   int tCSS = mInputC.at(aX.mRow + 1, aX.mCol    ) != 0 ? 1 : 0;
+   int tCSE = mInputC.at(aX.mRow + 1, aX.mCol + 1) != 0 ? 1 : 0;
+
+   int tDXX = mInputD.at(aX.mRow    , aX.mCol) != 0 ? 1 : 0;
+   int tUXX = mInputU.at(aX.mRow    , aX.mCol) != 0 ? 1 : 0;
 
    //***************************************************************************
    //***************************************************************************
    //***************************************************************************
    // Nearest neighbor rule testing.
 
-   // Rule 1.
-   if (tWW && tEE)
+   // RULE 1.
+   // If not on a contour of the current image.
+   if (tCNN && tCSS && tCEE && tCWW)
    {
       return;
    }
 
-   // Rule 2.
-   if (tNN && tSS)
+   // RULE 2.
+   // If on a vertical plane parallel to NS or ES.
+   if ((tUXX && tDXX) && ((tCNN && tCSS) || (tCEE && tCWW)))
    {
       return;
    }
 
-   // Count the number of nearest neighbors that are occupied.
-   int tNNSum = 0;
-   SV::RCCircuitLoop tNNLoop(aX, 1);
-   while (tNNLoop.loop())
-   {
-      if (mInputC.at(tNNLoop()) != 0) tNNSum++;
-   }
+   // Count the number of horizontal nearest neighbors.
+   int tCNN_sum = tCNW + tCNN + tCNE + tCWW + tCEE + tCSW + tCSS + tCSE;
 
-   // Rule 3.
-   if (tNNSum <= 3)
+   // RULE 3.
+   // If on a vertical plane not parallel to NS or ES and
+   // at a horizontal corner.
+   if ((tUXX && tDXX) && (tCNN_sum <= 3))
+   {
+      return;
+   }
+   
+   // RULE 4.
+   // If on a vertical plane not parallel to NS or ES and
+   // not at a horizontal corner.
+   if (tUXX && tDXX)
    {
       mOutput.at(aX) = mP->mHC1;
       return;
    }
 
-   // Rule 4.
+   // RULE 5.
+   // Otherwise not on a vertical plane.
    mOutput.at(aX) = mP->mHC2;
+   return;
 }
 
 //******************************************************************************
