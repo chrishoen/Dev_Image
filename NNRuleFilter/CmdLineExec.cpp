@@ -131,7 +131,7 @@ void CmdLineExec::executeRun3d(Ris::CmdLineCmd* aCmd)
       mImageSet.mInputImageU, 
       mImageSet.mOutputImage);
 
-   Prn::print(0, "done");
+   mFilter3d.show();
 }
 
 //******************************************************************************

@@ -40,11 +40,23 @@ def filter_high_pixel(x):
 
    # RULE 1.
    # If not on a contour of the current image.
+   #
+   # pass                       fail 
+   # x x x   x x x   x x x      x x x   x . x   x x x
+   # x x x   x x x   x x x      x x x   x x x   x x x
+   # x x x   x x x   x x x      x x x   x x x   x x x
+   #
    if (CNN and CSS and CEE and CWW):
       return 
 
    # RULE 2.
    # If on a vertical plane parallel to NS or ES.
+   #
+   # pass                       fail 
+   # . x x   . x x   . x x      . . x   . . x   . . x
+   # . x x   . x x   . x x      . x x   . x x   . x x
+   # . x x   . x x   . x x      x x x   x x x   x x x
+   #
    if (UXX and DXX) and ((CNN and CSS) or (CEE and CWW)):
       return 
 
@@ -54,17 +66,35 @@ def filter_high_pixel(x):
    # RULE 3.
    # If on a vertical plane not parallel to NS or ES and
    # at a horizontal corner.
-   if (UXX and DXX) and (CNN_sum <= 3)):
+   #
+   # pass                       fail 
+   # . . .   . . .   . . .      . . x   . . x   . . x
+   # . x x   . x x   . x x      . x x   . x x   . x x
+   # . x x   . x x   . x x      x x x   x x x   x x x
+   #
+   if ((UXX and DXX) and (CNN_sum <= 3)):
       return 
 
    # RULE 4.  
    # If on a vertical plane not parallel to NS or ES and
    # not at a horizontal corner.
+   #
+   # pass                       fail 
+   # . . x   . . x   . . x      . x x   . . x   . . .
+   # . x x   . x x   . x x      x x x   . x x   . . x
+   # x x x   x x x   x x x      x x x   x x x   . x x
+   #
    if (UXX and DXX):
       output_image.at(x) = parms.hc1
       return
 
    # RULE 5.
    # Otherwise not on a vertical plane.
+   #
+   # pass                 
+   # . x x   . . x   . . .
+   # x x x   . x x   . . x
+   # x x x   x x x   . x x
+   #
    output_image.at(x) = parms.hc2
    return

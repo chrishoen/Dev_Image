@@ -40,6 +40,20 @@ void NN3dRuleFilter::initialize(NN3dRuleParms* aParms)
 
 void NN3dRuleFilter::reset()
 {
+   mRuleCount1 = 0;
+   mRuleCount2 = 0;
+   mRuleCount3 = 0;
+   mRuleCount4 = 0;
+   mRuleCount5 = 0;
+}
+
+void NN3dRuleFilter::show()
+{
+   Prn::print(0, "RuleCount1 %10d", mRuleCount1);
+   Prn::print(0, "RuleCount2 %10d", mRuleCount2);
+   Prn::print(0, "RuleCount3 %10d", mRuleCount3);
+   Prn::print(0, "RuleCount4 %10d", mRuleCount4);
+   Prn::print(0, "RuleCount5 %10d", mRuleCount5);
 }
 
 //******************************************************************************
@@ -67,9 +81,9 @@ void NN3dRuleFilter::doFilterImage(
    aOutputImage = aInputImageC.clone();
 
    // Set the image wrappers.
-   mInputD.set(aInputImageC);
+   mInputD.set(aInputImageD);
    mInputC.set(aInputImageC);
-   mInputU.set(aInputImageC);
+   mInputU.set(aInputImageU);
    mOutput.set(aOutputImage);
 
    //***************************************************************************
@@ -132,6 +146,7 @@ void NN3dRuleFilter::doFilterHighPixel(RCIndex aX)
    // If not on a contour of the current image.
    if (tCNN && tCSS && tCEE && tCWW)
    {
+      mRuleCount1++;
       return;
    }
 
@@ -139,6 +154,7 @@ void NN3dRuleFilter::doFilterHighPixel(RCIndex aX)
    // If on a vertical plane parallel to NS or ES.
    if ((tUXX && tDXX) && ((tCNN && tCSS) || (tCEE && tCWW)))
    {
+      mRuleCount2++;
       return;
    }
 
@@ -150,6 +166,7 @@ void NN3dRuleFilter::doFilterHighPixel(RCIndex aX)
    // at a horizontal corner.
    if ((tUXX && tDXX) && (tCNN_sum <= 3))
    {
+      mRuleCount3++;
       return;
    }
    
@@ -159,12 +176,14 @@ void NN3dRuleFilter::doFilterHighPixel(RCIndex aX)
    if (tUXX && tDXX)
    {
       mOutput.at(aX) = mP->mHC1;
+      mRuleCount4++;
       return;
    }
 
    // RULE 5.
    // Otherwise not on a vertical plane.
    mOutput.at(aX) = mP->mHC2;
+   mRuleCount5++;
    return;
 }
 
