@@ -75,9 +75,9 @@ public:
    //***************************************************************************
    //***************************************************************************
    // Methods.
-
+private:
    // Filter a pixel.
-   void doFilterHighPixel(RCIndex aX);
+   inline void doFilterHighPixel(RCIndex aX);
 };
 
 
