@@ -54,7 +54,7 @@ void showImage2d(
    printf("\n");
    printf("********************************************* %-12s %4d %4d $ %1d %1d $ %4d %4d\n",
       aLabel, aImage.rows, aImage.cols, aImage.depth(), aImage.channels(),
-      tCenterPixel.mRow, tCenterPixel.mRow);
+      tCenterPixel.mRow, tCenterPixel.mCol);
    printf("\n");
 
    // Image wrapper.
@@ -137,7 +137,7 @@ void showImage3d(
    printf("\n");
    printf("********************************************* %-12s %4d %4d $ %1d %1d $ %4d %4d\n",
       aLabel, aImageC.rows, aImageC.cols, aImageC.depth(), aImageC.channels(),
-      tCenterPixel.mRow, tCenterPixel.mRow);
+      tCenterPixel.mRow, tCenterPixel.mCol);
    printf("\n");
 
    // Image wrapper.

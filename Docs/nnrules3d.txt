@@ -55,23 +55,16 @@ def filter_high_pixel(x):
    # If on a vertical plane not parallel to NS or ES and
    # at a horizontal corner.
    if (UXX and DXX) and (CNN_sum <= 3)):
-      output_image.at(x) = parms.hc1
       return 
 
    # RULE 4.  
    # If on a vertical plane not parallel to NS or ES and
    # not at a horizontal corner.
    if (UXX and DXX):
-      output_image.at(x) = parms.hc2
+      output_image.at(x) = parms.hc1
       return
 
    # RULE 5.
-   # If at a horizontal corner.
-   if (CNN_sum <= 3)):
-      output_image.at(x) = parms.hc1
-      return 
-
-   # RULE 6.
-   # Otherwise not on a vertical plane and not at a corner.
+   # Otherwise not on a vertical plane.
    output_image.at(x) = parms.hc2
    return

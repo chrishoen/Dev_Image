@@ -155,15 +155,27 @@ void CmdLineExec::executeShow2d(Ris::CmdLineCmd* aCmd)
 
 void CmdLineExec::executeShow3d(Ris::CmdLineCmd* aCmd)
 {
-   aCmd->setArgDefault(1, 1);
+   aCmd->setArgDefault(1, 0);
+   int tCode = aCmd->argInt(1);
 
    // Read parameters files.
    SV::gParmParms.reset();
    SV::gParmParms.readSection("default");
    SV::gParmParms.readMoreParms("default");
 
-   aCmd->setArgDefault(1, 1);
-   mImageSet.doShow3d(aCmd->argInt(1));
+   switch (tCode)
+   {
+   case 0:
+      mImageSet.doShow3d(1);
+      mImageSet.doShow3d(2);
+      break;
+   case 1:
+      mImageSet.doShow3d(1);
+      break;
+   case 2:
+      mImageSet.doShow3d(2);
+      break;
+   }
 }
 
 //******************************************************************************
