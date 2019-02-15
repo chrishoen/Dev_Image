@@ -112,21 +112,20 @@ void showImage2d(
    for (tLoop.firstRow(); tLoop.testRow(); tLoop.nextRow())
    {
       printf("%4d $ ", tLoop().mRow);
+      if (tCode != 0)
+      {
+         for (tLoop.firstCol(); tLoop.testCol(); tLoop.nextCol())
+         {
+            printf("  ");
+         }
+         printf("     ");
+      }
       for (tLoop.firstCol(); tLoop.testCol(); tLoop.nextCol())
       {
          int tValue = (int)tImage.at(tLoop());
-         if (tValue == 0)
-         {
-            printf(" .");
-         }
-         else if (tValue == 255)
-         {
-            printf(" x");
-         }
-         else
-         {
-            printf(" %1x",tValue/16);
-         }
+         if (tValue == 0)           printf(" .");
+         else if (tValue == 255)    printf(" x");
+         else                       printf(" %1x", tValue / 16);
       }
       printf("\n");
    }
