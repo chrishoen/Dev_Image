@@ -11,6 +11,7 @@ Program command line executive.
 #include "risCmdLineExec.h"
 #include "ImageSet.h"
 #include "svNN2dRuleFilter.h"
+#include "svNN3dRuleFilter.h"
 
 //******************************************************************************
 //******************************************************************************
@@ -33,6 +34,7 @@ public:
 
    ImageSet mImageSet;
    SV::NN2dRuleFilter mFilter2d;
+   SV::NN3dRuleFilter mFilter3d;
 
    //***************************************************************************
    //***************************************************************************
@@ -61,6 +63,7 @@ public:
    void executeSim2d       (Ris::CmdLineCmd* aCmd);
    void executeSim3d       (Ris::CmdLineCmd* aCmd);
    void executeRun2d       (Ris::CmdLineCmd* aCmd);
+   void executeRun3d       (Ris::CmdLineCmd* aCmd);
    void executeShow2d      (Ris::CmdLineCmd* aCmd);
    void executeShow3d      (Ris::CmdLineCmd* aCmd);
    void executeDraw        (Ris::CmdLineCmd* aCmd);

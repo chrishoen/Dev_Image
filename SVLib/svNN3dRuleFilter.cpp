@@ -15,9 +15,6 @@ Description:
 #include "svImageFunctions.h"
 #include "svImageShow.h"
 
-#pragma warning(push)
-#pragma warning(disable:4533 )
-
 namespace SV
 {
 //******************************************************************************
@@ -54,21 +51,23 @@ void NN3dRuleFilter::reset()
 // Filter the image, depending on the parms.
 
 void NN3dRuleFilter::doFilterImage(
-   cv::Mat&       aInputImage,     // Input
+   cv::Mat&       aInputImageD,    // Input
+   cv::Mat&       aInputImageC,    // Input
+   cv::Mat&       aInputImageU,    // Input
    cv::Mat&       aOutputImage)    // Output
 {
+   Prn::print(Prn::View11, "doFilterImage %4d %4d", aInputImageC.rows, aInputImageC.cols);
+
    //***************************************************************************
    //***************************************************************************
    //***************************************************************************
    // Initialize.
 
-   Prn::print(Prn::View11, "doFilterImage %4d %4d", aInputImage.rows, aInputImage.cols);
-
    // Copy the input image to the output image.
-   aOutputImage = aInputImage.clone();
+   aOutputImage = aInputImageC.clone();
 
    // Set the image wrappers.
-   mInput.set(aInputImage);
+   mInputC.set(aInputImageC);
    mOutput.set(aOutputImage);
 
    //***************************************************************************
@@ -78,16 +77,15 @@ void NN3dRuleFilter::doFilterImage(
 
    // Loop through the image. Ignore the top and bottom rows and ignore
    // the left and right edge columns.
-   SV::RCIndexLoop tLoop(RCIndex(1, 1),aInputImage.rows - 2, aInputImage.cols - 2);
+   SV::RCIndexLoop tLoop(RCIndex(1, 1),aInputImageC.rows - 2, aInputImageC.cols - 2);
    while (tLoop.loop())
    {
       // Filter each pixel that is high.
-      if (mInput.at(tLoop()) != 0)
+      if (mInputC.at(tLoop()) != 0)
       {
          doFilterHighPixel(tLoop());
       }
    }
-
 }
 
 //******************************************************************************
@@ -95,10 +93,10 @@ void NN3dRuleFilter::doFilterImage(
 //******************************************************************************
 // Filter a pixel that is high.
 // 
-// NW NN NE
-// WW XX EE
-// SW SS SE
-
+// D           C           U
+// NW NN NE    NW NN NE    NW NN NE
+// WW XX EE    WW XX EE    WW XX EE
+// SW SS SE    SW SS SE    SW SS SE
 
 void NN3dRuleFilter::doFilterHighPixel(RCIndex aX)
 {
@@ -108,26 +106,22 @@ void NN3dRuleFilter::doFilterHighPixel(RCIndex aX)
    // Local variables.
 
    // Nearest neighbor variables.
-   bool tNW = mInput.at(aX.mRow - 1, aX.mCol - 1) != 0;
-   bool tNN = mInput.at(aX.mRow - 1, aX.mCol    ) != 0;
-   bool tNE = mInput.at(aX.mRow - 1, aX.mCol + 1) != 0;
+   bool tNW = mInputC.at(aX.mRow - 1, aX.mCol - 1) != 0;
+   bool tNN = mInputC.at(aX.mRow - 1, aX.mCol    ) != 0;
+   bool tNE = mInputC.at(aX.mRow - 1, aX.mCol + 1) != 0;
 
-   bool tWW = mInput.at(aX.mRow    , aX.mCol - 1) != 0;
-   bool tXX = mInput.at(aX.mRow    , aX.mCol    ) != 0;
-   bool tEE = mInput.at(aX.mRow    , aX.mCol + 1) != 0;
+   bool tWW = mInputC.at(aX.mRow    , aX.mCol - 1) != 0;
+   bool tXX = mInputC.at(aX.mRow    , aX.mCol    ) != 0;
+   bool tEE = mInputC.at(aX.mRow    , aX.mCol + 1) != 0;
 
-   bool tSW = mInput.at(aX.mRow + 1, aX.mCol - 1) != 0;
-   bool tSS = mInput.at(aX.mRow + 1, aX.mCol    ) != 0;
-   bool tSE = mInput.at(aX.mRow + 1, aX.mCol + 1) != 0;
-
-   int tCode = 0;
+   bool tSW = mInputC.at(aX.mRow + 1, aX.mCol - 1) != 0;
+   bool tSS = mInputC.at(aX.mRow + 1, aX.mCol    ) != 0;
+   bool tSE = mInputC.at(aX.mRow + 1, aX.mCol + 1) != 0;
 
    //***************************************************************************
    //***************************************************************************
    //***************************************************************************
    // Nearest neighbor rule testing.
-
-   tCode = 0;
 
    // Rule 1.
    if (tWW && tEE)
@@ -146,7 +140,7 @@ void NN3dRuleFilter::doFilterHighPixel(RCIndex aX)
    SV::RCCircuitLoop tNNLoop(aX, 1);
    while (tNNLoop.loop())
    {
-      if (mInput.at(tNNLoop()) != 0) tNNSum++;
+      if (mInputC.at(tNNLoop()) != 0) tNNSum++;
    }
 
    // Rule 3.
@@ -165,4 +159,3 @@ void NN3dRuleFilter::doFilterHighPixel(RCIndex aX)
 //******************************************************************************
 }//namespace
 
-#pragma warning(pop)

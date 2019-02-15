@@ -37,6 +37,7 @@ void CmdLineExec::execute(Ris::CmdLineCmd* aCmd)
    if (aCmd->isCmd("Sim2d"))     executeSim2d(aCmd);
    if (aCmd->isCmd("Sim3d"))     executeSim3d(aCmd);
    if (aCmd->isCmd("Run2d"))     executeRun2d(aCmd);
+   if (aCmd->isCmd("Run3d"))     executeRun3d(aCmd);
    if (aCmd->isCmd("Show2d"))    executeShow2d(aCmd);
    if (aCmd->isCmd("Show3d"))    executeShow3d(aCmd);
    if (aCmd->isCmd("Draw"))      executeDraw(aCmd);
@@ -104,6 +105,31 @@ void CmdLineExec::executeRun2d(Ris::CmdLineCmd* aCmd)
    mImageSet.doSimInput2d();
    mFilter2d.initialize(&SV::gImageParms.mNN2dRuleFilterParms);
    mFilter2d.doFilterImage(mImageSet.mInputImageC, mImageSet.mOutputImage);
+
+   Prn::print(0, "done");
+}
+
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+
+void CmdLineExec::executeRun3d(Ris::CmdLineCmd* aCmd)
+{
+   aCmd->setArgDefault(1, 1);
+
+   // Read parameters files.
+   SV::gParmParms.reset();
+   SV::gParmParms.readSection("default");
+   SV::gParmParms.readMoreParms("default");
+
+   // Run.
+   mImageSet.doSimInput3d();
+   mFilter3d.initialize(&SV::gImageParms.mNN3dRuleFilterParms);
+   mFilter3d.doFilterImage(
+      mImageSet.mInputImageD,
+      mImageSet.mInputImageC, 
+      mImageSet.mInputImageU, 
+      mImageSet.mOutputImage);
 
    Prn::print(0, "done");
 }

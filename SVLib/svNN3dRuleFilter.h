@@ -42,8 +42,10 @@ public:
    //***************************************************************************
    // Members. Variables, according to the main diagram.
 
-   // Images.
-   ImageWrapper mInput;
+   // Images wrappers.
+   ImageWrapper mInputD;
+   ImageWrapper mInputC;
+   ImageWrapper mInputU;
    ImageWrapper mOutput;
 
    //***************************************************************************
@@ -64,7 +66,9 @@ public:
 
    // Filter an image according to the parms.
    void doFilterImage(
-      cv::Mat&       aInput,               // Input
+      cv::Mat&       aInputD,              // Input
+      cv::Mat&       aInputC,              // Input
+      cv::Mat&       aInputU,              // Input
       cv::Mat&       aOutput);             // Output
 
    //***************************************************************************
