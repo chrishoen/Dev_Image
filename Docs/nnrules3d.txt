@@ -1,6 +1,13 @@
-# DNW DNN DNE    CNW CNN CNE    UNW UNN UNE
-# DWW DXX DEE    CWW CXX CEE    UWW UXX UEE
-# DSW DSS DSE    CSW CSS CSE    USW USS USE
+# D            C           U
+# NW NN DNE    NW NN NE    NW NN NE
+# WW XX DEE    WW XX EE    WW XX EE
+# SW SS DSE    SW SS SE    SW SS SE
+#
+# D down       N north 
+# C current    S south
+# U up         E east
+#              W west
+
    
 # copy the input image to the output image.
 output_image = input_image_c.clone()
@@ -14,9 +21,9 @@ for xpixel in input_image_c:
 # filter a high pixel based on nearest neighbor rules.
 def filter_high_pixel(x):
    # extract nearest neighbors.
-   # NW NN NE
-   # WW XX EE
-   # SW SS SE
+   # DNW DNN DNE    CNW CNN CNE    UNW UNN UNE
+   # DWW DXX DEE    CWW CXX CEE    UWW UXX UEE
+   # DSW DSS DSE    CSW CSS CSE    USW USS USE
    
    CNW = input_image_c(x.row-1,x.col-1) != 0
    CNN = input_image_c(x.row-1,x.col  ) != 0
@@ -28,38 +35,43 @@ def filter_high_pixel(x):
    CDU = input_image_c(x.row+1,x.col  ) != 0
    CSE = input_image_c(x.row+1,x.col+1) != 0
 
-   # count the number of nearest neighbors that are occupied.
-   DNN_sum = DNW + DNN + DNE + DWW + DEE + DSW + DSS + DSE
-   CNN_sum = CNW + CNN + CNE + CWW + CEE + CSW + CSS + CSE
-   UNN_sum = UNW + UNN + UNE + UWW + UEE + USW + USS + USE
-   
-   # rule 1.
-   if (CNN and CSS and CEE and CWW and UXX and DXX):
-      return
-      
-   # rule 2.
+   DXX = input_image_d(x.row  ,x.col  ) != 0
+   UXX = input_image_u(x.row  ,x.col  ) != 0
+
+   # RULE 1.
+   # If not on a contour of the current image.
    if (CNN and CSS and CEE and CWW):
       return 
 
-   # rule 3.
+   # RULE 2.
+   # If on a vertical plane parallel to NS or ES.
    if (UXX and DXX) and ((CNN and CSS) or (CEE and CWW)):
       return 
 
-   # rule 4.
+   # count the number of horizontal nearest neighbors.
+   CNN_sum = CNW + CNN + CNE + CWW + CEE + CSW + CSS + CSE
+      
+   # RULE 3.
+   # If on a vertical plane not parallel to NS or ES and
+   # at a horizontal corner.
    if (UXX and DXX) and (CNN_sum <= 3)):
       output_image.at(x) = parms.hc1
       return 
 
-   # rule 5.  
+   # RULE 4.  
+   # If on a vertical plane not parallel to NS or ES and
+   # not at a horizontal corner.
    if (UXX and DXX):
       output_image.at(x) = parms.hc2
       return
 
-   # rule 6.
+   # RULE 5.
+   # If at a horizontal corner.
    if (CNN_sum <= 3)):
       output_image.at(x) = parms.hc1
       return 
 
-   # rule 7.
+   # RULE 6.
+   # Otherwise not on a vertical plane and not at a corner.
    output_image.at(x) = parms.hc2
    return
