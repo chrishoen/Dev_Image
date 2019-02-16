@@ -7,6 +7,7 @@ Description:
 //******************************************************************************
 
 #include "stdafx.h"
+#include <windows.h>
 
 #include "risSystemCalls.h"
 
@@ -22,37 +23,18 @@ namespace PX
 
 bool FileManager::doFindWorkGCodeName()
 {
-#if 0
    mWorkGCodeName.clear();
-   DIR* dirp = opendir("./work");
-   struct dirent * dp;
-   while ((dp = readdir(dirp)) != NULL)
+   std::string pattern = mWorkDirPath + "\\*.gcode";
+   WIN32_FIND_DATA data;
+   HANDLE hFind;
+   if ((hFind = FindFirstFile(pattern.c_str(), &data)) != INVALID_HANDLE_VALUE)
    {
-      if (dp->d_type == DT_REG)
+      do
       {
-         // Get file name from record.
-         std::string tFileName = dp->d_name;
-
-         // Find dot position.
-         std::size_t tDotPos = tFileName.find_last_of(".");
-
-         // If dot not found then continue the loop.
-         if (tDotPos == std::string::npos) continue;
-
-         // Get file extension substring.
-         std::string tExt = tFileName.substr(tDotPos, tFileName.size() - tDotPos);
-
-         // Test the file extension substring.
-         if (tExt.compare(".gcode") == 0)
-         {
-            // Erase file extension substring.
-//EXT       tFileName.erase(tDotPos, tFileName.size() - tDotPos);
-            mWorkGCodeName = tFileName;
-            break;
-         }
-      }
+         mWorkGCodeName = data.cFileName;
+      } while (FindNextFile(hFind, &data) != 0);
+      FindClose(hFind);
    }
-   closedir(dirp);
 
    // Guard.
    if (mWorkGCodeName.empty())
@@ -79,7 +61,7 @@ bool FileManager::doFindWorkGCodeName()
    Prn::print(0, "ScriptFilePath   %s", mWorkScriptFilePath.c_str());
    Prn::print(0, "done");
    Prn::print(0, "");
-#endif
+
    // Done.
    return true;
 }
