@@ -89,7 +89,6 @@ bool FileManager::setGCodeName(int aGCodeNum)
 
    // Set gcode name and file path.
    mGCodeName = mGCodeNameList[aGCodeNum];
-//EXT   mGCodeFilePath = "./gcode/" + mGCodeName + ".gcode";
    mGCodeFilePath = "./gcode/" + mGCodeName;
 
    // Test if the gcode file exists.
@@ -115,7 +114,6 @@ bool FileManager::setGCodeName(const char* aGCodeName)
 {
    // Set gcode name and file path.
    mGCodeName = aGCodeName;
-//EXT   mGCodeFilePath = "./gcode/" + mGCodeName + ".gcode";
    mGCodeFilePath = "./gcode/" + mGCodeName;
 
    // Test if the gcode file exists.
@@ -185,7 +183,7 @@ bool FileManager::doLoadGCode()
    char tString[200];
 
    // Clean the work directory.
-   Ris::doSystemCommand("rm -rf ./work/*");
+   Ris::doSystemCommand("del /q .\\work\\*.*");
 
    // Copy the gcode file into the work directory.
    // Ex. "cp ./gcode/Test100.gcode ./work"

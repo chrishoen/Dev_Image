@@ -184,13 +184,13 @@ bool FileManager::doLoadZip()
    char tString[200];
 
    // Clean the work directory.
-   Ris::doSystemCommand("rm -rf ./work/*");
+   Ris::doSystemCommand("del /q .\\work\\*.*");
 
    // Unzip the zip file into the work directory.
    // Ex. "/usr/bin/unzip ./zip/Test100.zip -d ./work"
-   sprintf(tString, "/usr/bin/unzip %s -d ./work", mZipFilePath.c_str());
+   sprintf(tString, "C:\\MyPrograms\\7-Zip\\7z.exe x %s -o.\\work -y -r", mZipFilePath.c_str());
+   printf("doCommand %s", tString);
    Ris::doSystemCommand(tString);
-   Ris::doSystemCommand("sudo chmod 666 ./work/*.*");
 
    // Done.
    mError = "PASS";

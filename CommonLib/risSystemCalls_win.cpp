@@ -24,40 +24,12 @@ namespace Ris
 
 int doSystemCommand(const char* aCommand)
 {
-#if 0
-   static const int cMaxStringSize = 200;
-   FILE *fp;
-   int status;
-   char path[cMaxStringSize];
-
-   fp = popen(aCommand, "r");
-   if (fp == NULL)
+   int tRet = system(aCommand);
+   if (tRet)
    {
       printf("doSystemCommand FAIL1 %s",aCommand);
       return -1;
    }
-      /* Handle error */;
-
-
-   while (fgets(path, cMaxStringSize, fp) != NULL)
-   {
-      printf("%s", path);
-   }
-
-
-   status = pclose(fp);
-   if (status == -1)
-   {
-      printf("doSystemCommand FAIL2 %s", aCommand);
-      return -1;
-   }
-   else
-   {
-      /* Use macros described under wait() to inspect `status' in order
-         to determine success/failure of command executed by popen() */
-      return status;
-   }
-#endif
    return 0;
 }
 
