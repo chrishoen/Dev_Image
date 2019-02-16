@@ -4,6 +4,9 @@
 #include "tsThreadServices.h"
 #include "risThreadsProcess.h"
 
+#include "CPrintDir.h"
+#include "pxFileManager.h"
+
 #include "svSysParms.h"
 #include "svImageParms.h"
 #include "svSimParms.h"
@@ -41,11 +44,19 @@ void main_initialize(int argc,char** argv)
    //***************************************************************************
    //***************************************************************************
    //***************************************************************************
+   // Enter process.
+
+   // Set the program working directory to the cprint directory path.
+   setProgramDirToCPrint();
+
+   //***************************************************************************
+   //***************************************************************************
+   //***************************************************************************
    // Initialize print facility.
 
    // Initialize print.
    Prn::resetPrint();
-   Prn::useConsole(1);
+// Prn::useConsole(1);
    Prn::initializePrint();
 
    // Initialize print filters.
@@ -85,6 +96,14 @@ void main_initialize(int argc,char** argv)
    // Read parameters files.
    Display::gParms.reset();
    Display::gParms.readSection("Default");
+
+   //***************************************************************************
+   //***************************************************************************
+   //***************************************************************************
+   // Initialize program resources.
+
+   // Initialize the file manager.
+   PX::gFileManager.initialize();
 }
 
 //******************************************************************************

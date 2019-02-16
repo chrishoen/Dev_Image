@@ -20,7 +20,8 @@ const char* getCPrintDirectory();
 // Set the program working directory to the cprint directory path.
 void setProgramDirToCPrint();
 
-
+// Clean the cprint work directory.
+void doCleanCPrintWork();
  
 //******************************************************************************
 //******************************************************************************

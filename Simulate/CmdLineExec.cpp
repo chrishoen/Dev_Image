@@ -4,10 +4,9 @@
 #include "svSysParms.h"
 #include "svImageParms.h"
 #include "svSimParms.h"
+#include "svParmParms.h"
 #include "displayParms.h"
 #include "displayFunctions.h"
-
-#include "Simulate.h"
 
 #include "displayGraphicsThread.h"
 
@@ -23,6 +22,7 @@ CmdLineExec::CmdLineExec()
 
 void CmdLineExec::reset()
 {
+   mImageSet.reset();
 }
 
 //******************************************************************************
@@ -34,10 +34,18 @@ void CmdLineExec::reset()
 
 void CmdLineExec::execute(Ris::CmdLineCmd* aCmd)
 {
-   if (aCmd->isCmd("Run"))       executeRun(aCmd);
-   if (aCmd->isCmd("Show"))      executeShow(aCmd);
-   if (aCmd->isCmd("Test"))      executeTest(aCmd);
-   if (aCmd->isCmd("D0"))        executeDraw0(aCmd);
+   if (aCmd->isCmd("Sim2d"))     executeSim2d(aCmd);
+   if (aCmd->isCmd("Sim3d"))     executeSim3d(aCmd);
+   if (aCmd->isCmd("Run2d"))     executeRun2d(aCmd);
+   if (aCmd->isCmd("Run3d"))     executeRun3d(aCmd);
+   if (aCmd->isCmd("Show2d"))    executeShow2d(aCmd);
+   if (aCmd->isCmd("Show3d"))    executeShow3d(aCmd);
+   if (aCmd->isCmd("Draw"))      executeDraw(aCmd);
+   if (aCmd->isCmd("Read"))      executeRead(aCmd);
+   if (aCmd->isCmd("ReadIn"))    executeReadInput(aCmd);
+   if (aCmd->isCmd("Write"))     executeWrite(aCmd);
+   if (aCmd->isCmd("WriteOut"))  executeWriteOutput(aCmd);
+
    if (aCmd->isCmd("GO1"))       executeGo1(aCmd);
    if (aCmd->isCmd("GO2"))       executeGo2(aCmd);
    if (aCmd->isCmd("GO3"))       executeGo3(aCmd);
@@ -50,68 +58,191 @@ void CmdLineExec::execute(Ris::CmdLineCmd* aCmd)
 //******************************************************************************
 //******************************************************************************
 
-void CmdLineExec::executeRun(Ris::CmdLineCmd* aCmd)
+void CmdLineExec::executeSim2d(Ris::CmdLineCmd* aCmd)
 {
    aCmd->setArgDefault(1, 1);
 
    // Read parameters files.
-   SV::gSimParms.reset();
-   SV::gSimParms.readSection("default");
-   SV::gImageParms.reset();
-   SV::gImageParms.readSection("default");
-   SV::gImageParms.readOverrides(&SV::gSimParms);
+   SV::gParmParms.reset();
+   SV::gParmParms.readSection("default");
+   SV::gParmParms.readMoreParms("default");
 
    // Run.
-   mSim.doRun(aCmd->argInt(1));
+   mImageSet.doSimInput2d();
 }
 
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
 
-void CmdLineExec::executeShow(Ris::CmdLineCmd* aCmd)
+void CmdLineExec::executeSim3d(Ris::CmdLineCmd* aCmd)
 {
    aCmd->setArgDefault(1, 1);
 
    // Read parameters files.
-   SV::gSimParms.reset();
-   SV::gSimParms.readSection("default");
-   SV::gImageParms.reset();
-   SV::gImageParms.readSection("default");
-   SV::gImageParms.readOverrides(&SV::gSimParms);
-
-   mSim.doShow(aCmd->argInt(1));
-}
-
-//******************************************************************************
-//******************************************************************************
-//******************************************************************************
-
-void CmdLineExec::executeTest(Ris::CmdLineCmd* aCmd)
-{
-   aCmd->setArgDefault(1, 1);
-
-   // Read parameters files.
-   SV::gSimParms.reset();
-   SV::gSimParms.readSection("default");
-   SV::gImageParms.reset();
-   SV::gImageParms.readSection("default");
-   SV::gImageParms.readOverrides(&SV::gSimParms);
+   SV::gParmParms.reset();
+   SV::gParmParms.readSection("default");
+   SV::gParmParms.readMoreParms("default");
 
    // Run.
-   mSim.doTest(aCmd->argInt(1));
+   mImageSet.doSimInput3d();
 }
 
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
 
-void CmdLineExec::executeDraw0(Ris::CmdLineCmd* aCmd)
+void CmdLineExec::executeRun2d(Ris::CmdLineCmd* aCmd)
+{
+   aCmd->setArgDefault(1, 1);
+
+   // Read parameters files.
+   SV::gParmParms.reset();
+   SV::gParmParms.readSection("default");
+   SV::gParmParms.readMoreParms("default");
+
+   // Run.
+   mImageSet.doSimInput2d();
+   mFilter2d.initialize(&SV::gImageParms.mNN2dRuleFilterParms);
+   mFilter2d.doFilterImage(mImageSet.mInputImageC, mImageSet.mOutputImage);
+
+   Prn::print(0, "done");
+}
+
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+
+void CmdLineExec::executeRun3d(Ris::CmdLineCmd* aCmd)
+{
+   aCmd->setArgDefault(1, 1);
+
+   // Read parameters files.
+   SV::gParmParms.reset();
+   SV::gParmParms.readSection("default");
+   SV::gParmParms.readMoreParms("default");
+
+   // Run.
+   mImageSet.doSimInput3d();
+   mFilter3d.initialize(&SV::gImageParms.mNN3dRuleFilterParms);
+   mFilter3d.doFilterImage(
+      mImageSet.mInputImageD,
+      mImageSet.mInputImageC, 
+      mImageSet.mInputImageU, 
+      mImageSet.mOutputImage);
+
+   mFilter3d.show();
+}
+
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+
+void CmdLineExec::executeShow2d(Ris::CmdLineCmd* aCmd)
+{
+   // Read parameters files.
+   SV::gParmParms.reset();
+   SV::gParmParms.readSection("default");
+   SV::gParmParms.readMoreParms("default");
+
+   aCmd->setArgDefault(1, 1);
+   mImageSet.doShow2d(aCmd->argInt(1));
+}
+
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+
+void CmdLineExec::executeShow3d(Ris::CmdLineCmd* aCmd)
 {
    aCmd->setArgDefault(1, 0);
    int tCode = aCmd->argInt(1);
 
-   Display::gGraphicsThread->postDraw0(tCode);
+   // Read parameters files.
+   SV::gParmParms.reset();
+   SV::gParmParms.readSection("default");
+   SV::gParmParms.readMoreParms("default");
+
+   switch (tCode)
+   {
+   case 0:
+      mImageSet.doShow3d(1);
+      mImageSet.doShow3d(2);
+      break;
+   case 1:
+      mImageSet.doShow3d(1);
+      break;
+   case 2:
+      mImageSet.doShow3d(2);
+      break;
+   }
+}
+
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+
+void CmdLineExec::executeDraw(Ris::CmdLineCmd* aCmd)
+{
+   aCmd->setArgDefault(1, 1);
+   mImageSet.doDraw(aCmd->argInt(1));
+}
+
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+
+void CmdLineExec::executeRead(Ris::CmdLineCmd* aCmd)
+{
+   aCmd->setArgDefault(1, 1);
+
+   // Read parameters files.
+   SV::gParmParms.reset();
+   SV::gParmParms.readSection("default");
+   SV::gParmParms.readMoreParms("default");
+
+   // Run.
+   mImageSet.doReadInput();
+   mImageSet.doReadOutput();
+}
+
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+
+void CmdLineExec::executeReadInput(Ris::CmdLineCmd* aCmd)
+{
+   aCmd->setArgDefault(1, 1);
+
+   // Read parameters files.
+   SV::gParmParms.reset();
+   SV::gParmParms.readSection("default");
+   SV::gParmParms.readMoreParms("default");
+
+   // Run.
+   mImageSet.doReadInput();
+   mFilter2d.initialize(&SV::gImageParms.mNN2dRuleFilterParms);
+   mFilter2d.doFilterImage(mImageSet.mInputImageC, mImageSet.mOutputImage);
+   Prn::print(0, "done");
+}
+
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+
+void CmdLineExec::executeWrite(Ris::CmdLineCmd* aCmd)
+{
+   mImageSet.doWriteInput();
+   mImageSet.doWriteOutput();
+}
+
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+
+void CmdLineExec::executeWriteOutput(Ris::CmdLineCmd* aCmd)
+{
+   mImageSet.doWriteOutput();
 }
 
 //******************************************************************************
@@ -120,7 +251,17 @@ void CmdLineExec::executeDraw0(Ris::CmdLineCmd* aCmd)
 
 void CmdLineExec::executeGo1(Ris::CmdLineCmd* aCmd)
 {
-   Display::showImage(SV::gImageParms.mTestImageFileName);
+   aCmd->setArgDefault(1, 1);
+
+   // Read parameters files.
+   SV::gParmParms.reset();
+   SV::gParmParms.readSection("default");
+   SV::gParmParms.readMoreParms("default");
+
+   // Run.
+   mImageSet.doSimInput2d();
+   mImageSet.doWriteInput();
+   mImageSet.doDraw(12);
 }
 
 //******************************************************************************
@@ -129,6 +270,10 @@ void CmdLineExec::executeGo1(Ris::CmdLineCmd* aCmd)
 
 void CmdLineExec::executeGo2(Ris::CmdLineCmd* aCmd)
 {
+   std::vector<int> tList(10);
+   tList.clear();
+   tList.reserve(10);
+   Prn::print(0, "size %d", tList.size());
 }
 
 //******************************************************************************
@@ -169,13 +314,11 @@ void CmdLineExec::executeParms(Ris::CmdLineCmd* aCmd)
    Display::gParms.readSection("default");
    Display::gParms.show();
 
-   SV::gImageParms.reset();
-   SV::gImageParms.readSection("default");
-   SV::gImageParms.readOverrides(&SV::gSimParms);
-   SV::gImageParms.show();
+   SV::gParmParms.reset();
+   SV::gParmParms.readSection("default");
+   SV::gParmParms.readMoreParms("default");
 
-   SV::gSimParms.reset();
-   SV::gSimParms.readSection("default");
+   SV::gImageParms.show();
    SV::gSimParms.show();
 }
 

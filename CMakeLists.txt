@@ -8,15 +8,15 @@ project ("Dev_Image")
 my_init_variables()
 my_init_import_variables()
 
+add_subdirectory ("Simulate")
 add_subdirectory ("CommonLib")
-add_subdirectory ("Session")
-return()
-
-add_subdirectory ("NNRuleFilter")
 add_subdirectory ("DisplayLib")
 add_subdirectory ("SVLib")
 return()
 
+add_subdirectory ("CommonLib")
+add_subdirectory ("Session")
+return()
 
 add_subdirectory ("CommonLib")
 add_subdirectory ("ContourFilter")

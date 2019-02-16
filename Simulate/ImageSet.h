@@ -16,7 +16,7 @@ Simulation calculations test one
 // This provides a framework for running simulation tests.
 //
 
-class Simulate
+class ImageSet
 {
 public:
 
@@ -25,34 +25,42 @@ public:
    //***************************************************************************
    // Members:
 
-   cv::Mat mInputImage;
-   
+   cv::Mat mInputImageD;
+   cv::Mat mInputImageC;
+   cv::Mat mInputImageU;
+   cv::Mat mOutputImage;
+
    //***************************************************************************
    //***************************************************************************
    //***************************************************************************
    // Methods:
 
    // Constructor.
-   Simulate();
+   ImageSet();
+   void reset();
 
    //***************************************************************************
    //***************************************************************************
    //***************************************************************************
    // Methods:
 
-   // These run sequences of operations.
-   void doRun(int aCode);
-   void doRun1();
-   void doRun2();
-   void doRun3();
+   // Input images.
+   void doSimInput2d();
+   void doSimInput3d();
+
+   void doReadInput();
+   void doReadOutput();
+
+   // Outut images.
+   void doWriteInput();
+   void doWriteOutput();
 
    // Show.
-   void doShow(int aCode);
+   void doShow2d(int aCode);
+   void doShow3d(int aCode);
 
-   // Test image.
-   void doTest(int aCode);
-   void doTest1();
-   void doTest2();
+   // Draw.
+   void doDraw(int aCode);
 };
 
 //******************************************************************************

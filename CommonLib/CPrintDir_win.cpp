@@ -8,6 +8,8 @@ Print utility
 
 #include "stdafx.h"
 
+#include "risSystemCalls.h"
+
 #include "CPrintDir.h"
 
 
@@ -31,6 +33,17 @@ void setProgramDirToCPrint()
    Ris::portableChdir("C:/aaa_cprint");
 }
 
+
+//****************************************************************************
+//****************************************************************************
+//****************************************************************************
+// Clean the cprint work directory.
+
+void doCleanCPrintWork()
+{
+   // Clean the work directory.
+   Ris::doSystemCommand("del /q .\\work\\*.*");
+}
 
 //****************************************************************************
 //****************************************************************************
