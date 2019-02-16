@@ -8,9 +8,6 @@ Description:
 
 #include "stdafx.h"
 
-#include <iostream>
-#include <algorithm>
-
 #include "CPrintDir.h"
 #include "risSystemCalls.h"
 

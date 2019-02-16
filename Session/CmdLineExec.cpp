@@ -5,9 +5,9 @@
 #include "risSystemCalls.h"
 
 #include "pxFileManager.h"
-//#include "pxScriptWriter.h"
-//#include "pxScriptReader.h"
-//#include "pxScriptTester.h"
+#include "pxScriptWriter.h"
+#include "pxScriptReader.h"
+#include "pxScriptTester.h"
 
 #include "CmdLineExec.h"
 
@@ -109,7 +109,7 @@ void CmdLineExec::executeLoadZip(Ris::CmdLineCmd* aCmd)
    // Find the gcode name.
    tPass = PX::gFileManager.doFindWorkGCodeName();
    if (!tPass) return;
-#if 0
+
    // Write the script.
    PX::ScriptWriter tScriptWriter;
    tPass = tScriptWriter.doWrite(
@@ -126,7 +126,6 @@ void CmdLineExec::executeLoadZip(Ris::CmdLineCmd* aCmd)
 
    // Show the test results.
    tScriptTester.show();
-#endif
 }
 
 //******************************************************************************
@@ -151,7 +150,7 @@ void CmdLineExec::executeLoadGCode(Ris::CmdLineCmd* aCmd)
    // Find the gcode name.
    tPass = PX::gFileManager.doFindWorkGCodeName();
    if (!tPass) return;
-#if 0
+
    // Write the script.
    PX::ScriptWriter tScriptWriter;
    tPass = tScriptWriter.doWrite(
@@ -168,7 +167,6 @@ void CmdLineExec::executeLoadGCode(Ris::CmdLineCmd* aCmd)
 
    // Show the test results.
    tScriptTester.show();
-#endif
 }
 
 //******************************************************************************
@@ -246,14 +244,12 @@ void CmdLineExec::executeWorkSlice(Ris::CmdLineCmd* aCmd)
 
 void CmdLineExec::executeGen(Ris::CmdLineCmd* aCmd)
 {
-#if 0
    PX::ScriptWriter tWriter;
    tWriter.doWrite(
       PX::gFileManager.mWorkGCodeFilePath,
       PX::gFileManager.mWorkSliceFilePrefixPath,
       PX::gFileManager.mWorkDirPath,
       PX::gFileManager.mWorkScriptFilePath);
-#endif
 }
 
 //******************************************************************************
@@ -262,13 +258,11 @@ void CmdLineExec::executeGen(Ris::CmdLineCmd* aCmd)
 
 void CmdLineExec::executeTest(Ris::CmdLineCmd* aCmd)
 {
-#if 0
    PX::ScriptTester tTester;
    if (tTester.doTestScriptFile(PX::gFileManager.mWorkScriptFilePath))
    {
       tTester.show();
    }
-#endif
 }
 
 //******************************************************************************
