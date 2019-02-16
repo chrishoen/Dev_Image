@@ -7,6 +7,7 @@ Description:
 //******************************************************************************
 
 #include "stdafx.h"
+#include <windows.h>
 
 #include "risSystemCalls.h"
 
@@ -22,43 +23,24 @@ namespace PX
 
 void FileManager::getZipNameList()
 {
-#if 0
    mZipNameList.clear();
-   DIR* dirp = opendir(mZipDirPath.c_str());
-   struct dirent * dp;
-   while ((dp = readdir(dirp)) != NULL)
+   std::string pattern = mZipDirPath + "\\*.zip";
+   WIN32_FIND_DATA data;
+   HANDLE hFind;
+   if ((hFind = FindFirstFile(pattern.c_str(), &data)) != INVALID_HANDLE_VALUE)
    {
-      if (dp->d_type == DT_REG)
+      do
       {
-         // Get file name from record.
-         std::string tFileName = dp->d_name;
-
-         // Find dot position.
-         std::size_t tDotPos = tFileName.find_last_of(".");
-
-         // If dot not found then continue the loop.
-         if (tDotPos == std::string::npos) continue;
-
-         // Get file extension substring.
-         std::string tExt = tFileName.substr(tDotPos, tFileName.size() - tDotPos);
-
-         // Test the file extension substring.
-         if (tExt.compare(".zip") == 0)
-         {
-            // Erase file extension substring.
-//EXT       tFileName.erase(tDotPos, tFileName.size() - tDotPos);
-            mZipNameList.push_back(tFileName);
-         }
-      }
+         mZipNameList.push_back(data.cFileName);
+      } while (FindNextFile(hFind, &data) != 0);
+      FindClose(hFind);
    }
-   closedir(dirp);
 
    // Exit if the list is empty.
    if (mZipNameList.empty()) return;
 
    // Sort the list.
    std::sort(mZipNameList.begin(), mZipNameList.end());
-#endif
 }
 
 //******************************************************************************
