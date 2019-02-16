@@ -336,7 +336,8 @@ void CmdLineExec::executeGo7(Ris::CmdLineCmd* aCmd)
 
 void CmdLineExec::executeGo8(Ris::CmdLineCmd* aCmd)
 {
-   Prn::print(0, "working dir %s", Ris::portableGetCurrentDir());
+   Prn::print(0, "program dir %s", Ris::portableGetProgramDir());
+   Prn::print(0, "current dir %s", Ris::portableGetCurrentDir());
 }
 
 //******************************************************************************
