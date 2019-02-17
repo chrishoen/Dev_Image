@@ -78,14 +78,15 @@ void SimStackGenerator::doGenerateImageStack()
    mGenParms.reset();
    mGenParms.mPolygonPoints = mP->mStackPolygonBottom;
 
-
-
-   // Loop for each generated image.
-   for (int i = 0; i < mStackSize; i++)
+   // Loop for each generated image, from bottom to top.
+   for (int tLoopIndex = 0; tLoopIndex < mStackSize; tLoopIndex++)
    {
+      // File index from top to bottom.
+      int tFileIndex = mStackSize - tLoopIndex - 1;
+
       // Print the polygon points.
       Prn::print(Prn::View01, "%3d $ %4d  %4d $ %4d  %4d $ %4d  %4d $ %4d  %4d",
-         i,
+         tFileIndex,
          mGenParms.mPolygonPoints[0][0], mGenParms.mPolygonPoints[0][1],
          mGenParms.mPolygonPoints[1][0], mGenParms.mPolygonPoints[1][1],
          mGenParms.mPolygonPoints[2][0], mGenParms.mPolygonPoints[2][1],
@@ -97,7 +98,7 @@ void SimStackGenerator::doGenerateImageStack()
       mGenPolygon.doGenerateImage(tOutputImage);
 
       // Write the image to a file.
-      cv::imwrite(mImageFilePaths[i].c_str(), tOutputImage);
+      cv::imwrite(mImageFilePaths[tFileIndex].c_str(), tOutputImage);
 
       // Advance the polygon points.
       for (int n = 0; n < mP->mStackPolygonBottom.mRows; n++)
