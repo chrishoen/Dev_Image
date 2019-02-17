@@ -72,6 +72,17 @@ void CmdLineExec::executeGen(Ris::CmdLineCmd* aCmd)
 void CmdLineExec::executeGo1(Ris::CmdLineCmd* aCmd)
 {
    aCmd->setArgDefault(1, 1);
+   aCmd->setArgDefault(2, 1);
+
+   int tMod = aCmd->argInt(1);
+   int tDelta = aCmd->argInt(2);
+   int tValue = 0;
+
+   for (int i = 0; i < 10; i++)
+   {
+      Prn::print(0, "%3d %3d ", i, tValue);
+      if ((i + tMod - 1) % tMod == 0) tValue += tDelta;
+   }
 }
 
 //******************************************************************************
