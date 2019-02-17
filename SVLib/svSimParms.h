@@ -66,7 +66,7 @@ public:
    //***************************************************************************
    // Parameter members.
 
-   // Center image point.
+   // Simulated images.
    SimImageGenParms mImageGenParmsD;
    SimImageGenParms mImageGenParmsC;
    SimImageGenParms mImageGenParmsU;
@@ -76,8 +76,13 @@ public:
    //***************************************************************************
    // Parameter members.
 
-   // Simulated error variables.
-   double   mNoiseSigma;
+   // Simulated image stack.
+   char             mStackName[cMaxStringSize];
+   int              mStackSize;
+
+   // Polygon parameters.
+   Ris::CmdLineTable2D<int, 40, 2>    mStackPolygonBottom;
+   Ris::CmdLineTable2D<int, 40, 2>    mStackPolygonDelta;
 
    //***************************************************************************
    //***************************************************************************

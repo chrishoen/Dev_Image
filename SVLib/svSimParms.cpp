@@ -29,11 +29,14 @@ void SimParms::reset()
    BaseClass::reset();
    BaseClass::setFileName_RelAlphaFiles("Image/SV_Sim_Parms.txt");
 
-   mNoiseSigma = 0.0;
-
    mImageGenParmsD.reset();
    mImageGenParmsC.reset();
    mImageGenParmsU.reset();
+
+   mStackName[0] = 0;
+   mStackSize = 0;
+   mStackPolygonBottom.reset();
+   mStackPolygonDelta.reset();
 }
 
 //******************************************************************************
@@ -58,11 +61,20 @@ void SimParms::show()
 {
    printf("\n");
    printf("SimParms************************************************ %s\n", mTargetSection);
-   mImageGenParmsD.show("D");
-   mImageGenParmsC.show("C");
-   mImageGenParmsU.show("U");
-   return;
-   printf("NoiseSigma             %10.2f\n", mNoiseSigma);
+
+   if (mStackSize == 0)
+   {
+      mImageGenParmsD.show("D");
+      mImageGenParmsC.show("C");
+      mImageGenParmsU.show("U");
+   }
+   else
+   {
+      printf("StackName                         %s\n", mStackName);
+      printf("StackSize                         %10d\n", mStackSize);
+      mStackPolygonBottom.show("StackBottom");
+      mStackPolygonDelta.show("StackDelta");
+   }
 }
 
 //******************************************************************************
@@ -76,11 +88,14 @@ void SimParms::execute(Ris::CmdLineCmd* aCmd)
 {
    if (!isTargetSection(aCmd)) return;
 
-   if (aCmd->isCmd("NoiseSigma"))          mNoiseSigma = aCmd->argDouble(1);
-
    if (aCmd->isCmd("ImageGenParmsD"))      readSection(aCmd->argString(1), &mImageGenParmsD);
    if (aCmd->isCmd("ImageGenParmsC"))      readSection(aCmd->argString(1), &mImageGenParmsC);
    if (aCmd->isCmd("ImageGenParmsU"))      readSection(aCmd->argString(1), &mImageGenParmsU);
+
+   if (aCmd->isCmd("StackName"))           aCmd->copyArgString(1, mStackName, cMaxStringSize);
+   if (aCmd->isCmd("StackSize"))           mStackSize = aCmd->argInt(1);
+   if (aCmd->isCmd("StackPolygonBottom"))  nestedPush(aCmd, &mStackPolygonBottom);
+   if (aCmd->isCmd("StackPolygonDelta"))   nestedPush(aCmd, &mStackPolygonDelta);
 }
 
 //******************************************************************************
