@@ -2,14 +2,14 @@
 
 /*==============================================================================
 SV namespace: sixdofs that are measured by a computer vision based system.
-Circle class for object point grid generators.
+Simulator synthetic image generator.
 ==============================================================================*/
 
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
 
-#include "svSimImageGenBase.h"
+#include "svSimParms.h"
 
 namespace SV
 {
@@ -20,14 +20,9 @@ namespace SV
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
-// This is an object point grid generator, which is used to generate
-// geometrical grids of object points that are displayed as target display
-// pixels. It generates a grids for the Circle algorithm.
-//
-// It inherits from the grid generator base class, which provides a common 
-// interface and a parameters member variable.
+// This is a simulator synthetic image generator.
 
-class SimImageGenCircle : public SimImageGenBase
+class SimStackGenerator
 {
 public:
 
@@ -36,25 +31,29 @@ public:
    //***************************************************************************
    // Members.
 
+   // Parameters.
+   SimParms* mP;
+
    //***************************************************************************
    //***************************************************************************
    //***************************************************************************
    // Methods.
+   // Instantiate specific grid generator selected from the parms.
 
    // Constructor.
-   typedef SimImageGenBase BaseClass;
-   SimImageGenCircle();
-   SimImageGenCircle(SimImageGenParms* aParms);
-   void reset();
+   SimStackGenerator();
+  ~SimStackGenerator();
+   SimStackGenerator(SimParms* aParms);
+   void initialize(SimParms* aParms);
+   void finalize();
 
    //***************************************************************************
    //***************************************************************************
    //***************************************************************************
    // Methods.
 
-   // Generate an image according to the parms.
-   void doGenerateImage(
-      cv::Mat&       aImage) override;          // Output
+   // Generate an image stack according to the parms.
+   void doGenerateStack();
 };
 
 //******************************************************************************
