@@ -45,6 +45,7 @@ public:
    typedef SimImageGenBase BaseClass;
    SimImageGenPolygon();
    SimImageGenPolygon(SimImageGenParms* aParms);
+   void initialize(SimImageGenParms* aParms);
    void reset();
 
    //***************************************************************************

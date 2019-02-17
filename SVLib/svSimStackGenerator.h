@@ -9,7 +9,12 @@ Simulator synthetic image generator.
 //******************************************************************************
 //******************************************************************************
 
+#include <string>
+#include <vector>
+
 #include "svSimParms.h"
+#include "svSimImageGenParms.h"
+#include "svSimImageGenPolygon.h"
 
 namespace SV
 {
@@ -37,8 +42,23 @@ public:
    //***************************************************************************
    //***************************************************************************
    //***************************************************************************
+   // Members.
+
+   // Number of images to generate.
+   int mStackSize;
+
+   // List of image file paths.
+   std::vector<std::string> mImageFilePaths;
+
+
+   // Polygon image generator.
+   SV::SimImageGenParms   mGenParms;
+   SV::SimImageGenPolygon mGenPolygon;
+
+   //***************************************************************************
+   //***************************************************************************
+   //***************************************************************************
    // Methods.
-   // Instantiate specific grid generator selected from the parms.
 
    // Constructor.
    SimStackGenerator();
@@ -52,8 +72,16 @@ public:
    //***************************************************************************
    // Methods.
 
-   // Generate an image stack according to the parms.
-   void doGenerateStack();
+   // Generate an image stack, according to the parms.
+   void doGenerateImageStack();
+
+   //***************************************************************************
+   //***************************************************************************
+   //***************************************************************************
+   // Methods.
+
+   // Set the image file paths.
+   void doSetImageFilePaths();
 };
 
 //******************************************************************************

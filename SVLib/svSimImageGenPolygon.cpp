@@ -29,6 +29,12 @@ SimImageGenPolygon::SimImageGenPolygon(SimImageGenParms* aParms)
    reset();
 }
 
+void SimImageGenPolygon::initialize(SimImageGenParms* aParms)
+{
+   BaseClass::mP = aParms;
+   reset();
+}
+
 void SimImageGenPolygon::reset()
 {
 }
@@ -44,7 +50,7 @@ void SimImageGenPolygon::reset()
 void SimImageGenPolygon::doGenerateImage(
    cv::Mat&       aImage)          // Output
 {
-   Prn::print(0, "SimImageGenPolygon::doGenerateImage");
+// Prn::print(0, "SimImageGenPolygon::doGenerateImage");
    // Create an image filled with all zeros.
    BaseClass::doCreateZeroImage(aImage);
 

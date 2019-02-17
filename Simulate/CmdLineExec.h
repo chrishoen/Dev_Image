@@ -9,9 +9,6 @@ Program command line executive.
 //******************************************************************************
 
 #include "risCmdLineExec.h"
-#include "ImageSet.h"
-#include "svNN2dRuleFilter.h"
-#include "svNN3dRuleFilter.h"
 
 //******************************************************************************
 //******************************************************************************
@@ -31,10 +28,6 @@ public:
    //***************************************************************************
    //***************************************************************************
    // Members.
-
-   ImageSet mImageSet;
-   SV::NN2dRuleFilter mFilter2d;
-   SV::NN3dRuleFilter mFilter3d;
 
    //***************************************************************************
    //***************************************************************************
@@ -60,17 +53,7 @@ public:
    // Methods.
 
    // Execute specific commands.
-   void executeSim2d       (Ris::CmdLineCmd* aCmd);
-   void executeSim3d       (Ris::CmdLineCmd* aCmd);
-   void executeRun2d       (Ris::CmdLineCmd* aCmd);
-   void executeRun3d       (Ris::CmdLineCmd* aCmd);
-   void executeShow2d      (Ris::CmdLineCmd* aCmd);
-   void executeShow3d      (Ris::CmdLineCmd* aCmd);
-   void executeDraw        (Ris::CmdLineCmd* aCmd);
-   void executeRead        (Ris::CmdLineCmd* aCmd);
-   void executeReadInput   (Ris::CmdLineCmd* aCmd);
-   void executeWrite       (Ris::CmdLineCmd* aCmd);
-   void executeWriteOutput (Ris::CmdLineCmd* aCmd);
+   void executeGen         (Ris::CmdLineCmd* aCmd);
 
    void executeGo1(Ris::CmdLineCmd* aCmd);
    void executeGo2(Ris::CmdLineCmd* aCmd);
