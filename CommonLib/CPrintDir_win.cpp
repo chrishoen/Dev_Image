@@ -42,7 +42,8 @@ void setProgramDirToCPrint()
 void doCleanCPrintWork()
 {
    // Clean the work directory.
-   Ris::doSystemCommand("del /q .\\work\\*.*");
+   Ris::doSystemCommand("rmdir /s /q .\\work");
+   Ris::doSystemCommand("mkdir .\\work");
 }
 
 //****************************************************************************

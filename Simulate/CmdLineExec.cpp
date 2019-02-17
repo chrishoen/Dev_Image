@@ -91,6 +91,8 @@ void CmdLineExec::executeGo1(Ris::CmdLineCmd* aCmd)
 
 void CmdLineExec::executeGo2(Ris::CmdLineCmd* aCmd)
 {
+   // Clean the cprint work directory.
+   doCleanCPrintWork();
 }
 
 //******************************************************************************
