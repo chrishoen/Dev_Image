@@ -11,10 +11,10 @@ Simulator synthetic image generator.
 
 #include <string>
 #include <vector>
+#include <opencv2/core/core.hpp>
 
 #include "svSimParms.h"
-#include "svSimImageGenParms.h"
-#include "svSimImageGenPolygon.h"
+#include "svSimImageGenerator.h"
 
 namespace SV
 {
@@ -50,10 +50,15 @@ public:
    // List of image file paths.
    std::vector<std::string> mImageFilePaths;
 
+   //***************************************************************************
+   //***************************************************************************
+   //***************************************************************************
+   // Members.
 
-   // Polygon image generator.
-   SV::SimImageGenParms   mGenParms;
-   SV::SimImageGenPolygon mGenPolygon;
+   SV::SimImageGenerator mSimImageGenerator;
+   cv::Mat mInputImage;
+   cv::Mat mOutputImage;
+
 
    //***************************************************************************
    //***************************************************************************

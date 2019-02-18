@@ -35,8 +35,6 @@ void SimParms::reset()
 
    mStackName[0] = 0;
    mStackSize = 0;
-   mStackPolygonBottom.reset();
-   mStackPolygonDelta.reset();
 }
 
 //******************************************************************************
@@ -72,8 +70,7 @@ void SimParms::show()
    {
       printf("StackName                         %s\n", mStackName);
       printf("StackSize                         %10d\n", mStackSize);
-      mStackPolygonBottom.show("StackBottom");
-      mStackPolygonDelta.show("StackDelta");
+      mImageGenParmsC.show("C");
    }
 }
 
@@ -94,8 +91,6 @@ void SimParms::execute(Ris::CmdLineCmd* aCmd)
 
    if (aCmd->isCmd("StackName"))           aCmd->copyArgString(1, mStackName, cMaxStringSize);
    if (aCmd->isCmd("StackSize"))           mStackSize = aCmd->argInt(1);
-   if (aCmd->isCmd("StackPolygonBottom"))  nestedPush(aCmd, &mStackPolygonBottom);
-   if (aCmd->isCmd("StackPolygonDelta"))   nestedPush(aCmd, &mStackPolygonDelta);
 }
 
 //******************************************************************************

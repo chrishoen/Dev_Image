@@ -8,8 +8,10 @@ Description:
 
 #include "stdafx.h"
 
-#include "svSimImageGenPolygon.h"
 #include "svSimStackGenerator.h"
+
+#include "svImageFunctions.h"
+#include "svImageShow.h"
 
 namespace SV
 {
@@ -56,8 +58,8 @@ void SimStackGenerator::initialize(SimParms* aParms)
    mStackSize = 0;
    mImageFilePaths.clear();
 
-   mGenParms.reset();
-   mGenPolygon.reset();
+   mInputImage.release();
+   mOutputImage.release();
 }
 
 //******************************************************************************
@@ -74,38 +76,18 @@ void SimStackGenerator::doGenerateImageStack()
    // Initialize the file paths.
    doSetImageFilePaths();
 
-   // Initialize the polygon image generator.
-   mGenParms.reset();
-   mGenParms.mPolygonPoints = mP->mStackPolygonBottom;
 
-   // Loop for each generated image, from bottom to top.
+   // Generate simulated image.
+   mSimImageGenerator.initialize(&SV::gSimParms.mImageGenParmsC);
+   mSimImageGenerator.doGenerateImage(mInputImage);
+   SV::showImageInfo(Prn::View01, "InputImage", mInputImage);
+   mOutputImage = mInputImage;
+
+   // Loop for each generated image, top to bottom.
    for (int tLoopIndex = 0; tLoopIndex < mStackSize; tLoopIndex++)
    {
-      // File index from top to bottom.
-      int tFileIndex = mStackSize - tLoopIndex - 1;
-
-      // Print the polygon points.
-      Prn::print(Prn::View01, "%3d $ %4d  %4d $ %4d  %4d $ %4d  %4d $ %4d  %4d",
-         tFileIndex,
-         mGenParms.mPolygonPoints[0][0], mGenParms.mPolygonPoints[0][1],
-         mGenParms.mPolygonPoints[1][0], mGenParms.mPolygonPoints[1][1],
-         mGenParms.mPolygonPoints[2][0], mGenParms.mPolygonPoints[2][1],
-         mGenParms.mPolygonPoints[3][0], mGenParms.mPolygonPoints[3][1]);
-
-      // Draw the polygon to an image.
-      cv::Mat tOutputImage;
-      mGenPolygon.initialize(&mGenParms);
-      mGenPolygon.doGenerateImage(tOutputImage);
-
       // Write the image to a file.
-      cv::imwrite(mImageFilePaths[tFileIndex].c_str(), tOutputImage);
-
-      // Advance the polygon points.
-      for (int n = 0; n < mP->mStackPolygonBottom.mRows; n++)
-      {
-         mGenParms.mPolygonPoints[n][0] += mP->mStackPolygonDelta[n][0];
-         mGenParms.mPolygonPoints[n][1] += mP->mStackPolygonDelta[n][1];
-      }
+      cv::imwrite(mImageFilePaths[tLoopIndex].c_str(), mOutputImage);
    }
 }
 

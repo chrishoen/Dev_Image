@@ -80,10 +80,6 @@ public:
    char             mStackName[cMaxStringSize];
    int              mStackSize;
 
-   // Polygon parameters.
-   Ris::CmdLineTable2D<int, 40, 2>    mStackPolygonBottom;
-   Ris::CmdLineTable2D<int, 40, 2>    mStackPolygonDelta;
-
    //***************************************************************************
    //***************************************************************************
    //***************************************************************************
