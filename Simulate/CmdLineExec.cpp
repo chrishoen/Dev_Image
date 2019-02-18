@@ -58,7 +58,7 @@ void CmdLineExec::executeGen(Ris::CmdLineCmd* aCmd)
    SV::gParmParms.readMoreParms("default");
 
    // Clean the cprint work directory.
-   doCleanCPrintWork();
+   CPrint::doCleanWork();
 
    // Run.
    SV::SimStackGenerator tStackGen(&SV::gSimParms);
@@ -92,7 +92,7 @@ void CmdLineExec::executeGo1(Ris::CmdLineCmd* aCmd)
 void CmdLineExec::executeGo2(Ris::CmdLineCmd* aCmd)
 {
    // Clean the cprint work directory.
-   doCleanCPrintWork();
+   CPrint::doCleanWork();
 }
 
 //******************************************************************************

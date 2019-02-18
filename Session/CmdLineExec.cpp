@@ -3,6 +3,7 @@
 
 #include "risPortableCalls.h"
 #include "risSystemCalls.h"
+#include "CPrintDir.h"
 
 #include "pxFileManager.h"
 #include "pxScriptWriter.h"
@@ -49,6 +50,7 @@ void CmdLineExec::execute(Ris::CmdLineCmd* aCmd)
 
    if (aCmd->isCmd("Gen"))    executeGen(aCmd);
    if (aCmd->isCmd("Test"))   executeTest(aCmd);
+   if (aCmd->isCmd("Clean"))  executeClean(aCmd);
 
    if (aCmd->isCmd("GO1"))    executeGo1(aCmd);
    if (aCmd->isCmd("GO2"))    executeGo2(aCmd);
@@ -269,8 +271,18 @@ void CmdLineExec::executeTest(Ris::CmdLineCmd* aCmd)
 //******************************************************************************
 //******************************************************************************
 
+void CmdLineExec::executeClean(Ris::CmdLineCmd* aCmd)
+{
+   CPrint::doCleanWork();
+}
+
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+
 void CmdLineExec::executeGo1(Ris::CmdLineCmd* aCmd)
 {
+   Prn::print(0, "%d", sizeof(std::string));
 }
 
 //******************************************************************************

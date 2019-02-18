@@ -136,9 +136,9 @@ bool ScriptTester::doTestScriptFile(std::string& aScriptFilePath)
    }
 
    // Done.
+   mReader.doCloseFile();
    return true;
 }
-//bool portableFilePathExists(char* aFilePath)
 
 //******************************************************************************
 //******************************************************************************

@@ -10,6 +10,7 @@ Description:
 #include <windows.h>
 
 #include "risSystemCalls.h"
+#include "CPrintDir.h"
 
 #include "pxFileManager.h"
 
@@ -23,24 +24,7 @@ namespace PX
 
 void FileManager::getZipNameList()
 {
-   mZipNameList.clear();
-   std::string pattern = mZipDirPath + "\\*.zip";
-   WIN32_FIND_DATA data;
-   HANDLE hFind;
-   if ((hFind = FindFirstFile(pattern.c_str(), &data)) != INVALID_HANDLE_VALUE)
-   {
-      do
-      {
-         mZipNameList.push_back(data.cFileName);
-      } while (FindNextFile(hFind, &data) != 0);
-      FindClose(hFind);
-   }
-
-   // Exit if the list is empty.
-   if (mZipNameList.empty()) return;
-
-   // Sort the list.
-   std::sort(mZipNameList.begin(), mZipNameList.end());
+   CPrint::getZipNameList(mZipDirPath, mZipNameList);
 }
 
 //******************************************************************************
@@ -88,8 +72,7 @@ bool FileManager::setZipName(int aZipNum)
 
    // Set zip name and file path.
    mZipName = mZipNameList[aZipNum];
-   //EXT mZipFilePath = "./zip/" + mZipName + ".zip";
-   mZipFilePath = "./zip/" + mZipName;
+   mZipFilePath = mZipDirPath + mZipName;
 
    // Test if the zip file exists.
    if (!exists(mZipFilePath))
@@ -114,8 +97,7 @@ bool FileManager::setZipName(const char* aZipName)
 {
    // Set zip name and file path.
    mZipName = aZipName;
-//EXT mZipFilePath = "./zip/" + mZipName + ".zip";
-   mZipFilePath = "./zip/" + mZipName;
+   mZipFilePath = mZipDirPath + mZipName;
 
    // Test if the zip file exists.
    if (!exists(mZipFilePath))
@@ -179,18 +161,11 @@ bool FileManager::doLoadZip()
       return false;
    }
 
-   // Temp.
-//   int tRet;
-   char tString[200];
-
    // Clean the work directory.
-   Ris::doSystemCommand("del /q .\\work\\*.*");
+   CPrint::doCleanWork();
 
    // Unzip the zip file into the work directory.
-   // Ex. "/usr/bin/unzip ./zip/Test100.zip -d ./work"
-   sprintf(tString, "C:\\MyPrograms\\7-Zip\\7z.exe x %s -o.\\work -y -r", mZipFilePath.c_str());
-   printf("doCommand %s", tString);
-   Ris::doSystemCommand(tString);
+   CPrint::doUnzipToWork(mZipFilePath);
 
    // Done.
    mError = "PASS";

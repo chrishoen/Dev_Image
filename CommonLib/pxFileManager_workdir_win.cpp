@@ -10,6 +10,7 @@ Description:
 #include <windows.h>
 
 #include "risSystemCalls.h"
+#include "CPrintDir.h"
 
 #include "pxFileManager.h"
 
@@ -23,18 +24,8 @@ namespace PX
 
 bool FileManager::doFindWorkGCodeName()
 {
-   mWorkGCodeName.clear();
-   std::string pattern = mWorkDirPath + "\\*.gcode";
-   WIN32_FIND_DATA data;
-   HANDLE hFind;
-   if ((hFind = FindFirstFile(pattern.c_str(), &data)) != INVALID_HANDLE_VALUE)
-   {
-      do
-      {
-         mWorkGCodeName = data.cFileName;
-      } while (FindNextFile(hFind, &data) != 0);
-      FindClose(hFind);
-   }
+   // Find the filename of the gcode file in the work directory.
+   CPrint::doFindWorkGCodeName(mWorkGCodeName);
 
    // Guard.
    if (mWorkGCodeName.empty())
@@ -45,20 +36,19 @@ bool FileManager::doFindWorkGCodeName()
       return false;
    }
 
-//EXT mWorkGCodeFilePath = "./work/" + mWorkGCodeName + ".gcode";
-   mWorkGCodeFilePath = "./work/" + mWorkGCodeName;
+   mWorkGCodeFilePath = mWorkDirPath + mWorkGCodeName;
 
-   mWorkSliceFilePrefixPath = "./work/" + mWorkGCodeName;
+   mWorkSliceFilePrefixPath = mWorkDirPath + mWorkGCodeName;
    std::size_t tErasePos = mWorkSliceFilePrefixPath.find_last_of(".");
    std::size_t tEraseLength = mWorkSliceFilePrefixPath.size() - tErasePos;
    mWorkSliceFilePrefixPath.erase(tErasePos,tEraseLength);
 
-   mWorkScriptFilePath = "./work/aaaa_script.txt";
+   mWorkScriptFilePath = mWorkDirPath + "aaaa_script.txt";
 
-   Prn::print(0, "GCodeName       %s",  mWorkGCodeName.c_str());
-   Prn::print(0, "GCodeFilePath   %s",  mWorkGCodeFilePath.c_str());
-   Prn::print(0, "GCodePrefixpath %s",  mWorkSliceFilePrefixPath.c_str());
-   Prn::print(0, "ScriptFilePath   %s", mWorkScriptFilePath.c_str());
+   Prn::print(0, "GCodeName        %s",  mWorkGCodeName.c_str());
+   Prn::print(0, "GCodeFilePath    %s",  mWorkGCodeFilePath.c_str());
+   Prn::print(0, "GCodePrefixpath  %s",  mWorkSliceFilePrefixPath.c_str());
+   Prn::print(0, "ScriptFilePath   %s",  mWorkScriptFilePath.c_str());
    Prn::print(0, "done");
    Prn::print(0, "");
 

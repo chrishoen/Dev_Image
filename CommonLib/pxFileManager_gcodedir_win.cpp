@@ -10,6 +10,7 @@ Description:
 #include <windows.h>
 
 #include "risSystemCalls.h"
+#include "CPrintDir.h"
 
 #include "pxFileManager.h"
 
@@ -23,24 +24,7 @@ namespace PX
 
 void FileManager::getGCodeNameList()
 {
-   mGCodeNameList.clear();
-   std::string pattern = mGCodeDirPath + "\\*.gcode";
-   WIN32_FIND_DATA data;
-   HANDLE hFind;
-   if ((hFind = FindFirstFile(pattern.c_str(), &data)) != INVALID_HANDLE_VALUE)
-   {
-      do
-      {
-         mGCodeNameList.push_back(data.cFileName);
-      } while (FindNextFile(hFind, &data) != 0);
-      FindClose(hFind);
-   }
-
-   // Exit if the list is empty.
-   if (mGCodeNameList.empty()) return;
-
-   // Sort the list.
-   std::sort(mGCodeNameList.begin(), mGCodeNameList.end());
+   CPrint::getGCodeNameList(mGCodeDirPath, mGCodeNameList);
 }
 
 //******************************************************************************
@@ -89,7 +73,7 @@ bool FileManager::setGCodeName(int aGCodeNum)
 
    // Set gcode name and file path.
    mGCodeName = mGCodeNameList[aGCodeNum];
-   mGCodeFilePath = "./gcode/" + mGCodeName;
+   mGCodeFilePath = mGCodeDirPath + mGCodeName;
 
    // Test if the gcode file exists.
    if (!exists(mGCodeFilePath))
@@ -114,7 +98,7 @@ bool FileManager::setGCodeName(const char* aGCodeName)
 {
    // Set gcode name and file path.
    mGCodeName = aGCodeName;
-   mGCodeFilePath = "./gcode/" + mGCodeName;
+   mGCodeFilePath = mGCodeDirPath + mGCodeName;
 
    // Test if the gcode file exists.
    if (!exists(mGCodeFilePath))
@@ -178,17 +162,11 @@ bool FileManager::doLoadGCode()
       return false;
    }
 
-   // Temp.
-   int tRet;
-   char tString[200];
-
    // Clean the work directory.
-   Ris::doSystemCommand("del /q .\\work\\*.*");
+   CPrint::doCleanWork();
 
    // Copy the gcode file into the work directory.
-   // Ex. "cp ./gcode/Test100.gcode ./work"
-   sprintf(tString, "cp %s ./work", mGCodeFilePath.c_str());
-   tRet = Ris::doSystemCommand(tString);
+   CPrint::doCopyToWork(mGCodeFilePath);
 
    // Done.
    mError = "PASS";

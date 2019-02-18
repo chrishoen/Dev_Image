@@ -27,7 +27,7 @@ int doSystemCommand(const char* aCommand)
    int tRet = system(aCommand);
    if (tRet)
    {
-      printf("doSystemCommand FAIL1 %s",aCommand);
+      printf("doSystemCommand FAIL1 %s\n",aCommand);
       return -1;
    }
    return 0;

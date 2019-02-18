@@ -64,8 +64,10 @@ public:
    void executeFindWorkGCode (Ris::CmdLineCmd* aCmd);
    void executeWorkSlice     (Ris::CmdLineCmd* aCmd);
 
-   void executeGen         (Ris::CmdLineCmd* aCmd);
-   void executeTest        (Ris::CmdLineCmd* aCmd);
+   void executeGen           (Ris::CmdLineCmd* aCmd);
+   void executeTest          (Ris::CmdLineCmd* aCmd);
+
+   void executeClean         (Ris::CmdLineCmd* aCmd);
 
    void executeGo1(Ris::CmdLineCmd* aCmd);
    void executeGo2(Ris::CmdLineCmd* aCmd);

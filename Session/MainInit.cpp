@@ -23,7 +23,7 @@ void main_initialize(int argc,char** argv)
    // Enter process.
 
    // Set the program working directory to the cprint directory path.
-   setProgramDirToCPrint();
+   CPrint::setProgramDir();
 
    //***************************************************************************
    //***************************************************************************
