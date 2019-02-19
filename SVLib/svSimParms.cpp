@@ -35,6 +35,7 @@ void SimParms::reset()
 
    mStackName[0] = 0;
    mStackSize = 0;
+   mStackMorphParms.reset();
 }
 
 //******************************************************************************
@@ -70,7 +71,7 @@ void SimParms::show()
    {
       printf("StackName                         %s\n", mStackName);
       printf("StackSize                         %10d\n", mStackSize);
-      mImageGenParmsC.show("C");
+      mStackMorphParms.show("Stack");
    }
 }
 
@@ -91,6 +92,8 @@ void SimParms::execute(Ris::CmdLineCmd* aCmd)
 
    if (aCmd->isCmd("StackName"))           aCmd->copyArgString(1, mStackName, cMaxStringSize);
    if (aCmd->isCmd("StackSize"))           mStackSize = aCmd->argInt(1);
+
+   if (aCmd->isCmd("StackMorphParms"))     readSection(aCmd->argString(1), &mStackMorphParms);
 }
 
 //******************************************************************************

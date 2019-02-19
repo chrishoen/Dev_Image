@@ -1,7 +1,6 @@
 #pragma once
 
 /*==============================================================================
-SV namespace: sixdofs that are measured by a computer vision based system.
 Parameters class whose values are read from a command file. 
 ==============================================================================*/
 
@@ -9,11 +8,9 @@ Parameters class whose values are read from a command file.
 //******************************************************************************
 //******************************************************************************
 
-#include "risCmdLineParms.h"
+#include "risCmdLineExec.h"
 #include "svRCIndex.h"
 #include "svRCSize.h"
-#include "svSimImageGenParms.h"
-#include "svSimMorphParms.h"
 
 //******************************************************************************
 //******************************************************************************
@@ -51,41 +48,17 @@ namespace SV
 // structure. If so, then this class is the root.
 // 
 
-class SimParms : public Ris::BaseCmdLineParms
+class SimMorphParms : public Ris::BaseCmdLineExec
 {
 public:
 
    //***************************************************************************
    //***************************************************************************
    //***************************************************************************
-   // Constants.
+   // Members that are read from the parms file.
 
-   static const int cMaxStringSize = 30;
-
-   //***************************************************************************
-   //***************************************************************************
-   //***************************************************************************
-   // Parameter members.
-
-   // Simulated images.
-   SimImageGenParms mImageGenParmsD;
-   SimImageGenParms mImageGenParmsC;
-   SimImageGenParms mImageGenParmsU;
-
-   //***************************************************************************
-   //***************************************************************************
-   //***************************************************************************
-   // Parameter members.
-
-   // Simulated image stack.
-   char             mStackName[cMaxStringSize];
-   int              mStackSize;
-   SimMorphParms    mStackMorphParms;
-
-   //***************************************************************************
-   //***************************************************************************
-   //***************************************************************************
-   // Expanded members that are not read from the parms file.
+   // High masking parameters.
+   SV::RCSize    mDelta;
 
    //***************************************************************************
    //***************************************************************************
@@ -93,31 +66,16 @@ public:
    // Methods.
 
    // Constructor,
-   typedef Ris::BaseCmdLineParms BaseClass;
-   SimParms();
+   typedef Ris::BaseCmdLineExec BaseClass;
+   SimMorphParms();
    void reset();
-   void show();
+   void show(const char* aLabel);
 
    // Base class override: Execute a command from the command file to set a 
    // member variable. This is called by the associated command file object
    // for each command in the file.
    void execute(Ris::CmdLineCmd* aCmd) override;
-
-   // Simulate expanded member variables. This is called after the entire
-   // section of the command file has been processed.
-   void expand() override;
 };
-
-//******************************************************************************
-//******************************************************************************
-//******************************************************************************
-// Global instance.
-
-#ifdef _SVSIMPARMS_CPP_
-   SimParms gSimParms;
-#else
-   extern SimParms gSimParms;
-#endif
 
 //******************************************************************************
 //******************************************************************************
