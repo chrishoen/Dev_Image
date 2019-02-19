@@ -53,6 +53,10 @@ void CmdLineExec::execute(Ris::CmdLineCmd* aCmd)
    if (aCmd->isCmd("GO32"))  executeGo32(aCmd);
    if (aCmd->isCmd("GO33"))  executeGo33(aCmd);
    if (aCmd->isCmd("GO34"))  executeGo34(aCmd);
+   if (aCmd->isCmd("GO41"))  executeGo41(aCmd);
+   if (aCmd->isCmd("GO42"))  executeGo42(aCmd);
+   if (aCmd->isCmd("GO43"))  executeGo43(aCmd);
+   if (aCmd->isCmd("GO44"))  executeGo44(aCmd);
 
    if(aCmd->isCmd("Parms"  ))  executeParms(aCmd);
 }
@@ -425,5 +429,63 @@ void CmdLineExec::executeGo34(Ris::CmdLineCmd* aCmd)
 void CmdLineExec::executeParms(Ris::CmdLineCmd* aCmd)
 {
    aCmd->setArgDefault(1,"NumberGrid");
+}
+
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+
+void CmdLineExec::executeGo41(Ris::CmdLineCmd* aCmd)
+{
+   aCmd->setArgDefault(1, true);
+
+   SV::RCIndexLoop tLoop(SV::RCIndex(100, 200), 5, 1);
+   for (tLoop.firstRow(); tLoop.testRow(); tLoop.nextRow())
+   {
+      Prn::print(0, "Loop %3d %3d", tLoop.mRow, tLoop.mCol);
+   }
+}
+
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+
+void CmdLineExec::executeGo42(Ris::CmdLineCmd* aCmd)
+{
+   aCmd->setArgDefault(1, true);
+
+   SV::RCIndexLoop tLoop(SV::RCIndex(100, 200), 1, 5);
+   for (tLoop.firstCol(); tLoop.testCol(); tLoop.nextCol())
+   {
+      Prn::print(0, "Loop %3d %3d", tLoop.mRow, tLoop.mCol);
+   }
+}
+
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+
+void CmdLineExec::executeGo43(Ris::CmdLineCmd* aCmd)
+{
+   SV::RCDitherLoop1 tLoop(SV::RCIndex(100, 200), 2, 1);
+   tLoop.centerCol();
+   for (tLoop.firstRow(); tLoop.testRow(); tLoop.nextRow())
+   {
+      Prn::print(0, "Loop %3d %3d", tLoop.mRow, tLoop.mCol);
+   }
+}
+
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+
+void CmdLineExec::executeGo44(Ris::CmdLineCmd* aCmd)
+{
+   SV::RCDitherLoop1 tLoop(SV::RCIndex(100, 200), 2, 1);
+   tLoop.centerRow();
+   for (tLoop.firstCol(); tLoop.testCol(); tLoop.nextCol())
+   {
+      Prn::print(0, "Loop %3d %3d", tLoop.mRow, tLoop.mCol);
+   }
 }
 

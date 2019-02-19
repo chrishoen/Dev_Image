@@ -339,6 +339,34 @@ public:
       mCol = mColA + mColC;
    }
 
+   // Constructor.
+   void set(int aLoop, int aDelta)
+   {
+      mFirst = true;
+      mLoop = aLoop;
+      mDelta = aDelta;
+      mRowA = -aLoop * aDelta;
+      mColA = -aLoop * aDelta;
+      mRowC = 0;
+      mColC = 0;
+      mRow = mRowA + mRowC;
+      mCol = mColA + mColC;
+   }
+
+   // Constructor.
+   void set(RCIndex aCenter, int aLoop, int aDelta)
+   {
+      mFirst = true;
+      mLoop = aLoop;
+      mDelta = aDelta;
+      mRowA = -aLoop * aDelta;
+      mColA = -aLoop * aDelta;
+      mRowC = aCenter.mRow;
+      mColC = aCenter.mCol;
+      mRow = mRowA + mRowC;
+      mCol = mColA + mColC;
+   }
+
    // Return the current row and column.
    RCIndex operator()()
    {
@@ -396,6 +424,18 @@ public:
    void firstCol()
    {
       mColA = -mLoop * mDelta;
+      mCol = mColA + mColC;
+   }
+
+   void centerRow()
+   {
+      mRowA = 0;
+      mRow = mRowA + mRowC;
+   }
+
+   void centerCol()
+   {
+      mColA = 0;
       mCol = mColA + mColC;
    }
 
