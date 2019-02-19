@@ -22,6 +22,7 @@ namespace PX
 GCodeWriter::GCodeWriter()
 {
 }
+
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
@@ -31,12 +32,14 @@ void GCodeWriter::doWrite(
    const std::string& aGCodeName,
    int aRepeatCount)
 {
-   // Input file path.
+   //***************************************************************************
+   //***************************************************************************
+   //***************************************************************************
+   // File paths.
+
    mInputBeginFilePath  = CPrint::getSpecialDirPath() + "gcode_begin.txt";
    mInputRepeatFilePath = CPrint::getSpecialDirPath() + "gcode_repeat.txt";
    mInputEndFilePath    = CPrint::getSpecialDirPath() + "gcode_end.txt";
-
-   // Output file path.
    mOutputGCodeFilePath = CPrint::getWorkDirPath() + aGCodeName + ".gcode";
 
    std::cout << "InputBeginFilePath   " << mInputBeginFilePath << std::endl;
@@ -44,6 +47,90 @@ void GCodeWriter::doWrite(
    std::cout << "InputEndFilePath     " << mInputEndFilePath << std::endl;
    std::cout << "OutputGCodeFilePath  " << mOutputGCodeFilePath << std::endl;
 
+   //***************************************************************************
+   //***************************************************************************
+   //***************************************************************************
+   // Open files.
+
+   mInputBeginFile.open(mInputBeginFilePath.c_str(), std::ios::in);
+   mInputRepeatFile.open(mInputRepeatFilePath.c_str(), std::ios::in);
+   mInputEndFile.open(mInputEndFilePath.c_str(), std::ios::in);
+   mOutputGCodeFile.open(mOutputGCodeFilePath.c_str(), std::ios::out | std::ios::trunc);
+
+   //***************************************************************************
+   //***************************************************************************
+   //***************************************************************************
+   // Copy file.
+
+   while (true)
+   {
+      // Read an input line from the input file.
+      std::string tLine;
+      std::getline(mInputBeginFile, tLine);
+
+      // Exit if end of file.
+      if (mInputBeginFile.eof()) break;
+
+      // Write to the output file.
+      mOutputGCodeFile << tLine << std::endl;
+   }
+
+   //***************************************************************************
+   //***************************************************************************
+   //***************************************************************************
+   // Repeat copy file.
+
+   for (int tSliceIndex = 0; tSliceIndex < aRepeatCount; tSliceIndex++)
+   {
+      // Write slice gcode.
+      mOutputGCodeFile << "; *********** START LAYER" << std::endl;
+      mOutputGCodeFile << ";<slice> " << tSliceIndex << std::endl;
+
+      // Copy file.
+      mInputRepeatFile.clear();
+      mInputRepeatFile.seekg(0, std::ios::beg);
+      while (true)
+      {
+         // Read an input line from the input file.
+         std::string tLine;
+         std::getline(mInputRepeatFile, tLine);
+
+         // Exit if end of file.
+         if (mInputRepeatFile.eof()) break;
+
+         // Write to the output file.
+         mOutputGCodeFile << tLine << std::endl;
+      }
+   }
+
+   //***************************************************************************
+   //***************************************************************************
+   //***************************************************************************
+   // Copy file.
+
+   while (true)
+   {
+      // Read an input line from the input file.
+      std::string tLine;
+      std::getline(mInputEndFile, tLine);
+
+      // Exit if end of file.
+      if (mInputEndFile.eof()) break;
+
+      // Write to the output file.
+      mOutputGCodeFile << tLine << std::endl;
+   }
+
+   //***************************************************************************
+   //***************************************************************************
+   //***************************************************************************
+   // Close files.
+
+   mInputBeginFile.close();
+   mInputRepeatFile.close();
+   mInputEndFile.close();
+   mInputEndFile.close();
+   mOutputGCodeFile.close();
 }
 
 #if 0

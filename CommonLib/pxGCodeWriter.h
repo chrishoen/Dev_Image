@@ -33,13 +33,17 @@ public:
    //***************************************************************************
    // Members.
 
-   // Input file path.
+   // File paths.
    std::string mInputBeginFilePath;
    std::string mInputRepeatFilePath;
    std::string mInputEndFilePath;
-
-   // Output file path.
    std::string mOutputGCodeFilePath;
+
+   // File descriptors.
+   std::ifstream mInputBeginFile;
+   std::ifstream mInputRepeatFile;
+   std::ifstream mInputEndFile;
+   std::ofstream mOutputGCodeFile;
 
    //***************************************************************************
    //***************************************************************************
