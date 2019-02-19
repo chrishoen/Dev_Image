@@ -57,6 +57,9 @@ public:
    //***************************************************************************
    // Members that are read from the parms file.
 
+   // Sim generated image size.
+   RCSize   mImageSize;
+
    // High masking parameters.
    SV::RCSize    mDelta;
 

@@ -14,7 +14,7 @@ Simulator synthetic image generator.
 #include <opencv2/core/core.hpp>
 
 #include "svSimParms.h"
-#include "svSimImageGenerator.h"
+#include "svSimMorphFilter.h"
 
 namespace SV
 {
@@ -55,7 +55,7 @@ public:
    //***************************************************************************
    // Members.
 
-   SV::SimImageGenerator mSimImageGenerator;
+   SV::SimMorphFilter mMorphFilter;
    cv::Mat mInputImage;
    cv::Mat mOutputImage;
 
@@ -87,6 +87,9 @@ public:
 
    // Set the image file paths.
    void doSetImageFilePaths();
+
+   // Write the output image to a file.
+   void doWriteOutputImage(int aIndex);
 };
 
 //******************************************************************************

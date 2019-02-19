@@ -62,6 +62,10 @@ public:
    //***************************************************************************
    // Methods.
 
+   // Initialize a first image.
+   void doInitializeImage(
+      cv::Mat&       aOutput);             // Output
+
    // Filter an image according to the parms.
    void doFilterImage(
       cv::Mat&       aInput,               // Input

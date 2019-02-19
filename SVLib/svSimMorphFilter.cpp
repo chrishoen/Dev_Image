@@ -45,6 +45,21 @@ void SimMorphFilter::reset()
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
+// Initialize a first image.
+
+void SimMorphFilter::doInitializeImage(
+   cv::Mat&       aOutput)              // Output
+{
+   // Create an image filled with all zeros.
+   aOutput = cv::Mat::zeros(mP->mImageSize.mRows, mP->mImageSize.mCols, CV_8UC1);
+
+   // Set the image wrappers.
+   mOutput.set(aOutput);
+
+   // Set the center pixel.
+   mOutput.at(RCIndex(mP->mImageSize.mRows/2, mP->mImageSize.mCols/2)) = 255;
+}
+
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
@@ -61,7 +76,7 @@ void SimMorphFilter::doFilterImage(
 
    Prn::print(Prn::View11, "doFilterImage %4d %4d", aInputImage.rows, aInputImage.cols);
 
-   // Copy the input image to the output image.
+   // Clone the input image to the output image.
    aOutputImage = aInputImage.clone();
 
    // Set the image wrappers.
@@ -84,7 +99,6 @@ void SimMorphFilter::doFilterImage(
          doFilterHighPixel(tLoop());
       }
    }
-
 }
 
 //******************************************************************************
@@ -103,6 +117,7 @@ void SimMorphFilter::doFilterHighPixel(RCIndex aX)
    //***************************************************************************
    //***************************************************************************
    // Local variables.
+   return;
 
    // Nearest neighbor variables.
    bool tNW = mInput.at(aX.mRow - 1, aX.mCol - 1) != 0;

@@ -4,6 +4,7 @@
 
 #include "stdafx.h"
 
+#include "svSysParms.h"
 #include "svSimMorphParms.h"
 
 //******************************************************************************
@@ -28,6 +29,7 @@ SimMorphParms::SimMorphParms()
 
 void SimMorphParms::reset()
 {
+   mImageSize = gSysParms.mImageSize;
    mDelta.reset();
 }
 
@@ -39,6 +41,7 @@ void SimMorphParms::reset()
 void SimMorphParms::show(const char* aLabel)
 {
    printf("SimMorphParms******************* %s\n",aLabel);
+   printf("ImageSize                %10d %10d\n", mImageSize.mRows, mImageSize.mCols);
    printf("Delta                    %10d %10d\n", mDelta.mRows, mDelta.mCols);
    printf("SimMorphParms*******************\n");
 }
@@ -52,6 +55,7 @@ void SimMorphParms::show(const char* aLabel)
 
 void SimMorphParms::execute(Ris::CmdLineCmd* aCmd)
 {
+   if (aCmd->isCmd("ImageSize"))      mImageSize.execute(aCmd);
    if (aCmd->isCmd("Delta"))          mDelta.execute(aCmd);
 }
 
