@@ -8,6 +8,7 @@
 #include "svParmParms.h"
 #include "displayParms.h"
 #include "displayFunctions.h"
+#include "Simulate.h"
 
 #include "svSimStackGenerator.h"
 
@@ -34,7 +35,7 @@ void CmdLineExec::reset()
 
 void CmdLineExec::execute(Ris::CmdLineCmd* aCmd)
 {
-   if (aCmd->isCmd("Gen"))       executeGen(aCmd);
+   if (aCmd->isCmd("Sim"))       executeSim(aCmd);
 
    if (aCmd->isCmd("GO1"))       executeGo1(aCmd);
    if (aCmd->isCmd("GO2"))       executeGo2(aCmd);
@@ -48,7 +49,7 @@ void CmdLineExec::execute(Ris::CmdLineCmd* aCmd)
 //******************************************************************************
 //******************************************************************************
 
-void CmdLineExec::executeGen(Ris::CmdLineCmd* aCmd)
+void CmdLineExec::executeSim(Ris::CmdLineCmd* aCmd)
 {
    aCmd->setArgDefault(1, 1);
 
@@ -57,12 +58,9 @@ void CmdLineExec::executeGen(Ris::CmdLineCmd* aCmd)
    SV::gParmParms.readSection("default");
    SV::gParmParms.readMoreParms("default");
 
-   // Clean the cprint work directory.
-   CPrint::doCleanWork();
-
    // Run.
-   SV::SimStackGenerator tStackGen(&SV::gSimParms);
-   tStackGen.doGenerateImageStack();
+   Simulate tSim;
+   tSim.doSimStack();
 }
 
 //******************************************************************************
