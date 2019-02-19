@@ -43,6 +43,17 @@ void setProgramDir()
 }
 
 
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+// Return directory paths.
+
+std::string getBaseDirPath()    { return std::string("C:\\aaa_cprint\\"); }
+std::string getZipDirPath()     { return std::string(".\\zip\\"); }
+std::string getGCodeDirPath()   { return std::string(".\\gcode\\"); }
+std::string getWorkDirPath()    { return std::string(".\\work\\"); }
+std::string getSpecialDirPath() { return std::string(".\\special\\"); }
+
 //****************************************************************************
 //****************************************************************************
 //****************************************************************************

@@ -29,18 +29,10 @@ FileManager::FileManager()
 
 void FileManager::initialize()
 {
-   mBaseDirPath = std::string(CPrint::getBaseDirectory());
-   mZipDirPath = mBaseDirPath + "/zip";
-   mGCodeDirPath = mBaseDirPath + "/gcode";
-   mWorkDirPath = mBaseDirPath + "/work";
-
-   mZipDirPath = mBaseDirPath + "zip\\";
-   mGCodeDirPath = mBaseDirPath + "gcode\\";
-   mWorkDirPath = mBaseDirPath + "work\\";
-
-   mZipDirPath =   ".\\zip\\";
-   mGCodeDirPath = ".\\gcode\\";
-   mWorkDirPath =  ".\\work\\";
+   mBaseDirPath  = CPrint::getBaseDirPath();
+   mZipDirPath   = CPrint::getZipDirPath();
+   mGCodeDirPath = CPrint::getGCodeDirPath();
+   mWorkDirPath  = CPrint::getWorkDirPath();
 }
 
 //******************************************************************************
