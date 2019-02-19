@@ -147,6 +147,19 @@ void doFindWorkGCodeName(std::string& aWorkGCodeName)
 //****************************************************************************
 //****************************************************************************
 //****************************************************************************
+// Zip a zip file from the work directory to the zip directory.
+
+void doZipFromWork(std::string& aZipFilePath)
+{
+   char tString[200];
+   sprintf(tString, "C:\\MyPrograms\\7-Zip\\7z.exe a -r %s -w .\\work\\*.* ", aZipFilePath.c_str());
+   printf("doCommand %s\n", tString);
+   Ris::doSystemCommand(tString);
+}
+
+//****************************************************************************
+//****************************************************************************
+//****************************************************************************
 // Unzip a zip file to the work directory.
 
 void doUnzipToWork(std::string& aZipFilePath)
@@ -155,7 +168,7 @@ void doUnzipToWork(std::string& aZipFilePath)
    // Ex. "/usr/bin/unzip ./zip/Test100.zip -d ./work"
    char tString[200];
    sprintf(tString, "C:\\MyPrograms\\7-Zip\\7z.exe x %s -o.\\work -y -r", aZipFilePath.c_str());
-   printf("doCommand %s", tString);
+   printf("doCommand %s\n", tString);
    Ris::doSystemCommand(tString);
 }
 

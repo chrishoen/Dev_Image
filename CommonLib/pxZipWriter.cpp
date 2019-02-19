@@ -9,51 +9,52 @@ Description:
 #include "stdafx.h"
 
 #include "CPrintDir.h"
-#include "svSysParms.h"
-#include "svImageParms.h"
-#include "svSimParms.h"
-#include "svParmParms.h"
-#include "svSimStackGenerator.h"
-#include "pxGCodeWriter.h"
 #include "pxZipWriter.h"
 
-#include "Simulate.h"
+namespace PX
+{
 
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
+// Constructor.
 
-Simulate::Simulate()
+ZipWriter::ZipWriter()
 {
 }
 
-void Simulate::reset()
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+// Zip the work directory to the zip directory with a zip filename
+// that is a name plus a postfix.
+
+void ZipWriter::doZipWork(
+   const char* aZipName,
+   const char* aPostFix)
 {
+   //***************************************************************************
+   //***************************************************************************
+   //***************************************************************************
+   // File paths.
+
+   mWorkDirPath = CPrint::getWorkDirPath();
+   mZipDirPath = CPrint::getZipDirPath();
+   mZipFilePath = mZipDirPath + aZipName + aPostFix + ".zip";
+
+   std::cout << "mWorkDirPath  " << mWorkDirPath << std::endl;
+   std::cout << "mZipFilePath  " << mZipFilePath << std::endl;
+
+   //***************************************************************************
+   //***************************************************************************
+   //***************************************************************************
+   // Zip.
+
+   CPrint::doZipFromWork(mZipFilePath);
 }
 
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
-// This simulates an input image stack.
+}//namespace
 
-void Simulate::doSimStack()
-{
-   // Clean the cprint work directory.
-   CPrint::doCleanWork();
-
-   // Generate the image stack.
-   SV::SimStackGenerator tStackGen(&SV::gSimParms);
-   tStackGen.doGenerateImageStack();
-
-   // Generate the stack gcode file.
-   PX::GCodeWriter tGCodeWriter;
-   tGCodeWriter.doWrite(SV::gSimParms.mStackName,SV::gSimParms.mStackSize);
-
-   // Generate the stack gcode file.
-   PX::ZipWriter tZipWriter;
-   tZipWriter.doZipWork(SV::gSimParms.mStackName,"_filt");
-}
-
-//******************************************************************************
-//******************************************************************************
-//******************************************************************************

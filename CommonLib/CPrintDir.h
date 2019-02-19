@@ -60,8 +60,11 @@ void getGCodeNameList(std::string& aGCodeDirPath, std::vector<std::string > &aGC
 // Find the gcode file in the work directory and return its filename.
 void doFindWorkGCodeName(std::string& aGCodeDirPath);
 
-// Unzip a zip file to the work directory.
+// Unzip a zip file from the zip directory to the work directory.
 void doUnzipToWork(std::string& aZipFilePath);
+
+// Zip a zip file from the work directory to the zip directory.
+void doZipFromWork(std::string& aZipFilePath);
 
 // Copy a file to the work directory..
 void doCopyToWork(std::string& aFilePath);
