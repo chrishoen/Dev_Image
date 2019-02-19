@@ -117,7 +117,6 @@ void SimMorphFilter::doFilterHighPixel(RCIndex aX)
    //***************************************************************************
    //***************************************************************************
    // Local variables.
-   return;
 
    // Nearest neighbor variables.
    bool tNW = mInput.at(aX.mRow - 1, aX.mCol - 1) != 0;
@@ -139,8 +138,27 @@ void SimMorphFilter::doFilterHighPixel(RCIndex aX)
    //***************************************************************************
    // Nearest neighbor rule testing.
 
+   // Loop index,
+   SV::RCDitherLoop1 tLoop;
+
+   // Set adjacent column pixels.
+   tLoop.set(aX, mP->mDelta.mCols, 1);
+   tLoop.centerRow();
+   for (tLoop.firstCol(); tLoop.testCol(); tLoop.nextCol())
+   {
+      mOutput.at(tLoop()) = 255;
+   }
+
+   // Set adjacent row pixels.
+   tLoop.set(aX, mP->mDelta.mRows, 1);
+   tLoop.centerCol();
+   for (tLoop.firstRow(); tLoop.testRow(); tLoop.nextRow())
+   {
+      mOutput.at(tLoop()) = 255;
+   }
 }
 
+// printf("loop %4d %4d\n", aX.mRow, aX.mCol);
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************

@@ -312,6 +312,20 @@ public:
    // Methods.
 
    // Constructor.
+   RCDitherLoop1()
+   {
+      mFirst = true;
+      mLoop = 0;
+      mDelta = 0;
+      mRowA = 0;
+      mColA = 0;
+      mRowC = 0;
+      mColC = 0;
+      mRow = mRowA + mRowC;
+      mCol = mColA + mColC;
+   }
+
+   // Constructor.
    RCDitherLoop1(int aLoop, int aDelta)
    {
       mFirst = true;
