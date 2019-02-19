@@ -67,6 +67,8 @@ public:
    void executeGen           (Ris::CmdLineCmd* aCmd);
    void executeTest          (Ris::CmdLineCmd* aCmd);
 
+   void executeWriteGCode    (Ris::CmdLineCmd* aCmd);
+
    void executeClean         (Ris::CmdLineCmd* aCmd);
 
    void executeGo1(Ris::CmdLineCmd* aCmd);

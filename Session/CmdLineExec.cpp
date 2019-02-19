@@ -9,6 +9,7 @@
 #include "pxScriptWriter.h"
 #include "pxScriptReader.h"
 #include "pxScriptTester.h"
+#include "pxGCodeWriter.h"
 
 #include "CmdLineExec.h"
 
@@ -45,24 +46,40 @@ void CmdLineExec::execute(Ris::CmdLineCmd* aCmd)
 
    if (aCmd->isCmd("SetZ"))    executeSetZip(aCmd);
    if (aCmd->isCmd("SetG"))    executeSetGCode(aCmd);
-   if (aCmd->isCmd("FindG"))  executeFindWorkGCode(aCmd);
-   if (aCmd->isCmd("Slice"))  executeWorkSlice(aCmd);
+   if (aCmd->isCmd("FindG"))   executeFindWorkGCode(aCmd);
+   if (aCmd->isCmd("Slice"))   executeWorkSlice(aCmd);
 
-   if (aCmd->isCmd("Gen"))    executeGen(aCmd);
-   if (aCmd->isCmd("Test"))   executeTest(aCmd);
-   if (aCmd->isCmd("Clean"))  executeClean(aCmd);
+   if (aCmd->isCmd("WriteG"))  executeWriteGCode(aCmd);
 
-   if (aCmd->isCmd("GO1"))    executeGo1(aCmd);
-   if (aCmd->isCmd("GO2"))    executeGo2(aCmd);
-   if (aCmd->isCmd("GO3"))    executeGo3(aCmd);
-   if (aCmd->isCmd("GO4"))    executeGo4(aCmd);
-   if (aCmd->isCmd("GO5"))    executeGo5(aCmd);
-   if (aCmd->isCmd("GO6"))    executeGo6(aCmd);
-   if (aCmd->isCmd("GO7"))    executeGo7(aCmd);
-   if (aCmd->isCmd("GO8"))    executeGo8(aCmd);
-   if (aCmd->isCmd("GO9"))    executeGo9(aCmd);
-   if (aCmd->isCmd("Show"))   executeShow(aCmd);
-   if (aCmd->isCmd("Parms"))  executeParms(aCmd);
+   if (aCmd->isCmd("Gen"))     executeGen(aCmd);
+   if (aCmd->isCmd("Test"))    executeTest(aCmd);
+   if (aCmd->isCmd("Clean"))   executeClean(aCmd);
+
+   if (aCmd->isCmd("GO1"))     executeGo1(aCmd);
+   if (aCmd->isCmd("GO2"))     executeGo2(aCmd);
+   if (aCmd->isCmd("GO3"))     executeGo3(aCmd);
+   if (aCmd->isCmd("GO4"))     executeGo4(aCmd);
+   if (aCmd->isCmd("GO5"))     executeGo5(aCmd);
+   if (aCmd->isCmd("GO6"))     executeGo6(aCmd);
+   if (aCmd->isCmd("GO7"))     executeGo7(aCmd);
+   if (aCmd->isCmd("GO8"))     executeGo8(aCmd);
+   if (aCmd->isCmd("GO9"))     executeGo9(aCmd);
+   if (aCmd->isCmd("Show"))    executeShow(aCmd);
+   if (aCmd->isCmd("Parms"))   executeParms(aCmd);
+}
+
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+
+void CmdLineExec::executeWriteGCode(Ris::CmdLineCmd* aCmd)
+{
+   std::string tGCodeName("MyStack");
+   int tRepeatCount = 10;
+   PX::GCodeWriter tGCodeWriter;
+   tGCodeWriter.doWrite(
+      tGCodeName,
+      tRepeatCount);
 }
 
 //******************************************************************************

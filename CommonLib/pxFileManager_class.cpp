@@ -42,13 +42,13 @@ void FileManager::initialize()
 
 void FileManager::show1()
 {
-   std::cout << "BaseDirPath " << mBaseDirPath << std::endl;
-   std::cout << "ZipDirPath " << mZipDirPath << std::endl;
+   std::cout << "BaseDirPath  " << mBaseDirPath << std::endl;
+   std::cout << "ZipDirPath   " << mZipDirPath << std::endl;
    std::cout << "GCodeDirPath " << mGCodeDirPath << std::endl;
-   std::cout << "WorkDirPath " << mWorkDirPath << std::endl;
+   std::cout << "WorkDirPath  " << mWorkDirPath << std::endl;
    std::cout << std::endl;
-   std::cout << "ZipName     " << mZipName << std::endl;
-   std::cout << "ZipFilePath " << mZipFilePath << std::endl;
+   std::cout << "ZipName      " << mZipName << std::endl;
+   std::cout << "ZipFilePath  " << mZipFilePath << std::endl;
 }
 
 void FileManager::show2()

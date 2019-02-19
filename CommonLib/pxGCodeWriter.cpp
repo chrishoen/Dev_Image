@@ -22,27 +22,31 @@ namespace PX
 GCodeWriter::GCodeWriter()
 {
 }
-#if 0
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
 // Generate a synthetic gcode file from the prototype files.
 
-void GCodeWriter::doGenerate(
-   const std::string& aGCodeFileName,
+void GCodeWriter::doWrite(
+   const std::string& aGCodeName,
    int aRepeatCount)
 {
    // Input file path.
-   mInputBeginFilePath = ;
-   mInputRepeatFilePath;
-   mInputEndFilePath;
+   mInputBeginFilePath  = CPrint::getSpecialDirPath() + "gcode_begin.txt";
+   mInputRepeatFilePath = CPrint::getSpecialDirPath() + "gcode_repeat.txt";
+   mInputEndFilePath    = CPrint::getSpecialDirPath() + "gcode_end.txt";
 
    // Output file path.
-   std::string mOutputGCodeFilePath;
+   mOutputGCodeFilePath = CPrint::getWorkDirPath() + aGCodeName + ".gcode";
 
-   mGCodeFilePath =
+   std::cout << "InputBeginFilePath   " << mInputBeginFilePath << std::endl;
+   std::cout << "InputRepeatFilePath  " << mInputRepeatFilePath << std::endl;
+   std::cout << "InputEndFilePath     " << mInputEndFilePath << std::endl;
+   std::cout << "OutputGCodeFilePath  " << mOutputGCodeFilePath << std::endl;
+
 }
 
+#if 0
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************

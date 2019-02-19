@@ -60,7 +60,7 @@ public:
    // Methods.
 
    // Generate a synthetic gcode file from the prototype files
-   void doGenerate(
+   void doWrite(
       const std::string& aGCodeFileName,
       int aRepeatCount);
 
