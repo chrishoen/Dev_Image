@@ -8,19 +8,19 @@ Description:
 
 #include "stdafx.h"
 
-#include "StackEvaluator.h"
+#include "StackEvaluate.h"
 
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
 // Constructor.
 
-StackEvaluator::StackEvaluator()
+StackEvaluate::StackEvaluate()
 {
    reset();
 }
 
-void StackEvaluator::reset()
+void StackEvaluate::reset()
 {
    mEvaluator.reset();
    mResults.reset();
@@ -33,7 +33,7 @@ void StackEvaluator::reset()
 //******************************************************************************
 // Test a script file. Return true if successful.
 
-bool StackEvaluator::doTestScriptFile(std::string& aScriptFilePath)
+bool StackEvaluate::doTestScriptFile(std::string& aScriptFilePath)
 {
    // Do this first.
    reset();
@@ -71,11 +71,11 @@ bool StackEvaluator::doTestScriptFile(std::string& aScriptFilePath)
 //******************************************************************************
 // Show test results.
 
-void StackEvaluator::show()
+void StackEvaluate::show()
 {
    return;
    Prn::print(0, "");
-   Prn::print(0, "StackEvaluator Results****************");
+   Prn::print(0, "StackEvaluate Results****************");
    Prn::print(0, "ReadCount        %5d", mReadCount);
 }
 

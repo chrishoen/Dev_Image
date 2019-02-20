@@ -17,17 +17,17 @@ Description:
 #include "pxGCodeWriter.h"
 #include "pxZipWriter.h"
 
-#include "Simulate.h"
+#include "StackSimulate.h"
 
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
 
-Simulate::Simulate()
+StackSimulate::StackSimulate()
 {
 }
 
-void Simulate::reset()
+void StackSimulate::reset()
 {
 }
 
@@ -36,7 +36,7 @@ void Simulate::reset()
 //******************************************************************************
 // This simulates an input image stack.
 
-void Simulate::doSimStack()
+void StackSimulate::doSimStack()
 {
    // Clean the cprint work directory.
    CPrint::doCleanWork();

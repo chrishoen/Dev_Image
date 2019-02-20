@@ -8,13 +8,13 @@
 #include "svParmParms.h"
 #include "displayParms.h"
 #include "displayFunctions.h"
-#include "Simulate.h"
+#include "StackSimulate.h"
 
 #include "pxFileManager.h"
 #include "pxScriptWriter.h"
 #include "pxScriptReader.h"
 #include "pxScriptTester.h"
-#include "StackEvaluator.h"
+#include "StackEvaluate.h"
 #include "StackDisplay.h"
 
 #include "svSimStackGenerator.h"
@@ -70,7 +70,7 @@ void CmdLineExec::executeSim(Ris::CmdLineCmd* aCmd)
    SV::gParmParms.readMoreParms("default");
 
    // Run.
-   Simulate tSim;
+   StackSimulate tSim;
    tSim.doSimStack();
 }
 
@@ -135,10 +135,10 @@ void CmdLineExec::executeEvaluate(Ris::CmdLineCmd* aCmd)
    executeLoadZip(aCmd);
 
    // Test the image stack.
-   StackEvaluator tStackEvaluator;
+   StackEvaluate tStackEvaluate;
 
-   tStackEvaluator.doTestScriptFile(PX::gFileManager.mWorkScriptFilePath);
-   tStackEvaluator.show();
+   tStackEvaluate.doTestScriptFile(PX::gFileManager.mWorkScriptFilePath);
+   tStackEvaluate.show();
 }
 
 //******************************************************************************

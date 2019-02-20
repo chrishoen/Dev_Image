@@ -19,9 +19,9 @@
 
 void main_initialize(int argc,char** argv)
 {
-   printf("Simulate Program********************************************BEGIN\n");
-   printf("Simulate Program********************************************BEGIN\n");
-   printf("Simulate Program********************************************BEGIN\n\n");
+   printf("StackFilter Program********************************************BEGIN\n");
+   printf("StackFilter Program********************************************BEGIN\n");
+   printf("StackFilter Program********************************************BEGIN\n\n");
 
    //***************************************************************************
    //***************************************************************************
@@ -29,7 +29,7 @@ void main_initialize(int argc,char** argv)
    // Initialize thread services.
 
    TS::reset();
-   TS::setProgramName("Simulate");
+   TS::setProgramName("StackFilter");
    TS::setProgramPrintLevel(TS::PrintLevel(0, 3));
    TS::initialize();
 
@@ -124,7 +124,7 @@ void main_finalize()
 
    // Done.
    printf("\n");
-   printf("Simulate Program********************************************END\n\n");
+   printf("StackFilter Program********************************************END\n\n");
 }
 
 //******************************************************************************
