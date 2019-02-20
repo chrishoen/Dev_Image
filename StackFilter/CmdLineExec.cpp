@@ -16,6 +16,7 @@
 #include "pxScriptTester.h"
 #include "StackEvaluate.h"
 #include "StackDisplay.h"
+#include "StackFilter.h"
 
 #include "svSimStackGenerator.h"
 
@@ -47,6 +48,7 @@ void CmdLineExec::execute(Ris::CmdLineCmd* aCmd)
    if (aCmd->isCmd("LoadZ"))     executeLoadZip(aCmd);
    if (aCmd->isCmd("Eval"))      executeEvaluate(aCmd);
    if (aCmd->isCmd("Disp"))      executeDisplay(aCmd);
+   if (aCmd->isCmd("Filt"))      executeFilter(aCmd);
 
    if (aCmd->isCmd("GO1"))       executeGo1(aCmd);
    if (aCmd->isCmd("GO2"))       executeGo2(aCmd);
@@ -153,6 +155,22 @@ void CmdLineExec::executeDisplay(Ris::CmdLineCmd* aCmd)
    // Test the image stack.
    StackDisplay tStackDisplay;
    tStackDisplay.doTestScriptFile(PX::gFileManager.mWorkScriptFilePath);
+}
+
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+
+void CmdLineExec::executeFilter(Ris::CmdLineCmd* aCmd)
+{
+   // Load a zip file
+   executeLoadZip(aCmd);
+
+   // Test the image stack.
+   StackFilter tStackFilter;
+
+   tStackFilter.doFilterScriptFile(PX::gFileManager.mWorkScriptFilePath);
+   tStackFilter.show();
 }
 
 //******************************************************************************
