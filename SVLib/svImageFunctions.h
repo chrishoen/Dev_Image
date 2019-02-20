@@ -60,10 +60,13 @@ void readImageFromFile(
 //******************************************************************************
 // Conversion functions.
 
-// Create a zero output image based on the size of an input image.
-void createZeroImage(
+// Create an all zeros or all ones output image based on the size of an
+// input image.
+void fillImage(
+   bool          aOnes,     // Control.
    cv::Mat&      aInput,    // Input
    cv::Mat&      aOutput);  // Output
+
 
 //******************************************************************************
 //******************************************************************************

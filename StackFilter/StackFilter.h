@@ -81,6 +81,8 @@ public:
 
    // Loop processing decomposition.
    void doBeforeLoop();
+   void doFirstInLoop();
+   void doNotFirstInLoop();
    void doProcessLoop();
    void doAfterLoop();
 };
