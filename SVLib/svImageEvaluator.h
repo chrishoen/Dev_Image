@@ -58,10 +58,9 @@ public:
    //***************************************************************************
    //***************************************************************************
    // Methods.
-
+private:
    // Evaluate a high pixel. Calculate the row and column metrics results.
-   void doEvaluateHighPixel(RCIndex aX);
-
+   inline void doEvaluateHighPixel(RCIndex aX);
 };
 
 //******************************************************************************
