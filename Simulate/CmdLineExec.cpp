@@ -10,6 +10,11 @@
 #include "displayFunctions.h"
 #include "Simulate.h"
 
+#include "pxFileManager.h"
+#include "pxScriptWriter.h"
+#include "pxScriptReader.h"
+#include "pxScriptTester.h"
+
 #include "svSimStackGenerator.h"
 
 #include "CmdLineExec.h"
@@ -36,6 +41,8 @@ void CmdLineExec::reset()
 void CmdLineExec::execute(Ris::CmdLineCmd* aCmd)
 {
    if (aCmd->isCmd("Sim"))       executeSim(aCmd);
+   if (aCmd->isCmd("DirZ"))      executeDirZip(aCmd);
+   if (aCmd->isCmd("LoadZ"))     executeLoadZip(aCmd);
 
    if (aCmd->isCmd("GO1"))       executeGo1(aCmd);
    if (aCmd->isCmd("GO2"))       executeGo2(aCmd);
@@ -61,6 +68,57 @@ void CmdLineExec::executeSim(Ris::CmdLineCmd* aCmd)
    // Run.
    Simulate tSim;
    tSim.doSimStack();
+}
+
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+
+void CmdLineExec::executeDirZip(Ris::CmdLineCmd* aCmd)
+{
+   PX::gFileManager.getZipNameList();
+   PX::gFileManager.showZipNameList();
+}
+
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+
+void CmdLineExec::executeLoadZip(Ris::CmdLineCmd* aCmd)
+{
+   bool tPass = false;
+
+   // Load the zip.
+   if (aCmd->isArgNumber(1))
+   {
+      tPass = PX::gFileManager.doLoadZip(aCmd->argInt(1));
+   }
+   else
+   {
+      tPass = PX::gFileManager.doLoadZip(aCmd->argString(1));
+   }
+   if (!tPass) return;
+
+   // Find the gcode name.
+   tPass = PX::gFileManager.doFindWorkGCodeName();
+   if (!tPass) return;
+
+   // Write the script.
+   PX::ScriptWriter tScriptWriter;
+   tPass = tScriptWriter.doWrite(
+      PX::gFileManager.mWorkGCodeFilePath,
+      PX::gFileManager.mWorkSliceFilePrefixPath,
+      PX::gFileManager.mWorkDirPath,
+      PX::gFileManager.mWorkScriptFilePath);
+   if (!tPass) return;
+
+   // Test the script.
+   PX::ScriptTester tScriptTester;
+   tPass = tScriptTester.doTestScriptFile(PX::gFileManager.mWorkScriptFilePath);
+   if (!tPass) return;
+
+   // Show the test results.
+   tScriptTester.show();
 }
 
 //******************************************************************************
