@@ -8,13 +8,9 @@ Description:
 
 #include "stdafx.h"
 
-#include "svImageResults.h"
+#include "pxStackEvaluator.h"
 
-//******************************************************************************
-//******************************************************************************
-//******************************************************************************
-
-namespace SV
+namespace PX
 {
 
 //******************************************************************************
@@ -22,35 +18,68 @@ namespace SV
 //******************************************************************************
 // Constructor.
 
-ImageResults::ImageResults()
+StackEvaluator::StackEvaluator()
 {
    reset();
 }
 
-void ImageResults::reset()
+void StackEvaluator::reset()
 {
-   mFirst = true;
-   mTotalCount = 0;
-   mHighCount = 0;
-   mRowMin.reset();
-   mRowMax.reset();
-   mColMin.reset();
-   mColMax.reset();
+   mEvaluator.reset();
+   mResults.reset();
+   mReadCount = 0;
+}
+
+
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+// Test a script file. Return true if successful.
+
+bool StackEvaluator::doTestScriptFile(std::string& aScriptFilePath)
+{
+   // Do this first.
+   reset();
+
+   // Open the script file.
+   if (!mReader.doOpenFile(aScriptFilePath)) return false;
+
+   // Loop to test the script file.
+   while (true)
+   {
+      // Read from the file. Exit if end of file.
+      if (!mReader.doRead()) break;
+      mReadCount++;
+
+      // Test the command code.
+      if (mReader.mCmdCode == cScriptCmd_Slice)
+      {
+         // Read image.
+         cv::Mat tImage = cv::imread(mReader.mString, CV_LOAD_IMAGE_GRAYSCALE);
+
+         // Evaluate image.
+         mResults.reset();
+         mEvaluator.doEvaluateImage(tImage, mResults);
+         mResults.show(0, mReader.mString);
+      }
+   }
+
+   // Done.
+   mReader.doCloseFile();
+   return true;
 }
 
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
-// Show.
+// Show test results.
 
-void ImageResults::show(int aPF, const char* aLabel)
+void StackEvaluator::show()
 {
-   Prn::print(aPF, "ROW %4d  %4d $ %4d  %4d COL %4d  %4d $ %4d  %4d %s",
-      mRowMin.mRow, mRowMin.mCol,
-      mRowMax.mRow, mRowMax.mCol,
-      mColMin.mRow, mColMin.mCol,
-      mColMax.mRow, mColMax.mCol,
-      aLabel);
+   return;
+   Prn::print(0, "");
+   Prn::print(0, "StackEvaluator Results****************");
+   Prn::print(0, "ReadCount        %5d", mReadCount);
 }
 
 //******************************************************************************

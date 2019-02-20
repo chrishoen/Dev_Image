@@ -84,7 +84,7 @@ void GCodeWriter::doWrite(
    {
       // Write slice gcode.
       mOutputGCodeFile << "; *********** START LAYER" << std::endl;
-      mOutputGCodeFile << ";<slice> " << tSliceIndex << std::endl;
+      mOutputGCodeFile << ";<Slice> " << tSliceIndex << std::endl;
 
       // Copy file.
       mInputRepeatFile.clear();

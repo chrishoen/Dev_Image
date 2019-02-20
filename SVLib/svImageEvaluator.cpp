@@ -94,10 +94,10 @@ void ImageEvaluator::doEvaluateHighPixel(RCIndex aX)
    }
 
    // Store results for other evaluations.
-   if (mResults->mRowMin.mRow <  aX.mRow) mResults->mRowMin = aX;
-   if (mResults->mRowMax.mRow >= aX.mRow) mResults->mRowMax = aX;
-   if (mResults->mColMin.mCol <  aX.mCol) mResults->mColMin = aX;
-   if (mResults->mColMax.mCol >= aX.mCol) mResults->mColMax = aX;
+   if (aX.mRow <  mResults->mRowMin.mRow) mResults->mRowMin = aX;
+   if (aX.mRow >= mResults->mRowMax.mRow) mResults->mRowMax = aX;
+   if (aX.mCol <  mResults->mColMin.mCol) mResults->mColMin = aX;
+   if (aX.mCol >= mResults->mColMax.mCol) mResults->mColMax = aX;
 }
 
 

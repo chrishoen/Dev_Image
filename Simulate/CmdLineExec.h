@@ -56,6 +56,7 @@ public:
    void executeSim         (Ris::CmdLineCmd* aCmd);
    void executeDirZip      (Ris::CmdLineCmd* aCmd);
    void executeLoadZip     (Ris::CmdLineCmd* aCmd);
+   void executeEvaluate    (Ris::CmdLineCmd* aCmd);
 
    void executeGo1(Ris::CmdLineCmd* aCmd);
    void executeGo2(Ris::CmdLineCmd* aCmd);

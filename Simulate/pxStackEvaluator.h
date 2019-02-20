@@ -1,70 +1,71 @@
+#pragma once
 /*==============================================================================
-Description:
+printer executive - script file tester.
 ==============================================================================*/
 
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
 
-#include "stdafx.h"
+#include <string>
 
-#include "CPrintDir.h"
-#include "pxZipWriter.h"
+#include "pxScriptReader.h"
+#include "svImageEvaluator.h"
+#include "svImageResults.h"
 
 namespace PX
 {
 
-//******************************************************************************
-//******************************************************************************
-//******************************************************************************
-// Constructor.
 
-ZipWriter::ZipWriter()
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+// This class encalsulates a script file tester. It uses the script file
+// reader to test a script file.
+
+class StackEvaluator
 {
-}
-
-//******************************************************************************
-//******************************************************************************
-//******************************************************************************
-// Zip the work directory to the zip directory with a zip filename
-// that is a name plus a postfix.
-
-void ZipWriter::doZipWork(
-   const char* aZipName,
-   const char* aPostFix)
-{
+public:
    //***************************************************************************
    //***************************************************************************
    //***************************************************************************
-   // File paths.
+   // Members.
 
-   mWorkDirPath = CPrint::getWorkDirPath();
-   mZipDirPath = CPrint::getZipDirPath();
+   // Parameterized functions and variables.
+   ScriptReader       mReader;
+   SV::ImageEvaluator mEvaluator;
+   SV::ImageResults   mResults;
 
-   if (aPostFix != 0 && strlen(aPostFix) != 0)
-   {
-      mZipFilePath = mZipDirPath + aZipName + aPostFix + ".zip";
-   }
-   else
-   {
-      mZipFilePath = mZipDirPath + aZipName + ".zip";
-   }
-
-
-
-   std::cout << "mWorkDirPath  " << mWorkDirPath << std::endl;
-   std::cout << "mZipFilePath  " << mZipFilePath << std::endl;
+   // Metrics.
+   int mReadCount;
 
    //***************************************************************************
    //***************************************************************************
    //***************************************************************************
-   // Zip.
+   // Methods.
 
-   CPrint::doZipFromWork(mZipFilePath);
-}
+   // Constructor.
+   StackEvaluator();
+   void reset();
+
+   //***************************************************************************
+   //***************************************************************************
+   //***************************************************************************
+   // Methods.
+
+   // Test a script file. Return true if successful.
+   bool doTestScriptFile(std::string& aScriptFilePath);
+
+   // Show test results.
+   void show();
+
+};
 
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
 }//namespace
+
+
+
 
