@@ -98,8 +98,9 @@ void StackFilter::doBeforeLoop()
    SV::createZeroImage(mInputImageD, mInputImageU);
    mInputPathD = std::string("zeros");
 
-   Prn::print(0, "%3d %-25s %-25s %-25s $ %-25s",
-      0, "up", "current", "down", "output");
+   Prn::print(0, "STACK FILTER");
+      Prn::print(0, "%3d %-25s %-25s %-25s $ %-25s",
+         0, "up", "current", "down", "output");
 }
 
 void StackFilter::doProcessLoop()
