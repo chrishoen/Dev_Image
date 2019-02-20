@@ -8,6 +8,8 @@ Description:
 
 #include "stdafx.h"
 
+#include "svImageFunctions.h"
+
 #include "StackFilter.h"
 
 //******************************************************************************
@@ -27,9 +29,22 @@ void StackFilter::reset()
    mInputImageU.release();
    mOutputImage.release();
 
+   mInputPathD.clear();
+   mInputPathC.clear();
+   mInputPathU.clear();
+   mOutputPath.clear();
+
    mEvaluator.reset();
    mResults.reset();
    mReadCount = 0;
+}
+
+void StackFilter::show()
+{
+   return;
+   Prn::print(0, "");
+   Prn::print(0, "StackFilter Results****************");
+   Prn::print(0, "ReadCount        %5d", mReadCount);
 }
 
 
@@ -46,25 +61,27 @@ bool StackFilter::doFilterScriptFile(std::string& aScriptFilePath)
    // Open the script file.
    if (!mReader.doOpenFile(aScriptFilePath)) return false;
 
-   // Loop to test the script file.
+   // Loop through the script file and process all of the slice
+   // commands, which contain the stack image file paths. This
+   // loops through the image stack from top to bottom.
+
+   // Filter.
+   doBeforeLoop();
    while (true)
    {
       // Read from the file. Exit if end of file.
       if (!mReader.doRead()) break;
 
-      // Test the command code.
+      // Test the command code for a slice command.
       if (mReader.mCmdCode == PX::cScriptCmd_Slice)
       {
+         // Filter.
+         doProcessLoop();
          mReadCount++;
-         // Read image.
-         cv::Mat tImage = cv::imread(mReader.mString, CV_LOAD_IMAGE_GRAYSCALE);
-
-         // Evaluate image.
-         mResults.reset();
-         mEvaluator.doEvaluateImage(tImage, mResults);
-         mResults.show(0, mReader.mString);
       }
    }
+   // Filter.
+   doAfterLoop();
 
    // Done.
    mReader.doCloseFile();
@@ -74,14 +91,54 @@ bool StackFilter::doFilterScriptFile(std::string& aScriptFilePath)
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
-// Show test results.
+// Loop processing decomposition.
 
-void StackFilter::show()
+void StackFilter::doBeforeLoop()
 {
-   return;
-   Prn::print(0, "");
-   Prn::print(0, "StackFilter Results****************");
-   Prn::print(0, "ReadCount        %5d", mReadCount);
+   SV::createZeroImage(mInputImageD, mInputImageU);
+   mInputPathD = std::string("zeros");
+
+   Prn::print(0, "%3d %-25s %-25s %-25s $ %-25s",
+      0, "up", "current", "down", "output");
+}
+
+void StackFilter::doProcessLoop()
+{
+   // Shift images.
+   mInputImageU = mInputImageC;
+   mInputImageC = mInputImageD;
+   mInputImageD = cv::imread(mReader.mString, CV_LOAD_IMAGE_GRAYSCALE);
+
+   // Shift file paths.
+   mInputPathU = mInputPathC;
+   mInputPathC = mInputPathD;
+   mInputPathD = std::string(mReader.mString);
+   mOutputPath = mInputPathC;
+
+   // Exit if first.
+   if (mReadCount == 0) return;
+
+   // Show.
+   Prn::print(0, "%3d %-25s %-25s %-25s $ %-25s", 
+      mReadCount, mInputPathU.c_str(), mInputPathC.c_str(), mInputPathD.c_str(), mOutputPath.c_str());
+}
+
+void StackFilter::doAfterLoop()
+{
+   // Shift images.
+   mInputImageU = mInputImageC;
+   mInputImageC = mInputImageD;
+   mInputImageD = cv::imread(mReader.mString, CV_LOAD_IMAGE_GRAYSCALE);
+
+   // Shift file paths.
+   mInputPathU = mInputPathC;
+   mInputPathC = mInputPathD;
+   mInputPathD = std::string("ones");
+   mOutputPath = mInputPathC;
+
+   // Show.
+   Prn::print(0, "%3d %-25s %-25s %-25s $ %-25s",
+      mReadCount, mInputPathU.c_str(), mInputPathC.c_str(), mInputPathD.c_str(), mOutputPath.c_str());
 }
 
 //******************************************************************************

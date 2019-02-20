@@ -31,10 +31,17 @@ public:
    //***************************************************************************
    // Members:
 
+   // Images.
    cv::Mat mInputImageD;
    cv::Mat mInputImageC;
    cv::Mat mInputImageU;
    cv::Mat mOutputImage;
+
+   // Image file paths.
+   std::string mInputPathD;
+   std::string mInputPathC;
+   std::string mInputPathU;
+   std::string mOutputPath;
 
    //***************************************************************************
    //***************************************************************************
@@ -57,6 +64,7 @@ public:
    // Constructor.
    StackFilter();
    void reset();
+   void show();
 
    //***************************************************************************
    //***************************************************************************
@@ -66,8 +74,15 @@ public:
    // Filter the images pointed to by a script file. Return true if successful.
    bool doFilterScriptFile(std::string& aScriptFilePath);
 
-   // Show test results.
-   void show();
+   //***************************************************************************
+   //***************************************************************************
+   //***************************************************************************
+   // Methods.
+
+   // Loop processing decomposition.
+   void doBeforeLoop();
+   void doProcessLoop();
+   void doAfterLoop();
 };
 
 //******************************************************************************
