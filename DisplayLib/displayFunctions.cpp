@@ -42,6 +42,20 @@ void showImage(
 //******************************************************************************
 // Show image.
 
+void showImageFullPath(
+   const char*   aFilePath)   // Input
+{
+   if (Display::gGraphicsThread == 0) return;
+
+   std::string* tFilePath = new std::string(aFilePath);
+   Display::gGraphicsThread->postDraw1(tFilePath);
+}
+
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+// Show image.
+
 void showImage(
    cv::Mat&      aInputImage)   // Input
 {

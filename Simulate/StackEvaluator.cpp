@@ -8,10 +8,7 @@ Description:
 
 #include "stdafx.h"
 
-#include "pxStackEvaluator.h"
-
-namespace PX
-{
+#include "StackEvaluator.h"
 
 //******************************************************************************
 //******************************************************************************
@@ -52,7 +49,7 @@ bool StackEvaluator::doTestScriptFile(std::string& aScriptFilePath)
       mReadCount++;
 
       // Test the command code.
-      if (mReader.mCmdCode == cScriptCmd_Slice)
+      if (mReader.mCmdCode == PX::cScriptCmd_Slice)
       {
          // Read image.
          cv::Mat tImage = cv::imread(mReader.mString, CV_LOAD_IMAGE_GRAYSCALE);
@@ -85,5 +82,4 @@ void StackEvaluator::show()
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
-}//namespace
 

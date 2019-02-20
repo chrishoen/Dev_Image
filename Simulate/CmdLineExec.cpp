@@ -14,7 +14,8 @@
 #include "pxScriptWriter.h"
 #include "pxScriptReader.h"
 #include "pxScriptTester.h"
-#include "pxStackEvaluator.h"
+#include "StackEvaluator.h"
+#include "StackDisplay.h"
 
 #include "svSimStackGenerator.h"
 
@@ -45,6 +46,7 @@ void CmdLineExec::execute(Ris::CmdLineCmd* aCmd)
    if (aCmd->isCmd("DirZ"))      executeDirZip(aCmd);
    if (aCmd->isCmd("LoadZ"))     executeLoadZip(aCmd);
    if (aCmd->isCmd("Eval"))      executeEvaluate(aCmd);
+   if (aCmd->isCmd("Disp"))      executeDisplay(aCmd);
 
    if (aCmd->isCmd("GO1"))       executeGo1(aCmd);
    if (aCmd->isCmd("GO2"))       executeGo2(aCmd);
@@ -133,10 +135,24 @@ void CmdLineExec::executeEvaluate(Ris::CmdLineCmd* aCmd)
    executeLoadZip(aCmd);
 
    // Test the image stack.
-   PX::StackEvaluator tStackEvaluator;
+   StackEvaluator tStackEvaluator;
 
    tStackEvaluator.doTestScriptFile(PX::gFileManager.mWorkScriptFilePath);
    tStackEvaluator.show();
+}
+
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+
+void CmdLineExec::executeDisplay(Ris::CmdLineCmd* aCmd)
+{
+   // Load a zip file
+   executeLoadZip(aCmd);
+
+   // Test the image stack.
+   StackDisplay tStackDisplay;
+   tStackDisplay.doTestScriptFile(PX::gFileManager.mWorkScriptFilePath);
 }
 
 //******************************************************************************

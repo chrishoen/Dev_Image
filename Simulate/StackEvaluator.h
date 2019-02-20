@@ -13,10 +13,6 @@ printer executive - script file tester.
 #include "svImageEvaluator.h"
 #include "svImageResults.h"
 
-namespace PX
-{
-
-
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
@@ -32,7 +28,7 @@ public:
    // Members.
 
    // Parameterized functions and variables.
-   ScriptReader       mReader;
+   PX::ScriptReader   mReader;
    SV::ImageEvaluator mEvaluator;
    SV::ImageResults   mResults;
 
@@ -58,13 +54,11 @@ public:
 
    // Show test results.
    void show();
-
 };
 
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
-}//namespace
 
 
 
