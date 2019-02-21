@@ -157,7 +157,7 @@ void doZipFromWork(std::string& aZipFilePath)
    printf("doCommand %s\n", tString);
    Ris::doSystemCommand(tString);
 
-   sprintf(tString, "C:\\MyPrograms\\7-Zip\\7z.exe a -r %s -w .\\work\\*", aZipFilePath.c_str());
+   sprintf(tString, "C:\\MyPrograms\\7-Zip\\7z.exe a -r %s -w .\\work\\* > nul", aZipFilePath.c_str());
    printf("doCommand %s\n", tString);
    Ris::doSystemCommand(tString);
 }
@@ -172,7 +172,7 @@ void doUnzipToWork(std::string& aZipFilePath)
    // Unzip the zip file into the work directory.
    // Ex. "/usr/bin/unzip ./zip/Test100.zip -d ./work"
    char tString[200];
-   sprintf(tString, "C:\\MyPrograms\\7-Zip\\7z.exe x %s -o.\\work -y -r", aZipFilePath.c_str());
+   sprintf(tString, "C:\\MyPrograms\\7-Zip\\7z.exe x %s -o.\\work -y -r > nul", aZipFilePath.c_str());
    printf("doCommand %s\n", tString);
    Ris::doSystemCommand(tString);
 }
