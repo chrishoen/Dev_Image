@@ -152,7 +152,12 @@ void doFindWorkGCodeName(std::string& aWorkGCodeName)
 void doZipFromWork(std::string& aZipFilePath)
 {
    char tString[200];
-   sprintf(tString, "C:\\MyPrograms\\7-Zip\\7z.exe a -r %s -w .\\work\\*.* ", aZipFilePath.c_str());
+
+   sprintf(tString, "del /q %s", aZipFilePath.c_str());
+   printf("doCommand %s\n", tString);
+   Ris::doSystemCommand(tString);
+
+   sprintf(tString, "C:\\MyPrograms\\7-Zip\\7z.exe a -r %s -w .\\work\\*", aZipFilePath.c_str());
    printf("doCommand %s\n", tString);
    Ris::doSystemCommand(tString);
 }
