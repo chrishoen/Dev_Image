@@ -10,3 +10,8 @@
 9       U=7     C=8     D=IN 9     OUT 8
 
         U=8     C=9     D=ones  OUT 9
+
+        
+U = C
+C = D
+D = input

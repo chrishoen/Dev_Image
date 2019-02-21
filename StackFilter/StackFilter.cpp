@@ -36,6 +36,9 @@ void StackFilter::reset()
    mOutputPath.clear();
 
    mReadCount = 0;
+   mRows = 0;
+   mCols = 0;
+
    mFilter.initialize(&SV::gImageParms.mNN3dRuleFilterParms);
 }
 
@@ -124,10 +127,11 @@ void StackFilter::doFirstInLoop()
    // C = zeros
    // U = clear
    mInputImageD = cv::imread(mReader.mString, CV_LOAD_IMAGE_GRAYSCALE);
-   SV::fillImage(false, mInputImageD, mInputImageC);
+   mRows = mInputImageD.rows;
+   mCols = mInputImageD.cols;
+   mInputImageC = cv::Mat::zeros(mRows, mCols, CV_8UC1);
    mInputImageU.release();
    mOutputImage.release();
-
 
    // Show.
    Prn::print(0, "%3d %-25s %-25s %-25s $ %-25s",
@@ -152,6 +156,9 @@ void StackFilter::doNotFirstInLoop()
    mInputImageU = mInputImageC;
    mInputImageC = mInputImageD;
    mInputImageD = cv::imread(mReader.mString, CV_LOAD_IMAGE_GRAYSCALE);
+   Prn::print(0, "DataU %x", mInputImageU.data);
+   Prn::print(0, "DataC %x", mInputImageC.data);
+   Prn::print(0, "DataD %x", mInputImageD.data);
 
    // Show.
    Prn::print(0, "%3d %-25s %-25s %-25s $ %-25s", 
@@ -183,7 +190,12 @@ void StackFilter::doAfterLoop()
    // D = ones
    mInputImageU = mInputImageC;
    mInputImageC = mInputImageD;
-   SV::fillImage(true, mInputImageC, mInputImageD);
+   mInputImageD.release();
+   mInputImageD = cv::Mat::ones(mRows, mCols, CV_8UC1);
+
+   Prn::print(0, "DataU %x", mInputImageU.data);
+   Prn::print(0, "DataC %x", mInputImageC.data);
+   Prn::print(0, "DataD %x", mInputImageD.data);
 
    // Show.
    Prn::print(0, "%3d %-25s %-25s %-25s $ %-25s",
@@ -195,7 +207,12 @@ void StackFilter::doAfterLoop()
       mInputImageC,
       mInputImageU,
       mOutputImage);
+
    cv::imwrite(mOutputPath.c_str(), mOutputImage);
+
+   return;
+   cv::imwrite(mOutputPath.c_str(), mInputImageC);
+
 }
 
 //******************************************************************************

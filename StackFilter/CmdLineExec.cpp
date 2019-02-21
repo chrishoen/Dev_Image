@@ -4,6 +4,7 @@
 #include "CPrintDir.h"
 #include "svSysParms.h"
 #include "svImageParms.h"
+#include "svImageFunctions.h"
 #include "svSimParms.h"
 #include "svParmParms.h"
 #include "displayParms.h"
@@ -47,6 +48,7 @@ void CmdLineExec::execute(Ris::CmdLineCmd* aCmd)
    if (aCmd->isCmd("DirZ"))      executeDirZip(aCmd);
    if (aCmd->isCmd("LoadZ"))     executeLoadZip(aCmd);
    if (aCmd->isCmd("Eval"))      executeEvaluate(aCmd);
+   if (aCmd->isCmd("Eval2"))     executeEvaluate2(aCmd);
    if (aCmd->isCmd("Disp"))      executeDisplay(aCmd);
    if (aCmd->isCmd("Filt"))      executeFilter(aCmd);
 
@@ -147,6 +149,19 @@ void CmdLineExec::executeEvaluate(Ris::CmdLineCmd* aCmd)
 //******************************************************************************
 //******************************************************************************
 
+void CmdLineExec::executeEvaluate2(Ris::CmdLineCmd* aCmd)
+{
+   // Test the image stack.
+   StackEvaluate tStackEvaluate;
+
+   tStackEvaluate.doTestScriptFile(PX::gFileManager.mWorkScriptFilePath);
+   tStackEvaluate.show();
+}
+
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+
 void CmdLineExec::executeDisplay(Ris::CmdLineCmd* aCmd)
 {
    // Load a zip file
@@ -179,18 +194,15 @@ void CmdLineExec::executeFilter(Ris::CmdLineCmd* aCmd)
 
 void CmdLineExec::executeGo1(Ris::CmdLineCmd* aCmd)
 {
-   aCmd->setArgDefault(1, 1);
-   aCmd->setArgDefault(2, 1);
+   cv::Mat tX1;
+   cv::Mat tX2;
 
-   int tMod = aCmd->argInt(1);
-   int tDelta = aCmd->argInt(2);
-   int tValue = 0;
+   tX1 = cv::Mat::zeros(10, 10, CV_8UC1);
+   tX2 = tX1;
+   Prn::print(0, "%2d %2d", tX1.rows,tX2.rows);
 
-   for (int i = 0; i < 10; i++)
-   {
-      Prn::print(0, "%3d %3d ", i, tValue);
-      if ((i + tMod - 1) % tMod == 0) tValue += tDelta;
-   }
+   tX1 = cv::Mat::zeros(20, 20, CV_8UC1);
+   Prn::print(0, "%2d %2d", tX1.rows, tX2.rows);
 }
 
 //******************************************************************************
@@ -199,8 +211,17 @@ void CmdLineExec::executeGo1(Ris::CmdLineCmd* aCmd)
 
 void CmdLineExec::executeGo2(Ris::CmdLineCmd* aCmd)
 {
-   // Clean the cprint work directory.
-   CPrint::doCleanWork();
+   cv::Mat tX1;
+   cv::Mat tX2;
+   cv::Mat tX3;
+   tX3 = cv::Mat::zeros(30, 40, CV_8UC1);
+
+   tX1 = cv::Mat::zeros(10, 10, CV_8UC1);
+   tX2 = tX1;
+   Prn::print(0, "%2d %2d", tX1.rows, tX2.rows);
+
+   SV::fillImage(true, tX3, tX1);
+   Prn::print(0, "%2d %2d", tX1.rows, tX2.rows);
 }
 
 //******************************************************************************
@@ -225,6 +246,18 @@ void CmdLineExec::executeGo4(Ris::CmdLineCmd* aCmd)
 
 void CmdLineExec::executeGo5(Ris::CmdLineCmd* aCmd)
 {
+   aCmd->setArgDefault(1, 1);
+   aCmd->setArgDefault(2, 1);
+
+   int tMod = aCmd->argInt(1);
+   int tDelta = aCmd->argInt(2);
+   int tValue = 0;
+
+   for (int i = 0; i < 10; i++)
+   {
+      Prn::print(0, "%3d %3d ", i, tValue);
+      if ((i + tMod - 1) % tMod == 0) tValue += tDelta;
+   }
 }
 
 //******************************************************************************
