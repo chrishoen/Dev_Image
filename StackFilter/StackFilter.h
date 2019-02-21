@@ -30,6 +30,11 @@ public:
    //***************************************************************************
    // Members:
 
+   // File paths.
+   std::string mScriptFilePath;
+   std::string mInputZipFileName;
+   std::string mOutputZipFileName;
+
    // Images.
    cv::Mat mInputImageS1;
    cv::Mat mInputImageS2;
@@ -72,7 +77,7 @@ public:
    // Methods.
 
    // Filter the images pointed to by a script file. Return true if successful.
-   bool doFilterScriptFile(std::string& aScriptFilePath);
+   bool doFilterScriptFile(std::string& aZipFileName);
 
    //***************************************************************************
    //***************************************************************************

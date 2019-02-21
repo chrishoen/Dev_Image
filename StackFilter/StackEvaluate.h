@@ -27,6 +27,9 @@ public:
    //***************************************************************************
    // Members.
 
+   // File paths.
+   std::string mScriptFilePath;
+      
    // Parameterized functions and variables.
    PX::ScriptReader   mReader;
    SV::ImageEvaluator mEvaluator;
@@ -50,7 +53,7 @@ public:
    // Methods.
 
    // Test a script file. Return true if successful.
-   bool doTestScriptFile(std::string& aScriptFilePath);
+   bool doTestScriptFile();
 
    // Show test results.
    void show();

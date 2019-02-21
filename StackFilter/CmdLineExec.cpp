@@ -127,6 +127,8 @@ void CmdLineExec::executeLoadZip(Ris::CmdLineCmd* aCmd)
 
    // Show the test results.
    tScriptTester.show();
+
+   Prn::print(0, "ZIPNAME %s", PX::gFileManager.mZipName.c_str());
 }
 
 //******************************************************************************
@@ -141,7 +143,7 @@ void CmdLineExec::executeEvaluate(Ris::CmdLineCmd* aCmd)
    // Test the image stack.
    StackEvaluate tStackEvaluate;
 
-   tStackEvaluate.doTestScriptFile(PX::gFileManager.mWorkScriptFilePath);
+   tStackEvaluate.doTestScriptFile();
    tStackEvaluate.show();
 }
 
@@ -154,7 +156,7 @@ void CmdLineExec::executeEvaluate2(Ris::CmdLineCmd* aCmd)
    // Test the image stack.
    StackEvaluate tStackEvaluate;
 
-   tStackEvaluate.doTestScriptFile(PX::gFileManager.mWorkScriptFilePath);
+   tStackEvaluate.doTestScriptFile();
    tStackEvaluate.show();
 }
 

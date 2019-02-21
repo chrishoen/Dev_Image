@@ -57,13 +57,16 @@ void StackFilter::show()
 //******************************************************************************
 // Filter the images pointed to by a script file. Return true if successful.
 
-bool StackFilter::doFilterScriptFile(std::string& aScriptFilePath)
+bool StackFilter::doFilterScriptFile(std::string& aZipFilePath)
 {
    // Do this first.
    reset();
 
+   // File paths.
+   mScriptFilePath = CPrint::getWorkDirPath() + "aaaa_script.txt";
+
    // Open the script file.
-   if (!mReader.doOpenFile(aScriptFilePath)) return false;
+   if (!mReader.doOpenFile(mScriptFilePath)) return false;
 
    // Loop through the script file and process all of the slice
    // commands, which contain the stack image file paths. This

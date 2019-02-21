@@ -8,6 +8,7 @@ Description:
 
 #include "stdafx.h"
 
+#include "CPrintDir.h"
 #include "StackEvaluate.h"
 
 //******************************************************************************
@@ -33,13 +34,16 @@ void StackEvaluate::reset()
 //******************************************************************************
 // Test a script file. Return true if successful.
 
-bool StackEvaluate::doTestScriptFile(std::string& aScriptFilePath)
+bool StackEvaluate::doTestScriptFile()
 {
    // Do this first.
    reset();
 
+   // File paths.
+   mScriptFilePath = CPrint::getWorkDirPath() + "aaaa_script.txt";
+
    // Open the script file.
-   if (!mReader.doOpenFile(aScriptFilePath)) return false;
+   if (!mReader.doOpenFile(mScriptFilePath)) return false;
 
    // Loop to test the script file.
    while (true)
