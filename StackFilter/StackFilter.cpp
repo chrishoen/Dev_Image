@@ -208,9 +208,9 @@ void StackFilter::doAfterLoop()
 
    // Filter.
    mFilter.doFilterImage(
-      mInputImageS3,
-      mInputImageS2,
       mInputImageS1,
+      mInputImageS2,
+      mInputImageS3,
       mOutputImageW2);
 
    // Write the output.

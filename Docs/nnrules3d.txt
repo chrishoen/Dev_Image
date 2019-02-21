@@ -1,12 +1,14 @@
-# D            C           U
-# NW NN DNE    NW NN NE    NW NN NE
-# WW XX DEE    WW XX EE    WW XX EE
-# SW SS DSE    SW SS SE    SW SS SE
+# 1 up
+# 2 current
+# 3 down
 #
-# D down       N north 
-# C current    S south
-# U up         E east
-#              W west
+# 11 12 13
+# 21 22 23
+# 31 32 33
+#
+# 111 112 113     211 212 213     311 312 313
+# 121 122 123     221 222 223     321 322 323
+# 131 132 133     231 232 233     331 332 333
 
    
 # copy the input image to the output image.
@@ -21,22 +23,22 @@ for xpixel in input_image_c:
 # filter a high pixel based on nearest neighbor rules.
 def filter_high_pixel(x):
    # extract nearest neighbors.
-   # DNW DNN DNE    CNW CNN CNE    UNW UNN UNE
-   # DWW DXX DEE    CWW CXX CEE    UWW UXX UEE
-   # DSW DSS DSE    CSW CSS CSE    USW USS USE
+   # 111 112 113     211 212 213     311 312 313
+   # 121 122 123     221 222 223     321 322 323
+   # 131 132 133     231 232 233     331 332 333
    
-   CNW = input_image_c(x.row-1,x.col-1) != 0
-   CNN = input_image_c(x.row-1,x.col  ) != 0
-   CNE = input_image_c(x.row-1,x.col+1) != 0
-   CWW = input_image_c(x.row  ,x.col-1) != 0
-   CXX = input_image_c(x.row  ,x.col  ) != 0
-   CEE = input_image_c(x.row  ,x.col+1) != 0
-   CSW = input_image_c(x.row+1,x.col-1) != 0
-   CDU = input_image_c(x.row+1,x.col  ) != 0
-   CSE = input_image_c(x.row+1,x.col+1) != 0
+   211 = input_image_2(x.row-1,x.col-1) != 0
+   212 = input_image_2(x.row-1,x.col  ) != 0
+   213 = input_image_2(x.row-1,x.col+1) != 0
+   221 = input_image_2;(x.row  ,x.col-1) != 0
+   222 = input_image_2(x.row  ,x.col  ) != 0
+   223 = input_image_2(x.row  ,x.col+1) != 0
+   231 = input_image_2(x.row+1,x.col-1) != 0
+   CDU = input_image_2(x.row+1,x.col  ) != 0
+   233 = input_image_2(x.row+1,x.col+1) != 0
 
-   DXX = input_image_d(x.row  ,x.col  ) != 0
-   UXX = input_image_u(x.row  ,x.col  ) != 0
+   122 = input_image_1(x.row  ,x.col  ) != 0
+   322 = input_image_3(x.row  ,x.col  ) != 0
 
    # RULE 1.
    # If not on a contour of the current image.
@@ -46,7 +48,7 @@ def filter_high_pixel(x):
    # x x x   x x x   x x x      x x x   x x x   x x x
    # x x x   x x x   x x x      x x x   x x x   x x x
    #
-   if (CNN and CSS and CEE and CWW):
+   if (212 and 232 and 221 and 223):
       return 
 
    # RULE 2.
@@ -57,11 +59,11 @@ def filter_high_pixel(x):
    # . x x   . x x   . x x      . x x   . x x   . x x
    # . x x   . x x   . x x      x x x   x x x   x x x
    #
-   if (UXX and DXX) and ((CNN and CSS) or (CEE and CWW)):
+   if (122 and 322) and ((212 and 232) or (221 and 223)):
       return 
 
    # count the number of horizontal nearest neighbors.
-   CNN_sum = CNW + CNN + CNE + CWW + CEE + CSW + CSS + CSE
+   NN_sum = 211 + 212 + 213 + 221 + 223 + 231 + 232 + 233
       
    # RULE 3.
    # If on a vertical plane not parallel to NS or ES and
@@ -72,7 +74,7 @@ def filter_high_pixel(x):
    # . x x   . x x   . x x      . x x   . x x   . x x
    # . x x   . x x   . x x      x x x   x x x   x x x
    #
-   if ((UXX and DXX) and (CNN_sum <= 3)):
+   if ((122 and 322) and (NN_sum <= 3)):
       return 
 
    # RULE 4.  
@@ -84,7 +86,7 @@ def filter_high_pixel(x):
    # . x x   . x x   . x x      x x x   . x x   . . x
    # x x x   x x x   x x x      x x x   x x x   . x x
    #
-   if (UXX and DXX):
+   if (122 and 322):
       output_image.at(x) = parms.hc1
       return
 

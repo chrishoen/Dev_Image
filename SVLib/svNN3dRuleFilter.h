@@ -43,9 +43,9 @@ public:
    // Members.
 
    // Images wrappers.
-   ImageWrapper mInputD;
-   ImageWrapper mInputC;
-   ImageWrapper mInputU;
+   ImageWrapper mInputS1;
+   ImageWrapper mInputS2;
+   ImageWrapper mInputS3;
    ImageWrapper mOutput;
 
    //***************************************************************************
@@ -79,9 +79,9 @@ public:
 
    // Filter an image according to the parms.
    void doFilterImage(
-      cv::Mat&       aInputD,              // Input
-      cv::Mat&       aInputC,              // Input
-      cv::Mat&       aInputU,              // Input
+      cv::Mat&       aInputS1,             // Input
+      cv::Mat&       aInputS2,             // Input
+      cv::Mat&       aInputS3,             // Input
       cv::Mat&       aOutput);             // Output
 
    //***************************************************************************

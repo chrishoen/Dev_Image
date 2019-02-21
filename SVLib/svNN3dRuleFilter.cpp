@@ -65,12 +65,12 @@ void NN3dRuleFilter::show()
 // Filter the image, depending on the parms.
 
 void NN3dRuleFilter::doFilterImage(
-   cv::Mat&       aInputImageD,    // Input
-   cv::Mat&       aInputImageC,    // Input
-   cv::Mat&       aInputImageU,    // Input
-   cv::Mat&       aOutputImage)    // Output
+   cv::Mat&       aInputS1,    // Input
+   cv::Mat&       aInputS2,    // Input
+   cv::Mat&       aInputS3,    // Input
+   cv::Mat&       aOutput)     // Output
 {
-   Prn::print(Prn::View11, "doFilterImage %4d %4d", aInputImageC.rows, aInputImageC.cols);
+   Prn::print(Prn::View14, "doFilterImage %4d %4d", aInputS2.rows, aInputS2.cols);
 
    //***************************************************************************
    //***************************************************************************
@@ -78,17 +78,16 @@ void NN3dRuleFilter::doFilterImage(
    // Initialize.
 
    // Copy the input image to the output image.
-   aOutputImage = aInputImageC.clone();
-   return;
+   aOutput = aInputS2.clone();
 
    // Reset variables.
    reset();
 
    // Set the image wrappers.
-   mInputD.set(aInputImageD);
-   mInputC.set(aInputImageC);
-   mInputU.set(aInputImageU);
-   mOutput.set(aOutputImage);
+   mInputS1.set(aInputS1);
+   mInputS2.set(aInputS2);
+   mInputS3.set(aInputS3);
+   mOutput.set(aOutput);
 
    //***************************************************************************
    //***************************************************************************
@@ -97,11 +96,11 @@ void NN3dRuleFilter::doFilterImage(
 
    // Loop through the image. Ignore the top and bottom rows and ignore
    // the left and right edge columns.
-   SV::RCIndexLoop tLoop(RCIndex(1, 1),aInputImageC.rows - 2, aInputImageC.cols - 2);
+   SV::RCIndexLoop tLoop(RCIndex(1, 1),aInputS2.rows - 2, aInputS2.cols - 2);
    while (tLoop.loop())
    {
       // Filter each pixel that is high.
-      if (mInputC.at(tLoop()) != 0)
+      if (mInputS2.at(tLoop()) != 0)
       {
          doFilterHighPixel(tLoop());
       }
@@ -113,10 +112,9 @@ void NN3dRuleFilter::doFilterImage(
 //******************************************************************************
 // Filter a pixel that is high.
 // 
-// D           C           U
-// NW NN NE    NW NN NE    NW NN NE
-// WW XX EE    WW XX EE    WW XX EE
-// SW SS SE    SW SS SE    SW SS SE
+// 111 112 113     211 212 213     311 312 313
+// 121 122 123     221 222 223     321 322 323
+// 131 132 133     231 232 233     331 332 333
 
 void NN3dRuleFilter::doFilterHighPixel(RCIndex aX)
 {
@@ -126,20 +124,20 @@ void NN3dRuleFilter::doFilterHighPixel(RCIndex aX)
    // Local variables.
 
    // Nearest neighbor variables.
-   int tCNW = mInputC.at(aX.mRow - 1, aX.mCol - 1) != 0 ? 1 : 0;
-   int tCNN = mInputC.at(aX.mRow - 1, aX.mCol    ) != 0 ? 1 : 0;
-   int tCNE = mInputC.at(aX.mRow - 1, aX.mCol + 1) != 0 ? 1 : 0;
+   int t211 = mInputS2.at(aX.mRow - 1, aX.mCol - 1) != 0 ? 1 : 0;
+   int t212 = mInputS2.at(aX.mRow - 1, aX.mCol    ) != 0 ? 1 : 0;
+   int t213 = mInputS2.at(aX.mRow - 1, aX.mCol + 1) != 0 ? 1 : 0;
 
-   int tCWW = mInputC.at(aX.mRow    , aX.mCol - 1) != 0 ? 1 : 0;
-   int tCXX = mInputC.at(aX.mRow    , aX.mCol    ) != 0 ? 1 : 0;
-   int tCEE = mInputC.at(aX.mRow    , aX.mCol + 1) != 0 ? 1 : 0;
+   int t221 = mInputS2.at(aX.mRow    , aX.mCol - 1) != 0 ? 1 : 0;
+   int t222 = mInputS2.at(aX.mRow    , aX.mCol    ) != 0 ? 1 : 0;
+   int t223 = mInputS2.at(aX.mRow    , aX.mCol + 1) != 0 ? 1 : 0;
 
-   int tCSW = mInputC.at(aX.mRow + 1, aX.mCol - 1) != 0 ? 1 : 0;
-   int tCSS = mInputC.at(aX.mRow + 1, aX.mCol    ) != 0 ? 1 : 0;
-   int tCSE = mInputC.at(aX.mRow + 1, aX.mCol + 1) != 0 ? 1 : 0;
+   int t231 = mInputS2.at(aX.mRow + 1, aX.mCol - 1) != 0 ? 1 : 0;
+   int t232 = mInputS2.at(aX.mRow + 1, aX.mCol    ) != 0 ? 1 : 0;
+   int t233 = mInputS2.at(aX.mRow + 1, aX.mCol + 1) != 0 ? 1 : 0;
 
-   int tDXX = mInputD.at(aX.mRow    , aX.mCol) != 0 ? 1 : 0;
-   int tUXX = mInputU.at(aX.mRow    , aX.mCol) != 0 ? 1 : 0;
+   int t322 = mInputS3.at(aX.mRow    , aX.mCol) != 0 ? 1 : 0;
+   int t122 = mInputS1.at(aX.mRow    , aX.mCol) != 0 ? 1 : 0;
 
    //***************************************************************************
    //***************************************************************************
@@ -148,7 +146,7 @@ void NN3dRuleFilter::doFilterHighPixel(RCIndex aX)
 
    // RULE 1.
    // If not on a contour of the current image.
-   if (tCNN && tCSS && tCEE && tCWW)
+   if (t212 && t232 && t221 && t223)
    {
       mRuleCount1++;
       return;
@@ -156,19 +154,19 @@ void NN3dRuleFilter::doFilterHighPixel(RCIndex aX)
 
    // RULE 2.
    // If on a vertical plane parallel to NS or ES.
-   if ((tUXX && tDXX) && ((tCNN && tCSS) || (tCEE && tCWW)))
+   if ((t122 && t322) && ((t212 && t232) || (t221 && t223)))
    {
       mRuleCount2++;
       return;
    }
 
    // Count the number of horizontal nearest neighbors.
-   int tCNN_sum = tCNW + tCNN + tCNE + tCWW + tCEE + tCSW + tCSS + tCSE;
+   int tNN_sum = t211 + t212 + t213 + t221 + t223 + t231 + t232 + t233;
 
    // RULE 3.
    // If on a vertical plane not parallel to NS or ES and
    // at a horizontal corner.
-   if ((tUXX && tDXX) && (tCNN_sum <= 3))
+   if ((t122 && t322) && (tNN_sum <= 3))
    {
       mRuleCount3++;
       return;
@@ -177,7 +175,7 @@ void NN3dRuleFilter::doFilterHighPixel(RCIndex aX)
    // RULE 4.
    // If on a vertical plane not parallel to NS or ES and
    // not at a horizontal corner.
-   if (tUXX && tDXX)
+   if (t122 && t322)
    {
       mOutput.at(aX) = mP->mHC1;
       mRuleCount4++;
