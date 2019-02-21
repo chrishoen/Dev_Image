@@ -31,16 +31,16 @@ public:
    // Members:
 
    // Images.
-   cv::Mat mInputImageD;
-   cv::Mat mInputImageC;
-   cv::Mat mInputImageU;
-   cv::Mat mOutputImage;
+   cv::Mat mInputImageS1;
+   cv::Mat mInputImageS2;
+   cv::Mat mInputImageS3;
+   cv::Mat mOutputImageW2;
 
    // Image file paths.
-   std::string mInputPathD;
-   std::string mInputPathC;
-   std::string mInputPathU;
-   std::string mOutputPath;
+   std::string mInputPathS1;
+   std::string mInputPathS2;
+   std::string mInputPathS3;
+   std::string mOutputPathW2;
 
    //***************************************************************************
    //***************************************************************************

@@ -25,15 +25,15 @@ StackFilter::StackFilter()
 
 void StackFilter::reset()
 {
-   mInputImageD.release();
-   mInputImageC.release();
-   mInputImageU.release();
-   mOutputImage.release();
+   mInputImageS3.release();
+   mInputImageS2.release();
+   mInputImageS1.release();
+   mOutputImageW2.release();
 
-   mInputPathD.clear();
-   mInputPathC.clear();
-   mInputPathU.clear();
-   mOutputPath.clear();
+   mInputPathS3.clear();
+   mInputPathS2.clear();
+   mInputPathS1.clear();
+   mOutputPathW2.clear();
 
    mReadCount = 0;
    mRows = 0;
@@ -107,115 +107,109 @@ void StackFilter::doBeforeLoop()
 {
    Prn::print(0, "STACK FILTER");
    Prn::print(0, "%3d %-25s %-25s %-25s $ %-25s",
-      -1, "up", "current", "down", "output");
+      -1, "s1", "s2", "s3", "output");
    Prn::print(0, "");
 }
 
 void StackFilter::doFirstInLoop()
 {
    // Initialize file paths.
-   // D = input
-   // C = zeros
-   // U = clear
-   mInputPathD = std::string(mReader.mString);
-   mInputPathC = "zeros";
-   mInputPathU = "empty";
-   mOutputPath = "empty";
+   // S1 = empty
+   // S2 = zeros
+   // S3 = input
+   mInputPathS1 = "empty";
+   mInputPathS2 = "zeros";
+   mInputPathS3 = std::string(mReader.mString);
+   mOutputPathW2 = "empty";
 
    // Initialize images.
-   // D = input
-   // C = zeros
-   // U = clear
-   mInputImageD = cv::imread(mReader.mString, CV_LOAD_IMAGE_GRAYSCALE);
-   mRows = mInputImageD.rows;
-   mCols = mInputImageD.cols;
-   mInputImageC = cv::Mat::zeros(mRows, mCols, CV_8UC1);
-   mInputImageU.release();
-   mOutputImage.release();
+   // S1 = empty
+   // S2 = zeros
+   // S3 = input
+   mInputImageS3 = cv::imread(mReader.mString, CV_LOAD_IMAGE_GRAYSCALE);
+   mRows = mInputImageS3.rows;
+   mCols = mInputImageS3.cols;
+   mInputImageS2 = cv::Mat(mRows, mCols, CV_8UC1, cv::Scalar(0));
+   mInputImageS1 = cv::Mat();
+   mOutputImageW2 = cv::Mat();
 
    // Show.
    Prn::print(0, "%3d %-25s %-25s %-25s $ %-25s",
-      mReadCount, mInputPathU.c_str(), mInputPathC.c_str(), mInputPathD.c_str(), mOutputPath.c_str());
+      mReadCount, mInputPathS1.c_str(), mInputPathS2.c_str(), mInputPathS3.c_str(), mOutputPathW2.c_str());
 }
 
 void StackFilter::doNotFirstInLoop()
 {
    // Shift file paths.
-   // U = C
-   // C = D
-   // D = input
-   mInputPathU = mInputPathC;
-   mInputPathC = mInputPathD;
-   mInputPathD = std::string(mReader.mString);
-   mOutputPath = mInputPathC;
+   // S1 = S2
+   // S2 = S3 
+   // S3 = input
+   mInputPathS1 = mInputPathS2;
+   mInputPathS2 = mInputPathS3;
+   mInputPathS3 = std::string(mReader.mString);
+   mOutputPathW2 = mInputPathS2;
 
    // Shift images.
-   // U = C
-   // C = D
-   // D = input
-   mInputImageU = mInputImageC;
-   mInputImageC = mInputImageD;
-   mInputImageD = cv::imread(mReader.mString, CV_LOAD_IMAGE_GRAYSCALE);
-   Prn::print(0, "DataU %x", mInputImageU.data);
-   Prn::print(0, "DataC %x", mInputImageC.data);
-   Prn::print(0, "DataD %x", mInputImageD.data);
+   // S1 = S2
+   // S2 = S3 
+   // S3 = input
+   mInputImageS1 = mInputImageS2;
+   mInputImageS2 = mInputImageS3;
+   mInputImageS3 = cv::imread(mReader.mString, CV_LOAD_IMAGE_GRAYSCALE);
 
    // Show.
    Prn::print(0, "%3d %-25s %-25s %-25s $ %-25s", 
-      mReadCount, mInputPathU.c_str(), mInputPathC.c_str(), mInputPathD.c_str(), mOutputPath.c_str());
+      mReadCount, mInputPathS1.c_str(), mInputPathS2.c_str(), mInputPathS3.c_str(), mOutputPathW2.c_str());
 
    // Filter and write output.
    mFilter.doFilterImage(
-      mInputImageD,
-      mInputImageC,
-      mInputImageU,
-      mOutputImage);
-   cv::imwrite(mOutputPath.c_str(), mOutputImage);
+      mInputImageS3,
+      mInputImageS2,
+      mInputImageS1,
+      mOutputImageW2);
+   cv::imwrite(mOutputPathW2.c_str(), mOutputImageW2);
 }
 
 void StackFilter::doAfterLoop()
 {
    // Shift file paths.
-   // U = C
-   // C = D
-   // D = ones
-   mInputPathU = mInputPathC;
-   mInputPathC = mInputPathD;
-   mInputPathD = std::string("ones");
-   mOutputPath = mInputPathC;
+   // S1 = S2
+   // S2 = S3 
+   // S3 = ones
+   mInputPathS1 = mInputPathS2;
+   mInputPathS2 = mInputPathS3;
+   mInputPathS3 = std::string("ones");
+   mOutputPathW2 = mInputPathS2;
 
    // Shift images.
-   // U = C
-   // C = D
-   // D = ones
-   mInputImageU = mInputImageC;
-   mInputImageC = mInputImageD;
-   mInputImageD.release();
-   mInputImageD = cv::Mat::ones(mRows, mCols, CV_8UC1);
-
-   Prn::print(0, "DataU %x", mInputImageU.data);
-   Prn::print(0, "DataC %x", mInputImageC.data);
-   Prn::print(0, "DataD %x", mInputImageD.data);
+   // S1 = S2
+   // S2 = S3 
+   // S3 = ones
+   mInputImageS1 = mInputImageS2;
+   mInputImageS2 = mInputImageS3;
+   mInputImageS3 = cv::Mat(mRows, mCols, CV_8UC1,cv::Scalar(255));
 
    // Show.
    Prn::print(0, "%3d %-25s %-25s %-25s $ %-25s",
-      -2, mInputPathU.c_str(), mInputPathC.c_str(), mInputPathD.c_str(), mOutputPath.c_str());
+      -2, mInputPathS1.c_str(), mInputPathS2.c_str(), mInputPathS3.c_str(), mOutputPathW2.c_str());
 
    // Filter and write output.
    mFilter.doFilterImage(
-      mInputImageD,
-      mInputImageC,
-      mInputImageU,
-      mOutputImage);
+      mInputImageS3,
+      mInputImageS2,
+      mInputImageS1,
+      mOutputImageW2);
 
-   cv::imwrite(mOutputPath.c_str(), mOutputImage);
-
-   return;
-   cv::imwrite(mOutputPath.c_str(), mInputImageC);
-
+   cv::imwrite(mOutputPathW2.c_str(), mOutputImageW2);
 }
 
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
+
+#if 0
+Prn::print(0, "DataU %x", mInputImageS1.data);
+Prn::print(0, "DataC %x", mInputImageS2.data);
+Prn::print(0, "DataD %x", mInputImageS3.data);
+#endif
 
