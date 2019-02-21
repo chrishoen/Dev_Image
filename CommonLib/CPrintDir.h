@@ -69,8 +69,8 @@ void doZipFromWork(std::string& aZipFilePath);
 // Copy a file to the work directory..
 void doCopyToWork(std::string& aFilePath);
 
-
-
+// Touch a file.
+void doTouch(std::string& aFilePath);
 
 //******************************************************************************
 //******************************************************************************

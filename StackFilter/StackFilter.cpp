@@ -8,6 +8,7 @@ Description:
 
 #include "stdafx.h"
 
+#include "CPrintDir.h"
 #include "svImageParms.h"
 #include "svImageFunctions.h"
 
@@ -25,14 +26,14 @@ StackFilter::StackFilter()
 
 void StackFilter::reset()
 {
-   mInputImageS3.release();
-   mInputImageS2.release();
-   mInputImageS1.release();
-   mOutputImageW2.release();
+   mInputImageS1 = cv::Mat();
+   mInputImageS2 = cv::Mat();
+   mInputImageS3 = cv::Mat();
+   mOutputImageW2 = cv::Mat();
 
-   mInputPathS3.clear();
-   mInputPathS2.clear();
    mInputPathS1.clear();
+   mInputPathS2.clear();
+   mInputPathS3.clear();
    mOutputPathW2.clear();
 
    mReadCount = 0;
@@ -161,13 +162,16 @@ void StackFilter::doNotFirstInLoop()
    Prn::print(0, "%3d %-25s %-25s %-25s $ %-25s", 
       mReadCount, mInputPathS1.c_str(), mInputPathS2.c_str(), mInputPathS3.c_str(), mOutputPathW2.c_str());
 
-   // Filter and write output.
+   // Filter.
    mFilter.doFilterImage(
       mInputImageS3,
       mInputImageS2,
       mInputImageS1,
       mOutputImageW2);
+
+   // Write the output.
    cv::imwrite(mOutputPathW2.c_str(), mOutputImageW2);
+   CPrint::doTouch(mOutputPathW2);
 }
 
 void StackFilter::doAfterLoop()
@@ -193,14 +197,16 @@ void StackFilter::doAfterLoop()
    Prn::print(0, "%3d %-25s %-25s %-25s $ %-25s",
       -2, mInputPathS1.c_str(), mInputPathS2.c_str(), mInputPathS3.c_str(), mOutputPathW2.c_str());
 
-   // Filter and write output.
+   // Filter.
    mFilter.doFilterImage(
       mInputImageS3,
       mInputImageS2,
       mInputImageS1,
       mOutputImageW2);
 
+   // Write the output.
    cv::imwrite(mOutputPathW2.c_str(), mOutputImageW2);
+   CPrint::doTouch(mOutputPathW2);
 }
 
 //******************************************************************************
