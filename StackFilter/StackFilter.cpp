@@ -8,6 +8,7 @@ Description:
 
 #include "stdafx.h"
 
+#include "svImageParms.h"
 #include "svImageFunctions.h"
 
 #include "StackFilter.h"
@@ -34,9 +35,8 @@ void StackFilter::reset()
    mInputPathU.clear();
    mOutputPath.clear();
 
-   mEvaluator.reset();
-   mResults.reset();
    mReadCount = 0;
+   mFilter.initialize(&SV::gImageParms.mNN3dRuleFilterParms);
 }
 
 void StackFilter::show()
@@ -110,14 +110,6 @@ void StackFilter::doBeforeLoop()
 
 void StackFilter::doFirstInLoop()
 {
-   // Initialize images.
-   // D = input
-   // C = zeros
-   // U = clear
-   mInputImageD = cv::imread(mReader.mString, CV_LOAD_IMAGE_GRAYSCALE);
-   SV::fillImage(false, mInputImageD, mInputImageC);
-   mInputImageU.release();
-
    // Initialize file paths.
    // D = input
    // C = zeros
@@ -127,6 +119,16 @@ void StackFilter::doFirstInLoop()
    mInputPathU = "empty";
    mOutputPath = "empty";
 
+   // Initialize images.
+   // D = input
+   // C = zeros
+   // U = clear
+   mInputImageD = cv::imread(mReader.mString, CV_LOAD_IMAGE_GRAYSCALE);
+   SV::fillImage(false, mInputImageD, mInputImageC);
+   mInputImageU.release();
+   mOutputImage.release();
+
+
    // Show.
    Prn::print(0, "%3d %-25s %-25s %-25s $ %-25s",
       mReadCount, mInputPathU.c_str(), mInputPathC.c_str(), mInputPathD.c_str(), mOutputPath.c_str());
@@ -134,14 +136,6 @@ void StackFilter::doFirstInLoop()
 
 void StackFilter::doNotFirstInLoop()
 {
-   // Shift images.
-   // U = C
-   // C = D
-   // D = input
-   mInputImageU = mInputImageC;
-   mInputImageC = mInputImageD;
-   mInputImageD = cv::imread(mReader.mString, CV_LOAD_IMAGE_GRAYSCALE);
-
    // Shift file paths.
    // U = C
    // C = D
@@ -151,21 +145,29 @@ void StackFilter::doNotFirstInLoop()
    mInputPathD = std::string(mReader.mString);
    mOutputPath = mInputPathC;
 
+   // Shift images.
+   // U = C
+   // C = D
+   // D = input
+   mInputImageU = mInputImageC;
+   mInputImageC = mInputImageD;
+   mInputImageD = cv::imread(mReader.mString, CV_LOAD_IMAGE_GRAYSCALE);
+
    // Show.
    Prn::print(0, "%3d %-25s %-25s %-25s $ %-25s", 
       mReadCount, mInputPathU.c_str(), mInputPathC.c_str(), mInputPathD.c_str(), mOutputPath.c_str());
+
+   // Filter and write output.
+   mFilter.doFilterImage(
+      mInputImageD,
+      mInputImageC,
+      mInputImageU,
+      mOutputImage);
+   cv::imwrite(mOutputPath.c_str(), mOutputImage);
 }
 
 void StackFilter::doAfterLoop()
 {
-   // Shift images.
-   // U = C
-   // C = D
-   // D = ones
-   mInputImageU = mInputImageC;
-   mInputImageC = mInputImageD;
-   SV::fillImage(true, mInputImageC, mInputImageD);
-
    // Shift file paths.
    // U = C
    // C = D
@@ -175,9 +177,25 @@ void StackFilter::doAfterLoop()
    mInputPathD = std::string("ones");
    mOutputPath = mInputPathC;
 
+   // Shift images.
+   // U = C
+   // C = D
+   // D = ones
+   mInputImageU = mInputImageC;
+   mInputImageC = mInputImageD;
+   SV::fillImage(true, mInputImageC, mInputImageD);
+
    // Show.
    Prn::print(0, "%3d %-25s %-25s %-25s $ %-25s",
       -2, mInputPathU.c_str(), mInputPathC.c_str(), mInputPathD.c_str(), mOutputPath.c_str());
+
+   // Filter and write output.
+   mFilter.doFilterImage(
+      mInputImageD,
+      mInputImageC,
+      mInputImageU,
+      mOutputImage);
+   cv::imwrite(mOutputPath.c_str(), mOutputImage);
 }
 
 //******************************************************************************

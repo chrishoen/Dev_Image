@@ -80,6 +80,9 @@ void NN3dRuleFilter::doFilterImage(
    // Copy the input image to the output image.
    aOutputImage = aInputImageC.clone();
 
+   // Reset variables.
+   reset();
+
    // Set the image wrappers.
    mInputD.set(aInputImageD);
    mInputC.set(aInputImageC);

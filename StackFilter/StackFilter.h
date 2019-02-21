@@ -11,8 +11,7 @@ image stack filter
 #include <opencv2/core/core.hpp>
 
 #include "pxScriptReader.h"
-#include "svImageEvaluator.h"
-#include "svImageResults.h"
+#include "svNN3dRuleFilter.h"
 
 //******************************************************************************
 //******************************************************************************
@@ -50,8 +49,7 @@ public:
 
    // Parameterized functions and variables.
    PX::ScriptReader   mReader;
-   SV::ImageEvaluator mEvaluator;
-   SV::ImageResults   mResults;
+   SV::NN3dRuleFilter mFilter;
 
    // Metrics.
    int mReadCount;
@@ -83,7 +81,6 @@ public:
    void doBeforeLoop();
    void doFirstInLoop();
    void doNotFirstInLoop();
-   void doProcessLoop();
    void doAfterLoop();
 };
 
