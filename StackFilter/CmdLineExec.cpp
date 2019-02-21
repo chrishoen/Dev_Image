@@ -196,21 +196,14 @@ void CmdLineExec::executeGo1(Ris::CmdLineCmd* aCmd)
 {
    cv::Mat tX1;
    cv::Mat tX2;
-   cv::Mat tXA;
 
-   tX1 = cv::Mat::zeros(100, 100, CV_8UC1);
-   tX1.at<uchar>(0, 0) = 11;
+   tX1 = cv::Mat(100, 100, CV_8UC1, 11);
    tX2 = tX1;
    Prn::print(0, "X1 %4d %4d", tX1.at<uchar>(0, 0), tX1.at<uchar>(0, 1));
    Prn::print(0, "X2 %4d %4d", tX2.at<uchar>(0, 0), tX2.at<uchar>(0, 1));
    Prn::print(0, "");
 
-   tXA = cv::Mat::zeros(100, 100, CV_8UC1);
-   tXA.at<uchar>(0, 0) = 99;
-   Prn::print(0, "XA %4d %4d", tXA.at<uchar>(0, 0), tXA.at<uchar>(0, 1));
-   Prn::print(0, "");
-
-   tX1 = tXA;
+   tX1 = cv::Mat::zeros(100, 100, CV_8UC1);
    Prn::print(0, "X1 %4d %4d", tX1.at<uchar>(0, 0), tX1.at<uchar>(0, 1));
    Prn::print(0, "X2 %4d %4d", tX2.at<uchar>(0, 0), tX2.at<uchar>(0, 1));
    Prn::print(0, "");
@@ -224,15 +217,17 @@ void CmdLineExec::executeGo2(Ris::CmdLineCmd* aCmd)
 {
    cv::Mat tX1;
    cv::Mat tX2;
-   cv::Mat tX3;
-   tX3 = cv::Mat::zeros(30, 40, CV_8UC1);
 
-   tX1 = cv::Mat::zeros(10, 10, CV_8UC1);
+   tX1 = cv::Mat(100, 100, CV_8UC1, 11);
    tX2 = tX1;
-   Prn::print(0, "%2d %2d", tX1.rows, tX2.rows);
+   Prn::print(0, "X1 %4d %4d", tX1.at<uchar>(0, 0), tX1.at<uchar>(0, 1));
+   Prn::print(0, "X2 %4d %4d", tX2.at<uchar>(0, 0), tX2.at<uchar>(0, 1));
+   Prn::print(0, "");
 
-   SV::fillImage(true, tX3, tX1);
-   Prn::print(0, "%2d %2d", tX1.rows, tX2.rows);
+   tX1 = cv::Mat(100, 100, CV_8UC1,cv::Scalar(0));
+   Prn::print(0, "X1 %4d %4d", tX1.at<uchar>(0, 0), tX1.at<uchar>(0, 1));
+   Prn::print(0, "X2 %4d %4d", tX2.at<uchar>(0, 0), tX2.at<uchar>(0, 1));
+   Prn::print(0, "");
 }
 
 //******************************************************************************
@@ -241,6 +236,22 @@ void CmdLineExec::executeGo2(Ris::CmdLineCmd* aCmd)
 
 void CmdLineExec::executeGo3(Ris::CmdLineCmd* aCmd)
 {
+   cv::Mat tX1;
+   cv::Mat tX2;
+   cv::Mat tX3;
+
+   tX1 = cv::Mat(100, 100, CV_8UC1, 11);
+   tX2 = tX1;
+   Prn::print(0, "X1 %4d %4d", tX1.at<uchar>(0, 0), tX1.at<uchar>(0, 1));
+   Prn::print(0, "X2 %4d %4d", tX2.at<uchar>(0, 0), tX2.at<uchar>(0, 1));
+   Prn::print(0, "");
+
+   tX3 = cv::Mat(100, 100, CV_8UC1, 33);
+
+   tX1 = tX3;
+   Prn::print(0, "X1 %4d %4d", tX1.at<uchar>(0, 0), tX1.at<uchar>(0, 1));
+   Prn::print(0, "X2 %4d %4d", tX2.at<uchar>(0, 0), tX2.at<uchar>(0, 1));
+   Prn::print(0, "");
 }
 
 //******************************************************************************
