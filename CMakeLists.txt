@@ -9,6 +9,12 @@ my_init_variables()
 my_init_import_variables()
 
 add_subdirectory ("CommonLib")
+add_subdirectory ("Matrix")
+add_subdirectory ("SVLib")
+return()
+
+add_subdirectory ("CommonLib")
+add_subdirectory ("Matrix")
 add_subdirectory ("StackFilter")
 add_subdirectory ("DisplayLib")
 add_subdirectory ("SVLib")
