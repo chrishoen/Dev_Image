@@ -57,13 +57,15 @@ void StackFilter::show()
 //******************************************************************************
 // Filter the images pointed to by a script file. Return true if successful.
 
-bool StackFilter::doFilterScriptFile(std::string& aZipFilePath)
+bool StackFilter::doFilterScriptFile(std::string& aInputZipFilePath)
 {
    // Do this first.
    reset();
 
    // File paths.
    mScriptFilePath = CPrint::getWorkDirPath() + "aaaa_script.txt";
+   mInputZipFilePath = aInputZipFilePath;
+   mOutputZipFilePath.clear();
 
    // Open the script file.
    if (!mReader.doOpenFile(mScriptFilePath)) return false;
@@ -99,6 +101,10 @@ bool StackFilter::doFilterScriptFile(std::string& aZipFilePath)
 
    // Done.
    mReader.doCloseFile();
+
+   // Zip the work directory to a zip file in the zip directory.
+   doZipOutput();
+
    return true;
 }
 
@@ -210,6 +216,23 @@ void StackFilter::doAfterLoop()
    // Write the output.
    cv::imwrite(mOutputPathW2.c_str(), mOutputImageW2);
    CPrint::doTouch(mOutputPathW2);
+}
+
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+
+void StackFilter::doZipOutput()
+{
+   // Output file path.
+   std::size_t tDotPos = mInputZipFilePath.find_last_of(".");
+   mOutputZipFilePath = mInputZipFilePath.insert(tDotPos, "_filtered");
+
+   Prn::print(0, "InputZipFilePath  %s", mInputZipFilePath.c_str());
+   Prn::print(0, "OutputZipFilePath %s", mOutputZipFilePath.c_str());
+
+   // Zip the new file in the work directory to the zip directory.
+   CPrint::doZipFromWork(mOutputZipFilePath);
 }
 
 //******************************************************************************

@@ -32,8 +32,8 @@ public:
 
    // File paths.
    std::string mScriptFilePath;
-   std::string mInputZipFileName;
-   std::string mOutputZipFileName;
+   std::string mInputZipFilePath;
+   std::string mOutputZipFilePath;
 
    // Images.
    cv::Mat mInputImageS1;
@@ -77,7 +77,7 @@ public:
    // Methods.
 
    // Filter the images pointed to by a script file. Return true if successful.
-   bool doFilterScriptFile(std::string& aZipFileName);
+   bool doFilterScriptFile(std::string& aInputZipFileName);
 
    //***************************************************************************
    //***************************************************************************
@@ -89,6 +89,9 @@ public:
    void doFirstInLoop();
    void doNotFirstInLoop();
    void doAfterLoop();
+
+   // Zip the output work directory to the zip directory.
+   void doZipOutput();
 };
 
 //******************************************************************************

@@ -127,8 +127,6 @@ void CmdLineExec::executeLoadZip(Ris::CmdLineCmd* aCmd)
 
    // Show the test results.
    tScriptTester.show();
-
-   Prn::print(0, "ZIPNAME %s", PX::gFileManager.mZipName.c_str());
 }
 
 //******************************************************************************
@@ -186,7 +184,7 @@ void CmdLineExec::executeFilter(Ris::CmdLineCmd* aCmd)
    // Test the image stack.
    StackFilter tStackFilter;
 
-   tStackFilter.doFilterScriptFile(PX::gFileManager.mWorkScriptFilePath);
+   tStackFilter.doFilterScriptFile(PX::gFileManager.mZipFilePath);
    tStackFilter.show();
 }
 
