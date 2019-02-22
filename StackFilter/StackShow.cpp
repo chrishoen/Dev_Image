@@ -119,10 +119,10 @@ bool StackShow::doShowScriptFile(int aSelect)
 
 void StackShow::doBeforeLoop()
 {
-   Prn::print(0, "STACK FILTER");
-   Prn::print(0, "%3d %-25s %-25s %-25s $ %-25s",
+   Prn::print(Prn::View02, "STACK SHOW");
+   Prn::print(Prn::View02, "%3d %-25s %-25s %-25s $ %-25s",
       -1, "s1", "s2", "s3", "output");
-   Prn::print(0, "");
+   Prn::print(Prn::View02, "");
 }
 
 void StackShow::doFirstInLoop()
@@ -137,7 +137,7 @@ void StackShow::doFirstInLoop()
    mOutputPathW2 = "empty";
 
    // Show.
-   Prn::print(0, "%3d %-25s %-25s %-25s $ %-25s",
+   Prn::print(Prn::View02, "%3d %-25s %-25s %-25s $ %-25s",
       mReadCount, mInputPathS1.c_str(), mInputPathS2.c_str(), mInputPathS3.c_str(), mOutputPathW2.c_str());
 }
 
@@ -153,7 +153,7 @@ void StackShow::doNotFirstInLoop()
    mOutputPathW2 = mInputPathS2;
 
    // Show.
-   Prn::print(0, "%3d %-25s %-25s %-25s $ %-25s", 
+   Prn::print(Prn::View02, "%3d %-25s %-25s %-25s $ %-25s",
       mReadCount, mInputPathS1.c_str(), mInputPathS2.c_str(), mInputPathS3.c_str(), mOutputPathW2.c_str());
 
    // Filter.
@@ -177,7 +177,7 @@ void StackShow::doAfterLoop()
    mOutputPathW2 = mInputPathS2;
 
    // Show.
-   Prn::print(0, "%3d %-25s %-25s %-25s $ %-25s",
+   Prn::print(Prn::View02, "%3d %-25s %-25s %-25s $ %-25s",
       -2, mInputPathS1.c_str(), mInputPathS2.c_str(), mInputPathS3.c_str(), mOutputPathW2.c_str());
 
    // Filter.
@@ -200,17 +200,17 @@ void StackShow::doShow()
    //***************************************************************************
    // Initialize.
 
-   Prn::print(0, "");
-   Prn::print(0, "STACKSHOW");
+   Prn::print(Prn::View01, "");
+   Prn::print(Prn::View01, "STACKSHOW");
 
    // Guard.
    if (mSelectPathS1.size() == 0)
    {
-      Prn::print(0, "empty");
+      Prn::print(0, "STACKSHOW empty");
       return;
    }
 
-   Prn::print(0, "%3d %-25s %-25s %-25s",
+   Prn::print(Prn::View01, "%3d %-25s %-25s %-25s",
       mSelect, mSelectPathS1.c_str(), mSelectPathS2.c_str(), mSelectPathS3.c_str());
 
    //***************************************************************************
@@ -257,8 +257,9 @@ void StackShow::doShow()
    SV::gImageParms.mRoiPixel = mResults.mColMin;
 
    // Show.
-   Prn::print(0, "SHOW");
-   SV::showImage3d("Stack", mInputImageS1, mInputImageS2, mInputImageS3);
+   char tLabel[100];
+   sprintf(tLabel, "Stack %3d", mSelect);
+   SV::showImage3d(tLabel, mInputImageS1, mInputImageS2, mInputImageS3);
 }
 
 //******************************************************************************

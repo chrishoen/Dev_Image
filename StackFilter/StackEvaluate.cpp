@@ -45,6 +45,8 @@ bool StackEvaluate::doTestScriptFile()
    // Open the script file.
    if (!mReader.doOpenFile(mScriptFilePath)) return false;
 
+   Prn::print(0, "");
+
    // Loop to test the script file.
    while (true)
    {

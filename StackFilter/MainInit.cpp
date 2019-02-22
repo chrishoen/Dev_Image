@@ -61,7 +61,7 @@ void main_initialize(int argc,char** argv)
    Prn::initializePrint();
 
    // Initialize print filters.
-   set_print_filters(0);
+   set_print_filters(1);
 
    //***************************************************************************
    //***************************************************************************

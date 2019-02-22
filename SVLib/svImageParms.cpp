@@ -62,7 +62,7 @@ void ImageParms::show()
    printf("ImageParms********************************************** %s\n", mTargetSection);
    printf("RoiPixel                 %10d %10d\n", mRoiPixel.mRow, mRoiPixel.mCol);
    printf("RoiB                     %10d\n", mRoiB);
-   printf("RoiCode                  %10d\n", mRoiHeaderCode);
+   printf("RoiHeaderCode            %10d\n", mRoiHeaderCode);
    printf("InputImageFileName                %s\n", mInputImageFileName);
    printf("OutputImageFileName               %s\n", mOutputImageFileName);
    mNN2dRuleFilterParms.show();
@@ -84,7 +84,7 @@ void ImageParms::execute(Ris::CmdLineCmd* aCmd)
 
    if (aCmd->isCmd("RoiPixel"))            mRoiPixel.execute(aCmd);
    if (aCmd->isCmd("RoiB"))                mRoiB = aCmd->argInt(1);
-   if (aCmd->isCmd("RoiCode"))             mRoiHeaderCode = aCmd->argInt(1);
+   if (aCmd->isCmd("RoiHeaderCode"))       mRoiHeaderCode = aCmd->argInt(1);
 
    if (aCmd->isCmd("InputImageFileName"))  aCmd->copyArgString(1, mInputImageFileName, cMaxStringSize);
    if (aCmd->isCmd("OutputImageFileName")) aCmd->copyArgString(1, mOutputImageFileName, cMaxStringSize);
