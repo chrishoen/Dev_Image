@@ -53,14 +53,14 @@ public:
    // Methods.
 
    // Execute specific commands.
-   void executeSim         (Ris::CmdLineCmd* aCmd);
-   void executeDirZip      (Ris::CmdLineCmd* aCmd);
-   void executeLoadZip     (Ris::CmdLineCmd* aCmd);
-   void executeEvaluate    (Ris::CmdLineCmd* aCmd);
-   void executeEvaluate2   (Ris::CmdLineCmd* aCmd);
-   void executeDisplay     (Ris::CmdLineCmd* aCmd);
-   void executeFilter      (Ris::CmdLineCmd* aCmd);
-   void executeShow        (Ris::CmdLineCmd* aCmd);
+   void executeSim             (Ris::CmdLineCmd* aCmd);
+   void executeDirZip          (Ris::CmdLineCmd* aCmd);
+   void executeLoadZip         (Ris::CmdLineCmd* aCmd);
+   void executeEvaluateZip     (Ris::CmdLineCmd* aCmd);
+   void executeEvaluateWork    (Ris::CmdLineCmd* aCmd);
+   void executeDisplayZip      (Ris::CmdLineCmd* aCmd);
+   void executeFilterZip       (Ris::CmdLineCmd* aCmd);
+   void executeShowWork        (Ris::CmdLineCmd* aCmd);
 
    void executeGo1(Ris::CmdLineCmd* aCmd);
    void executeGo2(Ris::CmdLineCmd* aCmd);

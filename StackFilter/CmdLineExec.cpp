@@ -50,11 +50,11 @@ void CmdLineExec::execute(Ris::CmdLineCmd* aCmd)
    if (aCmd->isCmd("Sim"))       executeSim(aCmd);
    if (aCmd->isCmd("DirZ"))      executeDirZip(aCmd);
    if (aCmd->isCmd("LoadZ"))     executeLoadZip(aCmd);
-   if (aCmd->isCmd("Eval"))      executeEvaluate(aCmd);
-   if (aCmd->isCmd("Eval2"))     executeEvaluate2(aCmd);
-   if (aCmd->isCmd("Disp"))      executeDisplay(aCmd);
-   if (aCmd->isCmd("Filt"))      executeFilter(aCmd);
-   if (aCmd->isCmd("Show"))      executeShow(aCmd);
+   if (aCmd->isCmd("EvalZ"))     executeEvaluateZip(aCmd);
+   if (aCmd->isCmd("EvalW"))     executeEvaluateWork(aCmd);
+   if (aCmd->isCmd("DispZ"))     executeDisplayZip(aCmd);
+   if (aCmd->isCmd("FiltZ"))     executeFilterZip(aCmd);
+   if (aCmd->isCmd("ShowW"))     executeShowWork(aCmd);
 
    if (aCmd->isCmd("GO1"))       executeGo1(aCmd);
    if (aCmd->isCmd("GO2"))       executeGo2(aCmd);
@@ -130,7 +130,7 @@ void CmdLineExec::executeLoadZip(Ris::CmdLineCmd* aCmd)
 //******************************************************************************
 //******************************************************************************
 
-void CmdLineExec::executeEvaluate(Ris::CmdLineCmd* aCmd)
+void CmdLineExec::executeEvaluateZip(Ris::CmdLineCmd* aCmd)
 {
    // Read parameters files.
    SV::gParmParms.reset();
@@ -151,7 +151,7 @@ void CmdLineExec::executeEvaluate(Ris::CmdLineCmd* aCmd)
 //******************************************************************************
 //******************************************************************************
 
-void CmdLineExec::executeEvaluate2(Ris::CmdLineCmd* aCmd)
+void CmdLineExec::executeEvaluateWork(Ris::CmdLineCmd* aCmd)
 {
    // Read parameters files.
    SV::gParmParms.reset();
@@ -169,7 +169,7 @@ void CmdLineExec::executeEvaluate2(Ris::CmdLineCmd* aCmd)
 //******************************************************************************
 //******************************************************************************
 
-void CmdLineExec::executeDisplay(Ris::CmdLineCmd* aCmd)
+void CmdLineExec::executeDisplayZip(Ris::CmdLineCmd* aCmd)
 {
    // Load a zip file
    executeLoadZip(aCmd);
@@ -188,7 +188,7 @@ void CmdLineExec::executeDisplay(Ris::CmdLineCmd* aCmd)
 //******************************************************************************
 //******************************************************************************
 
-void CmdLineExec::executeFilter(Ris::CmdLineCmd* aCmd)
+void CmdLineExec::executeFilterZip(Ris::CmdLineCmd* aCmd)
 {
    // Read parameters files.
    SV::gParmParms.reset();
@@ -209,7 +209,7 @@ void CmdLineExec::executeFilter(Ris::CmdLineCmd* aCmd)
 //******************************************************************************
 //******************************************************************************
 
-void CmdLineExec::executeShow(Ris::CmdLineCmd* aCmd)
+void CmdLineExec::executeShowWork(Ris::CmdLineCmd* aCmd)
 {
    aCmd->setArgDefault(1, 0);
 
