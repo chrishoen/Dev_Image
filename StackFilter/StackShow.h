@@ -46,6 +46,14 @@ public:
    std::string mInputPathS3;
    std::string mOutputPathW2;
 
+   // Image file paths.
+   std::string mSelectPathS1;
+   std::string mSelectPathS2;
+   std::string mSelectPathS3;
+
+   // Select loop count.
+   int mSelect;
+
    //***************************************************************************
    //***************************************************************************
    //***************************************************************************

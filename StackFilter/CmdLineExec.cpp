@@ -49,6 +49,7 @@ void CmdLineExec::execute(Ris::CmdLineCmd* aCmd)
    if (aCmd->isCmd("DirZ"))      executeDirZip(aCmd);
    if (aCmd->isCmd("LoadZ"))     executeLoadZip(aCmd);
    if (aCmd->isCmd("Eval"))      executeEvaluate(aCmd);
+   if (aCmd->isCmd("Eval2"))     executeEvaluate2(aCmd);
    if (aCmd->isCmd("Disp"))      executeDisplay(aCmd);
    if (aCmd->isCmd("Filt"))      executeFilter(aCmd);
    if (aCmd->isCmd("Show"))      executeShow(aCmd);
@@ -139,6 +140,19 @@ void CmdLineExec::executeEvaluate(Ris::CmdLineCmd* aCmd)
    // Load a zip file
    executeLoadZip(aCmd);
 
+   // Test the image stack.
+   StackEvaluate tStackEvaluate;
+
+   tStackEvaluate.doTestScriptFile();
+   tStackEvaluate.show();
+}
+
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+
+void CmdLineExec::executeEvaluate2(Ris::CmdLineCmd* aCmd)
+{
    // Test the image stack.
    StackEvaluate tStackEvaluate;
 

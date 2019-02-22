@@ -36,6 +36,11 @@ void StackShow::reset()
    mInputPathS3.clear();
    mOutputPathW2.clear();
 
+   mSelectPathS1.clear();
+   mSelectPathS2.clear();
+   mSelectPathS3.clear();
+   mSelect = 0;
+
    mReadCount = 0;
    mRows = 0;
    mCols = 0;
@@ -58,6 +63,9 @@ bool StackShow::doShowScriptFile(int aSelect)
 {
    // Do this first.
    reset();
+
+   // Loop select count.
+   mSelect = aSelect;
 
    // File paths.
    mScriptFilePath = CPrint::getWorkDirPath() + "aaaa_script.txt";
@@ -167,6 +175,12 @@ void StackShow::doNotFirstInLoop()
       mReadCount, mInputPathS1.c_str(), mInputPathS2.c_str(), mInputPathS3.c_str(), mOutputPathW2.c_str());
 
    // Filter.
+   if ((mSelect + 1) == mReadCount)
+   {
+      mSelectPathS1 = mInputPathS1;
+      mSelectPathS2 = mInputPathS2;
+      mSelectPathS3 = mInputPathS3;
+   }
 }
 
 void StackShow::doAfterLoop()
@@ -193,6 +207,12 @@ void StackShow::doAfterLoop()
       -2, mInputPathS1.c_str(), mInputPathS2.c_str(), mInputPathS3.c_str(), mOutputPathW2.c_str());
 
    // Filter.
+   if ((mSelect + 1) == mReadCount)
+   {
+      mSelectPathS1 = mInputPathS1;
+      mSelectPathS2 = mInputPathS2;
+      mSelectPathS3 = mInputPathS3;
+   }
 }
 
 //******************************************************************************
@@ -201,6 +221,59 @@ void StackShow::doAfterLoop()
 
 void StackShow::doShow()
 {
+   //***************************************************************************
+   //***************************************************************************
+   //***************************************************************************
+   // Initialize.
+
+   Prn::print(0, "");
+   Prn::print(0, "STACKSHOW");
+
+   // Guard.
+   if (mSelectPathS1.size() == 0)
+   {
+      Prn::print(0, "empty");
+      return;
+   }
+
+   Prn::print(0, "%3d %-25s %-25s %-25s",
+      mSelect, mSelectPathS1.c_str(), mSelectPathS2.c_str(), mSelectPathS3.c_str());
+
+
+   //***************************************************************************
+   //***************************************************************************
+   //***************************************************************************
+   // Read images.
+
+   // Read image S2.
+   mInputImageS2 = cv::imread(mSelectPathS2.c_str(), CV_LOAD_IMAGE_GRAYSCALE);
+   mRows = mInputImageS2.rows;
+   mCols = mInputImageS2.cols;
+
+   // Read image S1.
+   if (mSelectPathS1 == "zeros")
+   {
+      mInputImageS1 = cv::Mat(mRows, mCols, CV_8UC1, cv::Scalar(0));
+   }
+   else
+   {
+      mInputImageS1 = cv::imread(mSelectPathS1.c_str(), CV_LOAD_IMAGE_GRAYSCALE);
+   }
+
+   // Read image S3.
+   if (mSelectPathS3 == "ones")
+   {
+      mInputImageS1 = cv::Mat(mRows, mCols, CV_8UC1, cv::Scalar(255));
+   }
+   else
+   {
+      mInputImageS1 = cv::imread(mSelectPathS3.c_str(), CV_LOAD_IMAGE_GRAYSCALE);
+   }
+
+   mResults.reset();
+   mEvaluator.doEvaluateImage(mInputImageS2, mResults);
+   mResults.show(0, mReader.mString);
+
 }
 
 //******************************************************************************

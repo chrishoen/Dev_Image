@@ -57,6 +57,7 @@ public:
    void executeDirZip      (Ris::CmdLineCmd* aCmd);
    void executeLoadZip     (Ris::CmdLineCmd* aCmd);
    void executeEvaluate    (Ris::CmdLineCmd* aCmd);
+   void executeEvaluate2   (Ris::CmdLineCmd* aCmd);
    void executeDisplay     (Ris::CmdLineCmd* aCmd);
    void executeFilter      (Ris::CmdLineCmd* aCmd);
    void executeShow        (Ris::CmdLineCmd* aCmd);
