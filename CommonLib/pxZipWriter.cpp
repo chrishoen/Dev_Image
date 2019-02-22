@@ -40,8 +40,8 @@ void ZipWriter::doZipWork(const char* aZipName)
    mZipDirPath = CPrint::getZipDirPath();
    mZipFilePath = mZipDirPath + aZipName + ".zip";
 
-   Prn::print(Prn::View02, "WorkDirPath        %s", mWorkDirPath.c_str());
-   Prn::print(Prn::View02, "ZipFilePath        %s", mZipFilePath.c_str());
+   Prn::print(Prn::View02, "WorkDirPath               %s", mWorkDirPath.c_str());
+   Prn::print(Prn::View01, "ZipFilePath               %s", mZipFilePath.c_str());
 
 
    //***************************************************************************

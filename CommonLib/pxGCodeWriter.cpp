@@ -45,7 +45,7 @@ void GCodeWriter::doWrite(
    Prn::print(Prn::View02, "InputBeginFilePath        %s", mInputBeginFilePath.c_str());
    Prn::print(Prn::View02, "InputRepeatFilePath       %s", mInputRepeatFilePath.c_str());
    Prn::print(Prn::View02, "InputEndFilePath          %s", mInputEndFilePath.c_str());
-   Prn::print(Prn::View01, "OutputGCodeFilePath       %s", mInputBeginFilePath.c_str());
+   Prn::print(Prn::View01, "OutputGCodeFilePath       %s", mOutputGCodeFilePath.c_str());
 
    //***************************************************************************
    //***************************************************************************
