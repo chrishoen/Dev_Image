@@ -3,6 +3,7 @@
 
 #include "tsThreadServices.h"
 #include "risThreadsProcess.h"
+#include "MainPrint.h"
 
 #include "CPrintDir.h"
 #include "pxFileManager.h"
@@ -60,21 +61,7 @@ void main_initialize(int argc,char** argv)
    Prn::initializePrint();
 
    // Initialize print filters.
-   Prn::setFilter(Prn::ThreadInit1, true);
-   Prn::setFilter(Prn::ThreadInit2, false);
-   Prn::setFilter(Prn::ThreadRun1, true);
-   Prn::setFilter(Prn::ThreadRun2, true);
-   Prn::setFilter(Prn::ThreadRun3, true);
-   Prn::setFilter(Prn::ThreadRun4, true);
-
-   Prn::setFilter(Prn::View01,          true);
-   Prn::setFilter(Prn::View02,          true);
-   Prn::setFilter(Prn::View11,          true,  1);
-   Prn::setFilter(Prn::View12,          true,  1);
-   Prn::setFilter(Prn::View21,          true,  2);
-   Prn::setFilter(Prn::View21,          true,  2);
-
-   Prn::setFilter(Prn::Show1, true);
+   set_print_filters(0);
 
    //***************************************************************************
    //***************************************************************************

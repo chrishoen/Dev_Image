@@ -1,6 +1,7 @@
 
 #include "stdafx.h"
 
+#include "MainPrint.h"
 #include "CPrintDir.h"
 #include "svSysParms.h"
 #include "svImageParms.h"
@@ -45,6 +46,7 @@ void CmdLineExec::reset()
 
 void CmdLineExec::execute(Ris::CmdLineCmd* aCmd)
 {
+   if (aCmd->isCmd("Prn"))       set_print_filters(aCmd->argInt(1));
    if (aCmd->isCmd("Sim"))       executeSim(aCmd);
    if (aCmd->isCmd("DirZ"))      executeDirZip(aCmd);
    if (aCmd->isCmd("LoadZ"))     executeLoadZip(aCmd);
