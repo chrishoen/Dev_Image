@@ -96,7 +96,7 @@ void SimMorphFilter::doFilterImage(
       // Filter each pixel that is high.
       if (mInput.at(tLoop()) != 0)
       {
-         doFilterHighPixel(tLoop());
+         doFilterHighPixel2(tLoop());
       }
    }
 }
@@ -106,33 +106,9 @@ void SimMorphFilter::doFilterImage(
 //******************************************************************************
 // Filter a pixel that is high.
 // 
-// NW NN NE
-// WW XX EE
-// SW SS SE
 
-
-void SimMorphFilter::doFilterHighPixel(RCIndex aX)
+void SimMorphFilter::doFilterHighPixel2(RCIndex aX)
 {
-   //***************************************************************************
-   //***************************************************************************
-   //***************************************************************************
-   // Local variables.
-
-   // Nearest neighbor variables.
-   bool tNW = mInput.at(aX.mRow - 1, aX.mCol - 1) != 0;
-   bool tNN = mInput.at(aX.mRow - 1, aX.mCol    ) != 0;
-   bool tNE = mInput.at(aX.mRow - 1, aX.mCol + 1) != 0;
-
-   bool tWW = mInput.at(aX.mRow    , aX.mCol - 1) != 0;
-   bool tXX = mInput.at(aX.mRow    , aX.mCol    ) != 0;
-   bool tEE = mInput.at(aX.mRow    , aX.mCol + 1) != 0;
-
-   bool tSW = mInput.at(aX.mRow + 1, aX.mCol - 1) != 0;
-   bool tSS = mInput.at(aX.mRow + 1, aX.mCol    ) != 0;
-   bool tSE = mInput.at(aX.mRow + 1, aX.mCol + 1) != 0;
-
-   int tCode = 0;
-
    //***************************************************************************
    //***************************************************************************
    //***************************************************************************
@@ -158,7 +134,6 @@ void SimMorphFilter::doFilterHighPixel(RCIndex aX)
    }
 }
 
-// printf("loop %4d %4d\n", aX.mRow, aX.mCol);
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************

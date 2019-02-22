@@ -60,7 +60,10 @@ public:
    // Sim generated image size.
    RCSize   mImageSize;
 
-   // High masking parameters.
+   // Mode 1=square 2=diagonal.
+   int mMode;
+   
+   // Row column deltas.
    SV::RCSize    mDelta;
 
    //***************************************************************************
