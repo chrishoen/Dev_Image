@@ -30,9 +30,9 @@ namespace SV
 void showImageInfo(
    int           aPF,      // Input
    const char*   aLabel,   // Input
-   cv::Mat&      aImage)   // Input
+   cv::Mat&      aInput)   // Input
 {
-   Prn::print(aPF, "%-12s %4d %4d $ %3d %3d ", aLabel, aImage.rows, aImage.cols, aImage.depth(), aImage.channels());
+   Prn::print(aPF, "%-12s %4d %4d $ %3d %3d ", aLabel, aInput.rows, aInput.cols, aInput.depth(), aInput.channels());
 }
 
 //******************************************************************************
@@ -42,7 +42,7 @@ void showImageInfo(
 
 void showImage2d(
    const char*   aLabel,   // Input
-   cv::Mat&      aImage)   // Input
+   cv::Mat&      aInput)   // Input
 {
    //***************************************************************************
    //***************************************************************************
@@ -50,7 +50,7 @@ void showImage2d(
    // Initialize.
 
    // Guard.
-   if (aImage.rows == 0)return;
+   if (aInput.rows == 0)return;
 
    // Region of interest variables.
    RCIndex tCenterPixel = gImageParms.mRoiPixel;
@@ -59,12 +59,12 @@ void showImage2d(
 
    printf("\n");
    printf("********************************************* %-12s %4d %4d $ %1d %1d $ %4d %4d\n",
-      aLabel, aImage.rows, aImage.cols, aImage.depth(), aImage.channels(),
+      aLabel, aInput.rows, aInput.cols, aInput.depth(), aInput.channels(),
       tCenterPixel.mRow, tCenterPixel.mCol);
    printf("\n");
 
    // Image wrapper.
-   ImageWrapper tImage(aImage);
+   ImageWrapper tImage(aInput);
 
    // Dither loop.
    SV::RCDitherLoop1 tLoop(tCenterPixel, tB, 1);
@@ -140,10 +140,10 @@ void showImage2d(
 // Show image in tabular form.
 
 void showImage3d(
-   const char*   aLabel,   // Input
-   cv::Mat&      aImageD,  // Input
-   cv::Mat&      aImageC,  // Input
-   cv::Mat&      aImageU)  // Input
+   const char*   aLabel,    // Input
+   cv::Mat&      aInputS1,  // Input
+   cv::Mat&      aInputS2,  // Input
+   cv::Mat&      aInputS3)  // Input
 {
    //***************************************************************************
    //***************************************************************************
@@ -151,9 +151,9 @@ void showImage3d(
    // Initialize.
 
    // Guard.
-   if (aImageD.rows == 0)return;
-   if (aImageC.rows == 0)return;
-   if (aImageU.rows == 0)return;
+   if (aInputS1.rows == 0)return;
+   if (aInputS2.rows == 0)return;
+   if (aInputS3.rows == 0)return;
 
    // Region of interest variables.
    RCIndex tCenterPixel = gImageParms.mRoiPixel;
@@ -162,14 +162,14 @@ void showImage3d(
 
    printf("\n");
    printf("********************************************* %-12s %4d %4d $ %1d %1d $ %4d %4d\n",
-      aLabel, aImageC.rows, aImageC.cols, aImageC.depth(), aImageC.channels(),
+      aLabel, aInputS2.rows, aInputS2.cols, aInputS2.depth(), aInputS2.channels(),
       tCenterPixel.mRow, tCenterPixel.mCol);
    printf("\n");
 
    // Image wrapper.
-   ImageWrapper tImageD(aImageD);
-   ImageWrapper tImageC(aImageC);
-   ImageWrapper tImageU(aImageU);
+   ImageWrapper tInputS1(aInputS1);
+   ImageWrapper tInputS2(aInputS2);
+   ImageWrapper tInputS3(aInputS3);
 
    // Dither loop.
    SV::RCDitherLoop1 tLoop(tCenterPixel, tB, 1);
@@ -249,7 +249,7 @@ void showImage3d(
       printf("%4d $ ", tLoop().mRow);
       for (tLoop.firstCol(); tLoop.testCol(); tLoop.nextCol())
       {
-         int tValue = (int)tImageD.at(tLoop());
+         int tValue = (int)tInputS1.at(tLoop());
          if (tValue == 0)           printf(" .");
          else if (tValue == 255)    printf(" x");
          else                       printf(" %1x", tValue / 16);
@@ -257,7 +257,7 @@ void showImage3d(
       printf("     ");
       for (tLoop.firstCol(); tLoop.testCol(); tLoop.nextCol())
       {
-         int tValue = (int)tImageC.at(tLoop());
+         int tValue = (int)tInputS2.at(tLoop());
          if (tValue == 0)           printf(" .");
          else if (tValue == 255)    printf(" x");
          else                       printf(" %1x", tValue / 16);
@@ -265,7 +265,7 @@ void showImage3d(
       printf("     ");
       for (tLoop.firstCol(); tLoop.testCol(); tLoop.nextCol())
       {
-         int tValue = (int)tImageU.at(tLoop());
+         int tValue = (int)tInputS3.at(tLoop());
          if (tValue == 0)           printf(" .");
          else if (tValue == 255)    printf(" x");
          else                       printf(" %1x", tValue / 16);

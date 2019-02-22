@@ -32,8 +32,8 @@ void showImageInfo(
 
 // Show image in tabular form.
 void showImage2d(
-   const char*   aLabel,   // Input
-   cv::Mat&      aImage);  // Input
+   const char*   aLabel,    // Input
+   cv::Mat&      aInput);   // Input
 
 //******************************************************************************
 //******************************************************************************
@@ -42,10 +42,10 @@ void showImage2d(
 
 // Show image in tabular form.
 void showImage3d(
-   const char*   aLabel,   // Input
-   cv::Mat&      aImageD,  // Input
-   cv::Mat&      aImageC,  // Input
-   cv::Mat&      aImageU); // Input
+   const char*   aLabel,    // Input
+   cv::Mat&      aInputS1,  // Input
+   cv::Mat&      aInputS2,  // Input
+   cv::Mat&      aInputS3); // Input
 
 //******************************************************************************
 //******************************************************************************
