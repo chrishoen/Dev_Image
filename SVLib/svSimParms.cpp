@@ -29,9 +29,9 @@ void SimParms::reset()
    BaseClass::reset();
    BaseClass::setFileName_RelAlphaFiles("Image/SV_Sim_Parms.txt");
 
-   mImageGenParmsD.reset();
-   mImageGenParmsC.reset();
-   mImageGenParmsU.reset();
+   mImageGenParmsS1.reset();
+   mImageGenParmsS2.reset();
+   mImageGenParmsS3.reset();
 
    mStackName[0] = 0;
    mStackSize = 0;
@@ -46,9 +46,9 @@ void SimParms::reset()
 
 void SimParms::expand()
 {
-   mImageGenParmsD.expand();
-   mImageGenParmsC.expand();
-   mImageGenParmsU.expand();
+   mImageGenParmsS1.expand();
+   mImageGenParmsS2.expand();
+   mImageGenParmsS3.expand();
 }
 
 //******************************************************************************
@@ -63,9 +63,9 @@ void SimParms::show()
 
    if (mStackSize == 0)
    {
-      mImageGenParmsD.show("D");
-      mImageGenParmsC.show("C");
-      mImageGenParmsU.show("U");
+      mImageGenParmsS1.show("D");
+      mImageGenParmsS2.show("C");
+      mImageGenParmsS3.show("U");
    }
    else
    {
@@ -86,9 +86,9 @@ void SimParms::execute(Ris::CmdLineCmd* aCmd)
 {
    if (!isTargetSection(aCmd)) return;
 
-   if (aCmd->isCmd("ImageGenParmsD"))      readSection(aCmd->argString(1), &mImageGenParmsD);
-   if (aCmd->isCmd("ImageGenParmsC"))      readSection(aCmd->argString(1), &mImageGenParmsC);
-   if (aCmd->isCmd("ImageGenParmsU"))      readSection(aCmd->argString(1), &mImageGenParmsU);
+   if (aCmd->isCmd("ImageGenParmsS1"))      readSection(aCmd->argString(1), &mImageGenParmsS1);
+   if (aCmd->isCmd("ImageGenParmsS2"))      readSection(aCmd->argString(1), &mImageGenParmsS2);
+   if (aCmd->isCmd("ImageGenParmsS3"))      readSection(aCmd->argString(1), &mImageGenParmsS3);
 
    if (aCmd->isCmd("StackName"))           aCmd->copyArgString(1, mStackName, cMaxStringSize);
    if (aCmd->isCmd("StackSize"))           mStackSize = aCmd->argInt(1);

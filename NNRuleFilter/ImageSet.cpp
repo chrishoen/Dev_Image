@@ -42,7 +42,7 @@ void ImageSet::reset()
 void ImageSet::doSimInput2d()
 {
    // Generate simulated image.
-   SV::SimImageGenerator tGenerator(&SV::gSimParms.mImageGenParmsC);
+   SV::SimImageGenerator tGenerator(&SV::gSimParms.mImageGenParmsS2);
    tGenerator.doGenerateImage(mInputImageC);
    SV::showImageInfo(Prn::View01,"InputImageC", mInputImageC);
 }
@@ -56,11 +56,11 @@ void ImageSet::doSimInput3d()
 {
    // Generate simulated image.
    SV::SimImageGenerator tGenerator;
-   tGenerator.initialize(&SV::gSimParms.mImageGenParmsD);
+   tGenerator.initialize(&SV::gSimParms.mImageGenParmsS1);
    tGenerator.doGenerateImage(mInputImageD);
-   tGenerator.initialize(&SV::gSimParms.mImageGenParmsC);
+   tGenerator.initialize(&SV::gSimParms.mImageGenParmsS2);
    tGenerator.doGenerateImage(mInputImageC);
-   tGenerator.initialize(&SV::gSimParms.mImageGenParmsU);
+   tGenerator.initialize(&SV::gSimParms.mImageGenParmsS3);
    tGenerator.doGenerateImage(mInputImageU);
 
    SV::showImageInfo(Prn::View01, "InputImageD", mInputImageD);

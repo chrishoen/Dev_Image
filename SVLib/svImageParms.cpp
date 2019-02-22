@@ -107,14 +107,14 @@ void ImageParms::execute(Ris::CmdLineCmd* aCmd)
 
 void ImageParms::readOverrides(SimParms* aSimParms)
 {
-   if (aSimParms->mImageGenParmsC.mRoiPixel.mRow != 0)
+   if (aSimParms->mImageGenParmsS2.mRoiPixel.mRow != 0)
    {
-      mRoiPixel = aSimParms->mImageGenParmsC.mRoiPixel;
+      mRoiPixel = aSimParms->mImageGenParmsS2.mRoiPixel;
    }
 
-   if (aSimParms->mImageGenParmsC.mRoiB != 0)
+   if (aSimParms->mImageGenParmsS2.mRoiB != 0)
    {
-      mRoiB = aSimParms->mImageGenParmsC.mRoiB;
+      mRoiB = aSimParms->mImageGenParmsS2.mRoiB;
    }
 }
 

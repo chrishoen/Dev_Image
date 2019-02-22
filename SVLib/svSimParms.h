@@ -68,9 +68,9 @@ public:
    // Parameter members.
 
    // Simulated images.
-   SimImageGenParms mImageGenParmsD;
-   SimImageGenParms mImageGenParmsC;
-   SimImageGenParms mImageGenParmsU;
+   SimImageGenParms mImageGenParmsS1;
+   SimImageGenParms mImageGenParmsS2;
+   SimImageGenParms mImageGenParmsS3;
 
    //***************************************************************************
    //***************************************************************************
