@@ -1,75 +1,103 @@
 #pragma once
-
 /*==============================================================================
-Program command line executive.
+image stack filter
 ==============================================================================*/
 
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
 
-#include "risCmdLineExec.h"
+#include <string>
+#include <opencv2/core/core.hpp>
+
+#include "pxScriptReader.h"
+#include "svImageEvaluator.h"
+#include "svImageResults.h"
 
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
-// This class is the program command line executive. It processes user
-// command line inputs and executes them. It inherits from the command line
-// command executive base class, which provides an interface for executing
-// command line commands. It provides an override execute function that is
-// called by a console executive when it receives a console command line input.
-// The execute function then executes the command.
+// This class encalsulates an image stack filter. It reads from a script file
+// to obtain the file paths of images contained in an image stack. It reads
+// the stack of image files and filters them.
+// reader to .
 
-class CmdLineExec : public Ris::BaseCmdLineExec
+class StackShow
 {
 public:
 
    //***************************************************************************
    //***************************************************************************
    //***************************************************************************
+   // Members:
+
+   // File paths.
+   std::string mScriptFilePath;
+
+   // Images.
+   cv::Mat mInputImageS1;
+   cv::Mat mInputImageS2;
+   cv::Mat mInputImageS3;
+   cv::Mat mOutputImageW2;
+
+   // Image file paths.
+   std::string mInputPathS1;
+   std::string mInputPathS2;
+   std::string mInputPathS3;
+   std::string mOutputPathW2;
+
+   //***************************************************************************
+   //***************************************************************************
+   //***************************************************************************
    // Members.
 
+   // Parameterized functions and variables.
+   PX::ScriptReader   mReader;
+   SV::ImageEvaluator mEvaluator;
+   SV::ImageResults   mResults;
+
+   // Metrics.
+   int mReadCount;
+   int mRows;
+   int mCols;
+
    //***************************************************************************
    //***************************************************************************
    //***************************************************************************
    // Methods.
 
-   CmdLineExec();
+   // Constructor.
+   StackShow();
    void reset();
+   void show();
 
    //***************************************************************************
    //***************************************************************************
    //***************************************************************************
    // Methods.
 
-   // Base class override. Execute a command line command. It calls one of
-   // the following specific command execution functions. This is called by
-   // the owner of this object to pass command line commands to it. 
-   void execute(Ris::CmdLineCmd* aCmd) override;
+   // Show the images pointed to by a script file. Return true if successful.
+   bool doShowScriptFile(int aSelect);
 
    //***************************************************************************
    //***************************************************************************
    //***************************************************************************
    // Methods.
 
-   // Execute specific commands.
-   void executeSim         (Ris::CmdLineCmd* aCmd);
-   void executeDirZip      (Ris::CmdLineCmd* aCmd);
-   void executeLoadZip     (Ris::CmdLineCmd* aCmd);
-   void executeEvaluate    (Ris::CmdLineCmd* aCmd);
-   void executeDisplay     (Ris::CmdLineCmd* aCmd);
-   void executeFilter      (Ris::CmdLineCmd* aCmd);
-   void executeShow        (Ris::CmdLineCmd* aCmd);
+   // Loop processing decomposition.
+   void doBeforeLoop();
+   void doFirstInLoop();
+   void doNotFirstInLoop();
+   void doAfterLoop();
 
-   void executeGo1(Ris::CmdLineCmd* aCmd);
-   void executeGo2(Ris::CmdLineCmd* aCmd);
-   void executeGo3(Ris::CmdLineCmd* aCmd);
-   void executeGo4(Ris::CmdLineCmd* aCmd);
-   void executeGo5(Ris::CmdLineCmd* aCmd);
-   void executeParms(Ris::CmdLineCmd* aCmd);
+   // Zip the output work directory to the zip directory.
+   void doShow();
 };
 
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
+
+
+
 

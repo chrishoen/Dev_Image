@@ -18,6 +18,7 @@
 #include "StackEvaluate.h"
 #include "StackDisplay.h"
 #include "StackFilter.h"
+#include "StackShow.h"
 
 #include "svSimStackGenerator.h"
 
@@ -48,9 +49,9 @@ void CmdLineExec::execute(Ris::CmdLineCmd* aCmd)
    if (aCmd->isCmd("DirZ"))      executeDirZip(aCmd);
    if (aCmd->isCmd("LoadZ"))     executeLoadZip(aCmd);
    if (aCmd->isCmd("Eval"))      executeEvaluate(aCmd);
-   if (aCmd->isCmd("Eval2"))     executeEvaluate2(aCmd);
    if (aCmd->isCmd("Disp"))      executeDisplay(aCmd);
    if (aCmd->isCmd("Filt"))      executeFilter(aCmd);
+   if (aCmd->isCmd("Show"))      executeShow(aCmd);
 
    if (aCmd->isCmd("GO1"))       executeGo1(aCmd);
    if (aCmd->isCmd("GO2"))       executeGo2(aCmd);
@@ -149,19 +150,6 @@ void CmdLineExec::executeEvaluate(Ris::CmdLineCmd* aCmd)
 //******************************************************************************
 //******************************************************************************
 
-void CmdLineExec::executeEvaluate2(Ris::CmdLineCmd* aCmd)
-{
-   // Test the image stack.
-   StackEvaluate tStackEvaluate;
-
-   tStackEvaluate.doTestScriptFile();
-   tStackEvaluate.show();
-}
-
-//******************************************************************************
-//******************************************************************************
-//******************************************************************************
-
 void CmdLineExec::executeDisplay(Ris::CmdLineCmd* aCmd)
 {
    // Load a zip file
@@ -192,21 +180,23 @@ void CmdLineExec::executeFilter(Ris::CmdLineCmd* aCmd)
 //******************************************************************************
 //******************************************************************************
 
+void CmdLineExec::executeShow(Ris::CmdLineCmd* aCmd)
+{
+   aCmd->setArgDefault(1, 0);
+
+   // Test the image stack.
+   StackShow tStackShow;
+
+   tStackShow.doShowScriptFile(aCmd->argInt(1));
+   tStackShow.show();
+}
+
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+
 void CmdLineExec::executeGo1(Ris::CmdLineCmd* aCmd)
 {
-   cv::Mat tX1;
-   cv::Mat tX2;
-
-   tX1 = cv::Mat(100, 100, CV_8UC1, 11);
-   tX2 = tX1;
-   Prn::print(0, "X1 %4d %4d", tX1.at<uchar>(0, 0), tX1.at<uchar>(0, 1));
-   Prn::print(0, "X2 %4d %4d", tX2.at<uchar>(0, 0), tX2.at<uchar>(0, 1));
-   Prn::print(0, "");
-
-   tX1 = cv::Mat::zeros(100, 100, CV_8UC1);
-   Prn::print(0, "X1 %4d %4d", tX1.at<uchar>(0, 0), tX1.at<uchar>(0, 1));
-   Prn::print(0, "X2 %4d %4d", tX2.at<uchar>(0, 0), tX2.at<uchar>(0, 1));
-   Prn::print(0, "");
 }
 
 //******************************************************************************
@@ -215,19 +205,6 @@ void CmdLineExec::executeGo1(Ris::CmdLineCmd* aCmd)
 
 void CmdLineExec::executeGo2(Ris::CmdLineCmd* aCmd)
 {
-   cv::Mat tX1;
-   cv::Mat tX2;
-
-   tX1 = cv::Mat(100, 100, CV_8UC1, 11);
-   tX2 = tX1;
-   Prn::print(0, "X1 %4d %4d", tX1.at<uchar>(0, 0), tX1.at<uchar>(0, 1));
-   Prn::print(0, "X2 %4d %4d", tX2.at<uchar>(0, 0), tX2.at<uchar>(0, 1));
-   Prn::print(0, "");
-
-   tX1 = cv::Mat(100, 100, CV_8UC1,cv::Scalar(0));
-   Prn::print(0, "X1 %4d %4d", tX1.at<uchar>(0, 0), tX1.at<uchar>(0, 1));
-   Prn::print(0, "X2 %4d %4d", tX2.at<uchar>(0, 0), tX2.at<uchar>(0, 1));
-   Prn::print(0, "");
 }
 
 //******************************************************************************
@@ -236,22 +213,6 @@ void CmdLineExec::executeGo2(Ris::CmdLineCmd* aCmd)
 
 void CmdLineExec::executeGo3(Ris::CmdLineCmd* aCmd)
 {
-   cv::Mat tX1;
-   cv::Mat tX2;
-   cv::Mat tX3;
-
-   tX1 = cv::Mat(100, 100, CV_8UC1, 11);
-   tX2 = tX1;
-   Prn::print(0, "X1 %4d %4d", tX1.at<uchar>(0, 0), tX1.at<uchar>(0, 1));
-   Prn::print(0, "X2 %4d %4d", tX2.at<uchar>(0, 0), tX2.at<uchar>(0, 1));
-   Prn::print(0, "");
-
-   tX3 = cv::Mat(100, 100, CV_8UC1, 33);
-
-   tX1 = tX3;
-   Prn::print(0, "X1 %4d %4d", tX1.at<uchar>(0, 0), tX1.at<uchar>(0, 1));
-   Prn::print(0, "X2 %4d %4d", tX2.at<uchar>(0, 0), tX2.at<uchar>(0, 1));
-   Prn::print(0, "");
 }
 
 //******************************************************************************
