@@ -256,6 +256,13 @@ void StackShow::doShow()
    // Set roi center.
    SV::gImageParms.mRoiPixel = mResults.mColMin;
 
+   switch (SV::gImageParms.mRoiSelectCode)
+   {
+   case 1: SV::gImageParms.mRoiPixel = mResults.mRowMin; break;
+   case 2: SV::gImageParms.mRoiPixel = mResults.mColMax; break;
+   case 3: SV::gImageParms.mRoiPixel = mResults.mRowMax; break;
+   case 4: SV::gImageParms.mRoiPixel = mResults.mColMin; break;
+   }
    // Show.
    char tLabel[100];
    sprintf(tLabel, "Stack %3d", mSelect);

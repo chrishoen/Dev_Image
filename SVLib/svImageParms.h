@@ -73,6 +73,7 @@ public:
    RCIndex mRoiPixel;
    int     mRoiB;
    int     mRoiHeaderCode;
+   int     mRoiSelectCode;
 
    // Image file name.
    char mInputImageFileName[cMaxStringSize];
