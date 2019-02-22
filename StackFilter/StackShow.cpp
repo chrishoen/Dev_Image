@@ -11,6 +11,7 @@ Description:
 #include "CPrintDir.h"
 #include "svImageParms.h"
 #include "svImageFunctions.h"
+#include "svImageShow.h"
 
 #include "StackShow.h"
 
@@ -212,7 +213,6 @@ void StackShow::doShow()
    Prn::print(0, "%3d %-25s %-25s %-25s",
       mSelect, mSelectPathS1.c_str(), mSelectPathS2.c_str(), mSelectPathS3.c_str());
 
-
    //***************************************************************************
    //***************************************************************************
    //***************************************************************************
@@ -236,17 +236,29 @@ void StackShow::doShow()
    // Read image S3.
    if (mSelectPathS3 == "ones")
    {
-      mInputImageS1 = cv::Mat(mRows, mCols, CV_8UC1, cv::Scalar(255));
+      mInputImageS3 = cv::Mat(mRows, mCols, CV_8UC1, cv::Scalar(255));
    }
    else
    {
-      mInputImageS1 = cv::imread(mSelectPathS3.c_str(), CV_LOAD_IMAGE_GRAYSCALE);
+      mInputImageS3 = cv::imread(mSelectPathS3.c_str(), CV_LOAD_IMAGE_GRAYSCALE);
    }
 
+   //***************************************************************************
+   //***************************************************************************
+   //***************************************************************************
+   // Evaluate and show.
+
+   // Evaluate.
    mResults.reset();
    mEvaluator.doEvaluateImage(mInputImageS2, mResults);
    mResults.show(0, mReader.mString);
 
+   // Set roi center.
+   SV::gImageParms.mRoiPixel = mResults.mColMin;
+
+   // Show.
+   Prn::print(0, "SHOW");
+   SV::showImage3d("Stack", mInputImageS1, mInputImageS2, mInputImageS3);
 }
 
 //******************************************************************************
