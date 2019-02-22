@@ -29,9 +29,7 @@ ZipWriter::ZipWriter()
 // Zip the work directory to the zip directory with a zip filename
 // that is a name plus a postfix.
 
-void ZipWriter::doZipWork(
-   const char* aZipName,
-   const char* aPostFix)
+void ZipWriter::doZipWork(const char* aZipName)
 {
    //***************************************************************************
    //***************************************************************************
@@ -40,20 +38,11 @@ void ZipWriter::doZipWork(
 
    mWorkDirPath = CPrint::getWorkDirPath();
    mZipDirPath = CPrint::getZipDirPath();
+   mZipFilePath = mZipDirPath + aZipName + ".zip";
 
-   if (aPostFix != 0 && strlen(aPostFix) != 0)
-   {
-      mZipFilePath = mZipDirPath + aZipName + aPostFix + ".zip";
-   }
-   else
-   {
-      mZipFilePath = mZipDirPath + aZipName + ".zip";
-   }
+   Prn::print(Prn::View02, "WorkDirPath        %s", mWorkDirPath.c_str());
+   Prn::print(Prn::View02, "ZipFilePath        %s", mZipFilePath.c_str());
 
-
-
-   std::cout << "mWorkDirPath  " << mWorkDirPath << std::endl;
-   std::cout << "mZipFilePath  " << mZipFilePath << std::endl;
 
    //***************************************************************************
    //***************************************************************************

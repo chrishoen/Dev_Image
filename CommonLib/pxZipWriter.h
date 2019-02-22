@@ -58,11 +58,7 @@ public:
 
    // Zip the work directory to the zip directory with a zip filename
    // that is a name plus a postfix.
-   void doZipWork(
-      const char* aZipName,
-      const char* aPostFix);
-
-
+   void doZipWork(const char* aZipName);
 };
 
 //******************************************************************************

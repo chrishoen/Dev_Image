@@ -42,10 +42,10 @@ void GCodeWriter::doWrite(
    mInputEndFilePath    = CPrint::getSpecialDirPath() + "gcode_end.txt";
    mOutputGCodeFilePath = CPrint::getWorkDirPath() + aGCodeName + ".gcode";
 
-   std::cout << "InputBeginFilePath   " << mInputBeginFilePath << std::endl;
-   std::cout << "InputRepeatFilePath  " << mInputRepeatFilePath << std::endl;
-   std::cout << "InputEndFilePath     " << mInputEndFilePath << std::endl;
-   std::cout << "OutputGCodeFilePath  " << mOutputGCodeFilePath << std::endl;
+   Prn::print(Prn::View02, "InputBeginFilePath        %s", mInputBeginFilePath.c_str());
+   Prn::print(Prn::View02, "InputRepeatFilePath       %s", mInputRepeatFilePath.c_str());
+   Prn::print(Prn::View02, "InputEndFilePath          %s", mInputEndFilePath.c_str());
+   Prn::print(Prn::View01, "OutputGCodeFilePath       %s", mInputBeginFilePath.c_str());
 
    //***************************************************************************
    //***************************************************************************
