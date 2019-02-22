@@ -135,17 +135,6 @@ void StackShow::doFirstInLoop()
    mInputPathS3 = std::string(mReader.mString);
    mOutputPathW2 = "empty";
 
-   // Initialize images.
-   // S1 = empty
-   // S2 = zeros
-   // S3 = input
-   mInputImageS3 = cv::imread(mReader.mString, CV_LOAD_IMAGE_GRAYSCALE);
-   mRows = mInputImageS3.rows;
-   mCols = mInputImageS3.cols;
-   mInputImageS2 = cv::Mat(mRows, mCols, CV_8UC1, cv::Scalar(0));
-   mInputImageS1 = cv::Mat();
-   mOutputImageW2 = cv::Mat();
-
    // Show.
    Prn::print(0, "%3d %-25s %-25s %-25s $ %-25s",
       mReadCount, mInputPathS1.c_str(), mInputPathS2.c_str(), mInputPathS3.c_str(), mOutputPathW2.c_str());
@@ -161,14 +150,6 @@ void StackShow::doNotFirstInLoop()
    mInputPathS2 = mInputPathS3;
    mInputPathS3 = std::string(mReader.mString);
    mOutputPathW2 = mInputPathS2;
-
-   // Shift images.
-   // S1 = S2
-   // S2 = S3 
-   // S3 = input
-   mInputImageS1 = mInputImageS2;
-   mInputImageS2 = mInputImageS3;
-   mInputImageS3 = cv::imread(mReader.mString, CV_LOAD_IMAGE_GRAYSCALE);
 
    // Show.
    Prn::print(0, "%3d %-25s %-25s %-25s $ %-25s", 
@@ -193,14 +174,6 @@ void StackShow::doAfterLoop()
    mInputPathS2 = mInputPathS3;
    mInputPathS3 = std::string("ones");
    mOutputPathW2 = mInputPathS2;
-
-   // Shift images.
-   // S1 = S2
-   // S2 = S3 
-   // S3 = ones
-   mInputImageS1 = mInputImageS2;
-   mInputImageS2 = mInputImageS3;
-   mInputImageS3 = cv::Mat(mRows, mCols, CV_8UC1,cv::Scalar(255));
 
    // Show.
    Prn::print(0, "%3d %-25s %-25s %-25s $ %-25s",
