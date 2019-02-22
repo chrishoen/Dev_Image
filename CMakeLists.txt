@@ -10,6 +10,7 @@ my_init_import_variables()
 
 add_subdirectory ("CommonLib")
 add_subdirectory ("StackFilter")
+add_subdirectory ("NNRuleFilter")
 add_subdirectory ("DisplayLib")
 add_subdirectory ("SVLib")
 return()

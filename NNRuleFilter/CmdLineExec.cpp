@@ -104,7 +104,7 @@ void CmdLineExec::executeRun2d(Ris::CmdLineCmd* aCmd)
    // Run.
    mImageSet.doSimInput2d();
    mFilter2d.initialize(&SV::gImageParms.mNN2dRuleFilterParms);
-   mFilter2d.doFilterImage(mImageSet.mInputImageC, mImageSet.mOutputImage);
+   mFilter2d.doFilterImage(mImageSet.mInputS2, mImageSet.mOutput);
 
    Prn::print(0, "done");
 }
@@ -126,10 +126,10 @@ void CmdLineExec::executeRun3d(Ris::CmdLineCmd* aCmd)
    mImageSet.doSimInput3d();
    mFilter3d.initialize(&SV::gImageParms.mNN3dRuleFilterParms);
    mFilter3d.doFilterImage(
-      mImageSet.mInputImageD,
-      mImageSet.mInputImageC, 
-      mImageSet.mInputImageU, 
-      mImageSet.mOutputImage);
+      mImageSet.mInputS1,
+      mImageSet.mInputS2, 
+      mImageSet.mInputS3, 
+      mImageSet.mOutput);
 
    mFilter3d.show();
 }
@@ -222,7 +222,7 @@ void CmdLineExec::executeReadInput(Ris::CmdLineCmd* aCmd)
    // Run.
    mImageSet.doReadInput();
    mFilter2d.initialize(&SV::gImageParms.mNN2dRuleFilterParms);
-   mFilter2d.doFilterImage(mImageSet.mInputImageC, mImageSet.mOutputImage);
+   mFilter2d.doFilterImage(mImageSet.mInputS2, mImageSet.mOutput);
    Prn::print(0, "done");
 }
 

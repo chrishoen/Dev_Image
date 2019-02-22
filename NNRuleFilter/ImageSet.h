@@ -25,10 +25,10 @@ public:
    //***************************************************************************
    // Members:
 
-   cv::Mat mInputImageD;
-   cv::Mat mInputImageC;
-   cv::Mat mInputImageU;
-   cv::Mat mOutputImage;
+   cv::Mat mInputS1;
+   cv::Mat mInputS2;
+   cv::Mat mInputS3;
+   cv::Mat mOutput;
 
    //***************************************************************************
    //***************************************************************************
