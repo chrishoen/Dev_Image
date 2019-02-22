@@ -55,7 +55,7 @@ void showImage2d(
    // Region of interest variables.
    RCIndex tCenterPixel = gImageParms.mRoiPixel;
    int tB = gImageParms.mRoiB;
-   int tCode = gImageParms.mRoiCode;
+   int tHeaderCode = gImageParms.mRoiHeaderCode;
 
    printf("\n");
    printf("********************************************* %-12s %4d %4d $ %1d %1d $ %4d %4d\n",
@@ -74,7 +74,7 @@ void showImage2d(
    //***************************************************************************
    // Print header.
 
-   if (tCode == 0)
+   if (tHeaderCode == 0)
    {
       // Print header 1.
       printf("     $ ");
@@ -112,7 +112,7 @@ void showImage2d(
    for (tLoop.firstRow(); tLoop.testRow(); tLoop.nextRow())
    {
       printf("%4d $ ", tLoop().mRow);
-      if (tCode != 0)
+      if (tHeaderCode != 0)
       {
          for (tLoop.firstCol(); tLoop.testCol(); tLoop.nextCol())
          {
@@ -158,7 +158,7 @@ void showImage3d(
    // Region of interest variables.
    RCIndex tCenterPixel = gImageParms.mRoiPixel;
    int tB = gImageParms.mRoiB;
-   int tCode = gImageParms.mRoiCode;
+   int tHeaderCode = gImageParms.mRoiHeaderCode;
 
    printf("\n");
    printf("********************************************* %-12s %4d %4d $ %1d %1d $ %4d %4d\n",
@@ -179,7 +179,7 @@ void showImage3d(
    //***************************************************************************
    // Print header.
 
-   if (tCode == 0)
+   if (tHeaderCode == 0)
    {
       // Print header 1.
       printf("     $ ");

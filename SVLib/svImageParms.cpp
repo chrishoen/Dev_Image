@@ -29,7 +29,7 @@ void ImageParms::reset()
    BaseClass::reset();
    BaseClass::setFileName_RelAlphaFiles("Image/SV_Image_Parms.txt");
 
-   mInputImageS2FileName[0] = 0;
+   mInputImageFileName[0] = 0;
    mOutputImageFileName[0] = 0;
 
    mNN2dRuleFilterParms.reset();
@@ -38,7 +38,7 @@ void ImageParms::reset()
 
    mRoiPixel.reset();
    mRoiB = 0;
-   mRoiCode = 0;
+   mRoiHeaderCode = 0;
 }
 
 //******************************************************************************
@@ -62,8 +62,8 @@ void ImageParms::show()
    printf("ImageParms********************************************** %s\n", mTargetSection);
    printf("RoiPixel                 %10d %10d\n", mRoiPixel.mRow, mRoiPixel.mCol);
    printf("RoiB                     %10d\n", mRoiB);
-   printf("RoiCode                  %10d\n", mRoiCode);
-   printf("InputImageS2FileName              %s\n", mInputImageS2FileName);
+   printf("RoiCode                  %10d\n", mRoiHeaderCode);
+   printf("InputImageFileName                %s\n", mInputImageFileName);
    printf("OutputImageFileName               %s\n", mOutputImageFileName);
    mNN2dRuleFilterParms.show();
    mNN3dRuleFilterParms.show();
@@ -84,14 +84,14 @@ void ImageParms::execute(Ris::CmdLineCmd* aCmd)
 
    if (aCmd->isCmd("RoiPixel"))            mRoiPixel.execute(aCmd);
    if (aCmd->isCmd("RoiB"))                mRoiB = aCmd->argInt(1);
-   if (aCmd->isCmd("RoiCode"))             mRoiCode = aCmd->argInt(1);
+   if (aCmd->isCmd("RoiCode"))             mRoiHeaderCode = aCmd->argInt(1);
 
-   if (aCmd->isCmd("InputImageS2FileName"))  aCmd->copyArgString(1, mInputImageS2FileName, cMaxStringSize);
-   if (aCmd->isCmd("OutputImageFileName"))   aCmd->copyArgString(1, mOutputImageFileName, cMaxStringSize);
+   if (aCmd->isCmd("InputImageFileName"))  aCmd->copyArgString(1, mInputImageFileName, cMaxStringSize);
+   if (aCmd->isCmd("OutputImageFileName")) aCmd->copyArgString(1, mOutputImageFileName, cMaxStringSize);
 
-   if (aCmd->isCmd("NN2dRuleFilterParms"))   readSection(aCmd->argString(1), &mNN2dRuleFilterParms);
-   if (aCmd->isCmd("NN3dRuleFilterParms"))   readSection(aCmd->argString(1), &mNN3dRuleFilterParms);
-   if (aCmd->isCmd("ContourFilterParms"))    readSection(aCmd->argString(1), &mContourFilterParms);
+   if (aCmd->isCmd("NN2dRuleFilterParms")) readSection(aCmd->argString(1), &mNN2dRuleFilterParms);
+   if (aCmd->isCmd("NN3dRuleFilterParms")) readSection(aCmd->argString(1), &mNN3dRuleFilterParms);
+   if (aCmd->isCmd("ContourFilterParms"))  readSection(aCmd->argString(1), &mContourFilterParms);
 }
 
 //******************************************************************************

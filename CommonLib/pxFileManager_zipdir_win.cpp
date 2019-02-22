@@ -169,6 +169,7 @@ bool FileManager::doLoadZip()
 
    // Done.
    mError = "PASS";
+   Prn::print(Prn::View01, "LoadZip %s",mZipName.c_str());
    Prn::print(Prn::View02, "done");
    Prn::print(Prn::View02, "");
    return true;
