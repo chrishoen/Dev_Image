@@ -75,9 +75,7 @@ public:
    int     mRoiCode;
 
    // Image file name.
-   char mInputImageDFileName[cMaxStringSize];
-   char mInputImageCFileName[cMaxStringSize];
-   char mInputImageUFileName[cMaxStringSize];
+   char mInputImageS2FileName[cMaxStringSize];
    char mOutputImageFileName[cMaxStringSize];
 
    // Image filter.

@@ -29,9 +29,7 @@ void ImageParms::reset()
    BaseClass::reset();
    BaseClass::setFileName_RelAlphaFiles("Image/SV_Image_Parms.txt");
 
-   mInputImageDFileName[0] = 0;
-   mInputImageCFileName[0] = 0;
-   mInputImageUFileName[0] = 0;
+   mInputImageS2FileName[0] = 0;
    mOutputImageFileName[0] = 0;
 
    mNN2dRuleFilterParms.reset();
@@ -65,9 +63,7 @@ void ImageParms::show()
    printf("RoiPixel                 %10d %10d\n", mRoiPixel.mRow, mRoiPixel.mCol);
    printf("RoiB                     %10d\n", mRoiB);
    printf("RoiCode                  %10d\n", mRoiCode);
-   printf("InputImageDFileName               %s\n", mInputImageDFileName);
-   printf("InputImageCFileName               %s\n", mInputImageCFileName);
-   printf("InputImageUFileName               %s\n", mInputImageUFileName);
+   printf("InputImageS2FileName              %s\n", mInputImageS2FileName);
    printf("OutputImageFileName               %s\n", mOutputImageFileName);
    mNN2dRuleFilterParms.show();
    mNN3dRuleFilterParms.show();
@@ -90,10 +86,8 @@ void ImageParms::execute(Ris::CmdLineCmd* aCmd)
    if (aCmd->isCmd("RoiB"))                mRoiB = aCmd->argInt(1);
    if (aCmd->isCmd("RoiCode"))             mRoiCode = aCmd->argInt(1);
 
-   if (aCmd->isCmd("InputImageDFileName"))  aCmd->copyArgString(1, mInputImageDFileName, cMaxStringSize);
-   if (aCmd->isCmd("InputImageCFileName"))  aCmd->copyArgString(1, mInputImageCFileName, cMaxStringSize);
-   if (aCmd->isCmd("InputImageUFileName"))  aCmd->copyArgString(1, mInputImageUFileName, cMaxStringSize);
-   if (aCmd->isCmd("OutputImageFileName"))  aCmd->copyArgString(1, mOutputImageFileName, cMaxStringSize);
+   if (aCmd->isCmd("InputImageS2FileName"))  aCmd->copyArgString(1, mInputImageS2FileName, cMaxStringSize);
+   if (aCmd->isCmd("OutputImageFileName"))   aCmd->copyArgString(1, mOutputImageFileName, cMaxStringSize);
 
    if (aCmd->isCmd("NN2dRuleFilterParms"))   readSection(aCmd->argString(1), &mNN2dRuleFilterParms);
    if (aCmd->isCmd("NN3dRuleFilterParms"))   readSection(aCmd->argString(1), &mNN3dRuleFilterParms);

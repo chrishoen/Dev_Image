@@ -76,9 +76,9 @@ void ImageSet::doSimInput3d()
 void ImageSet::doReadInput()
 {
    // Read a test image file to the input image.
-   SV::readImageFromFile(mInputS2, SV::gImageParms.mInputImageCFileName);
+   SV::readImageFromFile(mInputS2, SV::gImageParms.mInputImageS2FileName);
    SV::showImageInfo(Prn::View11, "InputS2", mInputS2);
-   SV::showImageInfo(0, SV::gImageParms.mInputImageCFileName, mInputS2);
+   SV::showImageInfo(0, SV::gImageParms.mInputImageS2FileName, mInputS2);
 }
 
 void ImageSet::doReadOutput()
@@ -93,7 +93,7 @@ void ImageSet::doWriteInput()
 {
    // Save image.
    SV::showImageInfo(Prn::View11, "Input", mInputS2);
-   SV::writeImageToFile(mInputS2, SV::gImageParms.mInputImageCFileName);
+   SV::writeImageToFile(mInputS2, SV::gImageParms.mInputImageS2FileName);
 }
 
 void ImageSet::doWriteOutput()
@@ -142,7 +142,7 @@ void ImageSet::doDraw(int aCode)
    switch (aCode)
    {
    case 11:  Display::showImage(mInputS2); break;
-   case 12:  Display::showImage(SV::gImageParms.mInputImageCFileName); break;
+   case 12:  Display::showImage(SV::gImageParms.mInputImageS2FileName); break;
    case 21:  Display::showImage(mOutput); break;
    case 22:  Display::showImage(SV::gImageParms.mOutputImageFileName); break;
    }
