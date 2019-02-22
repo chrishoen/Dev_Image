@@ -7,6 +7,9 @@
 #include "stdafx.h"
 
 
+#include "SDL.h"
+#include "SDL_image.h"
+
 #include "risProgramTime.h"
 #include "risAlphaDir.h"
 
@@ -22,86 +25,75 @@ namespace Display
 // Load the png file and notify the completion. This is called for the 
 // posted event.
 
-void GraphicsThread::doVideoDraw2(SDL_Event* aEvent)
+void GraphicsThread::doVideoDraw1(SDL_Event* aEvent)
 {
    // Metrics.
    mStartTime = Ris::getCurrentProgramTime();
 
    int tRet = 0;
-   cv::Mat* tImage = (cv::Mat*)aEvent->user.data1;
+   int tCode = aEvent->user.code;
 
-   Prn::print(Prn::Show1, "doVideoDraw2  %4d %4d", tImage->rows, tImage->cols);
+   //***************************************************************************
+   //***************************************************************************
+   //***************************************************************************
+   // Image png file path and completion notification.
+
+   // Copy the event png filepath into a local.
+   std::string* tEventFilePath = (std::string*)aEvent->user.data1;
+   char tFilePath[200];
+   strncpy(tFilePath, tEventFilePath->c_str(), 200);
+
+   // Delete the event png filepath.
+   delete tEventFilePath;
+
+   // Copy the event completion notification into a local.
+   Ris::Threads::NotifyWrapper* tCompletionNotify = (Ris::Threads::NotifyWrapper*)aEvent->user.data2;
+
+   Prn::print(Prn::Vid1, "doVideoDraw1 %s", tFilePath);
 
    //***************************************************************************
    //***************************************************************************
    //***************************************************************************
    // Draw the image.
-
    try
    {
-      //***************************************************************************
-      //***************************************************************************
-      //***************************************************************************
-      // Draw the window.
+      // Load the texture from the png file.
+      SDL_Texture* tTexture = IMG_LoadTexture(mRenderer, tFilePath);
+      if (!tTexture) throw "IMG_LoadTexture";
 
-      // Create an intel image structure from the opencv image matrix.
-      IplImage tIntelImage(*tImage);
+      int tWidth, tHeight;
+      SDL_QueryTexture(tTexture, NULL, NULL, &tWidth, &tHeight);
+      Prn::print(Prn::Vid2, "LoadTexture %4d %4d", tWidth,tHeight);
 
-      Prn::print(Prn::Show2, "height        %4d", tIntelImage.height);
-      Prn::print(Prn::Show2, "width         %4d", tIntelImage.width);
-      Prn::print(Prn::Show2, "depth         %4d", tIntelImage.depth);
-      Prn::print(Prn::Show2, "nChannels     %4d", tIntelImage.nChannels);
-      Prn::print(Prn::Show2, "widthStep     %4d", tIntelImage.widthStep);
-
-      // Create a surface from the intel image.
-      SDL_Surface* tSurface = SDL_CreateRGBSurfaceFrom(
-         tIntelImage.imageData,
-         tIntelImage.width,
-         tIntelImage.height,
-         tIntelImage.depth*tIntelImage.nChannels,
-         tIntelImage.widthStep,
-         0xff0000, 0x00ff00, 0x0000ff, 0);
-      if (tSurface==0) throw "SDL_SDL_CreateRGBSurfaceFrom";
-
-      // Create a texture from the surface.
-      SDL_Texture* tTexture = SDL_CreateTextureFromSurface(
-         mRenderer,
-         tSurface);
-      if (tTexture == 0) throw "SDL_SDL_SDL_CreateTextureFromSurface";
-
-      // Clear the renderer.
-      tRet = SDL_RenderClear(mRenderer);
-      if (tRet) throw "SDL_RenderClear";
-
-      // Copy the texture to the renderer.
-      tRet = SDL_RenderCopy(mRenderer, tTexture, NULL, NULL);
-      if (tRet) throw "SDL_RenderCopy";
-
-      // Render the changes above.
-      SDL_RenderPresent(mRenderer);
-
-      // Free
-      SDL_FreeSurface(tSurface);
+      // Render the texture.
+      SDL_RenderCopy(mRenderer, tTexture, NULL, NULL);
       SDL_DestroyTexture(tTexture);
+
+      // Display the renderer changes.
+      SDL_RenderPresent(mRenderer);
    }
    catch (const char* aString)
    {
       Prn::print(Prn::ThreadRun1, "EXCEPTION %s", aString, SDL_GetError());
       mValidFlag = false;
    }
+
    // Metrics.
    mStopTime = Ris::getCurrentProgramTime();
    // Print the draw latency.
    if (gParms.mShowCode != 0)
    {
-      Prn::print(Prn::Show1, "Latency %6.3f", mStopTime - mStartTime);
+      Prn::print(Prn::Vid2, "Latency %6.3f", mStopTime - mStartTime);
    }
 
-   // Done.
-   delete tImage;
+   // Notify a completion.
+   if (tCompletionNotify)
+   {
+      tCompletionNotify->notify();
+   }
 }
 
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
-}//name;space
+}//namespace

@@ -28,14 +28,26 @@ void set_print_filters(int aCode)
 
    Prn::setFilter(Prn::Show1, true);
 
+   Prn::setFilter(Prn::VidInit1, true);
+   Prn::setFilter(Prn::VidInit2, true);
+   Prn::setFilter(Prn::Vid1,     true);
+   Prn::setFilter(Prn::Vid2,     true);
+
+
+
    if (aCode == 0) return;
 
    if (aCode == 1)
    {
-      Prn::setFilter(Prn::View01, true);
-      Prn::setFilter(Prn::View02, false);
-      Prn::setFilter(Prn::View03, false);
-      Prn::setFilter(Prn::View04, true);
+      Prn::setFilter(Prn::View01,  true);
+      Prn::setFilter(Prn::View02,  false);
+      Prn::setFilter(Prn::View03,  false);
+      Prn::setFilter(Prn::View04,  true);
+
+      Prn::setFilter(Prn::VidInit1, true);
+      Prn::setFilter(Prn::VidInit2, true);
+      Prn::setFilter(Prn::Vid1,     true);
+      Prn::setFilter(Prn::Vid2,     false);
    }
 }
 
