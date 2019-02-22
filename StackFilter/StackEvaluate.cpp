@@ -79,10 +79,6 @@ bool StackEvaluate::doTestScriptFile()
 
 void StackEvaluate::show()
 {
-   return;
-   Prn::print(0, "");
-   Prn::print(0, "StackEvaluate Results****************");
-   Prn::print(0, "ReadCount        %5d", mReadCount);
 }
 
 //******************************************************************************

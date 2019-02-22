@@ -19,7 +19,7 @@ void set_print_filters(int aCode)
    Prn::setFilter(Prn::View01, true);
    Prn::setFilter(Prn::View02, true);
    Prn::setFilter(Prn::View03, true);
-   Prn::setFilter(Prn::View04, true);
+   Prn::setFilter(Prn::View04, false);
 
    Prn::setFilter(Prn::View11, true,  1);
    Prn::setFilter(Prn::View12, true,  1);
@@ -35,7 +35,7 @@ void set_print_filters(int aCode)
       Prn::setFilter(Prn::View01, true);
       Prn::setFilter(Prn::View02, false);
       Prn::setFilter(Prn::View03, false);
-      Prn::setFilter(Prn::View04, false);
+      Prn::setFilter(Prn::View04, true);
    }
 }
 

@@ -132,6 +132,11 @@ void CmdLineExec::executeLoadZip(Ris::CmdLineCmd* aCmd)
 
 void CmdLineExec::executeEvaluate(Ris::CmdLineCmd* aCmd)
 {
+   // Read parameters files.
+   SV::gParmParms.reset();
+   SV::gParmParms.readSection("default");
+   SV::gParmParms.readMoreParms("default");
+
    // Load a zip file
    executeLoadZip(aCmd);
 
@@ -148,6 +153,11 @@ void CmdLineExec::executeEvaluate(Ris::CmdLineCmd* aCmd)
 
 void CmdLineExec::executeEvaluate2(Ris::CmdLineCmd* aCmd)
 {
+   // Read parameters files.
+   SV::gParmParms.reset();
+   SV::gParmParms.readSection("default");
+   SV::gParmParms.readMoreParms("default");
+
    // Test the image stack.
    StackEvaluate tStackEvaluate;
 
@@ -164,6 +174,11 @@ void CmdLineExec::executeDisplay(Ris::CmdLineCmd* aCmd)
    // Load a zip file
    executeLoadZip(aCmd);
 
+   // Read parameters files.
+   SV::gParmParms.reset();
+   SV::gParmParms.readSection("default");
+   SV::gParmParms.readMoreParms("default");
+
    // Test the image stack.
    StackDisplay tStackDisplay;
    tStackDisplay.doTestScriptFile(PX::gFileManager.mWorkScriptFilePath);
@@ -175,6 +190,11 @@ void CmdLineExec::executeDisplay(Ris::CmdLineCmd* aCmd)
 
 void CmdLineExec::executeFilter(Ris::CmdLineCmd* aCmd)
 {
+   // Read parameters files.
+   SV::gParmParms.reset();
+   SV::gParmParms.readSection("default");
+   SV::gParmParms.readMoreParms("default");
+
    // Load a zip file
    executeLoadZip(aCmd);
 
@@ -192,6 +212,11 @@ void CmdLineExec::executeFilter(Ris::CmdLineCmd* aCmd)
 void CmdLineExec::executeShow(Ris::CmdLineCmd* aCmd)
 {
    aCmd->setArgDefault(1, 0);
+
+   // Read parameters files.
+   SV::gParmParms.reset();
+   SV::gParmParms.readSection("default");
+   SV::gParmParms.readMoreParms("default");
 
    // Test the image stack.
    StackShow tStackShow;

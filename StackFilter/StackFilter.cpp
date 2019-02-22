@@ -45,10 +45,6 @@ void StackFilter::reset()
 
 void StackFilter::show()
 {
-   return;
-   Prn::print(0, "");
-   Prn::print(0, "StackFilter Results****************");
-   Prn::print(0, "ReadCount        %5d", mReadCount);
 }
 
 
@@ -116,9 +112,9 @@ bool StackFilter::doFilterScriptFile(std::string& aInputZipFilePath)
 void StackFilter::doBeforeLoop()
 {
    Prn::print(0, "STACK FILTER");
-   Prn::print(0, "%3d %-25s %-25s %-25s $ %-25s",
+   Prn::print(Prn::View03, "%3d %-25s %-25s %-25s $ %-25s",
       -1, "s1", "s2", "s3", "output");
-   Prn::print(0, "");
+   Prn::print(Prn::View03, "");
 }
 
 void StackFilter::doFirstInLoop()
@@ -144,7 +140,7 @@ void StackFilter::doFirstInLoop()
    mOutputImageW2 = cv::Mat();
 
    // Show.
-   Prn::print(0, "%3d %-25s %-25s %-25s $ %-25s",
+   Prn::print(Prn::View03, "%3d %-25s %-25s %-25s $ %-25s",
       mReadCount, mInputPathS1.c_str(), mInputPathS2.c_str(), mInputPathS3.c_str(), mOutputPathW2.c_str());
 }
 
@@ -168,7 +164,7 @@ void StackFilter::doNotFirstInLoop()
    mInputImageS3 = cv::imread(mReader.mString, CV_LOAD_IMAGE_GRAYSCALE);
 
    // Show.
-   Prn::print(0, "%3d %-25s %-25s %-25s $ %-25s", 
+   Prn::print(Prn::View03, "%3d %-25s %-25s %-25s $ %-25s",
       mReadCount, mInputPathS1.c_str(), mInputPathS2.c_str(), mInputPathS3.c_str(), mOutputPathW2.c_str());
 
    // Filter.
@@ -181,6 +177,7 @@ void StackFilter::doNotFirstInLoop()
    // Write the output.
    cv::imwrite(mOutputPathW2.c_str(), mOutputImageW2);
    CPrint::doTouch(mOutputPathW2);
+   Prn::print(Prn::View04, "%s", mOutputPathW2.c_str());
 }
 
 void StackFilter::doAfterLoop()
@@ -203,7 +200,7 @@ void StackFilter::doAfterLoop()
    mInputImageS3 = cv::Mat(mRows, mCols, CV_8UC1,cv::Scalar(255));
 
    // Show.
-   Prn::print(0, "%3d %-25s %-25s %-25s $ %-25s",
+   Prn::print(Prn::View03, "%3d %-25s %-25s %-25s $ %-25s",
       -2, mInputPathS1.c_str(), mInputPathS2.c_str(), mInputPathS3.c_str(), mOutputPathW2.c_str());
 
    // Filter.
@@ -216,6 +213,7 @@ void StackFilter::doAfterLoop()
    // Write the output.
    cv::imwrite(mOutputPathW2.c_str(), mOutputImageW2);
    CPrint::doTouch(mOutputPathW2);
+   Prn::print(Prn::View04, "%s", mOutputPathW2.c_str());
 }
 
 //******************************************************************************
@@ -226,13 +224,15 @@ void StackFilter::doZipOutput()
 {
    // Output file path.
    std::size_t tDotPos = mInputZipFilePath.find_last_of(".");
-   mOutputZipFilePath = mInputZipFilePath.insert(tDotPos, "_filtered");
-
-   Prn::print(0, "InputZipFilePath  %s", mInputZipFilePath.c_str());
-   Prn::print(0, "OutputZipFilePath %s", mOutputZipFilePath.c_str());
+   mOutputZipFilePath = mInputZipFilePath;
+   mOutputZipFilePath.insert(tDotPos, "_filtered");
 
    // Zip the new file in the work directory to the zip directory.
    CPrint::doZipFromWork(mOutputZipFilePath);
+
+   // Show.
+   Prn::print(0, "InputZipFilePath  %s", mInputZipFilePath.c_str());
+   Prn::print(0, "OutputZipFilePath %s", mOutputZipFilePath.c_str());
 }
 
 //******************************************************************************
