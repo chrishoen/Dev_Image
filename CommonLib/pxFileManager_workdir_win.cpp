@@ -45,12 +45,12 @@ bool FileManager::doFindWorkGCodeName()
 
    mWorkScriptFilePath = mWorkDirPath + "aaaa_script.txt";
 
-   Prn::print(0, "GCodeName        %s",  mWorkGCodeName.c_str());
-   Prn::print(0, "GCodeFilePath    %s",  mWorkGCodeFilePath.c_str());
-   Prn::print(0, "GCodePrefixpath  %s",  mWorkSliceFilePrefixPath.c_str());
-   Prn::print(0, "ScriptFilePath   %s",  mWorkScriptFilePath.c_str());
-   Prn::print(0, "done");
-   Prn::print(0, "");
+   Prn::print(Prn::View02, "GCodeName        %s",  mWorkGCodeName.c_str());
+   Prn::print(Prn::View02, "GCodeFilePath    %s",  mWorkGCodeFilePath.c_str());
+   Prn::print(Prn::View02, "GCodePrefixpath  %s",  mWorkSliceFilePrefixPath.c_str());
+   Prn::print(Prn::View02, "ScriptFilePath   %s",  mWorkScriptFilePath.c_str());
+   Prn::print(Prn::View02, "done");
+   Prn::print(Prn::View02, "");
 
    // Done.
    return true;

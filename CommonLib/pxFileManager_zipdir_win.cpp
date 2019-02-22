@@ -169,8 +169,8 @@ bool FileManager::doLoadZip()
 
    // Done.
    mError = "PASS";
-   Prn::print(0, "done");
-   Prn::print(0, "");
+   Prn::print(Prn::View02, "done");
+   Prn::print(Prn::View02, "");
    return true;
 }
 

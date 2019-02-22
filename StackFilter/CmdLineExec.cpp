@@ -101,14 +101,7 @@ void CmdLineExec::executeLoadZip(Ris::CmdLineCmd* aCmd)
    bool tPass = false;
 
    // Load the zip.
-   if (aCmd->isArgNumber(1))
-   {
-      tPass = PX::gFileManager.doLoadZip(aCmd->argInt(1));
-   }
-   else
-   {
-      tPass = PX::gFileManager.doLoadZip(aCmd->argString(1));
-   }
+   tPass = PX::gFileManager.doLoadZip(aCmd->argInt(1));
    if (!tPass) return;
 
    // Find the gcode name.

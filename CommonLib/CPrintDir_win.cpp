@@ -154,11 +154,11 @@ void doZipFromWork(std::string& aZipFilePath)
    char tString[200];
 
    sprintf(tString, "del /q %s", aZipFilePath.c_str());
-   printf("doCommand %s\n", tString);
+   Prn::print(Prn::View02,"doCommand %s", tString);
    Ris::doSystemCommand(tString);
 
    sprintf(tString, "C:\\MyPrograms\\7-Zip\\7z.exe a -r %s -w .\\work\\* > nul", aZipFilePath.c_str());
-   printf("doCommand %s\n", tString);
+   Prn::print(Prn::View02, "doCommand %s", tString);
    Ris::doSystemCommand(tString);
 }
 
@@ -173,7 +173,7 @@ void doUnzipToWork(std::string& aZipFilePath)
    // Ex. "/usr/bin/unzip ./zip/Test100.zip -d ./work"
    char tString[200];
    sprintf(tString, "C:\\MyPrograms\\7-Zip\\7z.exe x %s -o.\\work -y -r > nul", aZipFilePath.c_str());
-   printf("doCommand %s\n", tString);
+   Prn::print(Prn::View02, "doCommand %s", tString);
    Ris::doSystemCommand(tString);
 }
 

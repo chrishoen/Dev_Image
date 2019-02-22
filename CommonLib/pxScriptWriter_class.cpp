@@ -107,7 +107,7 @@ bool ScriptWriter::doWrite(
    doCloseFiles();
 
    // Done.
-   std::cout << "done" << std::endl;
+   Prn::print(Prn::View02, "done");
    return true;
 }
 
