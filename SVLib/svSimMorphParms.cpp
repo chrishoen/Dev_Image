@@ -30,6 +30,7 @@ SimMorphParms::SimMorphParms()
 void SimMorphParms::reset()
 {
    mValid = false;
+   mName[0] = 0;
    mImageSize = gSysParms.mImageSize;
    mRepeatNum = 0;
    mMorphNum = 0;
@@ -47,6 +48,7 @@ void SimMorphParms::show(const char* aLabel)
 {
    if (!mValid) return;
    printf("SimMorphParms******************* %s\n",aLabel);
+   printf("Name                     %10s\n", mName);
    printf("ImageSize                %10d %10d\n", mImageSize.mRows, mImageSize.mCols);
    printf("RepeatNum                %10d\n", mRepeatNum);
    printf("MorphNum                 %10d\n", mMorphNum);
@@ -84,6 +86,10 @@ void SimMorphParms::expand()
    mValid = mRepeatNum != 0;
 }
 
+void SimMorphParms::setName(const char* aName)
+{
+   strncpy(mName,aName,cMaxStringSize);
+}
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************

@@ -97,7 +97,7 @@ void SimStackGenerator::doApplyMorphFilter(SimMorphParms* aParms)
    // Guard.
    if (!aParms->mValid) return;
 
-   Prn::print(Prn::View01, "doApplyMorphFilter");
+   Prn::print(Prn::View01, "doApplyMorphFilter %s",aParms->mName);
 
    // Initialize the morph filter.
    mMorphFilter.initialize(aParms);

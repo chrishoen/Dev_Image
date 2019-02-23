@@ -55,13 +55,23 @@ public:
    //***************************************************************************
    //***************************************************************************
    //***************************************************************************
+   // Constants.
+
+   static const int cMaxStringSize = 40;
+
+   //***************************************************************************
+   //***************************************************************************
+   //***************************************************************************
    // Members that are read from the parms file.
 
    // True if valid.
    bool mValid;
 
+   // True if valid.
+   char mName[cMaxStringSize];
+
    // Sim generated image size.
-   RCSize   mImageSize;
+   RCSize mImageSize;
 
    // Iterations.
    int mRepeatNum;
@@ -72,7 +82,7 @@ public:
    int mMode;
    
    // Row column deltas.
-   SV::RCSize    mDelta;
+   SV::RCSize mDelta;
 
    //***************************************************************************
    //***************************************************************************
@@ -93,6 +103,9 @@ public:
    // Calculate expanded member variables. This is called after the entire
    // section of the command file has been processed.
    void expand();
+
+   // Helpers.
+   void setName(const char* aName);
 };
 
 //******************************************************************************

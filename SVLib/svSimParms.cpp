@@ -118,10 +118,30 @@ void SimParms::execute(Ris::CmdLineCmd* aCmd)
 
    if (aCmd->isCmd("StackName"))           aCmd->copyArgString(1, mStackName, cMaxStringSize);
    if (aCmd->isCmd("StackWriteFirst"))     mStackWriteFirst = aCmd->argBool(1);
-   if (aCmd->isCmd("StackMorphParmsA"))    readSection(aCmd->argString(1), &mStackMorphParmsA);
-   if (aCmd->isCmd("StackMorphParmsB"))    readSection(aCmd->argString(1), &mStackMorphParmsB);
-   if (aCmd->isCmd("StackMorphParmsC"))    readSection(aCmd->argString(1), &mStackMorphParmsC);
-   if (aCmd->isCmd("StackMorphParmsD"))    readSection(aCmd->argString(1), &mStackMorphParmsD);
+
+   if (aCmd->isCmd("StackMorphParmsA"))
+   {
+      readSection(aCmd->argString(1), &mStackMorphParmsA);
+      mStackMorphParmsA.setName(aCmd->argString(1));
+   }
+
+   if (aCmd->isCmd("StackMorphParmsB"))
+   {
+      readSection(aCmd->argString(1), &mStackMorphParmsB);
+      mStackMorphParmsB.setName(aCmd->argString(1));
+   }
+
+   if (aCmd->isCmd("StackMorphParmsC"))
+   {
+      readSection(aCmd->argString(1), &mStackMorphParmsC);
+      mStackMorphParmsC.setName(aCmd->argString(1));
+   }
+
+   if (aCmd->isCmd("StackMorphParmsD"))
+   {
+      readSection(aCmd->argString(1), &mStackMorphParmsD);
+      mStackMorphParmsD.setName(aCmd->argString(1));
+   }
 }
 
 //******************************************************************************
