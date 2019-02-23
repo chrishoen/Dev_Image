@@ -235,7 +235,7 @@ void CmdLineExec::executeGo12(Ris::CmdLineCmd* aCmd)
    aCmd->setArgDefault(1,1);
    aCmd->setArgDefault(2,1);
 
-   SV::RCDitherLoop2 tDitherLoop(aCmd->argInt(1),aCmd->argInt(2));
+   SV::RCDitherLoop2 tDitherLoop(SV::RCIndex(100,200),aCmd->argInt(1),aCmd->argInt(2));
    do
    {
       Prn::print(0,"DitherLoop2 %3d %3d",tDitherLoop.mRow,tDitherLoop.mCol);
@@ -267,7 +267,7 @@ void CmdLineExec::executeGo14(Ris::CmdLineCmd* aCmd)
    aCmd->setArgDefault(1, 1);
    aCmd->setArgDefault(2, 1);
 
-   SV::RCDitherLoop2 tDitherLoop(aCmd->argInt(1), aCmd->argInt(2));
+   SV::RCDitherLoop2 tDitherLoop(SV::RCIndex(100, 200),aCmd->argInt(1), aCmd->argInt(2));
    while (tDitherLoop.loop())
    {
       Prn::print(0, "DitherLoop2 %3d %3d", tDitherLoop.mRow, tDitherLoop.mCol);
@@ -340,7 +340,7 @@ void CmdLineExec::executeGo22(Ris::CmdLineCmd* aCmd)
    aCmd->setArgDefault(1, 1);
    aCmd->setArgDefault(2, 1);
 
-   SV::RCDitherLoop2 tDitherLoop(aCmd->argInt(1), aCmd->argInt(2));
+   SV::RCDitherLoop2 tDitherLoop(SV::RCIndex(100, 200),aCmd->argInt(1), aCmd->argInt(2));
    for (tDitherLoop.first(); tDitherLoop.test(); tDitherLoop.next())
    {
       Prn::print(0, "DitherLoop2 %3d %3d", tDitherLoop.mRow, tDitherLoop.mCol);

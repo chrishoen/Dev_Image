@@ -139,12 +139,10 @@ void SimMorphFilter::doFilterHighPixel1(RCIndex aX)
    //***************************************************************************
    // Nearest neighbor rule testing.
 
-   // Loop index,
-   SV::RCDitherLoop1 tLoop;
-
    // Set adjacent row and column pixels.
-   tLoop.set(aX, mP->mDelta.mRows, 1);
-   for (tLoop.first(); tLoop.test(); tLoop.next())
+   // Loop index,
+   SV::RCDitherLoop2 tLoop(aX, mP->mDelta.mRows, mP->mDelta.mCols);
+   while (tLoop.loop())
    {
       mOutput.at(tLoop()) = 255;
    }

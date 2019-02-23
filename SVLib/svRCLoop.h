@@ -506,12 +506,11 @@ public:
 // functionality to construct for loops with array indices.
 // It is used for loops that dither a square around a point.
 //
-// For odd rows, it moves left to right and then for even rows it moves right
-// to left, see text at the end of this file.
+// For each row, it moves left to right, see text at the end of this file.
 // >>>>>
-// <<<<<
 // >>>>>
-// <<<<<
+// >>>>>
+// >>>>>
 // >>>>>
 
 class RCDitherLoop2
@@ -524,11 +523,14 @@ public:
    // Members:
 
    bool mFirst;
+   short int mRowLoop;
+   short int mColLoop;
    short int mRow;
    short int mCol;
-   short int mLoop;
-   short int mDelta;
-   bool mMoveRight;
+   short int mRowA;
+   short int mColA;
+   short int mRowC;
+   short int mColC;
 
    //***************************************************************************
    //***************************************************************************
@@ -536,14 +538,31 @@ public:
    // Methods.
 
    // Constructor.
-   RCDitherLoop2(int aLoop, int aDelta)
+   RCDitherLoop2(RCIndex aCenter, int aRowLoop, int aColLoop)
    {
       mFirst = true;
-      mRow = -aLoop * aDelta;
-      mCol = -aLoop * aDelta;
-      mLoop = aLoop;
-      mDelta = aDelta;
-      mMoveRight = true;
+      mRowLoop = aRowLoop;
+      mColLoop = aColLoop;
+      mRowA = -aRowLoop;
+      mColA = -aColLoop;
+      mRowC = aCenter.mRow;
+      mColC = aCenter.mCol;
+      mRow = mRowA + mRowC;
+      mCol = mColA + mColC;
+   }
+
+   // Constructor.
+   void set(RCIndex aCenter, int aRowLoop, int aColLoop)
+   {
+      mFirst = true;
+      mRowLoop = aRowLoop;
+      mColLoop = aColLoop;
+      mRowA = -aRowLoop;
+      mColA = -aColLoop;
+      mRowC = aCenter.mRow;
+      mColC = aCenter.mCol;
+      mRow = mRowA + mRowC;
+      mCol = mColA + mColC;
    }
 
    // Return the current row and column.
@@ -560,32 +579,19 @@ public:
    // Advance the loop. Return true if the loop is not finished.
    bool advance()
    {
-      if (mMoveRight)
+      if (mColA != mColLoop)
       {
-         if (mCol != mLoop * mDelta)
-         {
-            mCol += mDelta;
-         }
-         else
-         {
-            mMoveRight = false;
-            mRow += mDelta;
-         }
+         mColA++;
       }
       else
       {
-         if (mCol != -mLoop * mDelta)
-         {
-            mCol -= mDelta;
-         }
-         else
-         {
-            mMoveRight = true;
-            mRow += mDelta;
-         }
+         mColA = -mColLoop;
+         mRowA++;
       }
+      mRow = mRowA + mRowC;
+      mCol = mColA + mColC;
 
-      return mRow <= mLoop * mDelta;
+      return mRowA <= mRowLoop;
    }
 
    bool loop()
@@ -601,41 +607,76 @@ public:
 
    void first()
    {
-      mRow = -mLoop * mDelta;
-      mCol = -mLoop * mDelta;
+      mRowA = -mRowLoop;
+      mColA = -mColLoop;
+      mRow = mRowA + mRowC;
+      mCol = mColA + mColC;
+   }
+
+   void firstRow()
+   {
+      mRowA = -mRowLoop;
+      mRow = mRowA + mRowC;
+   }
+
+   void firstCol()
+   {
+      mColA = -mColLoop;
+      mCol = mColA + mColC;
+   }
+
+   void centerRow()
+   {
+      mRowA = 0;
+      mRow = mRowA + mRowC;
+   }
+
+   void centerCol()
+   {
+      mColA = 0;
+      mCol = mColA + mColC;
    }
 
    bool test()
    {
-      return mRow <= mLoop * mDelta;
+      return mRowA <= mRowLoop;
+   }
+
+   bool testRow()
+   {
+      return mRowA <= mRowLoop;
+   }
+
+   bool testCol()
+   {
+      return mColA <= mColLoop;
    }
 
    void next()
    {
-      if (mMoveRight)
+      if (mColA != mColLoop)
       {
-         if (mCol != mLoop * mDelta)
-         {
-            mCol += mDelta;
-         }
-         else
-         {
-            mMoveRight = false;
-            mRow += mDelta;
-         }
+         mColA++;
       }
       else
       {
-         if (mCol != -mLoop * mDelta)
-         {
-            mCol -= mDelta;
-         }
-         else
-         {
-            mMoveRight = true;
-            mRow += mDelta;
-         }
+         mColA = -mColLoop;
+         mRowA++;
       }
+      mRow = mRowA + mRowC;
+      mCol = mColA + mColC;
+   }
+
+   void nextRow()
+   {
+      mRowA++;
+      mRow = mRowA + mRowC;
+   }
+
+   void nextCol()
+   {
+      mColA++;
+      mCol = mColA + mColC;
    }
 };
 
