@@ -73,6 +73,10 @@ public:
    // Sim generated image size.
    RCSize mImageSize;
 
+   // If true then generate and write a first image.
+   bool mGenerateFirst;
+   bool mWriteFirst;
+
    // Iterations.
    int mRepeatNum;
    int mMorphNum;

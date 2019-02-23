@@ -32,6 +32,9 @@ void SimMorphParms::reset()
    mValid = false;
    mName[0] = 0;
    mImageSize = gSysParms.mImageSize;
+   mGenerateFirst = false;
+   mWriteFirst = false;
+
    mRepeatNum = 0;
    mMorphNum = 0;
    mWriteNum = 0;
@@ -50,6 +53,8 @@ void SimMorphParms::show(const char* aLabel)
    printf("SimMorphParms******************* %s\n",aLabel);
    printf("Name                     %10s\n", mName);
    printf("ImageSize                %10d %10d\n", mImageSize.mRows, mImageSize.mCols);
+   printf("GenerateFirst            %s\n", my_string_from_bool(mGenerateFirst));
+   printf("WriteFirst               %s\n", my_string_from_bool(mWriteFirst));
    printf("RepeatNum                %10d\n", mRepeatNum);
    printf("MorphNum                 %10d\n", mMorphNum);
    printf("WriteNum                 %10d\n", mWriteNum);
@@ -69,6 +74,8 @@ void SimMorphParms::execute(Ris::CmdLineCmd* aCmd)
 {
    mValid = true;
    if (aCmd->isCmd("ImageSize"))      mImageSize.execute(aCmd);
+   if (aCmd->isCmd("GenerateFirst"))  mGenerateFirst = aCmd->argBool(1);
+   if (aCmd->isCmd("WriteFirst"))     mWriteFirst = aCmd->argBool(1);
    if (aCmd->isCmd("RepeatNum"))      mRepeatNum = aCmd->argInt(1);
    if (aCmd->isCmd("MorphNum"))       mMorphNum = aCmd->argInt(1);
    if (aCmd->isCmd("WriteNum"))       mWriteNum = aCmd->argInt(1);

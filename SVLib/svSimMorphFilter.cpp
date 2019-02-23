@@ -45,13 +45,13 @@ void SimMorphFilter::reset()
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
-// Initialize a first image.
+// Generate a first image.
 
-void SimMorphFilter::doInitializeImage(
+void SimMorphFilter::doGenerateFirstImage(
    cv::Mat&       aOutput)              // Output
 {
    // Create an image filled with all zeros.
-   aOutput = cv::Mat::zeros(mP->mImageSize.mRows, mP->mImageSize.mCols, CV_8UC1);
+   aOutput = cv::Mat(mP->mImageSize.mRows, mP->mImageSize.mCols, CV_8UC1, cv::Scalar(0));
 
    // Set the image wrappers.
    mOutput.set(aOutput);

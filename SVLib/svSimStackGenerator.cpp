@@ -70,19 +70,6 @@ void SimStackGenerator::doGenerateImageStack()
 {
    Prn::print(0, "SimStackGenerator::doGenerateStack");
 
-   // Initialize the morph filter.
-   mMorphFilter.initialize(&mP->mStackMorphParmsA);
-
-   // Initialize the first output image.
-   mMorphFilter.doInitializeImage(mOutputImage);
-   SV::showImageInfo(Prn::View01, "OutputImage", mOutputImage);
-
-   // Write the first image.
-   if (mP->mStackWriteFirst)
-   {
-      doWriteOutputImage();
-   }
-
    // Apply the morph filters.
    doApplyMorphFilter(&mP->mStackMorphParmsA);
 }
@@ -101,6 +88,19 @@ void SimStackGenerator::doApplyMorphFilter(SimMorphParms* aParms)
 
    // Initialize the morph filter.
    mMorphFilter.initialize(aParms);
+
+   // Generate the first output image.
+   if (aParms->mGenerateFirst)
+   {
+      mMorphFilter.doGenerateFirstImage(mOutputImage);
+      SV::showImageInfo(Prn::View01, "FirstOutputImage", mOutputImage);
+
+      // Write the first image.
+      if (aParms->mWriteFirst)
+      {
+         doWriteOutputImage();
+      }
+   }
 
    // Loop for the number of repeats.
    for (int tRepeatCount = 0; tRepeatCount < aParms->mRepeatNum; tRepeatCount++)

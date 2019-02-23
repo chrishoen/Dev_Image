@@ -62,8 +62,8 @@ public:
    //***************************************************************************
    // Methods.
 
-   // Initialize a first image.
-   void doInitializeImage(
+   // Generate a first image.
+   void doGenerateFirstImage(
       cv::Mat&       aOutput);             // Output
 
    // Filter an image according to the parms.

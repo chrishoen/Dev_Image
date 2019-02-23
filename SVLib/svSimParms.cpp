@@ -34,7 +34,6 @@ void SimParms::reset()
    mImageGenParmsS3.reset();
 
    mStackName[0] = 0;
-   mStackWriteFirst = false;
    mStackMorphParmsA.reset();
    mStackMorphParmsB.reset();
    mStackMorphParmsC.reset();
@@ -74,7 +73,6 @@ void SimParms::show()
    {
       tStackFlag = true;
       printf("StackName                         %s\n", mStackName);
-      printf("StackWriteFirst                   %s\n", my_string_from_bool(mStackWriteFirst));
       mStackMorphParmsA.show("MorphA");
    }
    if (mStackMorphParmsB.mValid)
@@ -117,7 +115,6 @@ void SimParms::execute(Ris::CmdLineCmd* aCmd)
    if (aCmd->isCmd("ImageGenParmsS3"))      readSection(aCmd->argString(1), &mImageGenParmsS3);
 
    if (aCmd->isCmd("StackName"))           aCmd->copyArgString(1, mStackName, cMaxStringSize);
-   if (aCmd->isCmd("StackWriteFirst"))     mStackWriteFirst = aCmd->argBool(1);
 
    if (aCmd->isCmd("StackMorphParmsA"))
    {
