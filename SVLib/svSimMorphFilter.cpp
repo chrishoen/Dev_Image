@@ -86,17 +86,40 @@ void SimMorphFilter::doFilterImage(
    //***************************************************************************
    //***************************************************************************
    //***************************************************************************
-   // Loop through the image.
+   // Loop through the image for mode 1.
 
    // Loop through the image. Ignore the top and bottom rows and ignore
    // the left and right edge columns.
-   SV::RCIndexLoop tLoop(RCIndex(1, 1),aInputImage.rows - 2, aInputImage.cols - 2);
-   while (tLoop.loop())
+   if (mP->mMode == 1)
    {
-      // Filter each pixel that is high.
-      if (mInput.at(tLoop()) != 0)
+      SV::RCIndexLoop tLoop(RCIndex(1, 1), aInputImage.rows - 2, aInputImage.cols - 2);
+      while (tLoop.loop())
       {
-         doFilterHighPixel2(tLoop());
+         // Filter each pixel that is high.
+         if (mInput.at(tLoop()) != 0)
+         {
+            doFilterHighPixel1(tLoop());
+         }
+      }
+   }
+
+   //***************************************************************************
+   //***************************************************************************
+   //***************************************************************************
+   // Loop through the image for mode 2.
+
+   // Loop through the image. Ignore the top and bottom rows and ignore
+   // the left and right edge columns.
+   if (mP->mMode == 2)
+   {
+      SV::RCIndexLoop tLoop(RCIndex(1, 1), aInputImage.rows - 2, aInputImage.cols - 2);
+      while (tLoop.loop())
+      {
+         // Filter each pixel that is high.
+         if (mInput.at(tLoop()) != 0)
+         {
+            doFilterHighPixel2(tLoop());
+         }
       }
    }
 }
@@ -104,8 +127,36 @@ void SimMorphFilter::doFilterImage(
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
 // Filter a pixel that is high.
-// 
+
+void SimMorphFilter::doFilterHighPixel1(RCIndex aX)
+{
+   //***************************************************************************
+   //***************************************************************************
+   //***************************************************************************
+   // Nearest neighbor rule testing.
+
+   // Loop index,
+   SV::RCDitherLoop1 tLoop;
+
+   // Set adjacent row and column pixels.
+   tLoop.set(aX, mP->mDelta.mRows, 1);
+   for (tLoop.first(); tLoop.test(); tLoop.next())
+   {
+      mOutput.at(tLoop()) = 255;
+   }
+}
+
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+// Filter a pixel that is high.
 
 void SimMorphFilter::doFilterHighPixel2(RCIndex aX)
 {
