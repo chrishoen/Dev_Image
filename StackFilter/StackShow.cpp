@@ -255,13 +255,25 @@ void StackShow::doShow()
 
    // Set roi center.
    SV::gImageParms.mRoiPixel = mResults.mColMin;
-
-   switch (SV::gImageParms.mRoiSelectCode)
+   if (SV::gImageParms.mRoiShowMode == 1)
    {
-   case 1: SV::gImageParms.mRoiPixel = mResults.mRowMin; break;
-   case 2: SV::gImageParms.mRoiPixel = mResults.mColMax; break;
-   case 3: SV::gImageParms.mRoiPixel = mResults.mRowMax; break;
-   case 4: SV::gImageParms.mRoiPixel = mResults.mColMin; break;
+      switch (SV::gImageParms.mRoiSelectCode)
+      {
+      case 1: SV::gImageParms.mRoiPixel = mResults.mMinMin; break;
+      case 2: SV::gImageParms.mRoiPixel = mResults.mMinMax; break;
+      case 3: SV::gImageParms.mRoiPixel = mResults.mMaxMax; break;
+      case 4: SV::gImageParms.mRoiPixel = mResults.mMaxMin; break;
+      }
+   }
+   if (SV::gImageParms.mRoiShowMode == 2)
+   {
+      switch (SV::gImageParms.mRoiSelectCode)
+      {
+      case 1: SV::gImageParms.mRoiPixel = mResults.mRowMin; break;
+      case 2: SV::gImageParms.mRoiPixel = mResults.mColMax; break;
+      case 3: SV::gImageParms.mRoiPixel = mResults.mRowMax; break;
+      case 4: SV::gImageParms.mRoiPixel = mResults.mColMin; break;
+      }
    }
    // Show.
    char tLabel[100];

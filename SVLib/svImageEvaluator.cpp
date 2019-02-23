@@ -86,12 +86,42 @@ void ImageEvaluator::doEvaluateHighPixel(RCIndex aX)
    if (mResults->mFirst)
    {
       mResults->mFirst = false;
+
+      mResults->mMinRowInt = aX.mRow;
+      mResults->mMaxRowInt = aX.mRow;
+      mResults->mMinColInt = aX.mCol;
+      mResults->mMaxColInt = aX.mCol;
+
+      mResults->mMinMin.mRow = mResults->mMinRowInt;
+      mResults->mMinMin.mCol = mResults->mMinColInt;
+      mResults->mMinMax.mRow = mResults->mMinRowInt;
+      mResults->mMinMax.mCol = mResults->mMaxColInt;
+      mResults->mMaxMin.mRow = mResults->mMaxRowInt;
+      mResults->mMaxMin.mCol = mResults->mMinColInt;
+      mResults->mMaxMax.mRow = mResults->mMaxRowInt;
+      mResults->mMaxMax.mCol = mResults->mMaxColInt;
+
       mResults->mRowMin = aX;
       mResults->mRowMax = aX;
       mResults->mColMin = aX;
       mResults->mColMax = aX;
       return;
    }
+
+   // Store results for other evaluations.
+   if (aX.mRow <  mResults->mMinRowInt) mResults->mMinRowInt = aX.mRow;
+   if (aX.mRow >= mResults->mMaxRowInt) mResults->mMaxRowInt = aX.mRow;
+   if (aX.mCol <  mResults->mMinColInt) mResults->mMinColInt = aX.mCol;
+   if (aX.mCol >= mResults->mMaxColInt) mResults->mMaxColInt = aX.mCol;
+
+   mResults->mMinMin.mRow = mResults->mMinRowInt;
+   mResults->mMinMin.mCol = mResults->mMinColInt;
+   mResults->mMinMax.mRow = mResults->mMinRowInt;
+   mResults->mMinMax.mCol = mResults->mMaxColInt;
+   mResults->mMaxMin.mRow = mResults->mMaxRowInt;
+   mResults->mMaxMin.mCol = mResults->mMinColInt;
+   mResults->mMaxMax.mRow = mResults->mMaxRowInt;
+   mResults->mMaxMax.mCol = mResults->mMaxColInt;
 
    // Store results for other evaluations.
    if (aX.mRow <  mResults->mRowMin.mRow) mResults->mRowMin = aX;

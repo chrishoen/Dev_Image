@@ -35,6 +35,18 @@ public:
    int mHighCount;
 
    // Row and column mins and maxs.
+   int mMinRowInt;
+   int mMaxRowInt;
+   int mMinColInt;
+   int mMaxColInt;
+
+   // Row and column mins and maxs.
+   RCIndex mMinMin;
+   RCIndex mMinMax;
+   RCIndex mMaxMin;
+   RCIndex mMaxMax;
+
+   // Row and column mins and maxs.
    RCIndex mRowMin;
    RCIndex mRowMax;
    RCIndex mColMin;
@@ -50,7 +62,7 @@ public:
    void reset();
 
    // Show.
-   void show(int aPrintFilter,const char* aLabel);
+   void show(int aPrintFilter, const char* aLabel);
 };
 
 //******************************************************************************

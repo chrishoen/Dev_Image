@@ -74,6 +74,7 @@ public:
    int     mRoiB;
    int     mRoiHeaderCode;
    int     mRoiSelectCode;
+   int     mRoiShowMode;
 
    // Image file name.
    char mInputImageFileName[cMaxStringSize];

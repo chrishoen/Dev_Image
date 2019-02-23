@@ -40,6 +40,7 @@ void ImageParms::reset()
    mRoiB = 0;
    mRoiHeaderCode = 0;
    mRoiSelectCode = 0;
+   mRoiShowMode = 0;
 }
 
 //******************************************************************************
@@ -64,6 +65,7 @@ void ImageParms::show()
    printf("RoiPixel                 %10d %10d\n", mRoiPixel.mRow, mRoiPixel.mCol);
    printf("RoiB                     %10d\n", mRoiB);
    printf("RoiHeaderCode            %10d\n", mRoiHeaderCode);
+   printf("RoiShowMode              %10d\n", mRoiShowMode);
    printf("RoiSelectCode            %10d\n", mRoiSelectCode);
    mNN3dRuleFilterParms.show();
    return;
@@ -87,6 +89,7 @@ void ImageParms::execute(Ris::CmdLineCmd* aCmd)
    if (aCmd->isCmd("RoiPixel"))            mRoiPixel.execute(aCmd);
    if (aCmd->isCmd("RoiB"))                mRoiB = aCmd->argInt(1);
    if (aCmd->isCmd("RoiHeaderCode"))       mRoiHeaderCode = aCmd->argInt(1);
+   if (aCmd->isCmd("RoiShowMode"))         mRoiShowMode = aCmd->argInt(1);
    if (aCmd->isCmd("RoiSelectCode"))       mRoiSelectCode = aCmd->argInt(1);
 
    if (aCmd->isCmd("InputImageFileName"))  aCmd->copyArgString(1, mInputImageFileName, cMaxStringSize);
