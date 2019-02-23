@@ -62,6 +62,7 @@ void CmdLineExec::execute(Ris::CmdLineCmd* aCmd)
    if (aCmd->isCmd("GO4"))       executeGo4(aCmd);
    if (aCmd->isCmd("GO5"))       executeGo5(aCmd);
    if (aCmd->isCmd("Parms"))     executeParms(aCmd);
+   if (aCmd->isCmd("Parms2"))    executeParms2(aCmd);
 }
 
 //******************************************************************************
@@ -296,6 +297,26 @@ void CmdLineExec::executeParms(Ris::CmdLineCmd* aCmd)
    SV::gParmParms.readMoreParms("default");
 
    SV::gImageParms.show();
+   SV::gSimParms.show();
+}
+
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+
+void CmdLineExec::executeParms2(Ris::CmdLineCmd* aCmd)
+{
+   SV::gSysParms.reset();
+   SV::gSysParms.readSection("default");
+
+   Display::gParms.reset();
+   Display::gParms.readSection("default");
+
+   SV::gParmParms.reset();
+   SV::gParmParms.readSection("default");
+   SV::gParmParms.readMoreParms("default");
+
+// SV::gImageParms.show();
    SV::gSimParms.show();
 }
 

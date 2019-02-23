@@ -55,8 +55,7 @@ void SimStackGenerator::initialize(SimParms* aParms)
    mP = aParms;
 
    // Initialize variables.
-   mStackSize = 0;
-   mImageFilePaths.clear();
+   mWriteCount = 0;
 
    mInputImage.release();
    mOutputImage.release();
@@ -70,52 +69,58 @@ void SimStackGenerator::initialize(SimParms* aParms)
 void SimStackGenerator::doGenerateImageStack()
 {
    Prn::print(0, "SimStackGenerator::doGenerateStack");
-   // Set the stack size.
-   mStackSize = mP->mStackSize;
-
-   // Initialize the file paths.
-   doSetImageFilePaths();
-
 
    // Initialize the morph filter.
-   mMorphFilter.initialize(&SV::gSimParms.mStackMorphParms);
+   mMorphFilter.initialize(&mP->mStackMorphParmsA);
 
    // Initialize the first output image.
    mMorphFilter.doInitializeImage(mOutputImage);
    SV::showImageInfo(Prn::View01, "OutputImage", mOutputImage);
 
-   // Loop for each generated image, top down.
-   for (int tLoopIndex = 0; tLoopIndex < mStackSize; tLoopIndex++)
+   // Write the first image.
+   if (mP->mStackWriteFirst)
    {
-      // Write the output image to a file.
-      doWriteOutputImage(tLoopIndex);
-
-      // Copy the output image to the input image.
-      mInputImage = mOutputImage;
-      
-      // Morph the input into a new output,
-      mMorphFilter.doFilterImage(mInputImage, mOutputImage);
+      doWriteOutputImage();
    }
+
+   // Apply the morph filters.
+   doApplyMorphFilter(&mP->mStackMorphParmsA);
 }
 
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
-// Set the image file paths.
+// Apply a morph filter to generate output images.
 
-void SimStackGenerator::doSetImageFilePaths()
+void SimStackGenerator::doApplyMorphFilter(SimMorphParms* aParms)
 {
-   // Set the stack size.
-   mStackSize = mP->mStackSize;
-   mImageFilePaths.clear();
+   // Guard.
+   if (!aParms->mValid) return;
 
-   // Set the image file path.
-   for (int i = 0; i < mStackSize; i++)
+   Prn::print(Prn::View01, "doApplyMorphFilter");
+
+   // Initialize the morph filter.
+   mMorphFilter.initialize(aParms);
+
+   // Loop for the number of repeats.
+   for (int tRepeatCount = 0; tRepeatCount < aParms->mRepeatNum; tRepeatCount++)
    {
-      char tFilePath[200];
-      sprintf(tFilePath, ".\\work\\%s%04d.png", mP->mStackName,i);
-      Prn::print(Prn::View11,"FilePath %s", tFilePath);
-      mImageFilePaths.push_back(tFilePath);
+      // Loop for the number of morphs.
+      for (int tMorphCount = 0; tMorphCount < aParms->mMorphNum; tMorphCount++)
+      {
+         // Copy the output image to the input image.
+         mInputImage = mOutputImage;
+
+         // Morph the input image into a new output image.
+         mMorphFilter.doFilterImage(mInputImage, mOutputImage);
+      }
+
+      // Loop for the number of writes.
+      for (int tWriteCount = 0; tWriteCount < aParms->mWriteNum; tWriteCount++)
+      {
+         // Write the output image to a file.
+         doWriteOutputImage();
+      }
    }
 }
 
@@ -124,10 +129,18 @@ void SimStackGenerator::doSetImageFilePaths()
 //******************************************************************************
 // Write the output image to a file.
 
-void SimStackGenerator::doWriteOutputImage(int aIndex)
+void SimStackGenerator::doWriteOutputImage()
 {
-   Prn::print(Prn::View01, "WriteOutput %s", mImageFilePaths[aIndex].c_str());
-   cv::imwrite(mImageFilePaths[aIndex].c_str(), mOutputImage);
+   // Get output file path.
+   char tFilePath[200];
+   sprintf(tFilePath, ".\\work\\%s%04d.png", mP->mStackName, mWriteCount);
+   Prn::print(Prn::View01, "WriteOutput %s", tFilePath);
+
+   // Write output file.
+   cv::imwrite(tFilePath, mOutputImage);
+
+   // Advance.
+   mWriteCount++;
 }
 
 //******************************************************************************

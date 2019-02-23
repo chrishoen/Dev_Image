@@ -34,8 +34,11 @@ void SimParms::reset()
    mImageGenParmsS3.reset();
 
    mStackName[0] = 0;
-   mStackSize = 0;
-   mStackMorphParms.reset();
+   mStackWriteFirst = false;
+   mStackMorphParmsA.reset();
+   mStackMorphParmsB.reset();
+   mStackMorphParmsC.reset();
+   mStackMorphParmsD.reset();
 }
 
 //******************************************************************************
@@ -49,6 +52,11 @@ void SimParms::expand()
    mImageGenParmsS1.expand();
    mImageGenParmsS2.expand();
    mImageGenParmsS3.expand();
+
+   mStackMorphParmsA.expand();
+   mStackMorphParmsB.expand();
+   mStackMorphParmsC.expand();
+   mStackMorphParmsD.expand();
 }
 
 //******************************************************************************
@@ -61,17 +69,35 @@ void SimParms::show()
    printf("\n");
    printf("SimParms************************************************ %s\n", mTargetSection);
 
-   if (mStackSize == 0)
+   bool tStackFlag = false;
+   if (mStackMorphParmsA.mValid)
    {
-      mImageGenParmsS1.show("D");
-      mImageGenParmsS2.show("C");
-      mImageGenParmsS3.show("U");
-   }
-   else
-   {
+      tStackFlag = true;
       printf("StackName                         %s\n", mStackName);
-      printf("StackSize                         %10d\n", mStackSize);
-      mStackMorphParms.show("Stack");
+      printf("StackWriteFirst                   %s\n", my_string_from_bool(mStackWriteFirst));
+      mStackMorphParmsA.show("MorphA");
+   }
+   if (mStackMorphParmsB.mValid)
+   {
+      tStackFlag = true;
+      mStackMorphParmsB.show("MorphB");
+   }
+   if (mStackMorphParmsC.mValid)
+   {
+      tStackFlag = true;
+      mStackMorphParmsC.show("MorphC");
+   }
+   if (mStackMorphParmsD.mValid)
+   {
+      tStackFlag = true;
+      mStackMorphParmsD.show("MorphD");
+   }
+
+   if (!tStackFlag)
+   {
+      mImageGenParmsS1.show("S1");
+      mImageGenParmsS2.show("S2");
+      mImageGenParmsS3.show("S3");
    }
 }
 
@@ -91,9 +117,11 @@ void SimParms::execute(Ris::CmdLineCmd* aCmd)
    if (aCmd->isCmd("ImageGenParmsS3"))      readSection(aCmd->argString(1), &mImageGenParmsS3);
 
    if (aCmd->isCmd("StackName"))           aCmd->copyArgString(1, mStackName, cMaxStringSize);
-   if (aCmd->isCmd("StackSize"))           mStackSize = aCmd->argInt(1);
-
-   if (aCmd->isCmd("StackMorphParms"))     readSection(aCmd->argString(1), &mStackMorphParms);
+   if (aCmd->isCmd("StackWriteFirst"))     mStackWriteFirst = aCmd->argBool(1);
+   if (aCmd->isCmd("StackMorphParmsA"))    readSection(aCmd->argString(1), &mStackMorphParmsA);
+   if (aCmd->isCmd("StackMorphParmsB"))    readSection(aCmd->argString(1), &mStackMorphParmsB);
+   if (aCmd->isCmd("StackMorphParmsC"))    readSection(aCmd->argString(1), &mStackMorphParmsC);
+   if (aCmd->isCmd("StackMorphParmsD"))    readSection(aCmd->argString(1), &mStackMorphParmsD);
 }
 
 //******************************************************************************

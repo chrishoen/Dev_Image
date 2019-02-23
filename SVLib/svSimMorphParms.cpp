@@ -29,7 +29,11 @@ SimMorphParms::SimMorphParms()
 
 void SimMorphParms::reset()
 {
+   mValid = false;
    mImageSize = gSysParms.mImageSize;
+   mRepeatNum = 0;
+   mMorphNum = 0;
+   mWriteNum = 0;
    mMode = 0;
    mDelta.reset();
 }
@@ -41,9 +45,13 @@ void SimMorphParms::reset()
 
 void SimMorphParms::show(const char* aLabel)
 {
+   if (!mValid) return;
    printf("SimMorphParms******************* %s\n",aLabel);
    printf("ImageSize                %10d %10d\n", mImageSize.mRows, mImageSize.mCols);
-   printf("Mode                     %10d\n",      mMode);
+   printf("RepeatNum                %10d\n", mRepeatNum);
+   printf("MorphNum                 %10d\n", mMorphNum);
+   printf("WriteNum                 %10d\n", mWriteNum);
+   printf("Mode                     %10d\n", mMode);
    printf("Delta                    %10d %10d\n", mDelta.mRows, mDelta.mCols);
    printf("SimMorphParms*******************\n");
 }
@@ -57,9 +65,23 @@ void SimMorphParms::show(const char* aLabel)
 
 void SimMorphParms::execute(Ris::CmdLineCmd* aCmd)
 {
+   mValid = true;
    if (aCmd->isCmd("ImageSize"))      mImageSize.execute(aCmd);
+   if (aCmd->isCmd("RepeatNum"))      mRepeatNum = aCmd->argInt(1);
+   if (aCmd->isCmd("MorphNum"))       mMorphNum = aCmd->argInt(1);
+   if (aCmd->isCmd("WriteNum"))       mWriteNum = aCmd->argInt(1);
    if (aCmd->isCmd("Mode"))           mMode = aCmd->argInt(1);
    if (aCmd->isCmd("Delta"))          mDelta.execute(aCmd);
+}
+
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+// Helpers.
+
+void SimMorphParms::expand()
+{
+   mValid = mRepeatNum != 0;
 }
 
 //******************************************************************************

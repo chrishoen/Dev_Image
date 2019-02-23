@@ -79,8 +79,11 @@ public:
 
    // Simulated image stack.
    char             mStackName[cMaxStringSize];
-   int              mStackSize;
-   SimMorphParms    mStackMorphParms;
+   bool             mStackWriteFirst;
+   SimMorphParms    mStackMorphParmsA;
+   SimMorphParms    mStackMorphParmsB;
+   SimMorphParms    mStackMorphParmsC;
+   SimMorphParms    mStackMorphParmsD;
 
    //***************************************************************************
    //***************************************************************************

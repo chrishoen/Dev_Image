@@ -44,21 +44,20 @@ public:
    //***************************************************************************
    // Members.
 
-   // Number of images to generate.
-   int mStackSize;
-
-   // List of image file paths.
-   std::vector<std::string> mImageFilePaths;
+   // Number of images that were generated.
+   int mWriteCount;
 
    //***************************************************************************
    //***************************************************************************
    //***************************************************************************
    // Members.
 
-   SV::SimMorphFilter mMorphFilter;
+   // Images.
    cv::Mat mInputImage;
    cv::Mat mOutputImage;
 
+   // Image filter.
+   SV::SimMorphFilter mMorphFilter;
 
    //***************************************************************************
    //***************************************************************************
@@ -85,11 +84,11 @@ public:
    //***************************************************************************
    // Methods.
 
-   // Set the image file paths.
-   void doSetImageFilePaths();
+   // Apply a morph filter to generate output images.
+   void doApplyMorphFilter(SimMorphParms* aParms);
 
    // Write the output image to a file.
-   void doWriteOutputImage(int aIndex);
+   void doWriteOutputImage();
 };
 
 //******************************************************************************
