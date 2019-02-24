@@ -1,0 +1,59 @@
+plane classes
+
+11 12 13
+21 22 23
+31 32 33
+
+22 always == 1
+
+01
+o x o       . = 0
+x x x       x = 1
+o x o       o = don't care
+
+02
+o x o
+o x o
+o x o
+
+and all other D8 group actions (rotations and reflections)
+10      20      31      40      50
+. . .   . . .   . . .   . . x   . . x
+. x .   . x .   . x x   . x x   . x x 
+. x .   . x x   . x x   . x x   x x x
+
+                32
+                . . .
+                . x .
+                x x x
+                
+# return the classification code for the neighbors of a plane.
+plane_classify(a11,a12,a13,a21,a23,a31,a32,a33):
+
+   # count the number of nearest neighbors.
+   neighbor_count = a11 + a12 + a13 + a21 + a23 + a31 + a32 + a33
+      
+   # count the number of corners.
+   corner_count = a11 + a13 + a31 + a33
+      
+   # count the number of changes.
+   change_count = 0
+   if (a11 != a21) change_count++
+   if (a12 != a11) change_count++
+   if (a13 != a12) change_count++
+   if (a23 != a13) change_count++
+   if (a33 != a23) change_count++
+   if (a32 != a33) change_count++
+   if (a31 != a32) change_count++
+   if (a21 != a31) change_count++
+   
+   # return a classification code.
+   if((a12 and a32) and (a21 and a23)): return 01
+   if((a12 and a32) or  (a21 and a23)): return 02
+   if((neighbor_count == 1) and (corner_count == 1)): return 10
+   if((neighbor_count == 2) and (change_count == 2)): return 20
+   if((neighbor_count == 3) and (change_count == 2) and (change_count == 1)): return 31
+   if((neighbor_count == 3) and (change_count == 2) and (corner_count == 2)): return 32
+   if((neighbor_count == 4) and (change_count == 2)): return 40
+   if((neighbor_count == 5) and (change_count == 2)): return 50
+   return 00                
