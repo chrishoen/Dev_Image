@@ -1,0 +1,102 @@
+# 1 up
+# 2 current
+# 3 down
+#
+# 11 12 13
+# 21 22 23
+# 31 32 33
+#
+# 111 112 113     211 212 213     311 312 313
+# 121 122 123     221 222 223     321 322 323
+# 131 132 133     231 232 233     331 332 333
+
+   
+# copy the input image to the output image.
+output_image = input_image_c.clone()
+
+# loop through all of the pixels in the input image
+# to filter the high pixels.
+for xpixel in input_image_c:
+   if input_image_c.at(xpixel) != 0
+      filter_high_pixel(xpixel)
+      
+# filter a high pixel based on nearest neighbor rules.
+def filter_high_pixel(x):
+   # extract nearest neighbors.
+   # 111 112 113     211 212 213     311 312 313
+   # 121 122 123     221 222 223     321 322 323
+   # 131 132 133     231 232 233     331 332 333
+   
+   211 = input_image_2(x.row-1,x.col-1) != 0
+   212 = input_image_2(x.row-1,x.col  ) != 0
+   213 = input_image_2(x.row-1,x.col+1) != 0
+   221 = input_image_2;(x.row  ,x.col-1) != 0
+   222 = input_image_2(x.row  ,x.col  ) != 0
+   223 = input_image_2(x.row  ,x.col+1) != 0
+   231 = input_image_2(x.row+1,x.col-1) != 0
+   CDU = input_image_2(x.row+1,x.col  ) != 0
+   233 = input_image_2(x.row+1,x.col+1) != 0
+
+   122 = input_image_1(x.row  ,x.col  ) != 0
+   322 = input_image_3(x.row  ,x.col  ) != 0
+
+   # RULE 1.
+   # If not on a contour of the current image.
+   #
+   # pass                       fail 
+   # x x x   x x x   x x x      x x x   x . x   x x x
+   # x x x   x x x   x x x      x x x   x x x   x x x
+   # x x x   x x x   x x x      x x x   x x x   x x x
+   #
+   if (212 and 232 and 221 and 223):
+      return 
+
+   # RULE 2.
+   # If on a vertical plane parallel to NS or ES.
+   #
+   # pass                       fail 
+   # . x x   . x x   . x x      . . x   . . x   . . x
+   # . x x   . x x   . x x      . x x   . x x   . x x
+   # . x x   . x x   . x x      x x x   x x x   x x x
+   #
+   if (122 and 322) and ((212 and 232) or (221 and 223)):
+      return 
+
+   # count the number of horizontal nearest neighbors.
+   NN_sum = 211 + 212 + 213 + 221 + 223 + 231 + 232 + 233
+      
+   # RULE 3.
+   # If on a vertical plane not parallel to NS or ES and
+   # at a horizontal corner.
+   #
+   # pass                       fail 
+   # . . .   . . .   . . .      . . x   . . x   . . x
+   # . x x   . x x   . x x      . x x   . x x   . x x
+   # . x x   . x x   . x x      x x x   x x x   x x x
+   #
+   if ((122 and 322) and (NN_sum <= 3)):
+      return 
+
+   # RULE 4.  
+   # If on a vertical plane not parallel to NS or ES and
+   # not at a horizontal corner.
+   #
+   # pass                       fail 
+   # . . x   . . x   . . x      . x x   . . x   . . .
+   # . x x   . x x   . x x      x x x   . x x   . . x
+   # x x x   x x x   x x x      x x x   x x x   . x x
+   #
+   if (122 and 322):
+      output_image.at(x) = parms.hc1
+      return
+
+   # RULE 5.
+   # Otherwise not on a vertical plane.
+   #
+   # pass                 
+   # . x x   . . x   . . .
+   # x x x   . x x   . . x
+   # x x x   x x x   . x x
+   #
+   output_image.at(x) = parms.hc2
+   return

@@ -1,0 +1,53 @@
+# 1 up
+# 2 current
+# 3 down
+#
+# 11 12 13
+# 21 22 23
+# 31 32 33
+#
+# 111 112 113     211 212 213     311 312 313
+# 121 122 123     221 222 223     321 322 323
+# 131 132 133     231 232 233     331 332 333
+      
+# calculate class variables.
+def calculate_classes(x):
+   # extract nearest neighbors.
+   # 111 112 113     211 212 213     311 312 313
+   # 121 122 123     221 222 223     321 322 323
+   # 131 132 133     231 232 233     331 332 333
+   
+   111 = input_image_1(x.row-1,x.col-1) != 0
+   112 = input_image_1(x.row-1,x.col  ) != 0
+   113 = input_image_1(x.row-1,x.col+1) != 0
+   121 = input_image_1(x.row  ,x.col-1) != 0
+   122 = input_image_1(x.row  ,x.col  ) != 0
+   123 = input_image_1(x.row  ,x.col+1) != 0
+   131 = input_image_1(x.row+1,x.col-1) != 0
+   132 = input_image_1(x.row+1,x.col  ) != 0
+   133 = input_image_1(x.row+1,x.col+1) != 0
+
+   211 = input_image_2(x.row-1,x.col-1) != 0
+   212 = input_image_2(x.row-1,x.col  ) != 0
+   213 = input_image_2(x.row-1,x.col+1) != 0
+   221 = input_image_2(x.row  ,x.col-1) != 0
+   222 = input_image_2(x.row  ,x.col  ) != 0
+   223 = input_image_2(x.row  ,x.col+1) != 0
+   231 = input_image_2(x.row+1,x.col-1) != 0
+   232 = input_image_2(x.row+1,x.col  ) != 0
+   233 = input_image_2(x.row+1,x.col+1) != 0
+
+   311 = input_image_3(x.row-1,x.col-1) != 0
+   312 = input_image_3(x.row-1,x.col  ) != 0
+   313 = input_image_3(x.row-1,x.col+1) != 0
+   321 = input_image_3(x.row  ,x.col-1) != 0
+   322 = input_image_3(x.row  ,x.col  ) != 0
+   323 = input_image_3(x.row  ,x.col+1) != 0
+   331 = input_image_3(x.row+1,x.col-1) != 0
+   332 = input_image_3(x.row+1,x.col  ) != 0
+   333 = input_image_3(x.row+1,x.col+1) != 0
+
+   class_s = plane_classify(211,212,213,221,223,231,232,233) 
+   class_r = plane_classify(121,122,123,221,223,321,322,323) 
+   class_c = plane_classify(112,122,132,212,232,312,322,332) 
+   return
