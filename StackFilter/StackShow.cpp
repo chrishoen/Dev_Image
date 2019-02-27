@@ -132,7 +132,7 @@ void StackShow::doFirstInLoop()
    // S2 = zeros
    // S3 = input
    mInputPathS1 = "empty";
-   mInputPathS2 = "zeros";
+   mInputPathS2 = "ones";
    mInputPathS3 = std::string(mReader.mString);
    mOutputPathW2 = "empty";
 
@@ -173,7 +173,7 @@ void StackShow::doAfterLoop()
    // S3 = ones
    mInputPathS1 = mInputPathS2;
    mInputPathS2 = mInputPathS3;
-   mInputPathS3 = "ones";
+   mInputPathS3 = "zeros";
    mOutputPathW2 = mInputPathS2;
 
    // Show.
@@ -224,9 +224,9 @@ void StackShow::doShow()
    mCols = mInputImageS2.cols;
 
    // Read image S1.
-   if (mSelectPathS1 == "zeros")
+   if (mSelectPathS1 == "ones")
    {
-      mInputImageS1 = cv::Mat(mRows, mCols, CV_8UC1, cv::Scalar(0));
+      mInputImageS1 = cv::Mat(mRows, mCols, CV_8UC1, cv::Scalar(255));
    }
    else
    {
@@ -234,9 +234,9 @@ void StackShow::doShow()
    }
 
    // Read image S3.
-   if (mSelectPathS3 == "ones")
+   if (mSelectPathS3 == "zeros")
    {
-      mInputImageS3 = cv::Mat(mRows, mCols, CV_8UC1, cv::Scalar(255));
+      mInputImageS3 = cv::Mat(mRows, mCols, CV_8UC1, cv::Scalar(0));
    }
    else
    {

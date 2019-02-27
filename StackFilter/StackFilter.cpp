@@ -124,7 +124,7 @@ void StackFilter::doFirstInLoop()
    // S2 = zeros
    // S3 = input
    mInputPathS1 = "empty";
-   mInputPathS2 = "zeros";
+   mInputPathS2 = "ones";
    mInputPathS3 = std::string(mReader.mString);
    mOutputPathW2 = "empty";
 
@@ -135,7 +135,7 @@ void StackFilter::doFirstInLoop()
    mInputImageS3 = cv::imread(mReader.mString, CV_LOAD_IMAGE_GRAYSCALE);
    mRows = mInputImageS3.rows;
    mCols = mInputImageS3.cols;
-   mInputImageS2 = cv::Mat(mRows, mCols, CV_8UC1, cv::Scalar(0));
+   mInputImageS2 = cv::Mat(mRows, mCols, CV_8UC1, cv::Scalar(255));
    mInputImageS1 = cv::Mat();
    mOutputImageW2 = cv::Mat();
 
@@ -188,7 +188,7 @@ void StackFilter::doAfterLoop()
    // S3 = ones
    mInputPathS1 = mInputPathS2;
    mInputPathS2 = mInputPathS3;
-   mInputPathS3 = std::string("ones");
+   mInputPathS3 = "zeros";
    mOutputPathW2 = mInputPathS2;
 
    // Shift images.
@@ -197,7 +197,7 @@ void StackFilter::doAfterLoop()
    // S3 = ones
    mInputImageS1 = mInputImageS2;
    mInputImageS2 = mInputImageS3;
-   mInputImageS3 = cv::Mat(mRows, mCols, CV_8UC1,cv::Scalar(255));
+   mInputImageS3 = cv::Mat(mRows, mCols, CV_8UC1,cv::Scalar(0));
 
    // Show.
    Prn::print(Prn::View03, "%3d %-25s %-25s %-25s $ %-25s",
@@ -238,10 +238,3 @@ void StackFilter::doZipOutput()
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
-
-#if 0
-Prn::print(0, "DataU %x", mInputImageS1.data);
-Prn::print(0, "DataC %x", mInputImageS2.data);
-Prn::print(0, "DataD %x", mInputImageS3.data);
-#endif
-
