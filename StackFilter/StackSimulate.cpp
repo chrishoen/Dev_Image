@@ -47,7 +47,7 @@ void StackSimulate::doSimStack()
 
    // Generate the stack gcode file.
    PX::GCodeWriter tGCodeWriter;
-   tGCodeWriter.doWrite(SV::gSimParms.mStackName, tStackGen.mWriteCount);
+   tGCodeWriter.doWrite(SV::gSimParms.mStackName, tStackGen.mStackSize);
 
    // Generate the stack gcode file.
    PX::ZipWriter tZipWriter;

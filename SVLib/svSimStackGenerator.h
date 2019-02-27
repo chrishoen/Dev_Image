@@ -44,6 +44,9 @@ public:
    //***************************************************************************
    // Members.
 
+   // Generated stack size.
+   int mStackSize;
+
    // Number of images that were generated.
    int mWriteCount;
 
@@ -83,6 +86,9 @@ public:
    //***************************************************************************
    //***************************************************************************
    // Methods.
+
+   // Calculate the stack size from the parms.
+   void doCalculateStackSize();
 
    // Apply a morph filter to generate output images.
    void doApplyMorphFilter(SimMorphParms* aParms);

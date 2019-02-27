@@ -55,6 +55,7 @@ void SimStackGenerator::initialize(SimParms* aParms)
    mP = aParms;
 
    // Initialize variables.
+   mStackSize = 0;
    mWriteCount = 0;
 
    mInputImage.release();
@@ -70,8 +71,54 @@ void SimStackGenerator::doGenerateImageStack()
 {
    Prn::print(0, "SimStackGenerator::doGenerateStack");
 
+   // Calculate the stack size from the parms.
+   doCalculateStackSize();
+
    // Apply the morph filters.
    doApplyMorphFilter(&mP->mStackMorphParmsA);
+   doApplyMorphFilter(&mP->mStackMorphParmsB);
+   doApplyMorphFilter(&mP->mStackMorphParmsC);
+   doApplyMorphFilter(&mP->mStackMorphParmsD);
+}
+
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+// Calculate the stack size from the parms.
+
+void SimStackGenerator::doCalculateStackSize()
+{
+   mStackSize = 0;
+
+   // ParmsA
+   if (mP->mStackMorphParmsA.mValid)
+   {
+      mStackSize += mP->mStackMorphParmsA.mRepeatNum * mP->mStackMorphParmsA.mWriteNum;
+      if (mP->mStackMorphParmsA.mWriteFirst) mStackSize++;
+   }
+
+   // ParmsB
+   if (mP->mStackMorphParmsB.mValid)
+   {
+      mStackSize += mP->mStackMorphParmsB.mRepeatNum * mP->mStackMorphParmsB.mWriteNum;
+      if (mP->mStackMorphParmsB.mWriteFirst) mStackSize++;
+   }
+
+   // ParmsC
+   if (mP->mStackMorphParmsC.mValid)
+   {
+      mStackSize += mP->mStackMorphParmsC.mRepeatNum * mP->mStackMorphParmsC.mWriteNum;
+      if (mP->mStackMorphParmsC.mWriteFirst) mStackSize++;
+   }
+
+   // ParmsD
+   if (mP->mStackMorphParmsD.mValid)
+   {
+      mStackSize += mP->mStackMorphParmsD.mRepeatNum * mP->mStackMorphParmsD.mWriteNum;
+      if (mP->mStackMorphParmsD.mWriteFirst) mStackSize++;
+   }
+
+   Prn::print(Prn::View01, "doCalculateStackSize %d", mStackSize);
 }
 
 //******************************************************************************
@@ -133,7 +180,8 @@ void SimStackGenerator::doWriteOutputImage()
 {
    // Get output file path.
    char tFilePath[200];
-   sprintf(tFilePath, ".\\work\\%s%04d.png", mP->mStackName, mWriteCount);
+   int tFileNum = mStackSize - mWriteCount - 1;
+   sprintf(tFilePath, ".\\work\\%s%04d.png", mP->mStackName, tFileNum);
    Prn::print(Prn::View01, "WriteOutput %s", tFilePath);
 
    // Write output file.
