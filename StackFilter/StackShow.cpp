@@ -173,7 +173,7 @@ void StackShow::doAfterLoop()
    // S3 = ones
    mInputPathS1 = mInputPathS2;
    mInputPathS2 = mInputPathS3;
-   mInputPathS3 = std::string("ones");
+   mInputPathS3 = "ones";
    mOutputPathW2 = mInputPathS2;
 
    // Show.
