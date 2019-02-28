@@ -90,7 +90,7 @@ void SimMorphFilter::doFilterImage(
 
    // Loop through the image. Ignore the top and bottom rows and ignore
    // the left and right edge columns.
-   if (mP->mMode == 1)
+   if (mP->isSquare())
    {
       SV::RCIndexLoop tLoop(RCIndex(1, 1), aInputImage.rows - 2, aInputImage.cols - 2);
       while (tLoop.loop())
@@ -98,7 +98,7 @@ void SimMorphFilter::doFilterImage(
          // Filter each pixel that is high.
          if (mInput.at(tLoop()) != 0)
          {
-            doFilterHighPixel1(tLoop());
+            doFilterHighPixel_SquareAdd(tLoop());
          }
       }
    }
@@ -110,7 +110,7 @@ void SimMorphFilter::doFilterImage(
 
    // Loop through the image. Ignore the top and bottom rows and ignore
    // the left and right edge columns.
-   if (mP->mMode == 2)
+   if (mP->isDiamond())
    {
       SV::RCIndexLoop tLoop(RCIndex(1, 1), aInputImage.rows - 2, aInputImage.cols - 2);
       while (tLoop.loop())
@@ -118,7 +118,7 @@ void SimMorphFilter::doFilterImage(
          // Filter each pixel that is high.
          if (mInput.at(tLoop()) != 0)
          {
-            doFilterHighPixel2(tLoop());
+            doFilterHighPixel_DiamondAdd(tLoop());
          }
       }
    }
@@ -132,7 +132,7 @@ void SimMorphFilter::doFilterImage(
 //******************************************************************************
 // Filter a pixel that is high.
 
-void SimMorphFilter::doFilterHighPixel1(RCIndex aX)
+void SimMorphFilter::doFilterHighPixel_SquareAdd(RCIndex aX)
 {
    //***************************************************************************
    //***************************************************************************
@@ -156,7 +156,7 @@ void SimMorphFilter::doFilterHighPixel1(RCIndex aX)
 //******************************************************************************
 // Filter a pixel that is high.
 
-void SimMorphFilter::doFilterHighPixel2(RCIndex aX)
+void SimMorphFilter::doFilterHighPixel_DiamondAdd(RCIndex aX)
 {
    //***************************************************************************
    //***************************************************************************

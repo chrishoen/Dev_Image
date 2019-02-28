@@ -76,9 +76,9 @@ public:
    //***************************************************************************
    // Methods.
 
-   // Filter a pixel. 1=square, 2=diagonal.
-   inline void doFilterHighPixel1(RCIndex aX);
-   inline void doFilterHighPixel2(RCIndex aX);
+   // Filter a pixel.
+   inline void doFilterHighPixel_SquareAdd(RCIndex aX);
+   inline void doFilterHighPixel_DiamondAdd(RCIndex aX);
 };
 
 
