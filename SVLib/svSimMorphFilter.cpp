@@ -45,6 +45,25 @@ void SimMorphFilter::reset()
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
+// Get nearest neighbors.
+
+inline void SimMorphFilter::doGetNearestNeighbors(RCIndex aX)
+{
+   m11 = mInput.at(aX.mRow - 1, aX.mCol - 1) != 0 ? 1 : 0;
+   m12 = mInput.at(aX.mRow - 1, aX.mCol    ) != 0 ? 1 : 0;
+   m13 = mInput.at(aX.mRow - 1, aX.mCol + 1) != 0 ? 1 : 0;
+
+   m21 = mInput.at(aX.mRow,     aX.mCol - 1) != 0 ? 1 : 0;
+   m23 = mInput.at(aX.mRow,     aX.mCol + 1) != 0 ? 1 : 0;
+
+   m31 = mInput.at(aX.mRow + 1, aX.mCol - 1) != 0 ? 1 : 0;
+   m32 = mInput.at(aX.mRow + 1, aX.mCol    ) != 0 ? 1 : 0;
+   m33 = mInput.at(aX.mRow + 1, aX.mCol + 1) != 0 ? 1 : 0;
+}
+
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
 // Generate a first image.
 
 void SimMorphFilter::doGenerateFirstImage(
@@ -134,17 +153,126 @@ void SimMorphFilter::doFilterImage(
 
 void SimMorphFilter::doFilterHighPixel_SquareAdd(RCIndex aX)
 {
-   //***************************************************************************
-   //***************************************************************************
-   //***************************************************************************
-   // Nearest neighbor rule testing.
+   // Locals.
+   RCIndex tCursor;
 
-   // Set adjacent row and column pixels.
-   // Loop index,
-   SV::RCDitherLoop2 tLoop(aX, mP->mDelta.mRows, mP->mDelta.mCols);
-   while (tLoop.loop())
+   // Get nearest neighbor variables.
+   doGetNearestNeighbors(aX);
+
+   // Nearest neighbor rule testing.
+   if (!m21)
    {
-      mOutput.at(tLoop()) = 255;
+      tCursor = aX;
+      tCursor.mCol--;
+      for (int i = 0; i < mP->mDelta.mCols; i++)
+      {
+         mOutput.at(tCursor) = 255;
+         tCursor.mCol--;
+      }
+   }
+
+   // Nearest neighbor rule testing.
+   if (!m23)
+   {
+      tCursor = aX;
+      tCursor.mCol++;
+      for (int i = 0; i < mP->mDelta.mCols; i++)
+      {
+         mOutput.at(tCursor) = 255;
+         tCursor.mCol++;
+      }
+   }
+
+   // Nearest neighbor rule testing.
+   if (!m12)
+   {
+      tCursor = aX;
+      tCursor.mRow--;
+      for (int i = 0; i < mP->mDelta.mRows; i++)
+      {
+         mOutput.at(tCursor) = 255;
+         tCursor.mRow--;
+      }
+   }
+
+   // Nearest neighbor rule testing.
+   if (!m32)
+   {
+      tCursor = aX;
+      tCursor.mRow++;
+      for (int i = 0; i < mP->mDelta.mRows; i++)
+      {
+         mOutput.at(tCursor) = 255;
+         tCursor.mRow++;
+      }
+   }
+
+   // Nearest neighbor rule testing.
+   if (!m11)
+   {
+      tCursor = aX;
+      tCursor.mRow--;
+      tCursor.mCol--;
+      for (int i = 0; i < mP->mDelta.mRows; i++)
+      {
+         for (int j = 0; j < mP->mDelta.mCols; j++)
+         {
+            mOutput.at(tCursor) = 255;
+            tCursor.mCol--;
+         }
+         tCursor.mRow--;
+      }
+   }
+
+   // Nearest neighbor rule testing.
+   if (!m13)
+   {
+      tCursor = aX;
+      tCursor.mRow--;
+      tCursor.mCol++;
+      for (int i = 0; i < mP->mDelta.mRows; i++)
+      {
+         for (int j = 0; j < mP->mDelta.mCols; j++)
+         {
+            mOutput.at(tCursor) = 255;
+            tCursor.mCol++;
+         }
+         tCursor.mRow--;
+      }
+   }
+
+   // Nearest neighbor rule testing.
+   if (!m31)
+   {
+      tCursor = aX;
+      tCursor.mRow++;
+      tCursor.mCol--;
+      for (int i = 0; i < mP->mDelta.mRows; i++)
+      {
+         for (int j = 0; j < mP->mDelta.mCols; j++)
+         {
+            mOutput.at(tCursor) = 255;
+            tCursor.mCol--;
+         }
+         tCursor.mRow++;
+      }
+   }
+
+   // Nearest neighbor rule testing.
+   if (!m33)
+   {
+      tCursor = aX;
+      tCursor.mRow++;
+      tCursor.mCol++;
+      for (int i = 0; i < mP->mDelta.mRows; i++)
+      {
+         for (int j = 0; j < mP->mDelta.mCols; j++)
+         {
+            mOutput.at(tCursor) = 255;
+            tCursor.mCol++;
+         }
+         tCursor.mRow++;
+      }
    }
 }
 
@@ -158,28 +286,58 @@ void SimMorphFilter::doFilterHighPixel_SquareAdd(RCIndex aX)
 
 void SimMorphFilter::doFilterHighPixel_DiamondAdd(RCIndex aX)
 {
-   //***************************************************************************
-   //***************************************************************************
-   //***************************************************************************
+   // Locals.
+   RCIndex tCursor;
+
+   // Get nearest neighbor variables.
+   doGetNearestNeighbors(aX);
+
    // Nearest neighbor rule testing.
-
-   // Loop index,
-   SV::RCDitherLoop1 tLoop;
-
-   // Set adjacent column pixels.
-   tLoop.set(aX, mP->mDelta.mCols, 1);
-   tLoop.centerRow();
-   for (tLoop.firstCol(); tLoop.testCol(); tLoop.nextCol())
+   if (!m21)
    {
-      mOutput.at(tLoop()) = 255;
+      tCursor = aX;
+      tCursor.mCol--;
+      for (int i = 0; i < mP->mDelta.mCols; i++)
+      {
+         mOutput.at(tCursor) = 255;
+         tCursor.mCol--;
+      }
    }
 
-   // Set adjacent row pixels.
-   tLoop.set(aX, mP->mDelta.mRows, 1);
-   tLoop.centerCol();
-   for (tLoop.firstRow(); tLoop.testRow(); tLoop.nextRow())
+   // Nearest neighbor rule testing.
+   if (!m23)
    {
-      mOutput.at(tLoop()) = 255;
+      tCursor = aX;
+      tCursor.mCol++;
+      for (int i = 0; i < mP->mDelta.mCols; i++)
+      {
+         mOutput.at(tCursor) = 255;
+         tCursor.mCol++;
+      }
+   }
+
+   // Nearest neighbor rule testing.
+   if (!m12)
+   {
+      tCursor = aX;
+      tCursor.mRow--;
+      for (int i = 0; i < mP->mDelta.mRows; i++)
+      {
+         mOutput.at(tCursor) = 255;
+         tCursor.mRow--;
+      }
+   }
+
+   // Nearest neighbor rule testing.
+   if (!m32)
+   {
+      tCursor = aX;
+      tCursor.mRow++;
+      for (int i = 0; i < mP->mDelta.mRows; i++)
+      {
+         mOutput.at(tCursor) = 255;
+         tCursor.mRow++;
+      }
    }
 }
 
