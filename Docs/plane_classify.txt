@@ -7,7 +7,7 @@ plane classes
 22 always == 1
 . = 0, x = 1, o = don't care
 
-0xee empty class
+-1 is empty class
 
 0x01
 o x o

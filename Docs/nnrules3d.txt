@@ -16,246 +16,59 @@ def filter_high_pixel(x):
    # If not on a horizontal edge.
    #
    # pass
-   # o o o   o x o   o o o 
-   # o o o   x x x   o o o 
-   # o o o   o x o   o o o 
-   # S=1     S=2     S=3
+   # o o o   o x o   o o o      o o o   o o o
+   # o o o   x x x   o o o      x x x   x x x
+   # o o o   o x o   o o o      o o o   o o o
+   # S=1     S=2     S=3        R=2     C=2
    #   
    if (class_s == 0x01):
       return 
 
    # RULE 2.
-   # If on a vertical plane parallel to R or C axis.
+   # If on a vertical plane and slice class is 4 or 5.
    #
    # pass                  
-   # . x x   . x x   . x x
-   # . x x   . x x   . x x
-   # . x x   . x x   . x x
-   # S=1     S=2     S=3
+   # . . x   . . x   . . x      . x x   . x x
+   # . x x   . x x   . x x      . x x   . x x
+   # . x x   . x x   . x x      . x x   . x x
+   # S=1     S=2     S=3        R=2     C=2
    #
-   if (class_r == 0x02 and class_2 == 0x02):
+   if (class_r == 0x02 and class_s >= 0x40):
+      output_image.at(x) = parms.hc1
       return 
 
-   # RULE 101.
-   # If on a vertical plane then test the horizontal class.
+   # RULE 3.
+   # If on a vertical plane and any other.
    #
-   # pass
-   # . . .   . . .   . . .
-   # . x .   . x .   . x .
-   # . x .   . x .   . x .
-   # S=1     S=2     S=3
+   # pass                  
+   # . . .   . . .   . . .      . . .   . . .
+   # . x x   . x x   . x x      . x x   . x x
+   # . x x   . x x   . x x      . x x   . x x
+   # S=1     S=2     S=3        R=2     C=2
    #
-   if (class_r == 0x02 and class_s == 0x10):
+   if (class_r == 0x02):
       return 
 
-   # RULE 102.
-   # If on a vertical plane then test the horizontal class.
+   # RULE 4.
+   # If not on a vertical plane and row or column class is 4 or 5.
    #
    # pass
-   # . . .   . . .   . . .
-   # . x .   . x .   . x .
-   # . x x   . x x   . x x
-   # S=1     S=2     S=3
+   # . . .   . . .   x x x      . . .   . . x
+   # . . .   . x x   x x x      . x x   . x x
+   # . . x   . x x   x x x      x x x   . x x
+   # S=1     S=2     S=3        R=2     C=2
    #
-   if (class_r == 0x02 and class_s == 0x20):
-      return 
-
-   # RULE 103.
-   # If on a vertical plane then test the horizontal class.
-   #
-   # pass
-   # . . .   . . .   . . .
-   # . x x   . x x   . x x
-   # . x x   . x x   . x x
-   # S=1     S=2     S=3
-   #
-   if (class_r == 0x02 and class_s == 0x31):
-      return 
-
-   # RULE 104.
-   # If on a vertical plane then test the horizontal class.
-   #
-   # pass
-   # . . .   . . .   . . .
-   # . x .   . x .   . x .
-   # x x x   x x x   x x x
-   # S=1     S=2     S=3
-   #
-   if (class_r == 0x02 and class_s == 0x32):
-      return 
-
-   # RULE 105.
-   # If on a vertical plane then test the horizontal class.
-   #
-   # pass
-   # . . x   . . x   . . x
-   # . x x   . x x   . x x
-   # . x x   . x x   . x x
-   # S=1     S=2     S=3
-   #
-   if (class_r == 0x02 and class_s == 0x40):
+   if (max(class_r,class_c >= 0x40):
       output_image.at(x) = parms.hc2
       return 
 
-   # RULE 106.
-   # If on a vertical plane then test the horizontal class.
+   # RULE 5.
+   # Any other.
    #
    # pass
-   # . . x   . . x   . . x
-   # . x x   . x x   . x x
-   # x x x   x x x   x x x
-   # S=1     S=2     S=3
+   # . . .   . . x   . . .      . . x   . . .
+   # . . x   . x x   . . x      . x x   . x .
+   # . . .   . . x   . . .      . . x   . . .
+   # S=1     S=2     S=3        R=2     C=2
    #
-   if (class_r == 0x02 and class_s == 0x50):
-      output_image.at(x) = parms.hc2
       return 
-
-   # RULE 201.
-   # If not on a vertical plane then test the vertical classes.
-   #
-   # pass
-   # . . .   . . .
-   # . x .   . x x
-   # . x .   . x x
-   # R=2     C=2
-   #
-   if (min(class_r,class_c) == 0x10):
-      return 
-
-   # RULE 202.
-   # If not on a vertical plane then test the vertical classes.
-   #
-   # pass
-   # . . .   . . .
-   # . x .   . x .
-   # . x .   . x .
-   # R=2     C=2
-   #
-   if (max(class_r,class_c) == 0x10):
-      return 
-
-   # RULE 203.
-   # If not on a vertical plane then test the vertical classes.
-   #
-   # pass
-   # . . .   . . .
-   # . x .   . x x
-   # . x x   . x x
-   # R=2     C=2
-   #
-   if (min(class_r,class_c) == 0x20):
-      return 
-
-   # RULE 204.
-   # If not on a vertical plane then test the vertical classes.
-   #
-   # pass
-   # . . .   . . .
-   # . x .   . x .
-   # . x .   . x x
-   # R=2     C=2
-   #
-   if (max(class_r,class_c) == 0x20):
-      return 
-
-   # RULE 205.
-   # If not on a vertical plane then test the vertical classes.
-   #
-   # pass
-   # . . .   . . .
-   # . x x   . x x
-   # . x x   . x x
-   # R=2     C=2
-   #
-   if (min(class_r,class_c) == 0x31):
-      return 
-
-   # RULE 206.
-   # If not on a vertical plane then test the vertical classes.
-   #
-   # pass
-   # . . .   . . .
-   # . x .   . x x
-   # . x x   . x x
-   # R=2     C=2
-   #
-   if (max(class_r,class_c) == 0x31):
-      return 
-
-   # RULE 207.
-   # If not on a vertical plane then test the vertical classes.
-   #
-   # pass
-   # . . .   . . .
-   # . x .   . x .
-   # x x x   x x x
-   # R=2     C=2
-   #
-   if (min(class_r,class_c) == 0x32):
-      return 
-
-   # RULE 208.
-   # If not on a vertical plane then test the vertical classes.
-   #
-   # pass
-   # . . .   . . .
-   # . x .   . x .
-   # . x .   x x x
-   # R=2     C=2
-   #
-   if (max(class_r,class_c) == 0x32):
-      return 
-
-   # RULE 209.
-   # If not on a vertical plane then test the vertical classes.
-   #
-   # pass
-   # . . x   . . x
-   # . x x   . x x
-   # . x x   x x x
-   # R=2     C=2
-   #
-   if (min(class_r,class_c) == 0x40):
-      return 
-
-   # RULE 210.
-   # If not on a vertical plane then test the vertical classes.
-   #
-   # pass
-   # . . x   . . x
-   # . x x   . x x
-   # . x x   . x x
-   # R=2     C=2
-   #
-   if (max(class_r,class_c) == 0x40):
-      return 
-
-   # RULE 211.
-   # If not on a vertical plane then test the vertical classes.
-   #
-   # pass
-   # . . x   . . x
-   # . x x   . x x
-   # x x x   x x x
-   # R=2     C=2
-   #
-   if (min(class_r,class_c) == 0x50):
-      return 
-
-   # RULE 212.
-   # If not on a vertical plane then test the vertical classes.
-   #
-   # pass
-   # . . x   . . .
-   # . x x   . x x
-   # x x x   . x x
-   # R=2     C=2
-   #
-   if (max(class_r,class_c) == 0x50):
-      return 
-
-
-
-
-
-
