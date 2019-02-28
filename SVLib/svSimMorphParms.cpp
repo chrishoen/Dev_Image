@@ -39,6 +39,7 @@ void SimMorphParms::reset()
    mMorphNum = 0;
    mWriteNum = 0;
    mMode = 0;
+   mAddFlag = false;
    mDelta.reset();
 }
 
@@ -53,12 +54,13 @@ void SimMorphParms::show(const char* aLabel)
    printf("SimMorphParms******************* %s\n",aLabel);
    printf("Name                     %10s\n", mName);
    printf("ImageSize                %10d %10d\n", mImageSize.mRows, mImageSize.mCols);
-   printf("GenerateFirst            %s\n", my_string_from_bool(mGenerateFirst));
-   printf("WriteFirst               %s\n", my_string_from_bool(mWriteFirst));
+   printf("GenerateFirst            %10s\n", my_string_from_bool(mGenerateFirst));
+   printf("WriteFirst               %10s\n", my_string_from_bool(mWriteFirst));
    printf("RepeatNum                %10d\n", mRepeatNum);
    printf("MorphNum                 %10d\n", mMorphNum);
    printf("WriteNum                 %10d\n", mWriteNum);
-   printf("Mode                     %10d\n", mMode);
+   printf("Mode                     %10s\n", asStringMode(mMode));
+   printf("AddFlag                  %10s\n", my_string_from_bool(mAddFlag));
    printf("Delta                    %10d %10d\n", mDelta.mRows, mDelta.mCols);
    printf("SimMorphParms*******************\n");
 }
@@ -80,7 +82,16 @@ void SimMorphParms::execute(Ris::CmdLineCmd* aCmd)
    if (aCmd->isCmd("MorphNum"))       mMorphNum = aCmd->argInt(1);
    if (aCmd->isCmd("WriteNum"))       mWriteNum = aCmd->argInt(1);
    if (aCmd->isCmd("Mode"))           mMode = aCmd->argInt(1);
+   if (aCmd->isCmd("AddFlag"))        mAddFlag = aCmd->argBool(1);
    if (aCmd->isCmd("Delta"))          mDelta.execute(aCmd);
+
+   if (aCmd->isCmd("Mode"))
+   {
+      if (aCmd->isArgString(1, asStringMode(cNone)))             mMode = cNone;
+      if (aCmd->isArgString(1, asStringMode(cModeSquare)))       mMode = cModeSquare;
+      if (aCmd->isArgString(1, asStringMode(cModeDiamond)))      mMode = cModeDiamond;
+   }
+
 }
 
 //******************************************************************************
@@ -93,10 +104,36 @@ void SimMorphParms::expand()
    mValid = mRepeatNum != 0;
 }
 
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+// Helpers.
+
 void SimMorphParms::setName(const char* aName)
 {
-   strncpy(mName,aName,cMaxStringSize);
+   strncpy(mName, aName, cMaxStringSize);
 }
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+// Helpers.
+
+char* SimMorphParms::asStringMode(int aX)
+{
+   switch (aX)
+   {
+   case cNone: return "None";
+   case cModeSquare: return "Square";
+   case cModeDiamond: return "Diamond";
+   default: return "UNKNOWN";
+   }
+}
+
+char* SimMorphParms::asStringMode()
+{
+   return asStringMode(mMode);
+}
+
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************

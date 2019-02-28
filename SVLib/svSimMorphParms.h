@@ -1,3 +1,4 @@
+
 #pragma once
 
 /*==============================================================================
@@ -62,6 +63,18 @@ public:
    //***************************************************************************
    //***************************************************************************
    //***************************************************************************
+   // Constants.
+
+   // None.
+   static const int cNone = 0;
+
+   // SimImage types.
+   static const int cModeSquare  = 1;
+   static const int cModeDiamond = 2;
+
+   //***************************************************************************
+   //***************************************************************************
+   //***************************************************************************
    // Members that are read from the parms file.
 
    // True if valid.
@@ -85,6 +98,9 @@ public:
    // Mode 1=square 2=diagonal.
    int mMode;
    
+   // If true then add delta. If false then subtract delta.
+   bool mAddFlag;
+
    // Row column deltas.
    SV::RCSize mDelta;
 
@@ -107,6 +123,17 @@ public:
    // Calculate expanded member variables. This is called after the entire
    // section of the command file has been processed.
    void expand();
+
+   //***************************************************************************
+   //***************************************************************************
+   //***************************************************************************
+   // Helpers.
+
+   static char* asStringMode(int aX);
+   char* asStringMode();
+
+   bool isSquare() { return mMode == cModeSquare; }
+   bool isDiamond() { return mMode == cModeDiamond; }
 
    // Helpers.
    void setName(const char* aName);
