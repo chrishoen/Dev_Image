@@ -89,6 +89,8 @@ public:
    // Filter a pixel.
    inline void doFilterHighPixel_SquareAdd(RCIndex aX);
    inline void doFilterHighPixel_DiamondAdd(RCIndex aX);
+   inline void doFilterHighPixel_SquareSub(RCIndex aX);
+   inline void doFilterHighPixel_DiamondSub(RCIndex aX);
 
    //***************************************************************************
    //***************************************************************************

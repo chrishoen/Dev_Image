@@ -105,11 +105,11 @@ void SimMorphFilter::doFilterImage(
    //***************************************************************************
    //***************************************************************************
    //***************************************************************************
-   // Loop through the image for mode 1.
+   // Loop through the image for mode a square with addition.
 
    // Loop through the image. Ignore the top and bottom rows and ignore
    // the left and right edge columns.
-   if (mP->isSquare())
+   if (mP->isSquare() && mP->mAddFlag)
    {
       SV::RCIndexLoop tLoop(RCIndex(1, 1), aInputImage.rows - 2, aInputImage.cols - 2);
       while (tLoop.loop())
@@ -125,11 +125,31 @@ void SimMorphFilter::doFilterImage(
    //***************************************************************************
    //***************************************************************************
    //***************************************************************************
-   // Loop through the image for mode 2.
+   // Loop through the image for mode a square with subtraction.
 
    // Loop through the image. Ignore the top and bottom rows and ignore
    // the left and right edge columns.
-   if (mP->isDiamond())
+   if (mP->isSquare() && !mP->mAddFlag)
+   {
+      SV::RCIndexLoop tLoop(RCIndex(1, 1), aInputImage.rows - 2, aInputImage.cols - 2);
+      while (tLoop.loop())
+      {
+         // Filter each pixel that is high.
+         if (mInput.at(tLoop()) != 0)
+         {
+            doFilterHighPixel_SquareSub(tLoop());
+         }
+      }
+   }
+
+   //***************************************************************************
+   //***************************************************************************
+   //***************************************************************************
+   // Loop through the image for a diamond with addition.
+
+   // Loop through the image. Ignore the top and bottom rows and ignore
+   // the left and right edge columns.
+   if (mP->isDiamond() && mP->mAddFlag)
    {
       SV::RCIndexLoop tLoop(RCIndex(1, 1), aInputImage.rows - 2, aInputImage.cols - 2);
       while (tLoop.loop())
@@ -138,6 +158,26 @@ void SimMorphFilter::doFilterImage(
          if (mInput.at(tLoop()) != 0)
          {
             doFilterHighPixel_DiamondAdd(tLoop());
+         }
+      }
+   }
+
+   //***************************************************************************
+   //***************************************************************************
+   //***************************************************************************
+   // Loop through the image for a diamond with subtraction.
+
+   // Loop through the image. Ignore the top and bottom rows and ignore
+   // the left and right edge columns.
+   if (mP->isDiamond() && !mP->mAddFlag)
+   {
+      SV::RCIndexLoop tLoop(RCIndex(1, 1), aInputImage.rows - 2, aInputImage.cols - 2);
+      while (tLoop.loop())
+      {
+         // Filter each pixel that is high.
+         if (mInput.at(tLoop()) != 0)
+         {
+            doFilterHighPixel_DiamondSub(tLoop());
          }
       }
    }
@@ -337,6 +377,128 @@ void SimMorphFilter::doFilterHighPixel_DiamondAdd(RCIndex aX)
       {
          mOutput.at(tCursor) = 255;
          tCursor.mRow++;
+      }
+   }
+}
+
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+// Filter a pixel that is high.
+
+void SimMorphFilter::doFilterHighPixel_SquareSub(RCIndex aX)
+{
+   // Locals.
+   RCIndex tCursor;
+
+   // Get nearest neighbor variables.
+   doGetNearestNeighbors(aX);
+
+   // Nearest neighbor rule testing.
+   if (!m21)
+   {
+      tCursor = aX;
+      for (int i = 0; i < mP->mDelta.mCols; i++)
+      {
+         mOutput.at(tCursor) = 0;
+         tCursor.mCol++;
+      }
+   }
+
+   // Nearest neighbor rule testing.
+   if (!m23)
+   {
+      tCursor = aX;
+      for (int i = 0; i < mP->mDelta.mCols; i++)
+      {
+         mOutput.at(tCursor) = 0;
+         tCursor.mCol--;
+      }
+   }
+
+   // Nearest neighbor rule testing.
+   if (!m12)
+   {
+      tCursor = aX;
+      for (int i = 0; i < mP->mDelta.mRows; i++)
+      {
+         mOutput.at(tCursor) = 0;
+         tCursor.mRow++;
+      }
+   }
+
+   // Nearest neighbor rule testing.
+   if (!m32)
+   {
+      tCursor = aX;
+      for (int i = 0; i < mP->mDelta.mRows; i++)
+      {
+         mOutput.at(tCursor) = 0;
+         tCursor.mRow--;
+      }
+   }
+}
+
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+// Filter a pixel that is high.
+
+void SimMorphFilter::doFilterHighPixel_DiamondSub(RCIndex aX)
+{
+   // Locals.
+   RCIndex tCursor;
+
+   // Get nearest neighbor variables.
+   doGetNearestNeighbors(aX);
+
+   // Nearest neighbor rule testing.
+   if (!m21)
+   {
+      tCursor = aX;
+      for (int i = 0; i < mP->mDelta.mCols; i++)
+      {
+         mOutput.at(tCursor) = 0;
+         tCursor.mCol++;
+      }
+   }
+
+   // Nearest neighbor rule testing.
+   if (!m23)
+   {
+      tCursor = aX;
+      for (int i = 0; i < mP->mDelta.mCols; i++)
+      {
+         mOutput.at(tCursor) = 0;
+         tCursor.mCol--;
+      }
+   }
+
+   // Nearest neighbor rule testing.
+   if (!m12)
+   {
+      tCursor = aX;
+      for (int i = 0; i < mP->mDelta.mRows; i++)
+      {
+         mOutput.at(tCursor) = 0;
+         tCursor.mRow++;
+      }
+   }
+
+   // Nearest neighbor rule testing.
+   if (!m32)
+   {
+      tCursor = aX;
+      for (int i = 0; i < mP->mDelta.mRows; i++)
+      {
+         mOutput.at(tCursor) = 0;
+         tCursor.mRow--;
       }
    }
 }
