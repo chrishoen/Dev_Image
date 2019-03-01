@@ -41,7 +41,7 @@ def filter_high_pixel(x):
    # If on a vertical plane and any other.
    #
    # pass                  
-   # . . .   . . .   . . .      . . .   . . .
+   # . . .   . . .   . . .      . x x   . x x
    # . x x   . x x   . x x      . x x   . x x
    # . x x   . x x   . x x      . x x   . x x
    # S=1     S=2     S=3        R=2     C=2
