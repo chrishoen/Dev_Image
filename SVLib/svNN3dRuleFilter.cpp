@@ -118,7 +118,7 @@ inline int NN3dRuleFilter::doClassifyPlane(
    int a31, int a32, int a33)
 {
    // Return a classification code.
-   if ((a12 && a32) || (a21 && a23)) return 0x01;
+   if ((a12 && a32) && (a21 && a23)) return 0x01;
    if (a12 && a32) return 0x02;
    if (a21 && a23) return 0x03;
 
@@ -140,9 +140,9 @@ inline int NN3dRuleFilter::doClassifyPlane(
    if (a21 != a31) tChangeCount++;
 
    // Return a classification code.
-   if ((tNeighborCount == 1) && (tCornerCount == 1)) return 0x10;
+   if ((tNeighborCount == 1) && (tCornerCount == 0)) return 0x10;
    if ((tNeighborCount == 2) && (tChangeCount == 2)) return 0x20;
-   if ((tNeighborCount == 3) && (tChangeCount == 2) && (tChangeCount == 1)) return 0x31;
+   if ((tNeighborCount == 3) && (tChangeCount == 2) && (tCornerCount == 1)) return 0x31;
    if ((tNeighborCount == 3) && (tChangeCount == 2) && (tCornerCount == 2)) return 0x32;
    if ((tNeighborCount == 4) && (tChangeCount == 2)) return 0x40;
    if ((tNeighborCount == 5) && (tChangeCount == 2)) return 0x50;
