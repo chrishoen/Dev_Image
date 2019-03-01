@@ -14,73 +14,37 @@ def filter_high_pixel(x):
 
    # RULE 1.
    # If slice is not on a horizontal edge.
-   #
-   # pass
-   # o o o   o x o   o o o      o o o   o o o
-   # o o o   x x x   o o o      x x x   x x x
-   # o o o   o x o   o o o      o o o   o o o
-   # S=1     S=2     S=3        R=2     C=2
-   #   
+
    if (class_s == 0x01):
       return 
 
    # RULE 2.
    # If cube is not classified.
-   #
-   # pass
-   # o o o   x . x   o o o      o o o   o o o
-   # o o o   . x .   o o o      . x .   . x x
-   # o o o   . x .   o o o      o o o   o o o
-   # S=1     S=2     S=3        R=2     C=2
-   #   
+
    if (class_s == 0xee or class_r == 0xee or class_c == 0xee):
       return 
 
    # RULE 3.
    # If on a vertical plane and slice class is 4 or 5.
-   #
-   # pass                  
-   # . . x   . . x   . . x      . x x   . x x
-   # . x x   . x x   . x x      . x x   . x x
-   # . x x   . x x   . x x      . x x   . x x
-   # S=1     S=2     S=3        R=2     C=2
-   #
+
    if (class_r == 0x02 and class_s >= 0x40):
       output_image.at(x) = parms.hc1
       return 
 
    # RULE 4.
    # If on a vertical plane and any other.
-   #
-   # pass                  
-   # . . .   . . .   . . .      . x x   . x x
-   # . x x   . x x   . x x      . x x   . x x
-   # . x x   . x x   . x x      . x x   . x x
-   # S=1     S=2     S=3        R=2     C=2
-   #
+
    if (class_r == 0x02):
       return 
 
    # RULE 5.
    # If not on a vertical plane and row or column class is 4 or 5.
-   #
-   # pass
-   # . . .   . . .   x x x      . . .   . . x
-   # . . .   . x x   x x x      . x x   . x x
-   # . . x   . x x   x x x      x x x   . x x
-   # S=1     S=2     S=3        R=2     C=2
-   #
+
    if (max(class_r,class_c >= 0x40):
       output_image.at(x) = parms.hc2
       return 
 
    # RULE 6.
    # Any other.
-   #
-   # pass
-   # . . .   . . x   . . .      . . x   . . .
-   # . . x   . x x   . . x      . x x   . x .
-   # . . .   . . x   . . .      . . x   . . .
-   # S=1     S=2     S=3        R=2     C=2
-   #
-      return 
+
+   return 
