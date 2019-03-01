@@ -11,9 +11,9 @@ for xpixel in input_image_c:
 def filter_high_pixel(x):
    # calculate class varaibles.
    calculate_classes(x)
-   
+
    # RULE 1.
-   # If not on a horizontal edge.
+   # If slice is not on a horizontal edge.
    #
    # pass
    # o o o   o x o   o o o      o o o   o o o
@@ -25,6 +25,18 @@ def filter_high_pixel(x):
       return 
 
    # RULE 2.
+   # If cube is not classified.
+   #
+   # pass
+   # o o o   x . x   o o o      o o o   o o o
+   # o o o   . x .   o o o      . x .   . x x
+   # o o o   . x .   o o o      o o o   o o o
+   # S=1     S=2     S=3        R=2     C=2
+   #   
+   if (class_s == 0xee or class_r == 0xee or class_c == 0xee):
+      return 
+
+   # RULE 3.
    # If on a vertical plane and slice class is 4 or 5.
    #
    # pass                  
@@ -37,7 +49,7 @@ def filter_high_pixel(x):
       output_image.at(x) = parms.hc1
       return 
 
-   # RULE 3.
+   # RULE 4.
    # If on a vertical plane and any other.
    #
    # pass                  
@@ -49,7 +61,7 @@ def filter_high_pixel(x):
    if (class_r == 0x02):
       return 
 
-   # RULE 4.
+   # RULE 5.
    # If not on a vertical plane and row or column class is 4 or 5.
    #
    # pass
@@ -62,7 +74,7 @@ def filter_high_pixel(x):
       output_image.at(x) = parms.hc2
       return 
 
-   # RULE 5.
+   # RULE 6.
    # Any other.
    #
    # pass
