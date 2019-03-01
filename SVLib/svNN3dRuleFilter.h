@@ -53,6 +53,35 @@ public:
    //***************************************************************************
    // Members.
 
+   // 111 112 113     211 212 213     311 312 313
+   // 121 122 123     221 222 223     321 322 323
+   // 131 132 133     231 232 233     331 332 333
+
+   // Nearest neighbor variables.
+   int m111, m112, m113;
+   int m121, m122, m123;
+   int m131, m132, m133;
+
+   // Nearest neighbor variables.
+   int m211, m212, m213;
+   int m221, m222, m223;
+   int m231, m232, m233;
+
+   // Nearest neighbor variables.
+   int m311, m312, m313;
+   int m321, m322, m323;
+   int m331, m332, m333;
+
+   // Class variables.
+   int mClassS;
+   int mClassR;
+   int mClassC;
+
+   //***************************************************************************
+   //***************************************************************************
+   //***************************************************************************
+   // Members.
+
    // Images wrappers.
    int mRuleCount1;
    int mRuleCount2;
@@ -88,9 +117,19 @@ public:
    //***************************************************************************
    //***************************************************************************
    // Methods.
-private:
+
    // Filter a pixel.
    inline void doFilterHighPixel(RCIndex aX);
+
+   // Classify a plane according to nearest neighbors.
+   inline int doClassifyPlane(
+      int a11, int a12, int a13,
+      int a21, int a23,
+      int a31, int a32, int a33);
+
+   // Classify the S,R,C planes.
+   inline void doClassifyPlaneS(RCIndex aX);
+   inline void doClassifyPlaneRC(RCIndex aX);
 };
 
 

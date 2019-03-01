@@ -110,81 +110,168 @@ void NN3dRuleFilter::doFilterImage(
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
+// Classify a plane according to nearest neighbors.
+
+inline int NN3dRuleFilter::doClassifyPlane(
+   int a11, int a12, int a13,
+   int a21, int a23,
+   int a31, int a32, int a33)
+{
+   // Return a classification code.
+   if ((a12 && a32) || (a21 && a23)) return 0x01;
+   if (a12 && a32) return 0x02;
+   if (a21 && a23) return 0x03;
+
+   // Count the number of nearest neighbors.
+   int tNeighborCount = a11 + a12 + a13 + a21 + a23 + a31 + a32 + a33;
+
+   // Count the number of corners.
+   int tCornerCount = a11 + a13 + a31 + a33;
+
+   // Count the number of changes.
+   int tChangeCount = 0;
+   if (a11 != a21) tChangeCount++;
+   if (a12 != a11) tChangeCount++;
+   if (a13 != a12) tChangeCount++;
+   if (a23 != a13) tChangeCount++;
+   if (a33 != a23) tChangeCount++;
+   if (a32 != a33) tChangeCount++;
+   if (a31 != a32) tChangeCount++;
+   if (a21 != a31) tChangeCount++;
+
+   // Return a classification code.
+   if ((tNeighborCount == 1) && (tCornerCount == 1)) return 0x10;
+   if ((tNeighborCount == 2) && (tChangeCount == 2)) return 0x20;
+   if ((tNeighborCount == 3) && (tChangeCount == 2) && (tChangeCount == 1)) return 0x31;
+   if ((tNeighborCount == 3) && (tChangeCount == 2) && (tCornerCount == 2)) return 0x32;
+   if ((tNeighborCount == 4) && (tChangeCount == 2)) return 0x40;
+   if ((tNeighborCount == 5) && (tChangeCount == 2)) return 0x50;
+   return -1;
+}
+
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+// Classify the S,R,C planes.
+
+inline void NN3dRuleFilter::doClassifyPlaneS(RCIndex aX)
+{
+   // Get matrix variables from input image plane.
+   m211 = mInputS2.at(aX.mRow - 1, aX.mCol - 1) != 0 ? 1 : 0;
+   m212 = mInputS2.at(aX.mRow - 1, aX.mCol    ) != 0 ? 1 : 0;
+   m213 = mInputS2.at(aX.mRow - 1, aX.mCol + 1) != 0 ? 1 : 0;
+
+   m221 = mInputS2.at(aX.mRow,     aX.mCol - 1) != 0 ? 1 : 0;
+   m222 = mInputS2.at(aX.mRow,     aX.mCol    ) != 0 ? 1 : 0;
+   m223 = mInputS2.at(aX.mRow,     aX.mCol + 1) != 0 ? 1 : 0;
+
+   m231 = mInputS2.at(aX.mRow + 1, aX.mCol - 1) != 0 ? 1 : 0;
+   m232 = mInputS2.at(aX.mRow + 1, aX.mCol    ) != 0 ? 1 : 0;
+   m233 = mInputS2.at(aX.mRow + 1, aX.mCol + 1) != 0 ? 1 : 0;
+
+   // Classify according to the matrix variables.
+   mClassS = doClassifyPlane(
+      m211, m212, m213,
+      m221,       m223,
+      m231, m232, m233);
+}
+
+inline void NN3dRuleFilter::doClassifyPlaneRC(RCIndex aX)
+{
+   // Get matrix variables from input image plane.
+   m111 = mInputS1.at(aX.mRow - 1, aX.mCol - 1) != 0 ? 1 : 0;
+   m112 = mInputS1.at(aX.mRow - 1, aX.mCol    ) != 0 ? 1 : 0;
+   m113 = mInputS1.at(aX.mRow - 1, aX.mCol + 1) != 0 ? 1 : 0;
+
+   m121 = mInputS1.at(aX.mRow,     aX.mCol - 1) != 0 ? 1 : 0;
+   m122 = mInputS1.at(aX.mRow,     aX.mCol    ) != 0 ? 1 : 0;
+   m123 = mInputS1.at(aX.mRow,     aX.mCol + 1) != 0 ? 1 : 0;
+
+   m131 = mInputS1.at(aX.mRow + 1, aX.mCol - 1) != 0 ? 1 : 0;
+   m132 = mInputS1.at(aX.mRow + 1, aX.mCol    ) != 0 ? 1 : 0;
+   m133 = mInputS1.at(aX.mRow + 1, aX.mCol + 1) != 0 ? 1 : 0;
+
+   // Get matrix variables from input image plane.
+   m311 = mInputS3.at(aX.mRow - 1, aX.mCol - 1) != 0 ? 1 : 0;
+   m312 = mInputS3.at(aX.mRow - 1, aX.mCol    ) != 0 ? 1 : 0;
+   m313 = mInputS3.at(aX.mRow - 1, aX.mCol + 1) != 0 ? 1 : 0;
+
+   m321 = mInputS3.at(aX.mRow,     aX.mCol - 1) != 0 ? 1 : 0;
+   m322 = mInputS3.at(aX.mRow,     aX.mCol    ) != 0 ? 1 : 0;
+   m323 = mInputS3.at(aX.mRow,     aX.mCol + 1) != 0 ? 1 : 0;
+
+   m331 = mInputS3.at(aX.mRow + 1, aX.mCol - 1) != 0 ? 1 : 0;
+   m332 = mInputS3.at(aX.mRow + 1, aX.mCol    ) != 0 ? 1 : 0;
+   m333 = mInputS3.at(aX.mRow + 1, aX.mCol + 1) != 0 ? 1 : 0;
+
+   // Classify according to the matrix variables.
+   mClassR = doClassifyPlane(
+      m121, m122, m123,
+      m221,       m223,
+      m321, m322, m323);
+
+   // Classify according to the matrix variables.
+   mClassC = doClassifyPlane(
+      m112, m122, m132,
+      m212,       m232,
+      m312, m322, m332);
+}
+
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
 // Filter a pixel that is high.
 // 
-// 111 112 113     211 212 213     311 312 313
-// 121 122 123     221 222 223     321 322 323
-// 131 132 133     231 232 233     331 332 333
 
 void NN3dRuleFilter::doFilterHighPixel(RCIndex aX)
 {
    //***************************************************************************
    //***************************************************************************
    //***************************************************************************
-   // Local variables.
-
-   // Nearest neighbor variables.
-   int t211 = mInputS2.at(aX.mRow - 1, aX.mCol - 1) != 0 ? 1 : 0;
-   int t212 = mInputS2.at(aX.mRow - 1, aX.mCol    ) != 0 ? 1 : 0;
-   int t213 = mInputS2.at(aX.mRow - 1, aX.mCol + 1) != 0 ? 1 : 0;
-
-   int t221 = mInputS2.at(aX.mRow    , aX.mCol - 1) != 0 ? 1 : 0;
-   int t222 = mInputS2.at(aX.mRow    , aX.mCol    ) != 0 ? 1 : 0;
-   int t223 = mInputS2.at(aX.mRow    , aX.mCol + 1) != 0 ? 1 : 0;
-
-   int t231 = mInputS2.at(aX.mRow + 1, aX.mCol - 1) != 0 ? 1 : 0;
-   int t232 = mInputS2.at(aX.mRow + 1, aX.mCol    ) != 0 ? 1 : 0;
-   int t233 = mInputS2.at(aX.mRow + 1, aX.mCol + 1) != 0 ? 1 : 0;
-
-   int t322 = mInputS3.at(aX.mRow    , aX.mCol) != 0 ? 1 : 0;
-   int t122 = mInputS1.at(aX.mRow    , aX.mCol) != 0 ? 1 : 0;
-
-   //***************************************************************************
-   //***************************************************************************
-   //***************************************************************************
    // Nearest neighbor rule testing.
 
+   // Classify the slice plane.
+   doClassifyPlaneS(aX);
+
    // RULE 1.
-   // If not on a contour of the current image.
-   if (t212 && t232 && t221 && t223)
+   // If not on a horizontal edge.
+   if (mClassS == 0x01)
    {
       mRuleCount1++;
       return;
    }
 
+   // Classify the row and column planes.
+   doClassifyPlaneRC(aX);
+
    // RULE 2.
-   // If on a vertical plane parallel to NS or ES.
-   if ((t122 && t322) && ((t212 && t232) || (t221 && t223)))
+   // If on a vertical plane and slice class is 4 or 5.
+   if ((mClassR == 0x02) && (mClassS >= 0x40))
    {
       mRuleCount2++;
+      mOutput.at(aX) = mP->mHC1;
       return;
    }
 
-   // Count the number of horizontal nearest neighbors.
-   int tNN_sum = t211 + t212 + t213 + t221 + t223 + t231 + t232 + t233;
-
    // RULE 3.
-   // If on a vertical plane not parallel to NS or ES and
-   // at a horizontal corner.
-   if ((t122 && t322) && (tNN_sum <= 3))
+   // If on a vertical plane and any other.
+   if (mClassR == 0x02)
    {
       mRuleCount3++;
       return;
    }
-   
+
    // RULE 4.
-   // If on a vertical plane not parallel to NS or ES and
-   // not at a horizontal corner.
-   if (t122 && t322)
+   // If not on a vertical plane and row or column class is 4 or 5.
+   if (my_imax(mClassR,mClassC) >= 0x40)
    {
-      mOutput.at(aX) = mP->mHC1;
       mRuleCount4++;
+      mOutput.at(aX) = mP->mHC2;
       return;
    }
 
    // RULE 5.
-   // Otherwise not on a vertical plane.
-   mOutput.at(aX) = mP->mHC2;
+   // Any other.
    mRuleCount5++;
    return;
 }
