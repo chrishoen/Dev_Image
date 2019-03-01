@@ -19,6 +19,11 @@ o x o
 o x o
 o x o
 
+0x03
+o o o
+x x x
+o o o
+
 and all other D8 group actions (rotations and reflections)
 0x10    0x20    0x31    0x40    0x50
 . . .   . . .   . . .   . . x   . . x
@@ -33,6 +38,11 @@ and all other D8 group actions (rotations and reflections)
 # return the classification code for the neighbors of a plane.
 def plane_classify(a11,a12,a13,a21,a23,a31,a32,a33):
 
+   # return a classification code.
+   if((a12 and a32) and (a21 and a23)): return 0x01
+   if(a12 and a32): return 0x02
+   if(a21 and a23): return 0x03
+   
    # count the number of nearest neighbors.
    neighbor_count = a11 + a12 + a13 + a21 + a23 + a31 + a32 + a33
       
@@ -51,12 +61,10 @@ def plane_classify(a11,a12,a13,a21,a23,a31,a32,a33):
    if (a21 != a31) change_count++
    
    # return a classification code.
-   if((a12 and a32) and (a21 and a23)): return 0x01
-   if((a12 and a32) or  (a21 and a23)): return 0x02
    if((neighbor_count == 1) and (corner_count == 1)): return 0x10
    if((neighbor_count == 2) and (change_count == 2)): return 0x20
    if((neighbor_count == 3) and (change_count == 2) and (change_count == 1)): return 0x31
    if((neighbor_count == 3) and (change_count == 2) and (corner_count == 2)): return 0x32
    if((neighbor_count == 4) and (change_count == 2)): return 0x40
    if((neighbor_count == 5) and (change_count == 2)): return 0x50
-   return 0xee
+   return -1
