@@ -13,6 +13,7 @@ Row and column loop index.
 
 #include "svRCIndex.h"
 #include "svRCSize.h"
+#include "svRCRect.h"
 
 //******************************************************************************
 //******************************************************************************
@@ -859,6 +860,199 @@ public:
    void next()
    {
       advance();
+   }
+};
+
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+// This class encapsulates an index loop iterator. It provides the
+// functionality to construct for loops with array indices.
+
+class RCRectLoop
+{
+public:
+
+   //***************************************************************************
+   //***************************************************************************
+   //***************************************************************************
+   // Members:
+
+   bool mFirst;
+   bool mRowForward;
+   bool mColForward;
+   short int mRowA;
+   short int mRowB;
+   short int mRow;
+   short int mColA;
+   short int mColB;
+   short int mCol;
+   short int mRows;
+   short int mCols;
+
+   //***************************************************************************
+   //***************************************************************************
+   //***************************************************************************
+   // Methods.
+
+   // Constructor.
+   RCRectLoop()
+   {
+      mFirst = true;
+      mRowForward = true;
+      mColForward = true;
+      mRowA = 0;
+      mRowB = 0;
+      mRow = 0;
+      mColA = 0;
+      mColB = 0;
+      mCol = 0;
+   }
+
+   // Constructor.
+   RCRectLoop(RCRect aRect)
+   {
+      mFirst = true;
+      mRowForward = true;
+      mColForward = true;
+      mRowA = aRect.mARow;
+      mRowB = aRect.mBRow;
+      mRow = 0;
+      mColA = aRect.mACol;
+      mColB = aRect.mBCol;
+      mCol = 0;
+   }
+
+   // Constructor.
+
+   // Return the current row and column.
+   RCIndex  operator()()
+   {
+      return RCIndex(mRow, mCol);
+   }
+
+   //***************************************************************************
+   //***************************************************************************
+   //***************************************************************************
+   // Methods.
+
+   void firstRow()
+   {
+      if (mRowForward)
+      {
+         mRow = mRowA;
+      }
+      else
+      {
+         mRow = mRowB;
+      }
+   }
+
+   void firstCol()
+   {
+      if (mColForward)
+      {
+         mCol = mColA;
+      }
+      else
+      {
+         mColA = mColB;
+      }
+   }
+
+   void first()
+   {
+      firstRow();
+      firstCol();
+   }
+
+   bool testRow()
+   {
+      if (mRowForward)
+      {
+         return (mRow <= mRowB);
+      }
+      else
+      {
+         return (mRow >= mRowA);
+      }
+   }
+
+   bool testCol()
+   {
+      if (mColForward)
+      {
+         return (mCol <= mColB);
+      }
+      else
+      {
+         return (mCol >= mColA);
+      }
+   }
+
+   bool test()
+   {
+      return testRow() && testCol();
+   }
+
+   void nextRow()
+   {
+      if (mRowForward)
+      {
+         mRow++;
+      }
+      else
+      {
+         mRow--;
+      }
+   }
+
+   void nextCol()
+   {
+      if (mColForward)
+      {
+         mCol++;
+      }
+      else
+      {
+         mCol--;
+      }
+   }
+
+   void next()
+   {
+      nextCol();
+      if (!testCol())
+      {
+         firstCol();
+         nextRow();
+      }
+   }
+
+   bool advance()
+   {
+      if (++mCol > mColB)
+      {
+         mCol = mColA;
+         if (++mRow > mRowB)
+         {
+            return false;
+         }
+      }
+      return true;
+   }
+
+   bool loop()
+   {
+      if (mFirst)
+      {
+         mRow = mRowA;
+         mCol = mColA;
+         mFirst = false;
+         return true;
+      }
+
+      return advance();
    }
 };
 

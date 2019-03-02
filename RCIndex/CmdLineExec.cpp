@@ -57,8 +57,62 @@ void CmdLineExec::execute(Ris::CmdLineCmd* aCmd)
    if (aCmd->isCmd("GO42"))  executeGo42(aCmd);
    if (aCmd->isCmd("GO43"))  executeGo43(aCmd);
    if (aCmd->isCmd("GO44"))  executeGo44(aCmd);
+   if (aCmd->isCmd("GO51"))  executeGo51(aCmd);
+   if (aCmd->isCmd("GO52"))  executeGo52(aCmd);
+   if (aCmd->isCmd("GO53"))  executeGo53(aCmd);
+   if (aCmd->isCmd("GO54"))  executeGo54(aCmd);
 
    if(aCmd->isCmd("Parms"  ))  executeParms(aCmd);
+}
+
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+
+void CmdLineExec::executeGo51(Ris::CmdLineCmd* aCmd)
+{
+   SV::RCRectLoop tLoop(SV::RCRect(100, 103, 200, 203));
+   while (tLoop.loop())
+   {
+      Prn::print(0, "Loop %3d %3d", tLoop.mRow, tLoop.mCol);
+   }
+}
+
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+
+void CmdLineExec::executeGo52(Ris::CmdLineCmd* aCmd)
+{
+   SV::RCRectLoop tLoop(SV::RCRect(100, 103, 200, 203));
+   for (tLoop.first(); tLoop.test(); tLoop.next())
+   {
+      Prn::print(0, "Loop %3d %3d", tLoop.mRow, tLoop.mCol);
+   }
+}
+
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+
+void CmdLineExec::executeGo53(Ris::CmdLineCmd* aCmd)
+{
+   SV::RCRectLoop tLoop(SV::RCRect(100, 103, 200, 203));
+   for (tLoop.firstRow(); tLoop.testRow(); tLoop.nextRow())
+   {
+      for (tLoop.firstCol(); tLoop.testCol(); tLoop.nextCol())
+      {
+         Prn::print(0, "Loop %3d %3d", tLoop.mRow, tLoop.mCol);
+      }
+   }
+}
+
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+
+void CmdLineExec::executeGo54(Ris::CmdLineCmd* aCmd)
+{
 }
 
 //******************************************************************************
@@ -70,7 +124,7 @@ void CmdLineExec::executeGo1(Ris::CmdLineCmd* aCmd)
    aCmd->setArgDefault(1, true);
    aCmd->setArgDefault(2, true);
 
-   SV::RCIndexLoop tLoop(SV::RCIndex(100,200),4, 4);
+   SV::RCIndexLoop tLoop(SV::RCIndex(100, 200), 4, 4);
    tLoop.mRowForward = aCmd->argBool(1);
    tLoop.mColForward = aCmd->argBool(2);
    for (tLoop.first(); tLoop.test(); tLoop.next())
