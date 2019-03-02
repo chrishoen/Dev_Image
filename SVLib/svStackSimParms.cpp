@@ -41,18 +41,16 @@ void StackSimParms::reset()
    mObject2Major.reset();
    mObject3Major.reset();
    mObject4Major.reset();
-   mObjectSize.reset();
-   mObject1Offset.reset();
-   mObject2Offset.reset();
-   mObject3Offset.reset();
-   mObject4Offset.reset();
 
    mObjectParms1.reset();
    mObjectParms2.reset();
    mObjectParms3.reset();
    mObjectParms4.reset();
 
-
+   mObject1Rect.reset();
+   mObject2Rect.reset();
+   mObject3Rect.reset();
+   mObject4Rect.reset();
 }
 
 //******************************************************************************
@@ -71,28 +69,52 @@ void StackSimParms::expand()
       mObjectParms1.mValid = true;
    }
 
-
    // Stack object row column roi size.
-   mObjectSize.mRows = gSysParms.mImageSize.mRows;
-   mObjectSize.mCols = gSysParms.mImageSize.mCols;
+   // Stack object row column upper left corner offsets.
+   RCSize  tObjectSize;
+   RCIndex tObject1Offset;
+   RCIndex tObject2Offset;
+   RCIndex tObject3Offset;
+   RCIndex tObject4Offset;
+
+
+   tObjectSize.mRows = gSysParms.mImageSize.mRows;
+   tObjectSize.mCols = gSysParms.mImageSize.mCols;
    if (mMajorSize.mRows != 0)
    {
-      mObjectSize.mRows = gSysParms.mImageSize.mRows / mMajorSize.mRows;
-      mObjectSize.mCols = gSysParms.mImageSize.mCols / mMajorSize.mCols;
+      tObjectSize.mRows = gSysParms.mImageSize.mRows / mMajorSize.mRows;
+      tObjectSize.mCols = gSysParms.mImageSize.mCols / mMajorSize.mCols;
    }
 
    // Stack object row column upper left corner offsets.
-   mObject1Offset.mRow = mObject1Major.mRow * mObjectSize.mRows;
-   mObject1Offset.mCol = mObject1Major.mCol * mObjectSize.mCols;
+   tObject1Offset.mRow = mObject1Major.mRow * tObjectSize.mRows;
+   tObject1Offset.mCol = mObject1Major.mCol * tObjectSize.mCols;
 
-   mObject2Offset.mRow = mObject2Major.mRow * mObjectSize.mRows;
-   mObject2Offset.mCol = mObject2Major.mCol * mObjectSize.mCols;
+   tObject2Offset.mRow = mObject2Major.mRow * tObjectSize.mRows;
+   tObject2Offset.mCol = mObject2Major.mCol * tObjectSize.mCols;
 
-   mObject3Offset.mRow = mObject3Major.mRow * mObjectSize.mRows;
-   mObject3Offset.mCol = mObject3Major.mCol * mObjectSize.mCols;
+   tObject3Offset.mRow = mObject3Major.mRow * tObjectSize.mRows;
+   tObject3Offset.mCol = mObject3Major.mCol * tObjectSize.mCols;
 
-   mObject4Offset.mRow = mObject4Major.mRow * mObjectSize.mRows;
-   mObject4Offset.mCol = mObject4Major.mCol * mObjectSize.mCols;
+   tObject4Offset.mRow = mObject4Major.mRow * tObjectSize.mRows;
+   tObject4Offset.mCol = mObject4Major.mCol * tObjectSize.mCols;
+
+   // Stack object row column rectangles.
+   mObject1Rect.initialize(
+      tObject1Offset.mRow, tObject1Offset.mRow + tObjectSize.mRows - 1,
+      tObject1Offset.mCol, tObject1Offset.mCol + tObjectSize.mCols - 1);
+
+   mObject2Rect.initialize(
+      tObject2Offset.mRow, tObject2Offset.mRow + tObjectSize.mRows - 1,
+      tObject2Offset.mCol, tObject2Offset.mCol + tObjectSize.mCols - 1);
+
+   mObject3Rect.initialize(
+      tObject3Offset.mRow, tObject3Offset.mRow + tObjectSize.mRows - 1,
+      tObject3Offset.mCol, tObject3Offset.mCol + tObjectSize.mCols - 1);
+
+   mObject4Rect.initialize(
+      tObject4Offset.mRow, tObject4Offset.mRow + tObjectSize.mRows - 1,
+      tObject4Offset.mCol, tObject4Offset.mCol + tObjectSize.mCols - 1);
 }
 
 //******************************************************************************
@@ -121,12 +143,16 @@ void StackSimParms::show()
    printf("Object2Major             %10d %4d\n", mObject2Major.mRow, mObject1Major.mCol);
    printf("Object3Major             %10d %4d\n", mObject3Major.mRow, mObject1Major.mCol);
    printf("Object4Major             %10d %4d\n", mObject4Major.mRow, mObject1Major.mCol);
+
    printf("\n");
-   printf("ObjectSize               %10d %4d\n", mObjectSize.mRows, mObjectSize.mCols);
-   printf("Object1Offset            %10d %4d\n", mObject1Offset.mRow, mObject1Offset.mCol);
-   printf("Object2Offset            %10d %4d\n", mObject2Offset.mRow, mObject2Offset.mCol);
-   printf("Object3Offset            %10d %4d\n", mObject3Offset.mRow, mObject3Offset.mCol);
-   printf("Object4Offset            %10d %4d\n", mObject4Offset.mRow, mObject4Offset.mCol);
+   printf("Object1Rect              %10d %4d   %4d %4d\n",
+      mObject1Rect.mARow, mObject1Rect.mBRow, mObject1Rect.mACol, mObject1Rect.mBCol);
+   printf("Object2Rect              %10d %4d   %4d %4d\n",
+      mObject2Rect.mARow, mObject2Rect.mBRow, mObject2Rect.mACol, mObject2Rect.mBCol);
+   printf("Object3Rect              %10d %4d   %4d %4d\n",
+      mObject3Rect.mARow, mObject3Rect.mBRow, mObject3Rect.mACol, mObject3Rect.mBCol);
+   printf("Object4Rect              %10d %4d   %4d %4d\n",
+      mObject4Rect.mARow, mObject4Rect.mBRow, mObject4Rect.mACol, mObject4Rect.mBCol);
 }
 
 //******************************************************************************

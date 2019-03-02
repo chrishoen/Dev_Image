@@ -12,6 +12,7 @@ Parameters class whose values are read from a command file.
 #include "risCmdLineParms.h"
 #include "svRCIndex.h"
 #include "svRCSize.h"
+#include "svRCRect.h"
 #include "svStackSimObjectParms.h"
 
 //******************************************************************************
@@ -92,14 +93,11 @@ public:
    StackSimObjectParms   mObjectParms3;
    StackSimObjectParms   mObjectParms4;
 
-   // Stack object row column roi size.
-   RCSize mObjectSize;
-
-   // Stack object row column upper left corner offsets.
-   RCIndex mObject1Offset;
-   RCIndex mObject2Offset;
-   RCIndex mObject3Offset;
-   RCIndex mObject4Offset;
+   // Stack object rectangles.
+   RCRect mObject1Rect;
+   RCRect mObject2Rect;
+   RCRect mObject3Rect;
+   RCRect mObject4Rect;
 
    //***************************************************************************
    //***************************************************************************
