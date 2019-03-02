@@ -44,7 +44,6 @@ void NN3dRuleFilter::reset()
    mRuleCount2 = 0;
    mRuleCount3 = 0;
    mRuleCount4 = 0;
-   mRuleCount5 = 0;
 }
 
 void NN3dRuleFilter::show()
@@ -53,7 +52,6 @@ void NN3dRuleFilter::show()
    Prn::print(0, "RuleCount2 %10d", mRuleCount2);
    Prn::print(0, "RuleCount3 %10d", mRuleCount3);
    Prn::print(0, "RuleCount4 %10d", mRuleCount4);
-   Prn::print(0, "RuleCount5 %10d", mRuleCount5);
 }
 
 //******************************************************************************
@@ -118,7 +116,7 @@ inline int NN3dRuleFilter::doClassifyPlane(
    int a31, int a32, int a33)
 {
    // Return a classification code.
-   if ((a12 && a32) && (a21 && a23)) return 0x01;
+   if (a12 && a32 && a21 && a23) return 0x01;
    if (a12 && a32) return 0x02;
    if (a21 && a23) return 0x03;
 
@@ -146,7 +144,7 @@ inline int NN3dRuleFilter::doClassifyPlane(
    if ((tNeighborCount == 3) && (tChangeCount == 2) && (tCornerCount == 2)) return 0x32;
    if ((tNeighborCount == 4) && (tChangeCount == 2)) return 0x40;
    if ((tNeighborCount == 5) && (tChangeCount == 2)) return 0x50;
-   return -1;
+   return 0xee;
 }
 
 //******************************************************************************
@@ -234,7 +232,7 @@ void NN3dRuleFilter::doFilterHighPixel(RCIndex aX)
    doClassifyPlaneS(aX);
 
    // RULE 1.
-   // If not on a horizontal edge.
+   // If the slice plane is not on a horizontal edge.
    if (mClassS == 0x01)
    {
       mRuleCount1++;
@@ -245,34 +243,25 @@ void NN3dRuleFilter::doFilterHighPixel(RCIndex aX)
    doClassifyPlaneRC(aX);
 
    // RULE 2.
-   // If on a vertical plane and slice class is 4 or 5.
-   if ((mClassR == 0x02) && (mClassS >= 0x40))
+   // If any plane is not classified.
+   if (mClassS == 0xee || mClassR == 0xee || mClassC == 0xee)
    {
       mRuleCount2++;
-      mOutput.at(aX) = mP->mHC1;
       return;
    }
 
    // RULE 3.
-   // If on a vertical plane and any other.
-   if (mClassR == 0x02)
+   // If any plane class is 4 or 5.
+   if (mClassS >= 0x40 || mClassR >= 0x40 || mClassC >= 0x40)
    {
       mRuleCount3++;
+      mOutput.at(aX) = mP->mHC1;
       return;
    }
 
    // RULE 4.
-   // If not on a vertical plane and row or column class is 4 or 5.
-   if (my_imax(mClassR,mClassC) >= 0x40)
-   {
-      mRuleCount4++;
-      mOutput.at(aX) = mP->mHC2;
-      return;
-   }
-
-   // RULE 5.
    // Any other.
-   mRuleCount5++;
+   mRuleCount4++;
    return;
 }
 
