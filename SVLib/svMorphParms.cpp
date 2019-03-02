@@ -5,7 +5,7 @@
 #include "stdafx.h"
 
 #include "svSysParms.h"
-#include "svSimMorphParms.h"
+#include "svMorphParms.h"
 
 //******************************************************************************
 //******************************************************************************
@@ -22,12 +22,12 @@ namespace SV
 //******************************************************************************
 // Constructor.
 
-SimMorphParms::SimMorphParms()
+MorphParms::MorphParms()
 {
    reset();
 }
 
-void SimMorphParms::reset()
+void MorphParms::reset()
 {
    mValid = false;
    mName[0] = 0;
@@ -48,10 +48,10 @@ void SimMorphParms::reset()
 //******************************************************************************
 // Show.
 
-void SimMorphParms::show(const char* aLabel)
+void MorphParms::show(const char* aLabel)
 {
    if (!mValid) return;
-   printf("SimMorphParms******************* %s\n",aLabel);
+   printf("MorphParms******************* %s\n",aLabel);
    printf("Name                     %10s\n", mName);
    printf("ImageSize                %10d %10d\n", mImageSize.mRows, mImageSize.mCols);
    printf("GenerateFirst            %10s\n", my_string_from_bool(mGenerateFirst));
@@ -62,7 +62,7 @@ void SimMorphParms::show(const char* aLabel)
    printf("Mode                     %10s\n", asStringMode(mMode));
    printf("AddFlag                  %10s\n", my_string_from_bool(mAddFlag));
    printf("Delta                    %10d %10d\n", mDelta.mRows, mDelta.mCols);
-   printf("SimMorphParms*******************\n");
+   printf("MorphParms*******************\n");
 }
 
 //******************************************************************************
@@ -72,7 +72,7 @@ void SimMorphParms::show(const char* aLabel)
 // member variable.  Only process commands for the target section.This is
 // called by the associated command file object for each command in the file.
 
-void SimMorphParms::execute(Ris::CmdLineCmd* aCmd)
+void MorphParms::execute(Ris::CmdLineCmd* aCmd)
 {
    mValid = true;
    if (aCmd->isCmd("ImageSize"))      mImageSize.execute(aCmd);
@@ -99,7 +99,7 @@ void SimMorphParms::execute(Ris::CmdLineCmd* aCmd)
 //******************************************************************************
 // Helpers.
 
-void SimMorphParms::expand()
+void MorphParms::expand()
 {
    mValid = mRepeatNum != 0;
 }
@@ -109,7 +109,7 @@ void SimMorphParms::expand()
 //******************************************************************************
 // Helpers.
 
-void SimMorphParms::setName(const char* aName)
+void MorphParms::setName(const char* aName)
 {
    strncpy(mName, aName, cMaxStringSize);
 }
@@ -118,7 +118,7 @@ void SimMorphParms::setName(const char* aName)
 //******************************************************************************
 // Helpers.
 
-char* SimMorphParms::asStringMode(int aX)
+char* MorphParms::asStringMode(int aX)
 {
    switch (aX)
    {
@@ -129,7 +129,7 @@ char* SimMorphParms::asStringMode(int aX)
    }
 }
 
-char* SimMorphParms::asStringMode()
+char* MorphParms::asStringMode()
 {
    return asStringMode(mMode);
 }

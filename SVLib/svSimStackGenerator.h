@@ -14,7 +14,7 @@ Simulator synthetic image generator.
 #include <opencv2/core/core.hpp>
 
 #include "svSimParms.h"
-#include "svSimMorphFilter.h"
+#include "svMorphFilter.h"
 
 namespace SV
 {
@@ -60,7 +60,7 @@ public:
    cv::Mat mOutputImage;
 
    // Image filter.
-   SV::SimMorphFilter mMorphFilter;
+   SV::MorphFilter mMorphFilter;
 
    //***************************************************************************
    //***************************************************************************
@@ -91,7 +91,7 @@ public:
    void doCalculateStackSize();
 
    // Apply a morph filter to generate output images.
-   void doApplyMorphFilter(SimMorphParms* aParms);
+   void doApplyMorphFilter(MorphParms* aParms);
 
    // Write the output image to a file.
    void doWriteOutputImage();

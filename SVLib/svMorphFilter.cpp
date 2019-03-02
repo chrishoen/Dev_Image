@@ -10,7 +10,7 @@ Description:
 
 #include "svRCIndex.h"
 #include "svRCLoop.h"
-#include "svSimMorphFilter.h"
+#include "svMorphFilter.h"
 
 #include "svImageFunctions.h"
 #include "svImageShow.h"
@@ -21,24 +21,24 @@ namespace SV
 //******************************************************************************
 //******************************************************************************
 
-SimMorphFilter::SimMorphFilter()
+MorphFilter::MorphFilter()
 {
    reset();
 }
 
-SimMorphFilter::SimMorphFilter(SimMorphParms* aParms)
-{
-   mP = aParms;
-   reset();
-}
-
-void SimMorphFilter::initialize(SimMorphParms* aParms)
+MorphFilter::MorphFilter(MorphParms* aParms)
 {
    mP = aParms;
    reset();
 }
 
-void SimMorphFilter::reset()
+void MorphFilter::initialize(MorphParms* aParms)
+{
+   mP = aParms;
+   reset();
+}
+
+void MorphFilter::reset()
 {
 }
 
@@ -47,7 +47,7 @@ void SimMorphFilter::reset()
 //******************************************************************************
 // Get nearest neighbors.
 
-inline void SimMorphFilter::doGetNearestNeighbors(RCIndex aX)
+inline void MorphFilter::doGetNearestNeighbors(RCIndex aX)
 {
    m11 = mInput.at(aX.mRow - 1, aX.mCol - 1) != 0 ? 1 : 0;
    m12 = mInput.at(aX.mRow - 1, aX.mCol    ) != 0 ? 1 : 0;
@@ -66,7 +66,7 @@ inline void SimMorphFilter::doGetNearestNeighbors(RCIndex aX)
 //******************************************************************************
 // Generate a first image.
 
-void SimMorphFilter::doGenerateFirstImage(
+void MorphFilter::doGenerateFirstImage(
    cv::Mat&       aOutput)              // Output
 {
    // Create an image filled with all zeros.
@@ -84,7 +84,7 @@ void SimMorphFilter::doGenerateFirstImage(
 //******************************************************************************
 // Filter the image, depending on the parms.
 
-void SimMorphFilter::doFilterImage(
+void MorphFilter::doFilterImage(
    cv::Mat&       aInputImage,     // Input
    cv::Mat&       aOutputImage)    // Output
 {
@@ -191,7 +191,7 @@ void SimMorphFilter::doFilterImage(
 //******************************************************************************
 // Filter a pixel that is high.
 
-void SimMorphFilter::doFilterHighPixel_SquareAdd(RCIndex aX)
+void MorphFilter::doFilterHighPixel_SquareAdd(RCIndex aX)
 {
    // Locals.
    RCIndex tCursor;
@@ -324,7 +324,7 @@ void SimMorphFilter::doFilterHighPixel_SquareAdd(RCIndex aX)
 //******************************************************************************
 // Filter a pixel that is high.
 
-void SimMorphFilter::doFilterHighPixel_DiamondAdd(RCIndex aX)
+void MorphFilter::doFilterHighPixel_DiamondAdd(RCIndex aX)
 {
    // Locals.
    RCIndex tCursor;
@@ -389,7 +389,7 @@ void SimMorphFilter::doFilterHighPixel_DiamondAdd(RCIndex aX)
 //******************************************************************************
 // Filter a pixel that is high.
 
-void SimMorphFilter::doFilterHighPixel_SquareSub(RCIndex aX)
+void MorphFilter::doFilterHighPixel_SquareSub(RCIndex aX)
 {
    // Locals.
    RCIndex tCursor;
@@ -450,7 +450,7 @@ void SimMorphFilter::doFilterHighPixel_SquareSub(RCIndex aX)
 //******************************************************************************
 // Filter a pixel that is high.
 
-void SimMorphFilter::doFilterHighPixel_DiamondSub(RCIndex aX)
+void MorphFilter::doFilterHighPixel_DiamondSub(RCIndex aX)
 {
    // Locals.
    RCIndex tCursor;

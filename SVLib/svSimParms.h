@@ -13,7 +13,7 @@ Parameters class whose values are read from a command file.
 #include "svRCIndex.h"
 #include "svRCSize.h"
 #include "svSimImageGenParms.h"
-#include "svSimMorphParms.h"
+#include "svMorphParms.h"
 
 //******************************************************************************
 //******************************************************************************
@@ -79,10 +79,10 @@ public:
 
    // Simulated image stack.
    char             mStackName[cMaxStringSize];
-   SimMorphParms    mStackMorphParmsA;
-   SimMorphParms    mStackMorphParmsB;
-   SimMorphParms    mStackMorphParmsC;
-   SimMorphParms    mStackMorphParmsD;
+   MorphParms    mMorphParmsA;
+   MorphParms    mMorphParmsB;
+   MorphParms    mMorphParmsC;
+   MorphParms    mMorphParmsD;
 
    //***************************************************************************
    //***************************************************************************

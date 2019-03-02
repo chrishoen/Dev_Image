@@ -75,10 +75,10 @@ void SimStackGenerator::doGenerateImageStack()
    doCalculateStackSize();
 
    // Apply the morph filters.
-   doApplyMorphFilter(&mP->mStackMorphParmsA);
-   doApplyMorphFilter(&mP->mStackMorphParmsB);
-   doApplyMorphFilter(&mP->mStackMorphParmsC);
-   doApplyMorphFilter(&mP->mStackMorphParmsD);
+   doApplyMorphFilter(&mP->mMorphParmsA);
+   doApplyMorphFilter(&mP->mMorphParmsB);
+   doApplyMorphFilter(&mP->mMorphParmsC);
+   doApplyMorphFilter(&mP->mMorphParmsD);
 }
 
 //******************************************************************************
@@ -91,31 +91,31 @@ void SimStackGenerator::doCalculateStackSize()
    mStackSize = 0;
 
    // ParmsA
-   if (mP->mStackMorphParmsA.mValid)
+   if (mP->mMorphParmsA.mValid)
    {
-      mStackSize += mP->mStackMorphParmsA.mRepeatNum * mP->mStackMorphParmsA.mWriteNum;
-      if (mP->mStackMorphParmsA.mWriteFirst) mStackSize++;
+      mStackSize += mP->mMorphParmsA.mRepeatNum * mP->mMorphParmsA.mWriteNum;
+      if (mP->mMorphParmsA.mWriteFirst) mStackSize++;
    }
 
    // ParmsB
-   if (mP->mStackMorphParmsB.mValid)
+   if (mP->mMorphParmsB.mValid)
    {
-      mStackSize += mP->mStackMorphParmsB.mRepeatNum * mP->mStackMorphParmsB.mWriteNum;
-      if (mP->mStackMorphParmsB.mWriteFirst) mStackSize++;
+      mStackSize += mP->mMorphParmsB.mRepeatNum * mP->mMorphParmsB.mWriteNum;
+      if (mP->mMorphParmsB.mWriteFirst) mStackSize++;
    }
 
    // ParmsC
-   if (mP->mStackMorphParmsC.mValid)
+   if (mP->mMorphParmsC.mValid)
    {
-      mStackSize += mP->mStackMorphParmsC.mRepeatNum * mP->mStackMorphParmsC.mWriteNum;
-      if (mP->mStackMorphParmsC.mWriteFirst) mStackSize++;
+      mStackSize += mP->mMorphParmsC.mRepeatNum * mP->mMorphParmsC.mWriteNum;
+      if (mP->mMorphParmsC.mWriteFirst) mStackSize++;
    }
 
    // ParmsD
-   if (mP->mStackMorphParmsD.mValid)
+   if (mP->mMorphParmsD.mValid)
    {
-      mStackSize += mP->mStackMorphParmsD.mRepeatNum * mP->mStackMorphParmsD.mWriteNum;
-      if (mP->mStackMorphParmsD.mWriteFirst) mStackSize++;
+      mStackSize += mP->mMorphParmsD.mRepeatNum * mP->mMorphParmsD.mWriteNum;
+      if (mP->mMorphParmsD.mWriteFirst) mStackSize++;
    }
 
    Prn::print(Prn::View01, "doCalculateStackSize %d", mStackSize);
@@ -126,7 +126,7 @@ void SimStackGenerator::doCalculateStackSize()
 //******************************************************************************
 // Apply a morph filter to generate output images.
 
-void SimStackGenerator::doApplyMorphFilter(SimMorphParms* aParms)
+void SimStackGenerator::doApplyMorphFilter(MorphParms* aParms)
 {
    // Guard.
    if (!aParms->mValid) return;

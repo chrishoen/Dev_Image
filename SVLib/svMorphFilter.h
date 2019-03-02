@@ -11,7 +11,7 @@ Nearest neighbor rule filter.
 #include <opencv2/core/core.hpp>
 
 #include "svImageWrapper.h"
-#include "svSimMorphParms.h"
+#include "svMorphParms.h"
 
 namespace SV
 {
@@ -26,7 +26,7 @@ namespace SV
 // that pertain to the nearest neighbors of the pixel.
 //
 
-class SimMorphFilter
+class MorphFilter
 {
 public:
 
@@ -35,7 +35,7 @@ public:
    //***************************************************************************
    // Parameters. These are read from a parms file.
 
-   SimMorphParms* mP;
+   MorphParms* mP;
 
    //***************************************************************************
    //***************************************************************************
@@ -62,9 +62,9 @@ public:
    // Methods.
 
    // Constructor.
-   SimMorphFilter();
-   SimMorphFilter(SimMorphParms* aParms);
-   void initialize(SimMorphParms* aParms);
+   MorphFilter();
+   MorphFilter(MorphParms* aParms);
+   void initialize(MorphParms* aParms);
    void reset();
 
    //***************************************************************************

@@ -1,0 +1,30 @@
+StackSimParms
+   StackSimObjectParms
+      MorphParms
+
+StackSimWriter
+   StackSimObjectWriter
+      MorphFilter
+
+
+
+StackSim_Parms.txt
+
+                       mFileName1
+                       mFileName2
+
+                       mPosition1
+                       mPosition2
+                       
+                       mRect1
+                       mRect2
+                       
+   SimStackObjectParms mObject1
+   SimStackObjectParms mObject2
+
+StackSimObject_pyramid_diamond_11.txt
+
+   MorphParmsA
+   MorphParmsB
+   
+   

@@ -34,10 +34,10 @@ void SimParms::reset()
    mImageGenParmsS3.reset();
 
    mStackName[0] = 0;
-   mStackMorphParmsA.reset();
-   mStackMorphParmsB.reset();
-   mStackMorphParmsC.reset();
-   mStackMorphParmsD.reset();
+   mMorphParmsA.reset();
+   mMorphParmsB.reset();
+   mMorphParmsC.reset();
+   mMorphParmsD.reset();
 }
 
 //******************************************************************************
@@ -52,10 +52,10 @@ void SimParms::expand()
    mImageGenParmsS2.expand();
    mImageGenParmsS3.expand();
 
-   mStackMorphParmsA.expand();
-   mStackMorphParmsB.expand();
-   mStackMorphParmsC.expand();
-   mStackMorphParmsD.expand();
+   mMorphParmsA.expand();
+   mMorphParmsB.expand();
+   mMorphParmsC.expand();
+   mMorphParmsD.expand();
 }
 
 //******************************************************************************
@@ -69,26 +69,26 @@ void SimParms::show()
    printf("SimParms************************************************ %s\n", mTargetSection);
 
    bool tStackFlag = false;
-   if (mStackMorphParmsA.mValid)
+   if (mMorphParmsA.mValid)
    {
       tStackFlag = true;
       printf("StackName                         %s\n", mStackName);
-      mStackMorphParmsA.show("MorphA");
+      mMorphParmsA.show("MorphA");
    }
-   if (mStackMorphParmsB.mValid)
+   if (mMorphParmsB.mValid)
    {
       tStackFlag = true;
-      mStackMorphParmsB.show("MorphB");
+      mMorphParmsB.show("MorphB");
    }
-   if (mStackMorphParmsC.mValid)
+   if (mMorphParmsC.mValid)
    {
       tStackFlag = true;
-      mStackMorphParmsC.show("MorphC");
+      mMorphParmsC.show("MorphC");
    }
-   if (mStackMorphParmsD.mValid)
+   if (mMorphParmsD.mValid)
    {
       tStackFlag = true;
-      mStackMorphParmsD.show("MorphD");
+      mMorphParmsD.show("MorphD");
    }
 
    if (!tStackFlag)
@@ -118,26 +118,26 @@ void SimParms::execute(Ris::CmdLineCmd* aCmd)
 
    if (aCmd->isCmd("StackMorphParmsA"))
    {
-      readSection(aCmd->argString(1), &mStackMorphParmsA);
-      mStackMorphParmsA.setName(aCmd->argString(1));
+      readSection(aCmd->argString(1), &mMorphParmsA);
+      mMorphParmsA.setName(aCmd->argString(1));
    }
 
    if (aCmd->isCmd("StackMorphParmsB"))
    {
-      readSection(aCmd->argString(1), &mStackMorphParmsB);
-      mStackMorphParmsB.setName(aCmd->argString(1));
+      readSection(aCmd->argString(1), &mMorphParmsB);
+      mMorphParmsB.setName(aCmd->argString(1));
    }
 
    if (aCmd->isCmd("StackMorphParmsC"))
    {
-      readSection(aCmd->argString(1), &mStackMorphParmsC);
-      mStackMorphParmsC.setName(aCmd->argString(1));
+      readSection(aCmd->argString(1), &mMorphParmsC);
+      mMorphParmsC.setName(aCmd->argString(1));
    }
 
    if (aCmd->isCmd("StackMorphParmsD"))
    {
-      readSection(aCmd->argString(1), &mStackMorphParmsD);
-      mStackMorphParmsD.setName(aCmd->argString(1));
+      readSection(aCmd->argString(1), &mMorphParmsD);
+      mMorphParmsD.setName(aCmd->argString(1));
    }
 }
 

@@ -49,7 +49,7 @@ namespace SV
 // structure. If so, then this class is the root.
 // 
 
-class SimMorphParms : public Ris::BaseCmdLineExec
+class MorphParms : public Ris::BaseCmdLineExec
 {
 public:
 
@@ -111,7 +111,7 @@ public:
 
    // Constructor,
    typedef Ris::BaseCmdLineExec BaseClass;
-   SimMorphParms();
+   MorphParms();
    void reset();
    void show(const char* aLabel);
 
