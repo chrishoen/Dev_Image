@@ -9,43 +9,26 @@ for xpixel in input_image_c:
       
 # filter a high pixel based on nearest neighbor rules.
 def filter_high_pixel(x):
-   # calculate class varaibles.
+   # calculate class variables.
    calculate_classes(x)
 
    # RULE 1.
    # If slice is not on a horizontal edge.
-
    if (class_s == 0x01):
       return 
 
    # RULE 2.
-   # If cube is not classified.
-
+   # If any plane is not classified.
    if (class_s == 0xee or class_r == 0xee or class_c == 0xee):
       return 
 
    # RULE 3.
-   # If on a vertical plane and slice class is 4 or 5.
-
-   if (max(class_r,class_c) == 0x02) and class_s >= 0x40):
-   if (class_r == 0x02 and class_s >= 0x40):
+   # If an plane class is 4 or 5.
+   if (class_s >= 0x40 or class_r >= 0x40 or class_c >= 0x40):
       output_image.at(x) = parms.hc1
       return 
 
    # RULE 4.
-   # If on a vertical plane and any other.
-
-   if (class_r == 0x02):
-      return 
-
-   # RULE 5.
-   # If not on a vertical plane and row or column class is 4 or 5.
-
-   if (max(class_r,class_c) >= 0x40):
-      output_image.at(x) = parms.hc2
-      return 
-
-   # RULE 6.
    # Any other.
-
    return 
+
