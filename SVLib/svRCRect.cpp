@@ -48,6 +48,23 @@ void RCRect::initialize(int aARow, int aBRow, int aACol, int aBCol)
    mBCol = aBCol;
 }
 
+// Shrink/expand by a delta.
+void RCRect::shrink(int aDelta)
+{
+   mARow += aDelta;
+   mBRow -= aDelta;
+   mACol += aDelta;
+   mBCol -= aDelta;
+
+}
+void RCRect::expand(int aDelta)
+{
+   mARow -= aDelta;
+   mBRow += aDelta;
+   mACol -= aDelta;
+   mBCol += aDelta;
+}
+
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************

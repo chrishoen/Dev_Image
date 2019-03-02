@@ -128,6 +128,10 @@ public:
    // Return true if the rectangle contains the index,
    bool contains(RCIndex aIndex);
 
+   // Shrink/expand by a delta.
+   void shrink(int aDelta);
+   void expand(int aDelta);
+
    //***************************************************************************
    //***************************************************************************
    //***************************************************************************
