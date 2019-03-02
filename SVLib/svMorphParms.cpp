@@ -52,7 +52,7 @@ void MorphParms::show(const char* aLabel)
 {
    if (!mValid) return;
    printf("MorphParms******************* %s\n",aLabel);
-   printf("Name                     %10s\n", mName);
+   printf("Name           %20s\n", mName);
    printf("ImageSize                %10d %10d\n", mImageSize.mRows, mImageSize.mCols);
    printf("GenerateFirst            %10s\n", my_string_from_bool(mGenerateFirst));
    printf("WriteFirst               %10s\n", my_string_from_bool(mWriteFirst));

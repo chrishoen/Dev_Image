@@ -10,6 +10,9 @@ Parameters class whose values are read from a command file.
 //******************************************************************************
 
 #include "risCmdLineParms.h"
+#include "svRCIndex.h"
+#include "svRCSize.h"
+#include "svMorphParms.h"
 
 //******************************************************************************
 //******************************************************************************
@@ -47,7 +50,7 @@ namespace SV
 // structure. If so, then this class is the root.
 // 
 
-class ParmParms : public Ris::BaseCmdLineParms
+class StackSimObjectParms : public Ris::BaseCmdLineParms
 {
 public:
 
@@ -56,17 +59,21 @@ public:
    //***************************************************************************
    // Constants.
 
-   static const int cMaxStringSize = 200;
+   static const int cMaxStringSize = 100;
 
    //***************************************************************************
    //***************************************************************************
    //***************************************************************************
    // Parameter members.
 
-   // Parms file names.
-   char mImageParmsFileName[cMaxStringSize];
-   char mSimParmsFileName[cMaxStringSize];
-   char mStackSimParmsFileName[cMaxStringSize];
+   // If true then valid.
+   bool          mValid;
+
+   // Simulated image stack.
+   MorphParms    mMorphParmsA;
+   MorphParms    mMorphParmsB;
+   MorphParms    mMorphParmsC;
+   MorphParms    mMorphParmsD;
 
    //***************************************************************************
    //***************************************************************************
@@ -80,7 +87,7 @@ public:
 
    // Constructor,
    typedef Ris::BaseCmdLineParms BaseClass;
-   ParmParms();
+   StackSimObjectParms();
    void reset();
    void show();
 
@@ -92,26 +99,7 @@ public:
    // Simulate expanded member variables. This is called after the entire
    // section of the command file has been processed.
    void expand() override;
-
-   //***************************************************************************
-   //***************************************************************************
-   //***************************************************************************
-   // Methods.
-
-   // Read more parms files.
-   void readMoreParms(char* aSection);
 };
-
-//******************************************************************************
-//******************************************************************************
-//******************************************************************************
-// Global instance.
-
-#ifdef _SVPARMPARMS_CPP_
-   ParmParms gParmParms;
-#else
-   extern ParmParms gParmParms;
-#endif
 
 //******************************************************************************
 //******************************************************************************

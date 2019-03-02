@@ -10,6 +10,9 @@ Parameters class whose values are read from a command file.
 //******************************************************************************
 
 #include "risCmdLineParms.h"
+#include "svRCIndex.h"
+#include "svRCSize.h"
+#include "svStackSimObjectParms.h"
 
 //******************************************************************************
 //******************************************************************************
@@ -47,7 +50,7 @@ namespace SV
 // structure. If so, then this class is the root.
 // 
 
-class ParmParms : public Ris::BaseCmdLineParms
+class StackSimParms : public Ris::BaseCmdLineParms
 {
 public:
 
@@ -58,20 +61,45 @@ public:
 
    static const int cMaxStringSize = 200;
 
+
    //***************************************************************************
    //***************************************************************************
    //***************************************************************************
    // Parameter members.
 
-   // Parms file names.
-   char mImageParmsFileName[cMaxStringSize];
-   char mSimParmsFileName[cMaxStringSize];
-   char mStackSimParmsFileName[cMaxStringSize];
+   // Simulated stack objects parms file names.
+   char  mObjectFileName1[cMaxStringSize];
+   char  mObjectFileName2[cMaxStringSize];
+   char  mObjectFileName3[cMaxStringSize];
+   char  mObjectFileName4[cMaxStringSize];
+
+
+   // Simulated stack object major row column positioning.
+   RCSize  mMajorSize;
+   RCIndex mObject1Major;
+   RCIndex mObject2Major;
+   RCIndex mObject3Major;
+   RCIndex mObject4Major;
 
    //***************************************************************************
    //***************************************************************************
    //***************************************************************************
    // Expanded members that are not read from the parms file.
+
+   // Stack objects.
+   StackSimObjectParms   mObjectParms1;
+   StackSimObjectParms   mObjectParms2;
+   StackSimObjectParms   mObjectParms3;
+   StackSimObjectParms   mObjectParms4;
+
+   // Stack object row column roi size.
+   RCSize mObjectSize;
+
+   // Stack object row column upper left corner offsets.
+   RCIndex mObject1Offset;
+   RCIndex mObject2Offset;
+   RCIndex mObject3Offset;
+   RCIndex mObject4Offset;
 
    //***************************************************************************
    //***************************************************************************
@@ -80,7 +108,7 @@ public:
 
    // Constructor,
    typedef Ris::BaseCmdLineParms BaseClass;
-   ParmParms();
+   StackSimParms();
    void reset();
    void show();
 
@@ -92,14 +120,6 @@ public:
    // Simulate expanded member variables. This is called after the entire
    // section of the command file has been processed.
    void expand() override;
-
-   //***************************************************************************
-   //***************************************************************************
-   //***************************************************************************
-   // Methods.
-
-   // Read more parms files.
-   void readMoreParms(char* aSection);
 };
 
 //******************************************************************************
@@ -107,10 +127,10 @@ public:
 //******************************************************************************
 // Global instance.
 
-#ifdef _SVPARMPARMS_CPP_
-   ParmParms gParmParms;
+#ifdef _SVSTACKSIMPARMS_CPP_
+   StackSimParms gStackSimParms;
 #else
-   extern ParmParms gParmParms;
+   extern StackSimParms gStackSimParms;
 #endif
 
 //******************************************************************************

@@ -4,13 +4,7 @@
 
 #include "stdafx.h"
 
-#include "svSysParms.h"
-#include "svImageParms.h"
-#include "svSimParms.h"
-#include "svStackSimParms.h"
-
-#define  _SVPARMPARMS_CPP_
-#include "svParmParms.h"
+#include "svStackSimObjectParms.h"
 
 //******************************************************************************
 //******************************************************************************
@@ -24,19 +18,19 @@ namespace SV
 //******************************************************************************
 // Constructor.
 
-ParmParms::ParmParms()
+StackSimObjectParms::StackSimObjectParms()
 {
    reset();
 }
 
-void ParmParms::reset()
+void StackSimObjectParms::reset()
 {
-   BaseClass::reset();
-   BaseClass::setFileName_RelAlphaFiles("Image/SV_Parm_Parms.txt");
+   mValid = false;
 
-   mImageParmsFileName[0] = 0;
-   mSimParmsFileName[0] = 0;
-   mStackSimParmsFileName[0] = 0;
+   mMorphParmsA.reset();
+   mMorphParmsB.reset();
+   mMorphParmsC.reset();
+   mMorphParmsD.reset();
 }
 
 //******************************************************************************
@@ -45,8 +39,12 @@ void ParmParms::reset()
 // Simulate expanded member variables. This is called after the entire
 // section of the command file has been processed.
 
-void ParmParms::expand()
+void StackSimObjectParms::expand()
 {
+   mMorphParmsA.expand();
+   mMorphParmsB.expand();
+   mMorphParmsC.expand();
+   mMorphParmsD.expand();
 }
 
 //******************************************************************************
@@ -54,13 +52,15 @@ void ParmParms::expand()
 //******************************************************************************
 // Show.
 
-void ParmParms::show()
+void StackSimObjectParms::show()
 {
    printf("\n");
-   printf("ParmParms********************************************** %s\n", mTargetSection);
-   printf("ImageParmsFileName                %s\n", mImageParmsFileName);
-   printf("SimParmsFileName                  %s\n", mSimParmsFileName);
-   printf("StackSimParmsFileName             %s\n", mStackSimParmsFileName);
+   printf("StackSimObjectParms************************************************ %s\n", mTargetSection);
+
+   mMorphParmsA.show("MorphA");
+   mMorphParmsB.show("MorphB");
+   mMorphParmsC.show("MorphC");
+   mMorphParmsD.show("MorphD");
 }
 
 //******************************************************************************
@@ -70,36 +70,33 @@ void ParmParms::show()
 // member variable.  Only process commands for the target section.This is
 // called by the associated command file object for each command in the file.
 
-void ParmParms::execute(Ris::CmdLineCmd* aCmd)
+void StackSimObjectParms::execute(Ris::CmdLineCmd* aCmd)
 {
    if (!isTargetSection(aCmd)) return;
 
-   if (aCmd->isCmd("ImageParmsFileName"))  aCmd->copyArgString(1, mImageParmsFileName, cMaxStringSize);
-   if (aCmd->isCmd("SimParmsFileName"))  aCmd->copyArgString(1, mSimParmsFileName, cMaxStringSize);
-   if (aCmd->isCmd("StackSimParmsFileName"))  aCmd->copyArgString(1, mStackSimParmsFileName, cMaxStringSize);
-}
+   if (aCmd->isCmd("StackMorphParmsA"))
+   {
+      readSection(aCmd->argString(1), &mMorphParmsA);
+      mMorphParmsA.setName(aCmd->argString(1));
+   }
 
-//******************************************************************************
-//******************************************************************************
-//******************************************************************************
-// Read more parms files.
+   if (aCmd->isCmd("StackMorphParmsB"))
+   {
+      readSection(aCmd->argString(1), &mMorphParmsB);
+      mMorphParmsB.setName(aCmd->argString(1));
+   }
 
-void ParmParms::readMoreParms(char* aSection)
-{
-   // Read parameters files.
-   SV::gSimParms.reset();
-   SV::gSimParms.setFileName_RelAlphaFiles(mSimParmsFileName);
-   SV::gSimParms.readSection(aSection);
+   if (aCmd->isCmd("StackMorphParmsC"))
+   {
+      readSection(aCmd->argString(1), &mMorphParmsC);
+      mMorphParmsC.setName(aCmd->argString(1));
+   }
 
-   SV::gImageParms.reset();
-   SV::gImageParms.setFileName_RelAlphaFiles(mImageParmsFileName);
-   SV::gImageParms.readSection(aSection);
-   SV::gImageParms.readOverrides(&SV::gSimParms);
-
-   SV::gStackSimParms.reset();
-   SV::gStackSimParms.setFileName_RelAlphaFiles(mStackSimParmsFileName);
-   SV::gStackSimParms.readSection(aSection);
-
+   if (aCmd->isCmd("StackMorphParmsD"))
+   {
+      readSection(aCmd->argString(1), &mMorphParmsD);
+      mMorphParmsD.setName(aCmd->argString(1));
+   }
 }
 
 //******************************************************************************
