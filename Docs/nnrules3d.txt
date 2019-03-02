@@ -13,7 +13,7 @@ def filter_high_pixel(x):
    calculate_classes(x)
 
    # RULE 1.
-   # If slice is not on a horizontal edge.
+   # If the slice plane is not on a horizontal edge.
    if (class_s == 0x01):
       return 
 
@@ -23,7 +23,7 @@ def filter_high_pixel(x):
       return 
 
    # RULE 3.
-   # If an plane class is 4 or 5.
+   # If any plane class is 4 or 5.
    if (class_s >= 0x40 or class_r >= 0x40 or class_c >= 0x40):
       output_image.at(x) = parms.hc1
       return 
