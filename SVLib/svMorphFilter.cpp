@@ -109,75 +109,27 @@ void MorphFilter::doFilterImage(
 
    // Loop through the image. Ignore the top and bottom rows and ignore
    // the left and right edge columns.
-   if (mP->isSquare() && mP->mAddFlag)
+   SV::RCIndexLoop tLoop(RCIndex(1, 1), aInputImage.rows - 2, aInputImage.cols - 2);
+   while (tLoop.loop())
    {
-      SV::RCIndexLoop tLoop(RCIndex(1, 1), aInputImage.rows - 2, aInputImage.cols - 2);
-      while (tLoop.loop())
+      // Filter each pixel that is high.
+      if (mInput.at(tLoop()) != 0)
       {
-         // Filter each pixel that is high.
-         if (mInput.at(tLoop()) != 0)
+         if (mP->isSquare() && mP->mAddFlag)
          {
             doFilterHighPixel_SquareAdd(tLoop());
          }
-      }
-   }
-
-   //***************************************************************************
-   //***************************************************************************
-   //***************************************************************************
-   // Loop through the image for mode a square with subtraction.
-
-   // Loop through the image. Ignore the top and bottom rows and ignore
-   // the left and right edge columns.
-   if (mP->isSquare() && !mP->mAddFlag)
-   {
-      SV::RCIndexLoop tLoop(RCIndex(1, 1), aInputImage.rows - 2, aInputImage.cols - 2);
-      while (tLoop.loop())
-      {
-         // Filter each pixel that is high.
-         if (mInput.at(tLoop()) != 0)
+         if (mP->isSquare() && !mP->mAddFlag)
          {
             doFilterHighPixel_SquareSub(tLoop());
          }
-      }
-   }
-
-   //***************************************************************************
-   //***************************************************************************
-   //***************************************************************************
-   // Loop through the image for a diamond with addition.
-
-   // Loop through the image. Ignore the top and bottom rows and ignore
-   // the left and right edge columns.
-   if (mP->isDiamond() && mP->mAddFlag)
-   {
-      SV::RCIndexLoop tLoop(RCIndex(1, 1), aInputImage.rows - 2, aInputImage.cols - 2);
-      while (tLoop.loop())
-      {
-         // Filter each pixel that is high.
-         if (mInput.at(tLoop()) != 0)
+         if (mP->isDiamond() && mP->mAddFlag)
          {
-            doFilterHighPixel_DiamondAdd(tLoop());
+            doFilterHighPixel_SquareAdd(tLoop());
          }
-      }
-   }
-
-   //***************************************************************************
-   //***************************************************************************
-   //***************************************************************************
-   // Loop through the image for a diamond with subtraction.
-
-   // Loop through the image. Ignore the top and bottom rows and ignore
-   // the left and right edge columns.
-   if (mP->isDiamond() && !mP->mAddFlag)
-   {
-      SV::RCIndexLoop tLoop(RCIndex(1, 1), aInputImage.rows - 2, aInputImage.cols - 2);
-      while (tLoop.loop())
-      {
-         // Filter each pixel that is high.
-         if (mInput.at(tLoop()) != 0)
+         if (mP->isDiamond() && !mP->mAddFlag)
          {
-            doFilterHighPixel_DiamondSub(tLoop());
+            doFilterHighPixel_SquareSub(tLoop());
          }
       }
    }
