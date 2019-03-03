@@ -7,7 +7,7 @@
 #include "svSysParms.h"
 #include "svImageParms.h"
 #include "svSimParms.h"
-#include "svStackSimParms.h"
+#include "svStackParms.h"
 
 #define  _SVPARMPARMS_CPP_
 #include "svParmParms.h"
@@ -36,7 +36,7 @@ void ParmParms::reset()
 
    mImageParmsFileName[0] = 0;
    mSimParmsFileName[0] = 0;
-   mStackSimParmsFileName[0] = 0;
+   mStackParmsFileName[0] = 0;
 }
 
 //******************************************************************************
@@ -60,7 +60,7 @@ void ParmParms::show()
    printf("ParmParms********************************************** %s\n", mTargetSection);
    printf("ImageParmsFileName                %s\n", mImageParmsFileName);
    printf("SimParmsFileName                  %s\n", mSimParmsFileName);
-   printf("StackSimParmsFileName             %s\n", mStackSimParmsFileName);
+   printf("StackParmsFileName                %s\n", mStackParmsFileName);
 }
 
 //******************************************************************************
@@ -75,8 +75,8 @@ void ParmParms::execute(Ris::CmdLineCmd* aCmd)
    if (!isTargetSection(aCmd)) return;
 
    if (aCmd->isCmd("ImageParmsFileName"))  aCmd->copyArgString(1, mImageParmsFileName, cMaxStringSize);
-   if (aCmd->isCmd("SimParmsFileName"))  aCmd->copyArgString(1, mSimParmsFileName, cMaxStringSize);
-   if (aCmd->isCmd("StackSimParmsFileName"))  aCmd->copyArgString(1, mStackSimParmsFileName, cMaxStringSize);
+   if (aCmd->isCmd("SimParmsFileName"))    aCmd->copyArgString(1, mSimParmsFileName, cMaxStringSize);
+   if (aCmd->isCmd("StackParmsFileName"))  aCmd->copyArgString(1, mStackParmsFileName, cMaxStringSize);
 }
 
 //******************************************************************************
@@ -96,9 +96,9 @@ void ParmParms::readMoreParms(char* aSection)
    SV::gImageParms.readSection(aSection);
    SV::gImageParms.readOverrides(&SV::gSimParms);
 
-   SV::gStackSimParms.reset();
-   SV::gStackSimParms.setFileName_RelAlphaFiles(mStackSimParmsFileName);
-   SV::gStackSimParms.readSection(aSection);
+   SV::gStackParms.reset();
+   SV::gStackParms.setFileName_RelAlphaFiles(mStackParmsFileName);
+   SV::gStackParms.readSection(aSection);
 
 }
 

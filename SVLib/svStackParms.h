@@ -12,7 +12,8 @@ Parameters class whose values are read from a command file.
 #include "risCmdLineParms.h"
 #include "svRCIndex.h"
 #include "svRCSize.h"
-#include "svMorphParms.h"
+#include "svRCRect.h"
+#include "svStackObjectParms.h"
 
 //******************************************************************************
 //******************************************************************************
@@ -50,7 +51,7 @@ namespace SV
 // structure. If so, then this class is the root.
 // 
 
-class StackSimObjectParms : public Ris::BaseCmdLineParms
+class StackParms : public Ris::BaseCmdLineParms
 {
 public:
 
@@ -59,26 +60,44 @@ public:
    //***************************************************************************
    // Constants.
 
-   static const int cMaxStringSize = 100;
+   static const int cMaxStringSize = 200;
+
 
    //***************************************************************************
    //***************************************************************************
    //***************************************************************************
    // Parameter members.
 
-   // If true then valid.
-   bool          mValid;
+   // Simulated stack objects parms file names.
+   char  mObjectFileName1[cMaxStringSize];
+   char  mObjectFileName2[cMaxStringSize];
+   char  mObjectFileName3[cMaxStringSize];
+   char  mObjectFileName4[cMaxStringSize];
 
-   // Simulated image stack.
-   MorphParms    mMorphParmsA;
-   MorphParms    mMorphParmsB;
-   MorphParms    mMorphParmsC;
-   MorphParms    mMorphParmsD;
+
+   // Simulated stack object major row column positioning.
+   RCSize  mMajorSize;
+   RCIndex mObject1Major;
+   RCIndex mObject2Major;
+   RCIndex mObject3Major;
+   RCIndex mObject4Major;
 
    //***************************************************************************
    //***************************************************************************
    //***************************************************************************
    // Expanded members that are not read from the parms file.
+
+   // Stack objects.
+   StackObjectParms   mObjectParms1;
+   StackObjectParms   mObjectParms2;
+   StackObjectParms   mObjectParms3;
+   StackObjectParms   mObjectParms4;
+
+   // Stack object rectangles.
+   RCRect mObject1Rect;
+   RCRect mObject2Rect;
+   RCRect mObject3Rect;
+   RCRect mObject4Rect;
 
    //***************************************************************************
    //***************************************************************************
@@ -87,7 +106,7 @@ public:
 
    // Constructor,
    typedef Ris::BaseCmdLineParms BaseClass;
-   StackSimObjectParms();
+   StackParms();
    void reset();
    void show();
 
@@ -100,6 +119,17 @@ public:
    // section of the command file has been processed.
    void expand() override;
 };
+
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+// Global instance.
+
+#ifdef _SVSTACKSIMPARMS_CPP_
+   StackParms gStackParms;
+#else
+   extern StackParms gStackParms;
+#endif
 
 //******************************************************************************
 //******************************************************************************

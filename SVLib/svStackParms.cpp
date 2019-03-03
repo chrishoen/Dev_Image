@@ -7,7 +7,7 @@
 #include "svSysParms.h"
 
 #define  _SVSTACKSIMPARMS_CPP_
-#include "svStackSimParms.h"
+#include "svStackParms.h"
 
 //******************************************************************************
 //******************************************************************************
@@ -21,15 +21,15 @@ namespace SV
 //******************************************************************************
 // Constructor.
 
-StackSimParms::StackSimParms()
+StackParms::StackParms()
 {
    reset();
 }
 
-void StackSimParms::reset()
+void StackParms::reset()
 {
    BaseClass::reset();
-   BaseClass::setFileName_RelAlphaFiles("Image/SV_StackSim_Parms.txt");
+   BaseClass::setFileName_RelAlphaFiles("Image/SV_Stack_Parms.txt");
 
    mObjectFileName1[0];
    mObjectFileName2[0];
@@ -59,7 +59,7 @@ void StackSimParms::reset()
 // Simulate expanded member variables. This is called after the entire
 // section of the command file has been processed.
 
-void StackSimParms::expand()
+void StackParms::expand()
 {
    // Stack objects.
    if (strlen(mObjectFileName1) != 0)
@@ -122,10 +122,10 @@ void StackSimParms::expand()
 //******************************************************************************
 // Show.
 
-void StackSimParms::show()
+void StackParms::show()
 {
    printf("\n");
-   printf("StackSimParms************************************************ %s\n", mTargetSection);
+   printf("StackParms************************************************ %s\n", mTargetSection);
 
    if (mObjectParms1.mValid)  mObjectParms1.show();
    if (mObjectParms2.mValid)  mObjectParms2.show();
@@ -162,7 +162,7 @@ void StackSimParms::show()
 // member variable.  Only process commands for the target section.This is
 // called by the associated command file object for each command in the file.
 
-void StackSimParms::execute(Ris::CmdLineCmd* aCmd)
+void StackParms::execute(Ris::CmdLineCmd* aCmd)
 {
    if (!isTargetSection(aCmd)) return;
 

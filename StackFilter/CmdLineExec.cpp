@@ -7,7 +7,7 @@
 #include "svImageParms.h"
 #include "svImageFunctions.h"
 #include "svSimParms.h"
-#include "svStackSimParms.h"
+#include "svStackParms.h"
 #include "svParmParms.h"
 #include "displayParms.h"
 #include "displayFunctions.h"
@@ -335,6 +335,6 @@ void CmdLineExec::executeParms3(Ris::CmdLineCmd* aCmd)
    SV::gParmParms.readSection("default");
    SV::gParmParms.readMoreParms("default");
 
-   SV::gStackSimParms.show();
+   SV::gStackParms.show();
 }
 
