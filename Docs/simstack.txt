@@ -28,3 +28,23 @@ StackSimObject_pyramid_diamond_11.txt
    MorphParmsB
    
    
+   
+an object is a stack of tiles
+a print is a stack of slices
+there are multiple tiles in a slice
+this produces multiple objects in a print.   
+   
+TileWriter
+TileParms
+
+
+
+
+
+
+
+
+
+
+
+   
