@@ -29,6 +29,9 @@ TileParms::TileParms()
 
 void TileParms::reset()
 {
+   mValid = false;
+   mName[0] = 0;
+
    mLoopNum = 0;
    mShape = 0;
    mDelta.reset();
@@ -41,8 +44,10 @@ void TileParms::reset()
 
 void TileParms::show(const char* aLabel)
 {
+   if (!mValid) return;
 
    printf("TileParms******************* %s\n",aLabel);
+   printf("Name           %20s\n", mName);
    printf("Shape                    %10s\n", asStringShape(mShape));
    printf("LoopNum                  %10d\n", mLoopNum);
    printf("Delta                    %10d %10d\n", mDelta.mRows, mDelta.mCols);
@@ -80,6 +85,8 @@ void TileParms::execute(Ris::CmdLineCmd* aCmd)
 
 void TileParms::expand()
 {
+   mValid = mDelta.mRows != 0 || mDelta.mCols != 0;
+
    mCenter.mRow = gSysParms.mImageSize.mRows / 2;
    mCenter.mCol = gSysParms.mImageSize.mCols / 2;
 }
@@ -88,6 +95,11 @@ void TileParms::expand()
 //******************************************************************************
 //******************************************************************************
 // Helpers.
+
+void TileParms::setName(const char* aName)
+{
+   strncpy(mName, aName, cMaxStringSize);
+}
 
 char* TileParms::asStringShape(int aX)
 {

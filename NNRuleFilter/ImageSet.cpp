@@ -9,6 +9,7 @@ Description:
 #include "stdafx.h"
 
 #include "svImageParms.h"
+#include "svTestParms.h"
 #include "svSimParms.h"
 #include "svStackParms.h"
 
@@ -45,7 +46,7 @@ void ImageSet::doSimInputTile2d()
 {
    // Generate simulated image.
    SV::createZeroImage(mInputS2);
-   SV::TileWriter tWriter(&SV::gStackParms.mTileParms);
+   SV::TileWriter tWriter(&SV::gTestParms.mTileParms);
    tWriter.doWrite(mInputS2);
    SV::showImageInfo(Prn::View01,"InputS2", mInputS2);
 }

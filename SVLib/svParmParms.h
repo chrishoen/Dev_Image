@@ -65,6 +65,7 @@ public:
 
    // Parms file names.
    char mImageParmsFileName[cMaxStringSize];
+   char mTestParmsFileName[cMaxStringSize];
    char mSimParmsFileName[cMaxStringSize];
    char mStackParmsFileName[cMaxStringSize];
 

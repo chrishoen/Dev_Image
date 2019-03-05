@@ -1,7 +1,7 @@
-
 #pragma once
 
 /*==============================================================================
+SV namespace: sixdofs that are measured by a computer vision based system.
 Parameters class whose values are read from a command file. 
 ==============================================================================*/
 
@@ -9,9 +9,12 @@ Parameters class whose values are read from a command file.
 //******************************************************************************
 //******************************************************************************
 
-#include "risCmdLineExec.h"
+#include "risCmdLineParms.h"
 #include "svRCIndex.h"
 #include "svRCSize.h"
+#include "svRCRect.h"
+#include "svStackObjectParms.h"
+#include "svTileParms.h"
 
 //******************************************************************************
 //******************************************************************************
@@ -49,7 +52,7 @@ namespace SV
 // structure. If so, then this class is the root.
 // 
 
-class TileParms : public Ris::BaseCmdLineExec
+class TestParms : public Ris::BaseCmdLineParms
 {
 public:
 
@@ -58,47 +61,15 @@ public:
    //***************************************************************************
    // Constants.
 
-   static const int cMaxStringSize = 40;
+   static const int cMaxStringSize = 200;
 
    //***************************************************************************
    //***************************************************************************
    //***************************************************************************
-   // Constants.
+   // Parameter members.
 
-   // None.
-   static const int cNone = 0;
-
-   // SimImage types.
-   static const int cShapeSquare  = 1;
-   static const int cShapeDiamond = 2;
-
-   //***************************************************************************
-   //***************************************************************************
-   //***************************************************************************
-   // Members that are read from the parms file.
-
-   // True if valid.
-   bool mValid;
-
-   // Name string.
-   char mName[cMaxStringSize];
-
-   //***************************************************************************
-   //***************************************************************************
-   //***************************************************************************
-   // Members that are read from the parms file.
-
-   // Shape 1=square 2=diagonal.
-   int mShape;
-   
-   // Iterations.
-   int mLoopNum;
-
-   // Row column deltas.
-   SV::RCSize mDelta;
-
-   // Row column center.
-   SV::RCIndex mCenter;
+   // Simulated stack objects parms file names.
+   TileParms  mTileParms;
 
    //***************************************************************************
    //***************************************************************************
@@ -106,33 +77,31 @@ public:
    // Methods.
 
    // Constructor,
-   typedef Ris::BaseCmdLineExec BaseClass;
-   TileParms();
+   typedef Ris::BaseCmdLineParms BaseClass;
+   TestParms();
    void reset();
-   void show(const char* aLabel);
+   void show();
 
    // Base class override: Execute a command from the command file to set a 
    // member variable. This is called by the associated command file object
    // for each command in the file.
    void execute(Ris::CmdLineCmd* aCmd) override;
 
-   // Calculate expanded member variables. This is called after the entire
+   // Simulate expanded member variables. This is called after the entire
    // section of the command file has been processed.
-   void expand();
-
-   //***************************************************************************
-   //***************************************************************************
-   //***************************************************************************
-   // Helpers.
-
-   static char* asStringShape(int aX);
-   char* asStringShape();
-
-   bool isSquare() { return mShape == cShapeSquare; }
-   bool isDiamond() { return mShape == cShapeDiamond; }
-
-   void setName(const char* aName);
+   void expand() override;
 };
+
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+// Global instance.
+
+#ifdef _SVTESTPARMS_CPP_
+   TestParms gTestParms;
+#else
+   extern TestParms gTestParms;
+#endif
 
 //******************************************************************************
 //******************************************************************************

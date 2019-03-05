@@ -5,13 +5,9 @@
 #include "stdafx.h"
 
 #include "svSysParms.h"
-#include "svImageParms.h"
-#include "svTestParms.h"
-#include "svSimParms.h"
-#include "svStackParms.h"
 
-#define  _SVPARMPARMS_CPP_
-#include "svParmParms.h"
+#define  _SVTESTPARMS_CPP_
+#include "svTestParms.h"
 
 //******************************************************************************
 //******************************************************************************
@@ -25,20 +21,17 @@ namespace SV
 //******************************************************************************
 // Constructor.
 
-ParmParms::ParmParms()
+TestParms::TestParms()
 {
    reset();
 }
 
-void ParmParms::reset()
+void TestParms::reset()
 {
    BaseClass::reset();
-   BaseClass::setFileName_RelAlphaFiles("Image/SV_Parm_Parms.txt");
+   BaseClass::setFileName_RelAlphaFiles("Image/SV_Test_Parms.txt");
 
-   mImageParmsFileName[0] = 0;
-   mSimParmsFileName[0] = 0;
-   mTestParmsFileName[0] = 0;
-   mStackParmsFileName[0] = 0;
+   mTileParms.reset();
 }
 
 //******************************************************************************
@@ -47,8 +40,9 @@ void ParmParms::reset()
 // Simulate expanded member variables. This is called after the entire
 // section of the command file has been processed.
 
-void ParmParms::expand()
+void TestParms::expand()
 {
+   mTileParms.expand();
 }
 
 //******************************************************************************
@@ -56,14 +50,12 @@ void ParmParms::expand()
 //******************************************************************************
 // Show.
 
-void ParmParms::show()
+void TestParms::show()
 {
    printf("\n");
-   printf("ParmParms********************************************** %s\n", mTargetSection);
-   printf("ImageParmsFileName                %s\n", mImageParmsFileName);
-   printf("TestParmsFileName                 %s\n", mTestParmsFileName);
-   printf("SimParmsFileName                  %s\n", mSimParmsFileName);
-   printf("StackParmsFileName                %s\n", mStackParmsFileName);
+   printf("TestParms************************************************ %s\n", mTargetSection);
+
+   mTileParms.show("Tile");
 }
 
 //******************************************************************************
@@ -73,41 +65,11 @@ void ParmParms::show()
 // member variable.  Only process commands for the target section.This is
 // called by the associated command file object for each command in the file.
 
-void ParmParms::execute(Ris::CmdLineCmd* aCmd)
+void TestParms::execute(Ris::CmdLineCmd* aCmd)
 {
    if (!isTargetSection(aCmd)) return;
 
-   if (aCmd->isCmd("ImageParmsFileName"))  aCmd->copyArgString(1, mImageParmsFileName, cMaxStringSize);
-   if (aCmd->isCmd("TestParmsFileName"))   aCmd->copyArgString(1, mTestParmsFileName, cMaxStringSize);
-   if (aCmd->isCmd("SimParmsFileName"))    aCmd->copyArgString(1, mSimParmsFileName, cMaxStringSize);
-   if (aCmd->isCmd("StackParmsFileName"))  aCmd->copyArgString(1, mStackParmsFileName, cMaxStringSize);
-}
-
-//******************************************************************************
-//******************************************************************************
-//******************************************************************************
-// Read more parms files.
-
-void ParmParms::readMoreParms(char* aSection)
-{
-   // Read parameters files.
-   SV::gSimParms.reset();
-   SV::gSimParms.setFileName_RelAlphaFiles(mSimParmsFileName);
-   SV::gSimParms.readSection(aSection);
-
-   SV::gImageParms.reset();
-   SV::gImageParms.setFileName_RelAlphaFiles(mImageParmsFileName);
-   SV::gImageParms.readSection(aSection);
-   SV::gImageParms.readOverrides(&SV::gSimParms);
-
-   SV::gTestParms.reset();
-   SV::gTestParms.setFileName_RelAlphaFiles(mTestParmsFileName);
-   SV::gTestParms.readSection(aSection);
-
-   SV::gStackParms.reset();
-   SV::gStackParms.setFileName_RelAlphaFiles(mStackParmsFileName);
-   SV::gStackParms.readSection(aSection);
-
+   if (aCmd->isCmd("TileParms"))            readSection(aCmd->argString(1), &mTileParms);
 }
 
 //******************************************************************************

@@ -63,7 +63,12 @@ public:
 
    // Write a tile to an image according to the parms.
    void doWrite(
-      cv::Mat&       aOutput);             // Output
+      cv::Mat&       aOutput);      // Output
+
+   // Write a tile to an image according to the parms.
+   void doWrite(
+      int            aLoopNum,      // Control
+      cv::Mat&       aOutput);      // Output
 
    //***************************************************************************
    //***************************************************************************

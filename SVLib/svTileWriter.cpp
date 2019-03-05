@@ -50,12 +50,7 @@ void TileWriter::reset()
 void TileWriter::doWrite(
    cv::Mat&       aOutputImage)    // Output
 {
-   //***************************************************************************
-   //***************************************************************************
-   //***************************************************************************
-   // Initialize.
-
-   Prn::print(Prn::View11, "doWrite %4d %4d", aOutputImage.rows, aOutputImage.cols);
+   Prn::print(Prn::View11, "TileWriter::doWrite %3d", mP->mLoopNum);
 
    // Set the image wrappers.
    mOutput.set(aOutputImage);
@@ -64,6 +59,19 @@ void TileWriter::doWrite(
    if (mP->isSquare())  doWriteSquare();
    if (mP->isDiamond()) doWriteDiamond();
 
+}
+
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+// Write a tile to an image according to the parms.
+
+void TileWriter::doWrite(
+   int            aLoopNum,
+   cv::Mat&       aOutputImage)    // Output
+{
+   mP->mLoopNum = aLoopNum;
+   doWrite(aOutputImage);
 }
 
 //******************************************************************************

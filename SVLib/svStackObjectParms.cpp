@@ -27,10 +27,10 @@ void StackObjectParms::reset()
 {
    mValid = false;
 
-   mMorphParmsA.reset();
-   mMorphParmsB.reset();
-   mMorphParmsC.reset();
-   mMorphParmsD.reset();
+   mTileParmsA.reset();
+   mTileParmsB.reset();
+   mTileParmsC.reset();
+   mTileParmsD.reset();
 }
 
 //******************************************************************************
@@ -41,10 +41,10 @@ void StackObjectParms::reset()
 
 void StackObjectParms::expand()
 {
-   mMorphParmsA.expand();
-   mMorphParmsB.expand();
-   mMorphParmsC.expand();
-   mMorphParmsD.expand();
+   mTileParmsA.expand();
+   mTileParmsB.expand();
+   mTileParmsC.expand();
+   mTileParmsD.expand();
 }
 
 //******************************************************************************
@@ -57,10 +57,10 @@ void StackObjectParms::show()
    printf("\n");
    printf("StackObjectParms************************************************ %s\n", mTargetSection);
 
-   mMorphParmsA.show("MorphA");
-   mMorphParmsB.show("MorphB");
-   mMorphParmsC.show("MorphC");
-   mMorphParmsD.show("MorphD");
+   mTileParmsA.show("TileA");
+   mTileParmsB.show("TileB");
+   mTileParmsC.show("TileC");
+   mTileParmsD.show("TileD");
 }
 
 //******************************************************************************
@@ -74,28 +74,28 @@ void StackObjectParms::execute(Ris::CmdLineCmd* aCmd)
 {
    if (!isTargetSection(aCmd)) return;
 
-   if (aCmd->isCmd("StackMorphParmsA"))
+   if (aCmd->isCmd("StackTileParmsA"))
    {
-      readSection(aCmd->argString(1), &mMorphParmsA);
-      mMorphParmsA.setName(aCmd->argString(1));
+      readSection(aCmd->argString(1), &mTileParmsA);
+      mTileParmsA.setName(aCmd->argString(1));
    }
 
-   if (aCmd->isCmd("StackMorphParmsB"))
+   if (aCmd->isCmd("StackTileParmsB"))
    {
-      readSection(aCmd->argString(1), &mMorphParmsB);
-      mMorphParmsB.setName(aCmd->argString(1));
+      readSection(aCmd->argString(1), &mTileParmsB);
+      mTileParmsB.setName(aCmd->argString(1));
    }
 
-   if (aCmd->isCmd("StackMorphParmsC"))
+   if (aCmd->isCmd("StackTileParmsC"))
    {
-      readSection(aCmd->argString(1), &mMorphParmsC);
-      mMorphParmsC.setName(aCmd->argString(1));
+      readSection(aCmd->argString(1), &mTileParmsC);
+      mTileParmsC.setName(aCmd->argString(1));
    }
 
-   if (aCmd->isCmd("StackMorphParmsD"))
+   if (aCmd->isCmd("StackTileParmsD"))
    {
-      readSection(aCmd->argString(1), &mMorphParmsD);
-      mMorphParmsD.setName(aCmd->argString(1));
+      readSection(aCmd->argString(1), &mTileParmsD);
+      mTileParmsD.setName(aCmd->argString(1));
    }
 }
 

@@ -3,6 +3,7 @@
 
 #include "svSysParms.h"
 #include "svImageParms.h"
+#include "svTestParms.h"
 #include "svSimParms.h"
 #include "svStackParms.h"
 #include "svParmParms.h"
@@ -37,7 +38,8 @@ void CmdLineExec::reset()
 void CmdLineExec::execute(Ris::CmdLineCmd* aCmd)
 {
    if (aCmd->isCmd("Tile"))      executeTile2d(aCmd);
-   if (aCmd->isCmd("Show"))      executeShow2d(aCmd);
+   if (aCmd->isCmd("Show"))    
+      executeShow2d(aCmd);
 
    if (aCmd->isCmd("Tile2d"))    executeTile2d(aCmd);
    if (aCmd->isCmd("Sim2d"))     executeSim2d(aCmd);
@@ -425,6 +427,6 @@ void CmdLineExec::executeParms3(Ris::CmdLineCmd* aCmd)
    SV::gParmParms.readSection("default");
    SV::gParmParms.readMoreParms("default");
 
-   SV::gStackParms.show();
+   SV::gTestParms.show();
 }
 

@@ -12,7 +12,7 @@ Parameters class whose values are read from a command file.
 #include "risCmdLineParms.h"
 #include "svRCIndex.h"
 #include "svRCSize.h"
-#include "svMorphParms.h"
+#include "svTileParms.h"
 
 //******************************************************************************
 //******************************************************************************
@@ -70,10 +70,10 @@ public:
    bool          mValid;
 
    // Simulated image stack.
-   MorphParms    mMorphParmsA;
-   MorphParms    mMorphParmsB;
-   MorphParms    mMorphParmsC;
-   MorphParms    mMorphParmsD;
+   TileParms    mTileParmsA;
+   TileParms    mTileParmsB;
+   TileParms    mTileParmsC;
+   TileParms    mTileParmsD;
 
    //***************************************************************************
    //***************************************************************************
