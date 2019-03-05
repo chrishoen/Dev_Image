@@ -63,6 +63,38 @@ void CmdLineExec::execute(Ris::CmdLineCmd* aCmd)
 //******************************************************************************
 //******************************************************************************
 
+void CmdLineExec::executeGo1(Ris::CmdLineCmd* aCmd)
+{
+   aCmd->setArgDefault(1, 1);
+   aCmd->setArgDefault(2, 1);
+   aCmd->setArgDefault(3, 1);
+
+   int tRepeatNum = aCmd->argInt(1);
+   int tRowNum = aCmd->argInt(2);
+   int tColNum = aCmd->argInt(3);
+
+      for (int tRow = 0; tRow < tRepeatNum; tRow++)
+      {
+         for (int tRowWrite = 0; tRowWrite < tRowNum; tRowWrite++)
+         {
+            printf("Row  %3d\n", tRow);
+            printf("COL  %3d  ", 0);
+            for (int tCol = 0; tCol < tRepeatNum - tRow - 1; tCol++)
+            {
+               for (int tColWrite = 0; tColWrite < tColNum; tColWrite++)
+               {
+                  printf("Col  %3d  ", tCol);
+               }
+            }
+            printf("\n");
+         }
+      }
+}
+
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+
 void CmdLineExec::executeTile2d(Ris::CmdLineCmd* aCmd)
 {
    aCmd->setArgDefault(1, 1);
@@ -265,25 +297,6 @@ void CmdLineExec::executeWrite(Ris::CmdLineCmd* aCmd)
 void CmdLineExec::executeWriteOutput(Ris::CmdLineCmd* aCmd)
 {
    mImageSet.doWriteOutput();
-}
-
-//******************************************************************************
-//******************************************************************************
-//******************************************************************************
-
-void CmdLineExec::executeGo1(Ris::CmdLineCmd* aCmd)
-{
-   aCmd->setArgDefault(1, 1);
-
-   // Read parameters files.
-   SV::gParmParms.reset();
-   SV::gParmParms.readSection("default");
-   SV::gParmParms.readMoreParms("default");
-
-   // Run.
-   mImageSet.doSimInput2d();
-   mImageSet.doWriteInput();
-   mImageSet.doDraw(12);
 }
 
 //******************************************************************************
