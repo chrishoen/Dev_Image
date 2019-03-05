@@ -29,17 +29,8 @@ TileParms::TileParms()
 
 void TileParms::reset()
 {
-   mValid = false;
-   mName[0] = 0;
-   mImageSize = gSysParms.mImageSize;
-   mGenerateFirst = false;
-   mWriteFirst = false;
-
    mRepeatNum = 0;
-   mTileNum = 0;
-   mWriteNum = 0;
-   mMode = 0;
-   mAddFlag = false;
+   mShape = 0;
    mDelta.reset();
 }
 
@@ -50,18 +41,12 @@ void TileParms::reset()
 
 void TileParms::show(const char* aLabel)
 {
-   if (!mValid) return;
+
    printf("TileParms******************* %s\n",aLabel);
-   printf("Name           %20s\n", mName);
-   printf("ImageSize                %10d %10d\n", mImageSize.mRows, mImageSize.mCols);
-   printf("GenerateFirst            %10s\n", my_string_from_bool(mGenerateFirst));
-   printf("WriteFirst               %10s\n", my_string_from_bool(mWriteFirst));
+   printf("Shape                    %10s\n", asStringShape(mShape));
    printf("RepeatNum                %10d\n", mRepeatNum);
-   printf("TileNum                 %10d\n", mTileNum);
-   printf("WriteNum                 %10d\n", mWriteNum);
-   printf("Mode                     %10s\n", asStringMode(mMode));
-   printf("AddFlag                  %10s\n", my_string_from_bool(mAddFlag));
    printf("Delta                    %10d %10d\n", mDelta.mRows, mDelta.mCols);
+   printf("Center                   %10d %10d\n", mCenter.mRow, mCenter.mCol);
    printf("TileParms*******************\n");
 }
 
@@ -74,22 +59,16 @@ void TileParms::show(const char* aLabel)
 
 void TileParms::execute(Ris::CmdLineCmd* aCmd)
 {
-   mValid = true;
-   if (aCmd->isCmd("ImageSize"))      mImageSize.execute(aCmd);
-   if (aCmd->isCmd("GenerateFirst"))  mGenerateFirst = aCmd->argBool(1);
-   if (aCmd->isCmd("WriteFirst"))     mWriteFirst = aCmd->argBool(1);
+   if (aCmd->isCmd("Shape"))          mShape = aCmd->argInt(1);
    if (aCmd->isCmd("RepeatNum"))      mRepeatNum = aCmd->argInt(1);
-   if (aCmd->isCmd("TileNum"))       mTileNum = aCmd->argInt(1);
-   if (aCmd->isCmd("WriteNum"))       mWriteNum = aCmd->argInt(1);
-   if (aCmd->isCmd("Mode"))           mMode = aCmd->argInt(1);
-   if (aCmd->isCmd("AddFlag"))        mAddFlag = aCmd->argBool(1);
    if (aCmd->isCmd("Delta"))          mDelta.execute(aCmd);
+   if (aCmd->isCmd("Center"))         mCenter.execute(aCmd);
 
-   if (aCmd->isCmd("Mode"))
+   if (aCmd->isCmd("Shape"))
    {
-      if (aCmd->isArgString(1, asStringMode(cNone)))             mMode = cNone;
-      if (aCmd->isArgString(1, asStringMode(cModeSquare)))       mMode = cModeSquare;
-      if (aCmd->isArgString(1, asStringMode(cModeDiamond)))      mMode = cModeDiamond;
+      if (aCmd->isArgString(1, asStringShape(cNone)))              mShape = cNone;
+      if (aCmd->isArgString(1, asStringShape(cShapeSquare)))       mShape = cShapeSquare;
+      if (aCmd->isArgString(1, asStringShape(cShapeDiamond)))      mShape = cShapeDiamond;
    }
 
 }
@@ -101,7 +80,8 @@ void TileParms::execute(Ris::CmdLineCmd* aCmd)
 
 void TileParms::expand()
 {
-   mValid = mRepeatNum != 0;
+   mCenter.mRow = gSysParms.mImageSize.mRows / 2;
+   mCenter.mCol = gSysParms.mImageSize.mCols / 2;
 }
 
 //******************************************************************************
@@ -109,29 +89,20 @@ void TileParms::expand()
 //******************************************************************************
 // Helpers.
 
-void TileParms::setName(const char* aName)
-{
-   strncpy(mName, aName, cMaxStringSize);
-}
-//******************************************************************************
-//******************************************************************************
-//******************************************************************************
-// Helpers.
-
-char* TileParms::asStringMode(int aX)
+char* TileParms::asStringShape(int aX)
 {
    switch (aX)
    {
    case cNone: return "None";
-   case cModeSquare: return "Square";
-   case cModeDiamond: return "Diamond";
+   case cShapeSquare: return "Square";
+   case cShapeDiamond: return "Diamond";
    default: return "UNKNOWN";
    }
 }
 
-char* TileParms::asStringMode()
+char* TileParms::asStringShape()
 {
-   return asStringMode(mMode);
+   return asStringShape(mShape);
 }
 
 //******************************************************************************

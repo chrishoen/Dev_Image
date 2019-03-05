@@ -69,40 +69,25 @@ public:
    static const int cNone = 0;
 
    // SimImage types.
-   static const int cModeSquare  = 1;
-   static const int cModeDiamond = 2;
+   static const int cShapeSquare  = 1;
+   static const int cShapeDiamond = 2;
 
    //***************************************************************************
    //***************************************************************************
    //***************************************************************************
    // Members that are read from the parms file.
 
-   // True if valid.
-   bool mValid;
-
-   // True if valid.
-   char mName[cMaxStringSize];
-
-   // Sim generated image size.
-   RCSize mImageSize;
-
-   // If true then generate and write a first image.
-   bool mGenerateFirst;
-   bool mWriteFirst;
-
+   // Shape 1=square 2=diagonal.
+   int mShape;
+   
    // Iterations.
    int mRepeatNum;
-   int mTileNum;
-   int mWriteNum;
-
-   // Mode 1=square 2=diagonal.
-   int mMode;
-   
-   // If true then add delta. If false then subtract delta.
-   bool mAddFlag;
 
    // Row column deltas.
    SV::RCSize mDelta;
+
+   // Row column center.
+   SV::RCIndex mCenter;
 
    //***************************************************************************
    //***************************************************************************
@@ -129,14 +114,11 @@ public:
    //***************************************************************************
    // Helpers.
 
-   static char* asStringMode(int aX);
-   char* asStringMode();
+   static char* asStringShape(int aX);
+   char* asStringShape();
 
-   bool isSquare() { return mMode == cModeSquare; }
-   bool isDiamond() { return mMode == cModeDiamond; }
-
-   // Helpers.
-   void setName(const char* aName);
+   bool isSquare() { return mShape == cShapeSquare; }
+   bool isDiamond() { return mShape == cShapeDiamond; }
 };
 
 //******************************************************************************

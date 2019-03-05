@@ -25,6 +25,19 @@ namespace SV
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
+// Create a zero output image based on the system parms.
+
+void createZeroImage(
+   cv::Mat&      aOutput)   // Output
+{
+   // Create an image filled with all zeros.
+   aOutput = cv::Mat(gSysParms.mImageSize.mRows, gSysParms.mImageSize.mCols, CV_8UC1, cv::Scalar(0));
+
+}
+
+   //******************************************************************************
+//******************************************************************************
+//******************************************************************************
 // Convert image to target format.
 
 void convertImageToTarget(
@@ -87,19 +100,6 @@ void extractImageRoi(
 
    // Extract roi.
    aOutput = aInput(tRoiRect);
-}
-
-//******************************************************************************
-//******************************************************************************
-//******************************************************************************
-// Create a zero output image based on the size of an input image.
-
-void createZeroImage(
-   cv::Mat&      aInput,    // Input
-   cv::Mat&      aOutput)   // Output
-{
-   // Create an image filled with all zeros.
-   aOutput = cv::Mat::zeros(aInput.rows, aInput.cols, CV_8UC1);
 }
 
 //******************************************************************************

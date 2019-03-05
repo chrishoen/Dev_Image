@@ -39,12 +39,25 @@ void ImageSet::reset()
 //******************************************************************************
 // This simulates an input image.
 
-void ImageSet::doSimInput2d()
+void ImageSet::doSimInputTile()
 {
    // Generate simulated image.
    SV::SimImageGenerator tGenerator(&SV::gSimParms.mImageGenParmsS2);
    tGenerator.doGenerateImage(mInputS2);
    SV::showImageInfo(Prn::View01,"InputS2", mInputS2);
+}
+
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+// This simulates an input image.
+
+void ImageSet::doSimInput2d()
+{
+   // Generate simulated image.
+   SV::SimImageGenerator tGenerator(&SV::gSimParms.mImageGenParmsS2);
+   tGenerator.doGenerateImage(mInputS2);
+   SV::showImageInfo(Prn::View01, "InputS2", mInputS2);
 }
 
 //******************************************************************************

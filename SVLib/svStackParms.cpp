@@ -51,6 +51,8 @@ void StackParms::reset()
    mObject2Rect.reset();
    mObject3Rect.reset();
    mObject4Rect.reset();
+
+   mTileParms.reset();
 }
 
 //******************************************************************************
@@ -61,6 +63,8 @@ void StackParms::reset()
 
 void StackParms::expand()
 {
+   mTileParms.expand();
+
    // Stack objects.
    if (strlen(mObjectFileName1) != 0)
    {
@@ -153,6 +157,9 @@ void StackParms::show()
       mObject3Rect.mARow, mObject3Rect.mBRow, mObject3Rect.mACol, mObject3Rect.mBCol);
    printf("Object4Rect              %10d %4d   %4d %4d\n",
       mObject4Rect.mARow, mObject4Rect.mBRow, mObject4Rect.mACol, mObject4Rect.mBCol);
+
+   printf("\n");
+   mTileParms.show("Tile");
 }
 
 //******************************************************************************
@@ -176,6 +183,8 @@ void StackParms::execute(Ris::CmdLineCmd* aCmd)
    if (aCmd->isCmd("Object2Major"))         mObject2Major.execute(aCmd);
    if (aCmd->isCmd("Object3Major"))         mObject3Major.execute(aCmd);
    if (aCmd->isCmd("Object4Major"))         mObject4Major.execute(aCmd);
+
+   if (aCmd->isCmd("TileParms"))            readSection(aCmd->argString(1), &mTileParms);
 }
 
 //******************************************************************************

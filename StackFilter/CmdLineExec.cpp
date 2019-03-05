@@ -5,11 +5,12 @@
 #include "CPrintDir.h"
 #include "svSysParms.h"
 #include "svImageParms.h"
-#include "svImageFunctions.h"
 #include "svSimParms.h"
 #include "svStackParms.h"
 #include "svParmParms.h"
 #include "displayParms.h"
+#include "svImageFunctions.h"
+
 #include "displayFunctions.h"
 #include "StackSimulate.h"
 

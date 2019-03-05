@@ -4,8 +4,10 @@
 #include "svSysParms.h"
 #include "svImageParms.h"
 #include "svSimParms.h"
+#include "svStackParms.h"
 #include "svParmParms.h"
 #include "displayParms.h"
+
 #include "displayFunctions.h"
 
 #include "displayGraphicsThread.h"
@@ -52,6 +54,8 @@ void CmdLineExec::execute(Ris::CmdLineCmd* aCmd)
    if (aCmd->isCmd("GO4"))       executeGo4(aCmd);
    if (aCmd->isCmd("GO5"))       executeGo5(aCmd);
    if (aCmd->isCmd("Parms"))     executeParms(aCmd);
+   if (aCmd->isCmd("Parms2"))    executeParms2(aCmd);
+   if (aCmd->isCmd("Parms3"))    executeParms3(aCmd);
 }
 
 //******************************************************************************
@@ -320,5 +324,41 @@ void CmdLineExec::executeParms(Ris::CmdLineCmd* aCmd)
 
    SV::gImageParms.show();
    SV::gSimParms.show();
+}
+
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+
+void CmdLineExec::executeParms2(Ris::CmdLineCmd* aCmd)
+{
+   SV::gSysParms.reset();
+   SV::gSysParms.readSection("default");
+
+   Display::gParms.reset();
+   Display::gParms.readSection("default");
+
+   SV::gParmParms.reset();
+   SV::gParmParms.readSection("default");
+   SV::gParmParms.readMoreParms("default");
+
+   // SV::gImageParms.show();
+   SV::gSimParms.show();
+}
+
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+
+void CmdLineExec::executeParms3(Ris::CmdLineCmd* aCmd)
+{
+   SV::gSysParms.reset();
+   SV::gSysParms.readSection("default");
+
+   SV::gParmParms.reset();
+   SV::gParmParms.readSection("default");
+   SV::gParmParms.readMoreParms("default");
+
+   SV::gStackParms.show();
 }
 
