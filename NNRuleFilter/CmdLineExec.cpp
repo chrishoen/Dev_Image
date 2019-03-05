@@ -37,6 +37,8 @@ void CmdLineExec::reset()
 void CmdLineExec::execute(Ris::CmdLineCmd* aCmd)
 {
    if (aCmd->isCmd("Tile"))      executeTile2d(aCmd);
+   if (aCmd->isCmd("Show"))      executeShow2d(aCmd);
+
    if (aCmd->isCmd("Tile2d"))    executeTile2d(aCmd);
    if (aCmd->isCmd("Sim2d"))     executeSim2d(aCmd);
    if (aCmd->isCmd("Sim3d"))     executeSim3d(aCmd);
@@ -79,11 +81,21 @@ void CmdLineExec::executeGo1(Ris::CmdLineCmd* aCmd)
 
    for (int tRow = 0; tRow < tRowCount; tRow++)
    {
-      printf("Row %3d\n", tRow);
+      int tRowIndex = (tRow + tRowNum / 2) / tRowNum;
+      printf("Row %3d\n", tRowIndex);
       printf("           ");
       for (int tCol = 0; tCol < tColCount; tCol++)
       {
-         printf("Col  %3d  ", tCol);
+         int tColIndex = (tCol + tColNum / 2) / tColNum;
+         bool tFlag = tColIndex <= tLoopNum - tRowIndex - 1;
+         if (tFlag)
+         {
+            printf("Col  %3d  ", tColIndex);
+         }
+         else
+         {
+            printf("...  %3d  ", tColIndex);
+         }
       }
       printf("\n");
    }

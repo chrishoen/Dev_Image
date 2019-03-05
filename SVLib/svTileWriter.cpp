@@ -90,29 +90,29 @@ void TileWriter::doWriteSquare()
 
 void TileWriter::doWriteDiamond()
 {
-   int tRepeatNum = mP->mRepeatNum;
+   int tLoopNum = mP->mRepeatNum;
    int tRowNum = mP->mDelta.mRows;
    int tColNum = mP->mDelta.mCols;
 
-   int tRowIndex = 0;
-   for (int tRow = 0; tRow < tRepeatNum; tRow++)
+   int tRowCount = tLoopNum * tRowNum - tRowNum / 2;
+   int tColCount = tLoopNum * tColNum - tColNum / 2;
+
+   for (int tRow = 0; tRow < tRowCount; tRow++)
    {
-      for (int tRowWrite = 0; tRowWrite < tRowNum; tRowWrite++)
+      int tRowIndex = (tRow + tRowNum / 2) / tRowNum;
+      for (int tCol = 0; tCol < tColCount; tCol++)
       {
-         int tColIndex = 0;
-         mOutput.at(mP->mCenter + RCIndex(tRowIndex,tColIndex)) = 255;
-         for (int tCol = 0; tCol < tRepeatNum - tRow - 1; tCol++)
+         int tColIndex = (tCol + tColNum / 2) / tColNum;
+         bool tFlag = tColIndex <= tLoopNum - tRowIndex - 1;
+         if (tFlag)
          {
-            for (int tColWrite = 0; tColWrite < tColNum; tColWrite++)
-            {
-               tColIndex++;
-               mOutput.at(mP->mCenter + RCIndex(tRowIndex, tColIndex)) = 255;
-            }
+            mOutput.at(mP->mCenter + RCIndex(-tRow, -tCol)) = 255;
+            mOutput.at(mP->mCenter + RCIndex(-tRow,  tCol)) = 255;
+            mOutput.at(mP->mCenter + RCIndex( tRow, -tCol)) = 255;
+            mOutput.at(mP->mCenter + RCIndex( tRow,  tCol)) = 255;
          }
-         tRowIndex++;
       }
    }
-
 }
 
 //******************************************************************************
