@@ -10,8 +10,10 @@ Description:
 
 #include "svImageParms.h"
 #include "svSimParms.h"
+#include "svStackParms.h"
 
 #include "svSimImageGenerator.h"
+#include "svTileWriter.h"
 
 #include "svImageFunctions.h"
 #include "svImageShow.h"
@@ -39,11 +41,12 @@ void ImageSet::reset()
 //******************************************************************************
 // This simulates an input image.
 
-void ImageSet::doSimInputTile()
+void ImageSet::doSimInputTile2d()
 {
    // Generate simulated image.
-   SV::SimImageGenerator tGenerator(&SV::gSimParms.mImageGenParmsS2);
-   tGenerator.doGenerateImage(mInputS2);
+   SV::createZeroImage(mInputS2);
+   SV::TileWriter tWriter(&SV::gStackParms.mTileParms);
+   tWriter.doWrite(mInputS2);
    SV::showImageInfo(Prn::View01,"InputS2", mInputS2);
 }
 

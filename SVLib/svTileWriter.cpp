@@ -45,7 +45,7 @@ void TileWriter::reset()
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
-// Writer a tile to an image according to the parms.
+// Write a tile to an image according to the parms.
 
 void TileWriter::doWrite(
    cv::Mat&       aOutputImage)    // Output
@@ -60,8 +60,37 @@ void TileWriter::doWrite(
    // Set the image wrappers.
    mOutput.set(aOutputImage);
 
+   // Write the tile.
+   if (mP->isSquare())  doWriteSquare();
+   if (mP->isDiamond()) doWriteDiamond();
+
 }
 
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+// Write a square tile according to the parms.
+
+void TileWriter::doWriteSquare()
+{
+   // Loop to set output image pixels high.
+   int tDitherRows = mP->mDelta.mRows* mP->mRepeatNum;
+   int tDitherCols = mP->mDelta.mCols* mP->mRepeatNum;
+   SV::RCDitherLoop2 tDitherLoop(mP->mCenter, tDitherRows, tDitherCols);
+   while (tDitherLoop.loop())
+   {
+      mOutput.at(tDitherLoop()) = 255;
+   }
+}
+
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+// Write a diamond tile according to the parms.
+
+void TileWriter::doWriteDiamond()
+{
+}
 
 //******************************************************************************
 //******************************************************************************

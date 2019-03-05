@@ -36,6 +36,7 @@ void CmdLineExec::reset()
 
 void CmdLineExec::execute(Ris::CmdLineCmd* aCmd)
 {
+   if (aCmd->isCmd("Tile2d"))    executeTile2d(aCmd);
    if (aCmd->isCmd("Sim2d"))     executeSim2d(aCmd);
    if (aCmd->isCmd("Sim3d"))     executeSim3d(aCmd);
    if (aCmd->isCmd("Run2d"))     executeRun2d(aCmd);
@@ -56,6 +57,23 @@ void CmdLineExec::execute(Ris::CmdLineCmd* aCmd)
    if (aCmd->isCmd("Parms"))     executeParms(aCmd);
    if (aCmd->isCmd("Parms2"))    executeParms2(aCmd);
    if (aCmd->isCmd("Parms3"))    executeParms3(aCmd);
+}
+
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+
+void CmdLineExec::executeTile2d(Ris::CmdLineCmd* aCmd)
+{
+   aCmd->setArgDefault(1, 1);
+
+   // Read parameters files.
+   SV::gParmParms.reset();
+   SV::gParmParms.readSection("default");
+   SV::gParmParms.readMoreParms("default");
+
+   // Run.
+   mImageSet.doSimInputTile2d();
 }
 
 //******************************************************************************

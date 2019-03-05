@@ -60,6 +60,7 @@ public:
    // Methods.
 
    // Execute specific commands.
+   void executeTile2d      (Ris::CmdLineCmd* aCmd);
    void executeSim2d       (Ris::CmdLineCmd* aCmd);
    void executeSim3d       (Ris::CmdLineCmd* aCmd);
    void executeRun2d       (Ris::CmdLineCmd* aCmd);

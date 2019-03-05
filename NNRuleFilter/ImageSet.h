@@ -45,7 +45,7 @@ public:
    // Methods:
 
    // Input images.
-   void doSimInputTile();
+   void doSimInputTile2d();
    void doSimInput2d();
    void doSimInput3d();
 
