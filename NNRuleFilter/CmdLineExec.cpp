@@ -36,6 +36,7 @@ void CmdLineExec::reset()
 
 void CmdLineExec::execute(Ris::CmdLineCmd* aCmd)
 {
+   if (aCmd->isCmd("Tile"))      executeTile2d(aCmd);
    if (aCmd->isCmd("Tile2d"))    executeTile2d(aCmd);
    if (aCmd->isCmd("Sim2d"))     executeSim2d(aCmd);
    if (aCmd->isCmd("Sim3d"))     executeSim3d(aCmd);
@@ -65,6 +66,36 @@ void CmdLineExec::execute(Ris::CmdLineCmd* aCmd)
 
 void CmdLineExec::executeGo1(Ris::CmdLineCmd* aCmd)
 {
+   aCmd->setArgDefault(1, 2);
+   aCmd->setArgDefault(2, 3);
+   aCmd->setArgDefault(3, 5);
+
+   int tLoopNum = aCmd->argInt(1);
+   int tRowNum = aCmd->argInt(2);
+   int tColNum = aCmd->argInt(3);
+
+   int tRowCount = tLoopNum * tRowNum - tRowNum / 2;
+   int tColCount = tLoopNum * tColNum - tColNum / 2;
+
+   for (int tRow = 0; tRow < tRowCount; tRow++)
+   {
+      printf("Row %3d\n", tRow);
+      printf("           ");
+      for (int tCol = 0; tCol < tColCount; tCol++)
+      {
+         printf("Col  %3d  ", tCol);
+      }
+      printf("\n");
+   }
+   printf("\n");
+}
+
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+
+void CmdLineExec::executeGo2(Ris::CmdLineCmd* aCmd)
+{
    aCmd->setArgDefault(1, 1);
    aCmd->setArgDefault(2, 1);
    aCmd->setArgDefault(3, 1);
@@ -73,22 +104,26 @@ void CmdLineExec::executeGo1(Ris::CmdLineCmd* aCmd)
    int tRowNum = aCmd->argInt(2);
    int tColNum = aCmd->argInt(3);
 
-      for (int tRow = 0; tRow < tRepeatNum; tRow++)
+   int tRowIndex = 0;
+   for (int tRow = 0; tRow < tRepeatNum; tRow++)
+   {
+      for (int tRowWrite = 0; tRowWrite < tRowNum; tRowWrite++)
       {
-         for (int tRowWrite = 0; tRowWrite < tRowNum; tRowWrite++)
+         int tColIndex = 0;
+         printf("Row %3d\n", tRowIndex);
+         printf("           COL  %3d  ", 0);
+         for (int tCol = 0; tCol < tRepeatNum - tRow - 1; tCol++)
          {
-            printf("Row  %3d\n", tRow);
-            printf("COL  %3d  ", 0);
-            for (int tCol = 0; tCol < tRepeatNum - tRow - 1; tCol++)
+            for (int tColWrite = 0; tColWrite < tColNum; tColWrite++)
             {
-               for (int tColWrite = 0; tColWrite < tColNum; tColWrite++)
-               {
-                  printf("Col  %3d  ", tCol);
-               }
+               tColIndex++;
+               printf("Col  %3d  ", tColIndex);
             }
-            printf("\n");
          }
+         tRowIndex++;
+         printf("\n");
       }
+   }
 }
 
 //******************************************************************************
@@ -297,18 +332,6 @@ void CmdLineExec::executeWrite(Ris::CmdLineCmd* aCmd)
 void CmdLineExec::executeWriteOutput(Ris::CmdLineCmd* aCmd)
 {
    mImageSet.doWriteOutput();
-}
-
-//******************************************************************************
-//******************************************************************************
-//******************************************************************************
-
-void CmdLineExec::executeGo2(Ris::CmdLineCmd* aCmd)
-{
-   std::vector<int> tList(10);
-   tList.clear();
-   tList.reserve(10);
-   Prn::print(0, "size %d", tList.size());
 }
 
 //******************************************************************************

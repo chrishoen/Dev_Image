@@ -90,6 +90,29 @@ void TileWriter::doWriteSquare()
 
 void TileWriter::doWriteDiamond()
 {
+   int tRepeatNum = mP->mRepeatNum;
+   int tRowNum = mP->mDelta.mRows;
+   int tColNum = mP->mDelta.mCols;
+
+   int tRowIndex = 0;
+   for (int tRow = 0; tRow < tRepeatNum; tRow++)
+   {
+      for (int tRowWrite = 0; tRowWrite < tRowNum; tRowWrite++)
+      {
+         int tColIndex = 0;
+         mOutput.at(mP->mCenter + RCIndex(tRowIndex,tColIndex)) = 255;
+         for (int tCol = 0; tCol < tRepeatNum - tRow - 1; tCol++)
+         {
+            for (int tColWrite = 0; tColWrite < tColNum; tColWrite++)
+            {
+               tColIndex++;
+               mOutput.at(mP->mCenter + RCIndex(tRowIndex, tColIndex)) = 255;
+            }
+         }
+         tRowIndex++;
+      }
+   }
+
 }
 
 //******************************************************************************
