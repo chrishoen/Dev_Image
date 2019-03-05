@@ -74,8 +74,8 @@ void TileWriter::doWrite(
 void TileWriter::doWriteSquare()
 {
    // Loop to set output image pixels high.
-   int tDitherRows = mP->mDelta.mRows * mP->mRepeatNum;
-   int tDitherCols = mP->mDelta.mCols * mP->mRepeatNum;
+   int tDitherRows = mP->mDelta.mRows * mP->mLoopNum;
+   int tDitherCols = mP->mDelta.mCols * mP->mLoopNum;
    SV::RCDitherLoop2 tDitherLoop(mP->mCenter, tDitherRows, tDitherCols);
    while (tDitherLoop.loop())
    {
@@ -90,7 +90,7 @@ void TileWriter::doWriteSquare()
 
 void TileWriter::doWriteDiamond()
 {
-   int tLoopNum = mP->mRepeatNum;
+   int tLoopNum = mP->mLoopNum;
    int tRowNum = mP->mDelta.mRows;
    int tColNum = mP->mDelta.mCols;
 

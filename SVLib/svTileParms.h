@@ -81,7 +81,7 @@ public:
    int mShape;
    
    // Iterations.
-   int mRepeatNum;
+   int mLoopNum;
 
    // Row column deltas.
    SV::RCSize mDelta;

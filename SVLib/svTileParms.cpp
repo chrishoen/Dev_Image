@@ -29,7 +29,7 @@ TileParms::TileParms()
 
 void TileParms::reset()
 {
-   mRepeatNum = 0;
+   mLoopNum = 0;
    mShape = 0;
    mDelta.reset();
 }
@@ -44,7 +44,7 @@ void TileParms::show(const char* aLabel)
 
    printf("TileParms******************* %s\n",aLabel);
    printf("Shape                    %10s\n", asStringShape(mShape));
-   printf("RepeatNum                %10d\n", mRepeatNum);
+   printf("LoopNum                  %10d\n", mLoopNum);
    printf("Delta                    %10d %10d\n", mDelta.mRows, mDelta.mCols);
    printf("Center                   %10d %10d\n", mCenter.mRow, mCenter.mCol);
    printf("TileParms*******************\n");
@@ -60,7 +60,7 @@ void TileParms::show(const char* aLabel)
 void TileParms::execute(Ris::CmdLineCmd* aCmd)
 {
    if (aCmd->isCmd("Shape"))          mShape = aCmd->argInt(1);
-   if (aCmd->isCmd("RepeatNum"))      mRepeatNum = aCmd->argInt(1);
+   if (aCmd->isCmd("LoopNum"))        mLoopNum = aCmd->argInt(1);
    if (aCmd->isCmd("Delta"))          mDelta.execute(aCmd);
    if (aCmd->isCmd("Center"))         mCenter.execute(aCmd);
 
