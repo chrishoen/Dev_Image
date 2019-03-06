@@ -9,6 +9,7 @@ Parameters class whose values are read from a command file.
 //******************************************************************************
 //******************************************************************************
 
+#include "risCmdLineTables.h"
 #include "risCmdLineParms.h"
 #include "svRCIndex.h"
 #include "svRCSize.h"
@@ -61,52 +62,46 @@ public:
    // Constants.
 
    static const int cMaxStringSize = 200;
-
+   static const int cMaxObjects = 4;
 
    //***************************************************************************
    //***************************************************************************
    //***************************************************************************
    // Parameter members.
 
-   // Simulated stack objects parms file names.
-   char  mObjectFileName1[cMaxStringSize];
-   char  mObjectFileName2[cMaxStringSize];
-   char  mObjectFileName3[cMaxStringSize];
-   char  mObjectFileName4[cMaxStringSize];
+   // Stack object enable flags.
+   Ris::CmdLineTable1D<bool, cMaxObjects>  mObjectEnable;
 
+   // Stack object parms file names.
+   Ris::CmdLineTable1D<Ris::TableString, cMaxObjects>  mObjectFileName;
 
-   // Simulated stack object major row column positioning.
+   // Stack object major row column positioning.
    RCSize  mMajorSize;
-   RCIndex mObject1Major;
-   RCIndex mObject2Major;
-   RCIndex mObject3Major;
-   RCIndex mObject4Major;
+   Ris::CmdLineTable2D<int, cMaxObjects, 2>  mObjectMajorTable;
+   RCIndex mObjectMajor[cMaxObjects];
+
+   // Test table.
+   Ris::CmdLineTable2D<int, 10, 4>     mTestTable;
 
    //***************************************************************************
    //***************************************************************************
    //***************************************************************************
    // Expanded members that are not read from the parms file.
 
-   // Stack objects.
-   StackObjectParms   mObjectParms1;
-   StackObjectParms   mObjectParms2;
-   StackObjectParms   mObjectParms3;
-   StackObjectParms   mObjectParms4;
+   // Stack object parameters.
+   StackObjectParms  mObjectParms[cMaxObjects];
 
-   // Stack objectsize.
+   // Stack object size.
    RCSize  mObjectSize;
 
-   // Stack object rectangles.
-   RCIndex mObject1Center;
-   RCIndex mObject2Center;
-   RCIndex mObject3Center;
-   RCIndex mObject4Center;
+   // Stack object rectangle upper left corner.
+   RCIndex mObjectOffset[cMaxObjects];
+
+   // Stack object rectangle center.
+   RCIndex mObjectCenter[cMaxObjects];
 
    // Stack object rectangles.
-   RCRect mObject1Rect;
-   RCRect mObject2Rect;
-   RCRect mObject3Rect;
-   RCRect mObject4Rect;
+   RCRect mObjectRect[cMaxObjects];
 
    //***************************************************************************
    //***************************************************************************

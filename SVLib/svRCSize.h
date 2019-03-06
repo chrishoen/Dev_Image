@@ -60,6 +60,12 @@ public:
       mCols = aCol;
    }
 
+   void set(int aRow, int aCol)
+   {
+      mRows = aRow;
+      mCols = aCol;
+   }
+
    void RCSize::reset()
    {
       mRows = 0;
