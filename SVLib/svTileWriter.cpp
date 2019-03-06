@@ -98,7 +98,7 @@ void TileWriter::doWriteSquare()
 
 void TileWriter::doWriteDiamond()
 {
-   int tNumLoop = mP->mNumLoop;
+   int tNumLoop = mP->mNumLoop + 1;
    int tNumRow = mP->mNumRow;
    int tNumCol = mP->mNumCol;
 
