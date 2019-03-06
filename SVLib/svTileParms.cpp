@@ -32,9 +32,15 @@ void TileParms::reset()
    mValid = false;
    mName[0] = 0;
 
-   mLoopNum = 0;
+   mNumLoop = 0;
    mShape = 0;
-   mDelta.reset();
+   mNumLoop = 0;
+   mNumRow = 0;
+   mNumCol = 0;
+   mStepH = 0;
+   mStepV = 0;
+
+   mCenter.reset();
 }
 
 //******************************************************************************
@@ -49,8 +55,11 @@ void TileParms::show(const char* aLabel)
    printf("TileParms******************* %s\n",aLabel);
    printf("Name           %20s\n", mName);
    printf("Shape                    %10s\n", asStringShape(mShape));
-   printf("LoopNum                  %10d\n", mLoopNum);
-   printf("Delta                    %10d %10d\n", mDelta.mRows, mDelta.mCols);
+   printf("NumLoop                  %10d\n", mNumLoop);
+   printf("NumRow                   %10d\n", mNumRow);
+   printf("NumCol                   %10d\n", mNumCol);
+   printf("StepH                    %10d\n", mStepH);
+   printf("StepV                    %10d\n", mStepV);
    printf("Center                   %10d %10d\n", mCenter.mRow, mCenter.mCol);
    printf("TileParms*******************\n");
 }
@@ -65,8 +74,11 @@ void TileParms::show(const char* aLabel)
 void TileParms::execute(Ris::CmdLineCmd* aCmd)
 {
    if (aCmd->isCmd("Shape"))          mShape = aCmd->argInt(1);
-   if (aCmd->isCmd("LoopNum"))        mLoopNum = aCmd->argInt(1);
-   if (aCmd->isCmd("Delta"))          mDelta.execute(aCmd);
+   if (aCmd->isCmd("NumLoop"))        mNumLoop = aCmd->argInt(1);
+   if (aCmd->isCmd("NumRow"))         mNumRow = aCmd->argInt(1);
+   if (aCmd->isCmd("NumCol"))         mNumCol = aCmd->argInt(1);
+   if (aCmd->isCmd("StepH"))          mStepH = aCmd->argInt(1);
+   if (aCmd->isCmd("StepV"))          mStepV = aCmd->argInt(1);
    if (aCmd->isCmd("Center"))         mCenter.execute(aCmd);
 
    if (aCmd->isCmd("Shape"))
@@ -85,7 +97,7 @@ void TileParms::execute(Ris::CmdLineCmd* aCmd)
 
 void TileParms::expand()
 {
-   mValid = mDelta.mRows != 0 || mDelta.mCols != 0;
+   mValid = mNumRow != 0 || mNumCol != 0;
 
    mCenter.mRow = gSysParms.mImageSize.mRows / 2;
    mCenter.mCol = gSysParms.mImageSize.mCols / 2;

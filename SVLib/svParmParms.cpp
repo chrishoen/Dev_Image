@@ -107,7 +107,6 @@ void ParmParms::readMoreParms(char* aSection)
    SV::gStackParms.reset();
    SV::gStackParms.setFileName_RelAlphaFiles(mStackParmsFileName);
    SV::gStackParms.readSection(aSection);
-
 }
 
 //******************************************************************************

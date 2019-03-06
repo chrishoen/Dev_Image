@@ -74,22 +74,22 @@ void CmdLineExec::executeGo1(Ris::CmdLineCmd* aCmd)
    aCmd->setArgDefault(2, 3);
    aCmd->setArgDefault(3, 5);
 
-   int tLoopNum = aCmd->argInt(1);
-   int tRowNum = aCmd->argInt(2);
-   int tColNum = aCmd->argInt(3);
+   int tLoopRow = aCmd->argInt(1);
+   int tNumRow = aCmd->argInt(2);
+   int tNumCol = aCmd->argInt(3);
 
-   int tRowCount = tLoopNum * tRowNum - tRowNum / 2;
-   int tColCount = tLoopNum * tColNum - tColNum / 2;
+   int tRowCount = tLoopRow * tNumRow - tNumRow / 2;
+   int tColCount = tLoopRow * tNumCol - tNumCol / 2;
 
    for (int tRow = 0; tRow < tRowCount; tRow++)
    {
-      int tRowIndex = (tRow + tRowNum / 2) / tRowNum;
+      int tRowIndex = (tRow + tNumRow / 2) / tNumRow;
       printf("Row %3d\n", tRowIndex);
       printf("           ");
       for (int tCol = 0; tCol < tColCount; tCol++)
       {
-         int tColIndex = (tCol + tColNum / 2) / tColNum;
-         bool tFlag = tColIndex <= tLoopNum - tRowIndex - 1;
+         int tColIndex = (tCol + tNumCol / 2) / tNumCol;
+         bool tFlag = tColIndex <= tLoopRow - tRowIndex - 1;
          if (tFlag)
          {
             printf("Col  %3d  ", tColIndex);
@@ -110,34 +110,6 @@ void CmdLineExec::executeGo1(Ris::CmdLineCmd* aCmd)
 
 void CmdLineExec::executeGo2(Ris::CmdLineCmd* aCmd)
 {
-   aCmd->setArgDefault(1, 1);
-   aCmd->setArgDefault(2, 1);
-   aCmd->setArgDefault(3, 1);
-
-   int tRepeatNum = aCmd->argInt(1);
-   int tRowNum = aCmd->argInt(2);
-   int tColNum = aCmd->argInt(3);
-
-   int tRowIndex = 0;
-   for (int tRow = 0; tRow < tRepeatNum; tRow++)
-   {
-      for (int tRowWrite = 0; tRowWrite < tRowNum; tRowWrite++)
-      {
-         int tColIndex = 0;
-         printf("Row %3d\n", tRowIndex);
-         printf("           COL  %3d  ", 0);
-         for (int tCol = 0; tCol < tRepeatNum - tRow - 1; tCol++)
-         {
-            for (int tColWrite = 0; tColWrite < tColNum; tColWrite++)
-            {
-               tColIndex++;
-               printf("Col  %3d  ", tColIndex);
-            }
-         }
-         tRowIndex++;
-         printf("\n");
-      }
-   }
 }
 
 //******************************************************************************

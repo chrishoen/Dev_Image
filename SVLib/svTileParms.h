@@ -91,11 +91,14 @@ public:
    // Shape 1=square 2=diagonal.
    int mShape;
    
-   // Iterations.
-   int mLoopNum;
+   // Horizontal iterations.
+   int mNumLoop;
+   int mNumRow;
+   int mNumCol;
 
-   // Row column deltas.
-   SV::RCSize mDelta;
+   // Vertical iterations.
+   int mStepH;
+   int mStepV;
 
    // Row column center.
    SV::RCIndex mCenter;
