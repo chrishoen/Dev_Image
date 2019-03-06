@@ -39,6 +39,7 @@ void TileParms::reset()
    mNumCol = 0;
    mStepH = 0;
    mStepV = 0;
+   mB = 0;
 
    mCenter.reset();
 }
@@ -60,6 +61,7 @@ void TileParms::show(const char* aLabel)
    printf("NumCol                   %10d\n", mNumCol);
    printf("StepH                    %10d\n", mStepH);
    printf("StepV                    %10d\n", mStepV);
+   printf("B                        %10d\n", mB);
    printf("Center                   %10d %10d\n", mCenter.mRow, mCenter.mCol);
    printf("TileParms*******************\n");
 }
@@ -101,6 +103,20 @@ void TileParms::expand()
 
    mCenter.mRow = gSysParms.mImageSize.mRows / 2;
    mCenter.mCol = gSysParms.mImageSize.mCols / 2;
+
+
+   if (isSquare())
+   {
+      int tRowCount = mNumLoop * mNumRow;
+      int tColCount = mNumLoop * mNumCol;
+      mB = my_imax(tRowCount, tColCount);
+   }
+   else
+   {
+      int tRowCount = mNumLoop * mNumRow - mNumRow / 2;
+      int tColCount = mNumLoop * mNumCol - mNumCol / 2;
+      mB = my_imax(tRowCount, tColCount);
+   }
 }
 
 //******************************************************************************
@@ -111,6 +127,19 @@ void TileParms::expand()
 void TileParms::adjust(int aStackIndex)
 {
    mNumLoop = mStepH * (aStackIndex / mStepV);
+
+   if (isSquare())
+   {
+      int tRowCount = mNumLoop * mNumRow;
+      int tColCount = mNumLoop * mNumCol;
+      mB = my_imax(tRowCount, tColCount);
+   }
+   else
+   {
+      int tRowCount = mNumLoop * mNumRow - mNumRow / 2;
+      int tColCount = mNumLoop * mNumCol - mNumCol / 2;
+      mB = my_imax(tRowCount, tColCount);
+   }
 }
 
 //******************************************************************************

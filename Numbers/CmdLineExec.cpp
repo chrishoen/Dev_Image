@@ -70,7 +70,9 @@ void CmdLineExec::executeGo2(Ris::CmdLineCmd* aCmd)
    for (int tN = 0; tN < 10; tN++)
    {
       SV::gTestParms.mTileParms.adjust(tN);
-      printf("NumLoop   %3d %3d\n", tN,SV::gTestParms.mTileParms.mNumLoop);
+      printf("NumLoop   %3d %3d $ %3d\n", tN,
+         SV::gTestParms.mTileParms.mNumLoop,
+         SV::gTestParms.mTileParms.mB);
    }
 }
 
