@@ -93,6 +93,15 @@ public:
    StackObjectParms   mObjectParms3;
    StackObjectParms   mObjectParms4;
 
+   // Stack objectsize.
+   RCSize  mObjectSize;
+
+   // Stack object rectangles.
+   RCIndex mObject1Center;
+   RCIndex mObject2Center;
+   RCIndex mObject3Center;
+   RCIndex mObject4Center;
+
    // Stack object rectangles.
    RCRect mObject1Rect;
    RCRect mObject2Rect;
