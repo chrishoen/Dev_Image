@@ -42,38 +42,19 @@ void CmdLineExec::execute(Ris::CmdLineCmd* aCmd)
 
 void CmdLineExec::executeGo1(Ris::CmdLineCmd* aCmd)
 {
-   aCmd->setArgDefault(1, 2);
-   aCmd->setArgDefault(2, 3);
-   aCmd->setArgDefault(3, 5);
+   aCmd->setArgDefault(1, 1);
+   aCmd->setArgDefault(2, 1);
 
-   int tLoopRow = aCmd->argInt(1);
-   int tNumRow = aCmd->argInt(2);
-   int tNumCol = aCmd->argInt(3);
+   int tNumLoop = 10;
+   int tH = aCmd->argInt(1);
+   int tV = aCmd->argInt(2);
 
-   int tRowCount = tLoopRow * tNumRow - tNumRow / 2;
-   int tColCount = tLoopRow * tNumCol - tNumCol / 2;
-
-   for (int tRow = 0; tRow < tRowCount; tRow++)
+   for (int tN = 0; tN < tNumLoop; tN++)
    {
-      int tRowIndex = (tRow + tNumRow / 2) / tNumRow;
-      printf("Row %3d\n", tRowIndex);
-      printf("           ");
-      for (int tCol = 0; tCol < tColCount; tCol++)
-      {
-         int tColIndex = (tCol + tNumCol / 2) / tNumCol;
-         bool tFlag = tColIndex <= tLoopRow - tRowIndex - 1;
-         if (tFlag)
-         {
-            printf("Col  %3d  ", tColIndex);
-         }
-         else
-         {
-            printf("...  %3d  ", tColIndex);
-         }
-      }
-      printf("\n");
+      int tP1 = tH * (tN / tV);
+
+      printf("%3d   %3d\n", tN,tP1);
    }
-   printf("\n");
 }
 
 //******************************************************************************
@@ -118,12 +99,12 @@ void CmdLineExec::executeDiamond(Ris::CmdLineCmd* aCmd)
    aCmd->setArgDefault(2, 3);
    aCmd->setArgDefault(3, 5);
 
-   int tLoopRow = aCmd->argInt(1);
+   int tNumLoop = aCmd->argInt(1);
    int tNumRow = aCmd->argInt(2);
    int tNumCol = aCmd->argInt(3);
 
-   int tRowCount = tLoopRow * tNumRow - tNumRow / 2;
-   int tColCount = tLoopRow * tNumCol - tNumCol / 2;
+   int tRowCount = tNumLoop * tNumRow - tNumRow / 2;
+   int tColCount = tNumLoop * tNumCol - tNumCol / 2;
 
    for (int tRow = 0; tRow < tRowCount; tRow++)
    {
@@ -133,7 +114,7 @@ void CmdLineExec::executeDiamond(Ris::CmdLineCmd* aCmd)
       for (int tCol = 0; tCol < tColCount; tCol++)
       {
          int tColIndex = (tCol + tNumCol / 2) / tNumCol;
-         bool tFlag = tColIndex <= tLoopRow - tRowIndex - 1;
+         bool tFlag = tColIndex <= tNumLoop - tRowIndex - 1;
          if (tFlag)
          {
             printf("Col  %3d  ", tColIndex);
