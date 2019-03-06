@@ -5,6 +5,7 @@
 #include "stdafx.h"
 
 #include "svSysParms.h"
+#include "svRCLoop.h"
 
 #define  _SVSTACKPARMS_CPP_
 #include "svStackParms.h"
@@ -33,8 +34,8 @@ void StackParms::reset()
 
    mObjectEnable.reset();
    mObjectFileName.reset();
+   mObjectLayout.reset();
    mMajorSize.reset();
-   mObjectMajorTable.reset();
 
    mObjectSize.reset();
 
@@ -70,13 +71,18 @@ void StackParms::expand()
    }
 
    // Set object major positioning.
-// mMajorSize.set(mObjectMajorTable.mRows, mObjectMajorTable.mCols);
-   for (int i = 0; i < cMaxObjects; i++)
+   SV::RCIndexLoop tLoop(mObjectLayout.mRows, mObjectLayout.mCols);
+   while (tLoop.loop())
    {
-      mObjectMajor[i].set(mObjectMajorTable[i][0], mObjectMajorTable[i][1]);
+      int tObjectIndex = mObjectLayout[tLoop().mRow][tLoop().mCol];
+      if (tObjectIndex > 0 && tObjectIndex < cMaxObjects)
+      {
+         mObjectMajor[tObjectIndex] = tLoop();
+      }
    }
 
    // Stack object size.
+   mMajorSize.set(mObjectLayout.mRows, mObjectLayout.mCols);
    mObjectSize.mRows = gSysParms.mImageSize.mRows / mMajorSize.mRows;
    mObjectSize.mCols = gSysParms.mImageSize.mCols / mMajorSize.mCols;
 
@@ -108,17 +114,16 @@ void StackParms::show()
    printf("\n");
    printf("StackParms************************************************ %s\n", mTargetSection);
 
-   mObjectEnable.show("ObjectEnable");
-   mObjectFileName.show("ObjectFileName");
-   mObjectMajorTable.show("ObjectMajorTable");
-
    for (int i = 0; i < cMaxObjects; i++)
    {
       if (mObjectParms[i].mValid)  mObjectParms[i].show();
    }
 
+   mObjectEnable.show("ObjectEnable");
+   mObjectFileName.show("ObjectFileName");
+   mObjectLayout.show("ObjectLayout");
+
    printf("\n");
-   printf("MajorSize                %10d %4d\n", mMajorSize.mRows, mMajorSize.mCols);
    for (int i = 0; i < cMaxObjects; i++)
    {
    printf("Object1Major             %10d %4d\n", mObjectMajor[i].mRow, mObjectMajor[i].mCol);
@@ -159,8 +164,7 @@ void StackParms::execute(Ris::CmdLineCmd* aCmd)
    if (aCmd->isCmd("ObjectFileName"))      nestedPush(aCmd, &mObjectFileName);
    if (aCmd->isCmd("ObjectEnable"))        nestedPush(aCmd, &mObjectEnable);
 
-   if (aCmd->isCmd("MajorSize"))           mMajorSize.execute(aCmd);
-   if (aCmd->isCmd("ObjectMajorTable"))    nestedPush(aCmd, &mObjectMajorTable);
+   if (aCmd->isCmd("ObjectLayout"))        nestedPush(aCmd, &mObjectLayout);
 
    if (aCmd->isCmd("TestTable"))           nestedPush(aCmd, &mTestTable);
 }

@@ -76,8 +76,8 @@ public:
    Ris::CmdLineTable1D<Ris::TableString, cMaxObjects>  mObjectFileName;
 
    // Stack object major row column positioning.
-   RCSize  mMajorSize;
-   Ris::CmdLineTable2D<int, cMaxObjects, 2>  mObjectMajorTable;
+   RCSize mMajorSize;
+   Ris::CmdLineTable2D<int, 4, cMaxObjects>  mObjectLayout;
    RCIndex mObjectMajor[cMaxObjects];
 
    // Test table.
