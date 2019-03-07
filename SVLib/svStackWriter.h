@@ -1,20 +1,17 @@
 #pragma once
 
 /*==============================================================================
-SV namespace: sixdofs that are measured by a computer vision based system.
-Simulator synthetic image generator.
+Synthetic image stack writer.
 ==============================================================================*/
 
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
 
-#include <string>
-#include <vector>
 #include <opencv2/core/core.hpp>
 
-#include "svStackObjectParms.h"
-#include "svTileWriter.h"
+#include "svStackParms.h"
+#include "svStackObjectWriter.h"
 
 namespace SV
 {
@@ -22,12 +19,9 @@ namespace SV
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
-//******************************************************************************
-//******************************************************************************
-//******************************************************************************
-// This is a simulator synthetic image generator.
+// This is a synthetic image stack writer.
 
-class StackObjectWriter
+class StackWriter
 {
 public:
 
@@ -37,20 +31,29 @@ public:
    // Members.
 
    // Parameters.
-   StackObjectParms* mP;
+   StackParms* mP;
 
    //***************************************************************************
    //***************************************************************************
    //***************************************************************************
    // Members.
 
+   // Generated stack size.
+   int mStackSize;
+
+   // Number of images that were generated.
+   int mWriteCount;
+
    //***************************************************************************
    //***************************************************************************
    //***************************************************************************
    // Members.
+
+   // Images.
+   cv::Mat mOutputImage;
 
    // Image filter.
-   SV::TileWriter mTileWriter;
+   SV::StackObjectWriter mObjectWriter;
 
    //***************************************************************************
    //***************************************************************************
@@ -58,21 +61,30 @@ public:
    // Methods.
 
    // Constructor.
-   StackObjectWriter();
-  ~StackObjectWriter();
-   StackObjectWriter(StackObjectParms* aParms);
-   void initialize(StackObjectParms* aParms);
+   StackWriter();
+  ~StackWriter();
+   StackWriter(StackParms* aParms);
+   void initialize(StackParms* aParms);
+   void finalize();
 
    //***************************************************************************
    //***************************************************************************
    //***************************************************************************
    // Methods.
 
-   // Write a stack object slice to an output image, based on a
-   // stack index, according to the parms.
-   void doWriteStackObject(
-      int            aStackIndex,     // Control
-      cv::Mat&       aOutputImage);   // Output
+   // Write an image stack, according to the parms.
+   void doWriteStack();
+
+   //***************************************************************************
+   //***************************************************************************
+   //***************************************************************************
+   // Methods.
+
+   // Write an image stack object, according to the parms.
+   void doWriteStackObject(StackObjectParms* aParms);
+
+   // Write the output image to a file.
+   void doWriteOutputImage();
 };
 
 //******************************************************************************

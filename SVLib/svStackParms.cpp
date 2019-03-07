@@ -32,6 +32,9 @@ void StackParms::reset()
    BaseClass::reset();
    BaseClass::setFileName_RelAlphaFiles("Image/SV_Stack_Parms.txt");
 
+   mStackName[0] = 0;
+   mStackSize = 0;
+
    mObjectEnable.reset();
    mObjectFileName.reset();
    mObjectLayout.reset();
@@ -124,6 +127,9 @@ void StackParms::show()
       if (mObjectParms[i].mValid)  mObjectParms[i].show();
    }
 
+   printf("StackName                %s\n", mStackName);
+   printf("StackSize                %10d\n", mStackSize);
+
    mObjectEnable.show("ObjectEnable");
    mObjectFileName.show("ObjectFileName");
    mObjectLayout.show("ObjectLayout");
@@ -154,6 +160,9 @@ void StackParms::show()
 void StackParms::execute(Ris::CmdLineCmd* aCmd)
 {
    if (!isTargetSection(aCmd)) return;
+
+   if (aCmd->isCmd("StackName"))           aCmd->copyArgString(1, mStackName, cMaxStringSize);
+   if (aCmd->isCmd("StackSize"))           mStackSize = aCmd->argInt(1);
 
    if (aCmd->isCmd("ObjectFileName"))      nestedPush(aCmd, &mObjectFileName);
    if (aCmd->isCmd("ObjectEnable"))        nestedPush(aCmd, &mObjectEnable);

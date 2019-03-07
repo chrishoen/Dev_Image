@@ -70,6 +70,10 @@ public:
    //***************************************************************************
    // Parameter members.
 
+   // Stack name and size.
+   char mStackName[cMaxStringSize];
+   int  mStackSize;
+
    // Stack object enable flags.
    Ris::CmdLineTable1D<bool, cMaxObjects>  mObjectEnable;
 
