@@ -61,11 +61,14 @@ void StackParms::expand()
    // Read Stack objects from object parms files.
    for (int i = 0; i < cMaxObjects; i++)
    {
-      if (strlen(mObjectFileName[i]) != 0 && mObjectEnable[i])
+      if (strlen(mObjectFileName[i]) != 0 && strcmp(mObjectFileName[i],"empty") != 0)
       {
-         mObjectParms[i].setFileName_RelAlphaFiles(mObjectFileName[i]);
-         mObjectParms[i].readSection("default");
-         mObjectParms[i].mValid = true;
+         if (mObjectEnable[i])
+         {
+            mObjectParms[i].setFileName_RelAlphaFiles(mObjectFileName[i]);
+            mObjectParms[i].readSection("default");
+            mObjectParms[i].mValid = true;
+         }
       }
    }
 

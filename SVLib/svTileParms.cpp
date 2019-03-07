@@ -145,6 +145,34 @@ void TileParms::adjust(int aStackIndex)
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
+// Return a roi center as a function of the stack index.
+
+RCIndex TileParms::getRoiCenter(int aStackIndex)
+{
+   int tNumLoop = mStepH * (aStackIndex / mStepV);
+   int tRowCount = 0;
+   int tColCount = 0;
+   RCIndex tRoiCenter;
+
+   if (isSquare())
+   {
+      tRowCount = tNumLoop * mNumRow;
+      tColCount = tNumLoop * mNumCol;
+      tRoiCenter = mCenter + RCIndex(-tRowCount, -tColCount);
+   }
+   else
+   {
+      tRowCount = tNumLoop * mNumRow - mNumRow / 2;
+      tColCount = tNumLoop * mNumCol - mNumCol / 2;
+      tRoiCenter = mCenter + RCIndex(-tRowCount,0);
+   }
+
+   return tRoiCenter;
+}
+
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
 // Helpers.
 
 void TileParms::setName(const char* aName)

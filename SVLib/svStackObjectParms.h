@@ -107,6 +107,9 @@ public:
 
    // Set the tile centers.
    void setCenter(RCIndex aCenter);
+
+   // Return a roi center as a function of the stack index.
+   RCIndex getRoiCenter(int aStackIndex);
 };
 
 //******************************************************************************

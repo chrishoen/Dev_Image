@@ -41,6 +41,11 @@ void StackObjectParms::setCenter(RCIndex aCenter)
    mTileParmsD.mCenter = aCenter;
 }
 
+RCIndex StackObjectParms::getRoiCenter(int aStackIndex)
+{
+   return mTileParmsA.getRoiCenter(aStackIndex);
+}
+
 
 //******************************************************************************
 //******************************************************************************
