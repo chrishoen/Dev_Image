@@ -33,6 +33,15 @@ void StackObjectParms::reset()
    mTileParmsD.reset();
 }
 
+void StackObjectParms::setCenter(RCIndex aCenter)
+{
+   mTileParmsA.mCenter = aCenter;
+   mTileParmsB.mCenter = aCenter;
+   mTileParmsC.mCenter = aCenter;
+   mTileParmsD.mCenter = aCenter;
+}
+
+
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************

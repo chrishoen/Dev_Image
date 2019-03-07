@@ -60,7 +60,17 @@ void RCSector::set(RCIndex aCorner, RCIndex aCenter)
 //******************************************************************************
 // Show.
 
-void RCSector::show(int aPF,char* aLabel)
+void RCSector::show1(int aPF,char* aLabel)
+{
+   Prn::print(aPF, "%-10s                   %4d %4d   %4d %4d",
+      aLabel,
+      mCorner.mRow,
+      mCorner.mCol,
+      mCenter.mRow,
+      mCenter.mCol);
+}
+
+void RCSector::show2(int aPF, char* aLabel)
 {
    Prn::print(aPF, "%-10s $$ %4d %4d",
       aLabel,

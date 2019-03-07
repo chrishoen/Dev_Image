@@ -43,12 +43,8 @@ void StackParms::reset()
    {
       mObjectMajor[i].reset();
       mObjectParms[i].reset();
-      mObjectOffset[i].reset();
-      mObjectCenter[i].reset();
-      mObjectRect[i].reset();
+      mObjectSector[i].reset();
    }
-
-   mTestTable.reset();
 }
 
 //******************************************************************************
@@ -89,19 +85,28 @@ void StackParms::expand()
    // Set stack object positioning parameters.
    for (int i = 0; i < cMaxObjects; i++)
    {
+      RCIndex tCorner;
+      RCIndex tCenter;
+
       // Stack object row column upper left corner offsets.
-      mObjectOffset[i].mRow = mObjectMajor[i].mRow * mObjectSize.mRows;
-      mObjectOffset[i].mCol = mObjectMajor[i].mCol * mObjectSize.mCols;
+      tCorner.mRow = mObjectMajor[i].mRow * mObjectSize.mRows;
+      tCorner.mCol = mObjectMajor[i].mCol * mObjectSize.mCols;
 
       // Stack object row column centers.
-      mObjectCenter[i].mRow = mObjectOffset[i].mRow + mObjectSize.mRows / 2;
-      mObjectCenter[i].mCol = mObjectOffset[i].mCol + mObjectSize.mCols / 2;
+      tCenter.mRow = tCorner.mRow + mObjectSize.mRows / 2;
+      tCenter.mCol = tCorner.mCol + mObjectSize.mCols / 2;
 
-      // Stack object row column rectangles.
-      mObjectRect[i].initialize(
-         mObjectOffset[i].mRow, mObjectOffset[i].mRow + mObjectSize.mRows - 1,
-         mObjectOffset[i].mCol, mObjectOffset[i].mCol + mObjectSize.mCols - 1);
+      // Stack object row column sectors.
+      mObjectSector[i].set(tCorner, tCenter);
    }
+
+
+   // Set stack objects parameters.
+   for (int i = 0; i < cMaxObjects; i++)
+   {
+      mObjectParms[i].setCenter(mObjectSector[i].mCenter);
+   }
+
 }
 
 //******************************************************************************
@@ -124,30 +129,19 @@ void StackParms::show()
    mObjectLayout.show("ObjectLayout");
 
    printf("\n");
+   printf("ObjectSize               %10d %4d\n", mObjectSize.mRows, mObjectSize.mCols);
+
+   printf("\n");
    for (int i = 0; i < cMaxObjects; i++)
    {
    printf("Object1Major             %10d %4d\n", mObjectMajor[i].mRow, mObjectMajor[i].mCol);
    }
 
    printf("\n");
-   printf("ObjectSize               %10d %4d\n", mObjectSize.mRows, mObjectSize.mCols);
-
-   printf("\n");
    for (int i = 0; i < cMaxObjects; i++)
    {
-   printf("ObjectCenter             %10d %4d\n", mObjectCenter[i].mRow, mObjectCenter[i].mCol);
+      mObjectSector[i].show1(0,"ObjectSector");
    }
-
-   printf("\n");
-   for (int i = 0; i < cMaxObjects; i++)
-   {
-   printf("ObjectRect               %10d %4d   %4d %4d\n",
-      mObjectRect[i].mARow, mObjectRect[i].mBRow, mObjectRect[i].mACol, mObjectRect[i].mBCol);
-   }
-
-   printf("\n");
-   printf("TestTableSize            %10d %4d\n", mTestTable.mRows, mTestTable.mCols);
-   mTestTable.show("TestTable");
 }
 
 //******************************************************************************
@@ -165,8 +159,6 @@ void StackParms::execute(Ris::CmdLineCmd* aCmd)
    if (aCmd->isCmd("ObjectEnable"))        nestedPush(aCmd, &mObjectEnable);
 
    if (aCmd->isCmd("ObjectLayout"))        nestedPush(aCmd, &mObjectLayout);
-
-   if (aCmd->isCmd("TestTable"))           nestedPush(aCmd, &mTestTable);
 }
 
 //******************************************************************************

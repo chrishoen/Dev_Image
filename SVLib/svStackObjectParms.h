@@ -99,6 +99,14 @@ public:
    // Simulate expanded member variables. This is called after the entire
    // section of the command file has been processed.
    void expand() override;
+
+   //***************************************************************************
+   //***************************************************************************
+   //***************************************************************************
+   // Methods.
+
+   // Set the tile centers.
+   void setCenter(RCIndex aCenter);
 };
 
 //******************************************************************************

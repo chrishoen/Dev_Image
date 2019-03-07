@@ -14,6 +14,7 @@ Parameters class whose values are read from a command file.
 #include "svRCIndex.h"
 #include "svRCSize.h"
 #include "svRCRect.h"
+#include "svRCSector.h"
 #include "svStackObjectParms.h"
 
 //******************************************************************************
@@ -80,9 +81,6 @@ public:
    Ris::CmdLineTable2D<int, 4, cMaxObjects>  mObjectLayout;
    RCIndex mObjectMajor[cMaxObjects];
 
-   // Test table.
-   Ris::CmdLineTable2D<int, 10, 4>     mTestTable;
-
    //***************************************************************************
    //***************************************************************************
    //***************************************************************************
@@ -94,14 +92,8 @@ public:
    // Stack object size.
    RCSize  mObjectSize;
 
-   // Stack object rectangle upper left corner.
-   RCIndex mObjectOffset[cMaxObjects];
-
-   // Stack object rectangle center.
-   RCIndex mObjectCenter[cMaxObjects];
-
-   // Stack object rectangles.
-   RCRect mObjectRect[cMaxObjects];
+   // Stack object sectors.
+   RCSector mObjectSector[cMaxObjects];
 
    //***************************************************************************
    //***************************************************************************

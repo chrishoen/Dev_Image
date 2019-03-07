@@ -84,7 +84,7 @@ void CmdLineExec::executeGo2(Ris::CmdLineCmd* aCmd)
 void CmdLineExec::executeGo3(Ris::CmdLineCmd* aCmd)
 {
    SV::RCSector tSector(SV::gTestParms.mCorner, SV::gTestParms.mCenter);
-   tSector.show(0, "MySector");
+   tSector.show1(0, "MySector");
 }
 
 //******************************************************************************
