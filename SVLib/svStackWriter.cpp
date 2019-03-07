@@ -79,7 +79,7 @@ void StackWriter::doWriteStack()
       for (int tObjectIndex = 0; tObjectIndex < StackParms::cMaxObjects; tObjectIndex++)
       {
          // If the object is valid.
-         if (mP->mObjectParms->mValid)
+         if (mP->mObjectParms[tObjectIndex].mValid)
          {
             // Initialize the object writer with the object parms.
             mObjectWriter.initialize(&mP->mObjectParms[tObjectIndex]);
