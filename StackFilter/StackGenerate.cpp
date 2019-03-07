@@ -9,49 +9,46 @@ Description:
 #include "stdafx.h"
 
 #include "CPrintDir.h"
-#include "svSysParms.h"
-#include "svImageParms.h"
-#include "svSimParms.h"
-#include "svParmParms.h"
-#include "svSimStackGenerator.h"
+#include "svStackParms.h"
+#include "svStackWriter.h"
 #include "pxGCodeWriter.h"
 #include "pxZipWriter.h"
 
-#include "StackSimulate.h"
+#include "StackGenerate.h"
 
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
 
-StackSimulate::StackSimulate()
+StackGenerate::StackGenerate()
 {
 }
 
-void StackSimulate::reset()
+void StackGenerate::reset()
 {
 }
 
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
-// This simulates an input image stack.
+// Generate a stack of simulated images.
 
-void StackSimulate::doSimStack()
+void StackGenerate::doGenerateStack()
 {
    // Clean the cprint work directory.
    CPrint::doCleanWork();
 
    // Generate the image stack.
-   SV::SimStackGenerator tStackGen(&SV::gSimParms);
-   tStackGen.doGenerateImageStack();
+   SV::StackWriter tStackWriter(&SV::gStackParms);
+   tStackWriter.doWriteStack();
 
    // Generate the stack gcode file.
    PX::GCodeWriter tGCodeWriter;
-   tGCodeWriter.doWrite(SV::gSimParms.mStackName, tStackGen.mStackSize);
+   tGCodeWriter.doWrite(SV::gStackParms.mStackName, SV::gStackParms.mStackSize);
 
-   // Zipt the work directory.
+   // Zip the work directory.
    PX::ZipWriter tZipWriter;
-   tZipWriter.doZipWork(SV::gSimParms.mStackName);
+   tZipWriter.doZipWork(SV::gStackParms.mStackName);
 }
 
 //******************************************************************************

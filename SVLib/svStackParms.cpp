@@ -127,7 +127,7 @@ void StackParms::show()
       if (mObjectParms[i].mValid)  mObjectParms[i].show();
    }
 
-   printf("StackName                %s\n", mStackName);
+   printf("StackName      %20s\n", mStackName);
    printf("StackSize                %10d\n", mStackSize);
 
    mObjectEnable.show("ObjectEnable");

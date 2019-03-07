@@ -102,7 +102,7 @@ void StackWriter::doWriteOutputImage()
 {
    // Get output file path.
    char tFilePath[200];
-   int tFileNum = mStackSize - mWriteCount - 1;
+   int tFileNum = mP->mStackSize - mWriteCount - 1;
    sprintf(tFilePath, ".\\work\\%s%04d.png", mP->mStackName, tFileNum);
    Prn::print(Prn::View01, "WriteOutput %s", tFilePath);
 

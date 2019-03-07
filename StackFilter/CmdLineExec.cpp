@@ -12,7 +12,7 @@
 #include "svImageFunctions.h"
 
 #include "displayFunctions.h"
-#include "StackSimulate.h"
+#include "StackGenerate.h"
 
 #include "pxFileManager.h"
 #include "pxScriptWriter.h"
@@ -49,7 +49,7 @@ void CmdLineExec::reset()
 void CmdLineExec::execute(Ris::CmdLineCmd* aCmd)
 {
    if (aCmd->isCmd("Prn"))       set_print_filters(aCmd->argInt(1));
-   if (aCmd->isCmd("Sim"))       executeSim(aCmd);
+   if (aCmd->isCmd("Gen"))       executeGen(aCmd);
    if (aCmd->isCmd("DirZ"))      executeDirZip(aCmd);
    if (aCmd->isCmd("LoadZ"))     executeLoadZip(aCmd);
    if (aCmd->isCmd("EvalZ"))     executeEvaluateZip(aCmd);
@@ -72,7 +72,7 @@ void CmdLineExec::execute(Ris::CmdLineCmd* aCmd)
 //******************************************************************************
 //******************************************************************************
 
-void CmdLineExec::executeSim(Ris::CmdLineCmd* aCmd)
+void CmdLineExec::executeGen(Ris::CmdLineCmd* aCmd)
 {
    aCmd->setArgDefault(1, 1);
 
@@ -82,8 +82,8 @@ void CmdLineExec::executeSim(Ris::CmdLineCmd* aCmd)
    SV::gParmParms.readMoreParms("default");
 
    // Run.
-   StackSimulate tSim;
-   tSim.doSimStack();
+   StackGenerate tGen;
+   tGen.doGenerateStack();
 }
 
 //******************************************************************************

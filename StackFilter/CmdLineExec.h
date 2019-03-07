@@ -53,7 +53,7 @@ public:
    // Methods.
 
    // Execute specific commands.
-   void executeSim             (Ris::CmdLineCmd* aCmd);
+   void executeGen             (Ris::CmdLineCmd* aCmd);
    void executeDirZip          (Ris::CmdLineCmd* aCmd);
    void executeLoadZip         (Ris::CmdLineCmd* aCmd);
    void executeEvaluateZip     (Ris::CmdLineCmd* aCmd);

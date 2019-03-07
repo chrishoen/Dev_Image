@@ -38,9 +38,6 @@ public:
    //***************************************************************************
    // Members.
 
-   // Generated stack size.
-   int mStackSize;
-
    // Number of images that were generated.
    int mWriteCount;
 
