@@ -216,6 +216,7 @@ void CmdLineExec::executeFilterZip(Ris::CmdLineCmd* aCmd)
 void CmdLineExec::executeShowWork(Ris::CmdLineCmd* aCmd)
 {
    aCmd->setArgDefault(1, 0);
+   aCmd->setArgDefault(2, 0);
 
    // Read parameters files.
    SV::gParmParms.reset();
@@ -225,7 +226,7 @@ void CmdLineExec::executeShowWork(Ris::CmdLineCmd* aCmd)
    // Test the image stack.
    StackShow tStackShow;
 
-   tStackShow.doShowScriptFile(aCmd->argInt(1));
+   tStackShow.doShowScriptFile(aCmd->argInt(1), aCmd->argInt(2));
    tStackShow.show();
 }
 

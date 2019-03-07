@@ -87,47 +87,18 @@ void ImageEvaluator::doEvaluateHighPixel(RCIndex aX)
    {
       mResults->mFirst = false;
 
-      mResults->mMinRowInt = aX.mRow;
-      mResults->mMaxRowInt = aX.mRow;
-      mResults->mMinColInt = aX.mCol;
-      mResults->mMaxColInt = aX.mCol;
-
-      mResults->mMinMin.mRow = mResults->mMinRowInt;
-      mResults->mMinMin.mCol = mResults->mMinColInt;
-      mResults->mMinMax.mRow = mResults->mMinRowInt;
-      mResults->mMinMax.mCol = mResults->mMaxColInt;
-      mResults->mMaxMin.mRow = mResults->mMaxRowInt;
-      mResults->mMaxMin.mCol = mResults->mMinColInt;
-      mResults->mMaxMax.mRow = mResults->mMaxRowInt;
-      mResults->mMaxMax.mCol = mResults->mMaxColInt;
-
-      mResults->mRowMin = aX;
-      mResults->mRowMax = aX;
-      mResults->mColMin = aX;
-      mResults->mColMax = aX;
+      mResults->mMinRow = aX.mRow;
+      mResults->mMaxRow = aX.mRow;
+      mResults->mMinCol = aX.mCol;
+      mResults->mMaxCol = aX.mCol;
       return;
    }
 
    // Store results for other evaluations.
-   if (aX.mRow <  mResults->mMinRowInt) mResults->mMinRowInt = aX.mRow;
-   if (aX.mRow >= mResults->mMaxRowInt) mResults->mMaxRowInt = aX.mRow;
-   if (aX.mCol <  mResults->mMinColInt) mResults->mMinColInt = aX.mCol;
-   if (aX.mCol >= mResults->mMaxColInt) mResults->mMaxColInt = aX.mCol;
-
-   mResults->mMinMin.mRow = mResults->mMinRowInt;
-   mResults->mMinMin.mCol = mResults->mMinColInt;
-   mResults->mMinMax.mRow = mResults->mMinRowInt;
-   mResults->mMinMax.mCol = mResults->mMaxColInt;
-   mResults->mMaxMin.mRow = mResults->mMaxRowInt;
-   mResults->mMaxMin.mCol = mResults->mMinColInt;
-   mResults->mMaxMax.mRow = mResults->mMaxRowInt;
-   mResults->mMaxMax.mCol = mResults->mMaxColInt;
-
-   // Store results for other evaluations.
-   if (aX.mRow <  mResults->mRowMin.mRow) mResults->mRowMin = aX;
-   if (aX.mRow >= mResults->mRowMax.mRow) mResults->mRowMax = aX;
-   if (aX.mCol <  mResults->mColMin.mCol) mResults->mColMin = aX;
-   if (aX.mCol >= mResults->mColMax.mCol) mResults->mColMax = aX;
+   if (aX.mRow <  mResults->mMinRow) mResults->mMinRow = aX.mRow;
+   if (aX.mRow >= mResults->mMaxRow) mResults->mMaxRow = aX.mRow;
+   if (aX.mCol <  mResults->mMinCol) mResults->mMinCol = aX.mCol;
+   if (aX.mCol >= mResults->mMaxCol) mResults->mMaxCol = aX.mCol;
 }
 
 

@@ -33,7 +33,7 @@ void SimImageGenParms::reset()
    mImageType    = cNone;
    mImageSize = gSysParms.mImageSize;
    mImageB = 0;
-   mRoiPixel.reset();
+   mRoiCenter.reset();
    mRoiB = 0;
    mGaussianWidth = 0.0;
    mGaussianAmplitude = 0.0;
@@ -56,7 +56,7 @@ void SimImageGenParms::show(const char* aLabel)
    printf("ImageB                   %10d\n",        mImageB);
    printf("GaussianWidth            %10.2f\n",      mGaussianWidth);
    printf("GaussianAmplitude        %10.2f\n",      mGaussianAmplitude);
-   printf("RoiPixel                 %10d %10d\n",   mRoiPixel.mRow, mRoiPixel.mCol);
+   printf("RoiCenter                 %10d %10d\n",   mRoiCenter.mRow, mRoiCenter.mCol);
    printf("RoiB                     %10d\n",        mRoiB);
    mPolygonPoints.show("PolygonPoints");
    printf("BitMapCorner             %10d %10d\n",   mBitMapCorner.mRow, mBitMapCorner.mCol);
@@ -88,7 +88,7 @@ void SimImageGenParms::execute(Ris::CmdLineCmd* aCmd)
    }
 
    if (aCmd->isCmd("ImageB"))              mImageB = aCmd->argInt(1);
-   if (aCmd->isCmd("RoiPixel"))            mRoiPixel.execute(aCmd);
+   if (aCmd->isCmd("RoiCenter"))            mRoiCenter.execute(aCmd);
    if (aCmd->isCmd("RoiB"))                mRoiB = aCmd->argInt(1);
    if (aCmd->isCmd("GaussianWidth"))       mGaussianWidth = aCmd->argDouble(1);
    if (aCmd->isCmd("GaussianAmplitude"))   mGaussianAmplitude = aCmd->argDouble(1);

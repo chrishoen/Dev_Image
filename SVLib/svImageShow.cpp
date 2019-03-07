@@ -53,7 +53,7 @@ void showImage2d(
    if (aInput.rows == 0)return;
 
    // Region of interest variables.
-   RCIndex tCenterPixel = gImageParms.mRoiPixel;
+   RCIndex tCenterPixel = gImageParms.mRoiCenter;
    int tB = gImageParms.mRoiB;
    int tHeaderCode = gImageParms.mRoiHeaderCode;
 
@@ -156,7 +156,7 @@ void showImage3d(
    if (aInputS3.rows == 0)return;
 
    // Region of interest variables.
-   RCIndex tCenterPixel = gImageParms.mRoiPixel;
+   RCIndex tCenterPixel = gImageParms.mRoiCenter;
    int tB = gImageParms.mRoiB;
    int tHeaderCode = gImageParms.mRoiHeaderCode;
 

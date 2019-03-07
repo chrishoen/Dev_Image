@@ -84,7 +84,7 @@ public:
    int      mImageB;
 
    // Region of interest parameters.
-   RCIndex mRoiPixel;
+   RCIndex mRoiCenter;
    int     mRoiB;
 
    // Gaussian parameters.

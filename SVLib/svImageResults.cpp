@@ -34,20 +34,10 @@ void ImageResults::reset()
    mTotalCount = 0;
    mHighCount = 0;
 
-   mMinRowInt = 0;
-   mMaxRowInt = 0;
-   mMinColInt = 0;
-   mMaxColInt = 0;
-   
-   mMinMin.reset();
-   mMinMax.reset();
-   mMaxMin.reset();
-   mMaxMax.reset();
-
-   mRowMin.reset();
-   mRowMax.reset();
-   mColMin.reset();
-   mColMax.reset();
+   mMinRow = 0;
+   mMaxRow = 0;
+   mMinCol = 0;
+   mMaxCol = 0;
 }
 
 //******************************************************************************
@@ -57,27 +47,10 @@ void ImageResults::reset()
 
 void ImageResults::show(int aPF, const char* aLabel)
 {
-   if (SV::gImageParms.mRoiShowMode == 1)
-   {
-      Prn::print(aPF, "%7d ROW %4d %4d $ %4d %4d COL %4d %4d $ %4d %4d %s",
-         mHighCount,
-         mMinMin.mRow, mMinMin.mCol,
-         mMinMax.mRow, mMinMax.mCol,
-         mMaxMax.mRow, mMaxMax.mCol,
-         mMaxMin.mRow, mMaxMin.mCol,
-         aLabel);
-   }
-
-   if (SV::gImageParms.mRoiShowMode == 2)
-   {
-      Prn::print(aPF, "%7d ROW %4d %4d $ %4d %4d COL %4d %4d $ %4d %4d %s",
-         mHighCount,
-         mRowMin.mRow, mRowMin.mCol,
-         mColMax.mRow, mColMax.mCol,
-         mRowMax.mRow, mRowMax.mCol,
-         mColMin.mRow, mColMin.mCol,
-         aLabel);
-   }
+   Prn::print(aPF, "%7d ROW %4d %4d COL %4d %4d    %s",
+      mHighCount,
+      mMinRow, mMaxRow, mMinCol, mMaxCol,
+      aLabel);
 }
 
 //******************************************************************************

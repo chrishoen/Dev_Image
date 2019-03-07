@@ -70,7 +70,7 @@ public:
    // Parameter members.
 
    // Region of interest parameters.
-   RCIndex mRoiPixel;
+   RCIndex mRoiCenter;
    int     mRoiB;
    int     mRoiHeaderCode;
    int     mRoiSelectCode;

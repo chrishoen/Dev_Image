@@ -36,7 +36,7 @@ void ImageParms::reset()
    mNN3dRuleFilterParms.reset();
    mContourFilterParms.reset();
 
-   mRoiPixel.reset();
+   mRoiCenter.reset();
    mRoiB = 0;
    mRoiHeaderCode = 0;
    mRoiSelectCode = 0;
@@ -62,7 +62,7 @@ void ImageParms::show()
 {
    printf("\n");
    printf("ImageParms********************************************** %s\n", mTargetSection);
-   printf("RoiPixel                 %10d %10d\n", mRoiPixel.mRow, mRoiPixel.mCol);
+   printf("RoiCenter                 %10d %10d\n", mRoiCenter.mRow, mRoiCenter.mCol);
    printf("RoiB                     %10d\n", mRoiB);
    printf("RoiHeaderCode            %10d\n", mRoiHeaderCode);
    printf("RoiShowMode              %10d\n", mRoiShowMode);
@@ -86,7 +86,7 @@ void ImageParms::execute(Ris::CmdLineCmd* aCmd)
 {
    if (!isTargetSection(aCmd)) return;
 
-   if (aCmd->isCmd("RoiPixel"))            mRoiPixel.execute(aCmd);
+   if (aCmd->isCmd("RoiCenter"))            mRoiCenter.execute(aCmd);
    if (aCmd->isCmd("RoiB"))                mRoiB = aCmd->argInt(1);
    if (aCmd->isCmd("RoiHeaderCode"))       mRoiHeaderCode = aCmd->argInt(1);
    if (aCmd->isCmd("RoiShowMode"))         mRoiShowMode = aCmd->argInt(1);
@@ -107,9 +107,9 @@ void ImageParms::execute(Ris::CmdLineCmd* aCmd)
 
 void ImageParms::readOverrides(SimParms* aSimParms)
 {
-   if (aSimParms->mImageGenParmsS2.mRoiPixel.mRow != 0)
+   if (aSimParms->mImageGenParmsS2.mRoiCenter.mRow != 0)
    {
-      mRoiPixel = aSimParms->mImageGenParmsS2.mRoiPixel;
+      mRoiCenter = aSimParms->mImageGenParmsS2.mRoiCenter;
    }
 
    if (aSimParms->mImageGenParmsS2.mRoiB != 0)

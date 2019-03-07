@@ -52,7 +52,8 @@ public:
    std::string mSelectPathS3;
 
    // Select loop count.
-   int mSelect;
+   int mObjectIndex;
+   int mStackIndex;
 
    //***************************************************************************
    //***************************************************************************
@@ -85,7 +86,7 @@ public:
    // Methods.
 
    // Show the images pointed to by a script file. Return true if successful.
-   bool doShowScriptFile(int aSelect);
+   bool doShowScriptFile(int aObjectIndex,int aStackIndex);
 
    //***************************************************************************
    //***************************************************************************

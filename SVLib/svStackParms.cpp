@@ -50,6 +50,18 @@ void StackParms::reset()
    }
 }
 
+RCIndex StackParms::getRoiCenter(int aObjectIndex, int aStackIndex)
+{
+   return mObjectParms[aObjectIndex].getRoiCenter(aStackIndex);
+}
+
+RCIndex StackParms::getReverseRoiCenter(int aObjectIndex, int aReverseStackIndex)
+{
+   int tStackIndex = mStackSize - aReverseStackIndex - 1;
+   return mObjectParms[aObjectIndex].getRoiCenter(tStackIndex);
+}
+
+
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************

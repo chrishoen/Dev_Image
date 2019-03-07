@@ -92,8 +92,8 @@ void extractImageRoi(
    if (aInput.rows == 0)return;
 
    // Roi variables.
-   int tUpperLeftRowY = gImageParms.mRoiPixel.mRow - gImageParms.mRoiB;
-   int tUpperLeftColX = gImageParms.mRoiPixel.mCol - gImageParms.mRoiB;
+   int tUpperLeftRowY = gImageParms.mRoiCenter.mRow - gImageParms.mRoiB;
+   int tUpperLeftColX = gImageParms.mRoiCenter.mCol - gImageParms.mRoiB;
    int tWidth = 2 * gImageParms.mRoiB + 1;
    int tHeight = tWidth;
    cv::Rect tRoiRect(tUpperLeftColX, tUpperLeftRowY, tWidth, tHeight);

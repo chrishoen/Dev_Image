@@ -118,6 +118,15 @@ public:
    // Simulate expanded member variables. This is called after the entire
    // section of the command file has been processed.
    void expand() override;
+
+   //***************************************************************************
+   //***************************************************************************
+   //***************************************************************************
+   // Methods.
+
+   // Return a roi center as a function of the stack index.
+   RCIndex getRoiCenter(int aObjectIndex, int aStackIndex);
+   RCIndex getReverseRoiCenter(int aObjectIndex, int aReverseStackIndex);
 };
 
 //******************************************************************************

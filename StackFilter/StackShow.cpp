@@ -9,6 +9,7 @@ Description:
 #include "stdafx.h"
 
 #include "CPrintDir.h"
+#include "svStackParms.h"
 #include "svImageParms.h"
 #include "svImageFunctions.h"
 #include "svImageShow.h"
@@ -40,7 +41,7 @@ void StackShow::reset()
    mSelectPathS1.clear();
    mSelectPathS2.clear();
    mSelectPathS3.clear();
-   mSelect = 0;
+   mStackIndex = 0;
 
    mReadCount = 0;
    mRows = 0;
@@ -60,13 +61,14 @@ void StackShow::show()
 //******************************************************************************
 // Filter the images pointed to by a script file. Return true if successful.
 
-bool StackShow::doShowScriptFile(int aSelect)
+bool StackShow::doShowScriptFile(int aObjectIndex, int aStackIndex)
 {
    // Do this first.
    reset();
 
    // Loop select count.
-   mSelect = aSelect;
+   mObjectIndex = aObjectIndex;
+   mStackIndex = aStackIndex;
 
    // File paths.
    mScriptFilePath = CPrint::getWorkDirPath() + "aaaa_script.txt";
@@ -157,7 +159,7 @@ void StackShow::doNotFirstInLoop()
       mReadCount, mInputPathS1.c_str(), mInputPathS2.c_str(), mInputPathS3.c_str(), mOutputPathW2.c_str());
 
    // Filter.
-   if ((mSelect + 1) == mReadCount)
+   if ((mStackIndex + 1) == mReadCount)
    {
       mSelectPathS1 = mInputPathS1;
       mSelectPathS2 = mInputPathS2;
@@ -181,7 +183,7 @@ void StackShow::doAfterLoop()
       -2, mInputPathS1.c_str(), mInputPathS2.c_str(), mInputPathS3.c_str(), mOutputPathW2.c_str());
 
    // Filter.
-   if ((mSelect + 1) == mReadCount)
+   if ((mStackIndex + 1) == mReadCount)
    {
       mSelectPathS1 = mInputPathS1;
       mSelectPathS2 = mInputPathS2;
@@ -211,7 +213,7 @@ void StackShow::doShow()
    }
 
    Prn::print(Prn::View01, "%3d %-25s %-25s %-25s",
-      mSelect, mSelectPathS1.c_str(), mSelectPathS2.c_str(), mSelectPathS3.c_str());
+      mStackIndex, mSelectPathS1.c_str(), mSelectPathS2.c_str(), mSelectPathS3.c_str());
 
    //***************************************************************************
    //***************************************************************************
@@ -254,30 +256,12 @@ void StackShow::doShow()
    mResults.show(0, mReader.mString);
 
    // Set roi center.
-   SV::gImageParms.mRoiPixel = mResults.mColMin;
-   if (SV::gImageParms.mRoiShowMode == 1)
-   {
-      switch (SV::gImageParms.mRoiSelectCode)
-      {
-      case 1: SV::gImageParms.mRoiPixel = mResults.mMinMin; break;
-      case 2: SV::gImageParms.mRoiPixel = mResults.mMinMax; break;
-      case 3: SV::gImageParms.mRoiPixel = mResults.mMaxMax; break;
-      case 4: SV::gImageParms.mRoiPixel = mResults.mMaxMin; break;
-      }
-   }
-   if (SV::gImageParms.mRoiShowMode == 2)
-   {
-      switch (SV::gImageParms.mRoiSelectCode)
-      {
-      case 1: SV::gImageParms.mRoiPixel = mResults.mRowMin; break;
-      case 2: SV::gImageParms.mRoiPixel = mResults.mColMax; break;
-      case 3: SV::gImageParms.mRoiPixel = mResults.mRowMax; break;
-      case 4: SV::gImageParms.mRoiPixel = mResults.mColMin; break;
-      }
-   }
+   SV::gImageParms.mRoiCenter = SV::gStackParms.getReverseRoiCenter(mObjectIndex,mStackIndex);
+   Prn::print(0, "ShowRoiCenter %4d %4d", SV::gImageParms.mRoiCenter.mRow, SV::gImageParms.mRoiCenter.mCol);
+
    // Show.
    char tLabel[100];
-   sprintf(tLabel, "Stack %3d", mSelect);
+   sprintf(tLabel, "Stack %3d", mStackIndex);
    SV::showImage3d(tLabel, mInputImageS1, mInputImageS2, mInputImageS3);
 }
 
