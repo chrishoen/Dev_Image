@@ -150,7 +150,7 @@ public:
    // Methods.
 
    // Adjust the loop number according to the stack index.
-   void adjust(int aStackIndex);
+   void doAdjust(int aStackIndex);
 
    // Return a roi center as a function of the stack index.
    RCIndex getRoiCenter(int aStackIndex);

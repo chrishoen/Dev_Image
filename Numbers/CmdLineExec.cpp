@@ -43,6 +43,29 @@ void CmdLineExec::execute(Ris::CmdLineCmd* aCmd)
 
 void CmdLineExec::executeGo1(Ris::CmdLineCmd* aCmd)
 {
+   SV::gTestParms.reset();
+   SV::gTestParms.readSection("default");
+
+   aCmd->setArgDefault(1, 1);
+   for (int tStackIndex = 0; tStackIndex < 10; tStackIndex++)
+   {
+      SV::gTestParms.mTileParms.doAdjust(tStackIndex);
+      SV::RCIndex tRoiCenter = SV::gTestParms.mTileParms.getRoiCenter(tStackIndex);
+      printf("%4d $ %4d $ %4d $ %4d %4d\n",
+         tStackIndex,
+         SV::gTestParms.mTileParms.mNumLoop,
+         SV::gTestParms.mTileParms.mB,
+         tRoiCenter.mRow,
+         tRoiCenter.mCol);
+   }
+}
+
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+
+void CmdLineExec::executeGo2(Ris::CmdLineCmd* aCmd)
+{
    aCmd->setArgDefault(1, 1);
    aCmd->setArgDefault(2, 1);
 
@@ -55,25 +78,6 @@ void CmdLineExec::executeGo1(Ris::CmdLineCmd* aCmd)
       int tP1 = tH * (tN / tV);
 
       printf("%3d   %3d\n", tN,tP1);
-   }
-}
-
-//******************************************************************************
-//******************************************************************************
-//******************************************************************************
-
-void CmdLineExec::executeGo2(Ris::CmdLineCmd* aCmd)
-{
-   SV::gTestParms.reset();
-   SV::gTestParms.readSection("default");
-
-   aCmd->setArgDefault(1, 1);
-   for (int tN = 0; tN < 10; tN++)
-   {
-      SV::gTestParms.mTileParms.adjust(tN);
-      printf("NumLoop   %3d %3d $ %3d\n", tN,
-         SV::gTestParms.mTileParms.mNumLoop,
-         SV::gTestParms.mTileParms.mB);
    }
 }
 

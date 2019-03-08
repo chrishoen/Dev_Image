@@ -101,10 +101,6 @@ void TileParms::expand()
 {
    mValid = mNumRow != 0 || mNumCol != 0;
 
-   mCenter.mRow = gSysParms.mImageSize.mRows / 2;
-   mCenter.mCol = gSysParms.mImageSize.mCols / 2;
-
-
    if (isSquare())
    {
       int tRowCount = mNumLoop * mNumRow;
@@ -124,7 +120,7 @@ void TileParms::expand()
 //******************************************************************************
 // Adjust the loop number according to the stack index.
 
-void TileParms::adjust(int aStackIndex)
+void TileParms::doAdjust(int aStackIndex)
 {
    mNumLoop = mStepH * (aStackIndex / mStepV);
 
