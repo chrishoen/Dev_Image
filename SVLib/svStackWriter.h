@@ -39,7 +39,7 @@ public:
    // Members.
 
    // Number of images that were generated.
-   int mWriteCount;
+   int mStackIndex;
 
    //***************************************************************************
    //***************************************************************************
@@ -77,11 +77,8 @@ public:
    //***************************************************************************
    // Methods.
 
-   // Write an image stack object, according to the parms.
-   void doWriteStackObject(StackObjectParms* aParms);
-
    // Write the output image to a file.
-   void doWriteOutputImage();
+   void doWriteOutputImage(int aReverseIndex);
 };
 
 //******************************************************************************
