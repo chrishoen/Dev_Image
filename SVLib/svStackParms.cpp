@@ -67,26 +67,25 @@ void StackParms::reset()
 //******************************************************************************
 // Get roi centers.
 
-RCIndex StackParms::getObjectRoiCenter(int aObjectIndex, int aStackIndex)
+RCIndex StackParms::getStackRoiCenter(int aObjectIndex, int aStackIndex)
 {
-   return mObjectParms[aObjectIndex].getRoiCenter(aStackIndex);
+   int tObjectStackIndex = aStackIndex;
+   int tRaftStackIndex = aStackIndex - mObjectHeight;
+
+   if (aStackIndex < mObjectHeight)
+   {
+      return mObjectParms[aObjectIndex].getRoiCenter(tObjectStackIndex);
+   }
+   else
+   {
+      return mRaftParms[aObjectIndex].getRoiCenter(tRaftStackIndex);
+   }
 }
 
-RCIndex StackParms::getObjectReverseRoiCenter(int aObjectIndex, int aReverseStackIndex)
+RCIndex StackParms::getReverseRoiCenter(int aObjectIndex, int aReverseIndex)
 {
-   int tStackIndex = mStackHeight - aReverseStackIndex - 1;
-   return mObjectParms[aObjectIndex].getRoiCenter(tStackIndex);
-}
-
-RCIndex StackParms::getRaftRoiCenter(int aRaftIndex, int aStackIndex)
-{
-   return mRaftParms[aRaftIndex].getRoiCenter(aStackIndex);
-}
-
-RCIndex StackParms::getRaftReverseRoiCenter(int aRaftIndex, int aReverseStackIndex)
-{
-   int tStackIndex = mStackHeight - aReverseStackIndex - 1;
-   return mRaftParms[aRaftIndex].getRoiCenter(tStackIndex);
+   int tStackIndex = mStackHeight - aReverseIndex - 1;
+   return getStackRoiCenter(aObjectIndex,tStackIndex);
 }
 
 //******************************************************************************
