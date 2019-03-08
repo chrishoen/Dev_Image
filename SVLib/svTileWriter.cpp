@@ -64,19 +64,6 @@ void TileWriter::doWrite(
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
-// Write a tile to an image according to the parms.
-
-void TileWriter::doWrite(
-   int            aNumLoop,
-   cv::Mat&       aOutputImage)    // Output
-{
-   mP->mNumLoop = aNumLoop;
-   doWrite(aOutputImage);
-}
-
-//******************************************************************************
-//******************************************************************************
-//******************************************************************************
 // Write a square tile according to the parms.
 
 void TileWriter::doWriteSquare()
@@ -104,7 +91,6 @@ void TileWriter::doWriteDiamond()
 
    int tRowCount = tNumLoop * tNumRow - tNumRow / 2;
    int tColCount = tNumLoop * tNumCol - tNumCol / 2;
-   mP->mB = my_imax(tRowCount, tColCount);
 
    for (int tRow = 0; tRow < tRowCount; tRow++)
    {

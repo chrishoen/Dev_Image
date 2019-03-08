@@ -64,8 +64,8 @@ void StackObjectWriter::doWriteStackObject(
    mTileWriter.initialize(&mP->mTileParmsA);
 
    // Write a tile to the output image at the stack index.
-   int tNumLoop = aStackIndex;
-   mTileWriter.doWrite(tNumLoop,aOutputImage);
+   mP->mTileParmsA.doAdjust(aStackIndex);
+   mTileWriter.doWrite(aOutputImage);
 }
 
 //******************************************************************************

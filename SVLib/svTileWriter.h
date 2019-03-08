@@ -61,13 +61,8 @@ public:
    //***************************************************************************
    // Methods.
 
-   // Write a tile to an image according to the parms.
+   // Write a tile to an image, according to the parms.
    void doWrite(
-      cv::Mat&       aOutput);      // Output
-
-   // Write a tile to an image according to the parms.
-   void doWrite(
-      int            aNumLoop,      // Control
       cv::Mat&       aOutput);      // Output
 
    //***************************************************************************
@@ -75,10 +70,10 @@ public:
    //***************************************************************************
    // Methods.
 
-   // Write a square tile according to the parms.
+   // Write a square tile, according to the parms.
    void doWriteSquare();
 
-   // Write a diamond tile according to the parms.
+   // Write a diamond tile, according to the parms.
    void doWriteDiamond();
 };
 

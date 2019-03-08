@@ -37,9 +37,9 @@ void TileParms::reset()
    mNumLoop = 0;
    mNumRow = 0;
    mNumCol = 0;
+   mStepL = 0;
    mStepH = 0;
    mStepV = 0;
-   mB = 0;
 
    mCenter.reset();
 }
@@ -59,9 +59,9 @@ void TileParms::show(const char* aLabel)
    printf("NumLoop                  %10d\n", mNumLoop);
    printf("NumRow                   %10d\n", mNumRow);
    printf("NumCol                   %10d\n", mNumCol);
+   printf("StepL                    %10d\n", mStepL);
    printf("StepH                    %10d\n", mStepH);
    printf("StepV                    %10d\n", mStepV);
-   printf("B                        %10d\n", mB);
    printf("Center                   %10d %10d\n", mCenter.mRow, mCenter.mCol);
    printf("TileParms*******************\n");
 }
@@ -79,6 +79,7 @@ void TileParms::execute(Ris::CmdLineCmd* aCmd)
    if (aCmd->isCmd("NumLoop"))        mNumLoop = aCmd->argInt(1);
    if (aCmd->isCmd("NumRow"))         mNumRow = aCmd->argInt(1);
    if (aCmd->isCmd("NumCol"))         mNumCol = aCmd->argInt(1);
+   if (aCmd->isCmd("StepL"))          mStepL = aCmd->argInt(1);
    if (aCmd->isCmd("StepH"))          mStepH = aCmd->argInt(1);
    if (aCmd->isCmd("StepV"))          mStepV = aCmd->argInt(1);
    if (aCmd->isCmd("Center"))         mCenter.execute(aCmd);
@@ -100,19 +101,6 @@ void TileParms::execute(Ris::CmdLineCmd* aCmd)
 void TileParms::expand()
 {
    mValid = mNumRow != 0 || mNumCol != 0;
-
-   if (isSquare())
-   {
-      int tRowCount = mNumLoop * mNumRow;
-      int tColCount = mNumLoop * mNumCol;
-      mB = my_imax(tRowCount, tColCount);
-   }
-   else
-   {
-      int tRowCount = mNumLoop * mNumRow - mNumRow / 2;
-      int tColCount = mNumLoop * mNumCol - mNumCol / 2;
-      mB = my_imax(tRowCount, tColCount);
-   }
 }
 
 //******************************************************************************
@@ -122,19 +110,11 @@ void TileParms::expand()
 
 void TileParms::doAdjust(int aStackIndex)
 {
-   mNumLoop = mStepH * (aStackIndex / mStepV);
-
-   if (isSquare())
+   mNumLoop = mStepL + mStepH * (aStackIndex / mStepV);
+   if (mNumLoop < 0)
    {
-      int tRowCount = mNumLoop * mNumRow;
-      int tColCount = mNumLoop * mNumCol;
-      mB = my_imax(tRowCount, tColCount);
-   }
-   else
-   {
-      int tRowCount = mNumLoop * mNumRow - mNumRow / 2;
-      int tColCount = mNumLoop * mNumCol - mNumCol / 2;
-      mB = my_imax(tRowCount, tColCount);
+      printf("mNumLoop less than zero\n");
+      mNumLoop = 0;
    }
 }
 
@@ -145,21 +125,21 @@ void TileParms::doAdjust(int aStackIndex)
 
 RCIndex TileParms::getRoiCenter(int aStackIndex)
 {
-   int tNumLoop = mStepH * (aStackIndex / mStepV);
+   doAdjust(aStackIndex);
    int tRowCount = 0;
    int tColCount = 0;
    RCIndex tRoiCenter;
 
    if (isSquare())
    {
-      tRowCount = tNumLoop * mNumRow;
-      tColCount = tNumLoop * mNumCol;
+      tRowCount = mNumLoop * mNumRow;
+      tColCount = mNumLoop * mNumCol;
       tRoiCenter = mCenter + RCIndex(-tRowCount, -tColCount);
    }
    else
    {
-      tRowCount = tNumLoop * mNumRow - mNumRow / 2;
-      tColCount = tNumLoop * mNumCol - mNumCol / 2;
+      tRowCount = mNumLoop * mNumRow - mNumRow / 2;
+      tColCount = mNumLoop * mNumCol - mNumCol / 2;
       tRoiCenter = mCenter + RCIndex(-tRowCount,0);
    }
 

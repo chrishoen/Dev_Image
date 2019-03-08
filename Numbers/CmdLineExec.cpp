@@ -51,10 +51,9 @@ void CmdLineExec::executeGo1(Ris::CmdLineCmd* aCmd)
    {
       SV::gTestParms.mTileParms.doAdjust(tStackIndex);
       SV::RCIndex tRoiCenter = SV::gTestParms.mTileParms.getRoiCenter(tStackIndex);
-      printf("%4d $ %4d $ %4d $ %4d %4d\n",
+      printf("%4d $ %4d $ %4d %4d\n",
          tStackIndex,
          SV::gTestParms.mTileParms.mNumLoop,
-         SV::gTestParms.mTileParms.mB,
          tRoiCenter.mRow,
          tRoiCenter.mCol);
    }
