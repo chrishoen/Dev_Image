@@ -70,7 +70,7 @@ void StackWriter::doWriteStack()
    Prn::print(0, "StackWriter::doWriteStack");
 
    // Loop to write all of the stack images.
-   for (int tStackIndex = 0; tStackIndex < mP->mStackSize; tStackIndex++)
+   for (int tStackIndex = 0; tStackIndex < mP->mStackHeight; tStackIndex++)
    {
       // Initialize the output image to all zeros.
       createZeroImage(mOutputImage);
@@ -102,7 +102,7 @@ void StackWriter::doWriteOutputImage()
 {
    // Get output file path.
    char tFilePath[200];
-   int tFileNum = mP->mStackSize - mWriteCount - 1;
+   int tFileNum = mP->mStackHeight - mWriteCount - 1;
    sprintf(tFilePath, ".\\work\\%s%04d.png", mP->mStackName, tFileNum);
    Prn::print(Prn::View01, "WriteOutput %s", tFilePath);
 

@@ -33,7 +33,9 @@ void StackParms::reset()
    BaseClass::setFileName_RelAlphaFiles("Image/SV_Stack_Parms.txt");
 
    mStackName[0] = 0;
-   mStackSize = 0;
+   mStackHeight = 0;
+   mObjectHeight = 0;
+   mRaftHeight = 0;
 
    mObjectEnable.reset();
    mObjectFileName.reset();
@@ -72,7 +74,7 @@ RCIndex StackParms::getObjectRoiCenter(int aObjectIndex, int aStackIndex)
 
 RCIndex StackParms::getObjectReverseRoiCenter(int aObjectIndex, int aReverseStackIndex)
 {
-   int tStackIndex = mStackSize - aReverseStackIndex - 1;
+   int tStackIndex = mStackHeight - aReverseStackIndex - 1;
    return mObjectParms[aObjectIndex].getRoiCenter(tStackIndex);
 }
 
@@ -83,7 +85,7 @@ RCIndex StackParms::getRaftRoiCenter(int aRaftIndex, int aStackIndex)
 
 RCIndex StackParms::getRaftReverseRoiCenter(int aRaftIndex, int aReverseStackIndex)
 {
-   int tStackIndex = mStackSize - aReverseStackIndex - 1;
+   int tStackIndex = mStackHeight - aReverseStackIndex - 1;
    return mRaftParms[aRaftIndex].getRoiCenter(tStackIndex);
 }
 
@@ -95,6 +97,7 @@ RCIndex StackParms::getRaftReverseRoiCenter(int aRaftIndex, int aReverseStackInd
 
 void StackParms::expand()
 {
+   mStackHeight = mObjectHeight + mRaftHeight;
    expandObjects();
    expandRafts();
 }
@@ -264,7 +267,9 @@ void StackParms::showObjects()
    }
 
    printf("StackName      %20s\n", mStackName);
-   printf("StackSize                %10d\n", mStackSize);
+   printf("StackHeight              %10d\n", mStackHeight);
+   printf("ObjectHeight             %10d\n", mObjectHeight);
+   printf("RaftHeight               %10d\n", mRaftHeight);
 
    mObjectEnable.show("ObjectEnable");
    mObjectFileName.show("ObjectFileName");
@@ -302,7 +307,9 @@ void StackParms::showRafts()
    }
 
    printf("StackName      %20s\n", mStackName);
-   printf("StackSize                %10d\n", mStackSize);
+   printf("StackHeight              %10d\n", mStackHeight);
+   printf("ObjectHeight             %10d\n", mObjectHeight);
+   printf("RaftHeight               %10d\n", mRaftHeight);
 
    mRaftEnable.show("RaftEnable");
    mRaftFileName.show("RaftFileName");
@@ -336,7 +343,8 @@ void StackParms::execute(Ris::CmdLineCmd* aCmd)
    if (!isTargetSection(aCmd)) return;
 
    if (aCmd->isCmd("StackName"))         aCmd->copyArgString(1, mStackName, cMaxStringSize);
-   if (aCmd->isCmd("StackSize"))         mStackSize = aCmd->argInt(1);
+   if (aCmd->isCmd("ObjectHeight"))      mObjectHeight = aCmd->argInt(1);
+   if (aCmd->isCmd("RaftHeight"))        mRaftHeight = aCmd->argInt(1);
 
    if (aCmd->isCmd("ObjectFileName"))    nestedPush(aCmd, &mObjectFileName);
    if (aCmd->isCmd("ObjectEnable"))      nestedPush(aCmd, &mObjectEnable);

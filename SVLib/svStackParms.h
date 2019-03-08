@@ -73,7 +73,9 @@ public:
 
    // Stack name and size.
    char mStackName[cMaxStringSize];
-   int  mStackSize;
+   int  mStackHeight;
+   int  mObjectHeight;
+   int  mRaftHeight;
 
    // Stack object enable flags.
    Ris::CmdLineTable1D<bool, cMaxObjects>  mObjectEnable;

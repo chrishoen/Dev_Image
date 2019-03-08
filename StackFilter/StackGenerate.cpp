@@ -44,7 +44,7 @@ void StackGenerate::doGenerateStack()
 
    // Generate the stack gcode file.
    PX::GCodeWriter tGCodeWriter;
-   tGCodeWriter.doWrite(SV::gStackParms.mStackName, SV::gStackParms.mStackSize);
+   tGCodeWriter.doWrite(SV::gStackParms.mStackName, SV::gStackParms.mStackHeight);
 
    // Zip the work directory.
    PX::ZipWriter tZipWriter;
