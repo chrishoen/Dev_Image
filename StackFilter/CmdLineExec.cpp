@@ -330,6 +330,8 @@ void CmdLineExec::executeParms2(Ris::CmdLineCmd* aCmd)
 
 void CmdLineExec::executeParms3(Ris::CmdLineCmd* aCmd)
 {
+   aCmd->setArgDefault(1, 0);
+
    SV::gSysParms.reset();
    SV::gSysParms.readSection("default");
 
@@ -337,6 +339,6 @@ void CmdLineExec::executeParms3(Ris::CmdLineCmd* aCmd)
    SV::gParmParms.readSection("default");
    SV::gParmParms.readMoreParms("default");
 
-   SV::gStackParms.show();
+   SV::gStackParms.show(aCmd->argInt(1));
 }
 

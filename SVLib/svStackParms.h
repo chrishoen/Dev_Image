@@ -64,6 +64,7 @@ public:
 
    static const int cMaxStringSize = 200;
    static const int cMaxObjects = 4;
+   static const int cMaxRafts = 4;
 
    //***************************************************************************
    //***************************************************************************
@@ -76,14 +77,19 @@ public:
 
    // Stack object enable flags.
    Ris::CmdLineTable1D<bool, cMaxObjects>  mObjectEnable;
+   Ris::CmdLineTable1D<bool, cMaxRafts>    mRaftEnable;
 
    // Stack object parms file names.
    Ris::CmdLineTable1D<Ris::TableString, cMaxObjects>  mObjectFileName;
+   Ris::CmdLineTable1D<Ris::TableString, cMaxRafts>    mRaftFileName;
 
    // Stack object major row column positioning.
-   RCSize mMajorSize;
+   RCSize mObjectMajorSize;
+   RCSize mRaftMajorSize;
    Ris::CmdLineTable2D<int, 4, cMaxObjects>  mObjectLayout;
+   Ris::CmdLineTable2D<int, 4, cMaxRafts>    mRaftLayout;
    RCIndex mObjectMajor[cMaxObjects];
+   RCIndex mRaftMajor[cMaxRafts];
 
    //***************************************************************************
    //***************************************************************************
@@ -92,12 +98,15 @@ public:
 
    // Stack object parameters.
    StackObjectParms  mObjectParms[cMaxObjects];
+   StackObjectParms  mRaftParms[cMaxRafts];
 
    // Stack object size.
    RCSize  mObjectSize;
+   RCSize  mRaftSize;
 
    // Stack object sectors.
    RCSector mObjectSector[cMaxObjects];
+   RCSector mRaftSector[cMaxRafts];
 
    //***************************************************************************
    //***************************************************************************
@@ -108,7 +117,6 @@ public:
    typedef Ris::BaseCmdLineParms BaseClass;
    StackParms();
    void reset();
-   void show();
 
    // Base class override: Execute a command from the command file to set a 
    // member variable. This is called by the associated command file object
@@ -118,15 +126,24 @@ public:
    // Simulate expanded member variables. This is called after the entire
    // section of the command file has been processed.
    void expand() override;
+   void expandObjects();
+   void expandRafts();
 
    //***************************************************************************
    //***************************************************************************
    //***************************************************************************
    // Methods.
 
+   // Show.
+   void show(int aCode);
+   void showObjects();
+   void showRafts();
+
    // Return a roi center as a function of the stack index.
-   RCIndex getRoiCenter(int aObjectIndex, int aStackIndex);
-   RCIndex getReverseRoiCenter(int aObjectIndex, int aReverseStackIndex);
+   RCIndex getObjectRoiCenter(int aObjectIndex, int aStackIndex);
+   RCIndex getObjectReverseRoiCenter(int aObjectIndex, int aReverseStackIndex);
+   RCIndex getRaftRoiCenter(int aRaftIndex, int aStackIndex);
+   RCIndex getRaftReverseRoiCenter(int aRaftIndex, int aReverseStackIndex);
 };
 
 //******************************************************************************
