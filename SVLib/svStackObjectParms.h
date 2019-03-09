@@ -9,6 +9,7 @@ Parameters class whose values are read from a command file.
 //******************************************************************************
 //******************************************************************************
 
+#include "risCmdLineTables.h"
 #include "risCmdLineParms.h"
 #include "svRCIndex.h"
 #include "svRCSize.h"
@@ -60,25 +61,36 @@ public:
    // Constants.
 
    static const int cMaxStringSize = 100;
+   static const int cMaxTiles = 4;
 
    //***************************************************************************
    //***************************************************************************
    //***************************************************************************
-   // Parameter members.
+   // Members.
+
+   // Object name.
+   char mName[cMaxStringSize];
 
    // If true then valid.
-   bool          mValid;
+   bool  mValid;
 
-   // Simulated image stack.
-   TileParms    mTileParmsA;
-   TileParms    mTileParmsB;
-   TileParms    mTileParmsC;
-   TileParms    mTileParmsD;
+   // Tile enable flags.
+   Ris::CmdLineTable1D<bool, cMaxTiles>  mTileEnable;
+
+   // Tile heights.
+   Ris::CmdLineTable1D<int, cMaxTiles>  mTileHeights;
+
+
+   // Tile parameters sections.
+   Ris::CmdLineTable1D<Ris::TableString, cMaxTiles>  mTileParmSections;
 
    //***************************************************************************
    //***************************************************************************
    //***************************************************************************
    // Expanded members that are not read from the parms file.
+
+   // Tile parameters.
+   TileParms  mTileParms[cMaxTiles];
 
    //***************************************************************************
    //***************************************************************************

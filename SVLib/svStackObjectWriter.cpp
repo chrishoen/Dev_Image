@@ -59,13 +59,14 @@ void StackObjectWriter::doWriteStackObject(
    cv::Mat&       aOutputImage)    // Output
 {
    Prn::print(Prn::View11, "StackObjectWriter::doWriteStackObject");
-
+#if 0
    // Initialize the tile writer.
    mTileWriter.initialize(&mP->mTileParmsA);
 
    // Write a tile to the output image at the stack index.
    mP->mTileParmsA.doAdjust(aStackIndex);
    mTileWriter.doWrite(aOutputImage);
+#endif
 }
 
 //******************************************************************************

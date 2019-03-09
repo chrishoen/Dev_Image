@@ -26,24 +26,29 @@ StackObjectParms::StackObjectParms()
 void StackObjectParms::reset()
 {
    mValid = false;
+   mName[0] = 0;
 
-   mTileParmsA.reset();
-   mTileParmsB.reset();
-   mTileParmsC.reset();
-   mTileParmsD.reset();
+   mTileEnable.reset();
+   mTileHeights.reset();
+   mTileParmSections.reset();
+
+   for (int i = 0; i < cMaxTiles; i++)
+   {
+      mTileParms[i].reset();
+   }
 }
 
 void StackObjectParms::setCenter(RCIndex aCenter)
 {
-   mTileParmsA.mCenter = aCenter;
-   mTileParmsB.mCenter = aCenter;
-   mTileParmsC.mCenter = aCenter;
-   mTileParmsD.mCenter = aCenter;
+   for (int i = 0; i < cMaxTiles; i++)
+   {
+      mTileParms[i].mCenter = aCenter;
+   }
 }
 
 RCIndex StackObjectParms::getRoiCenter(int aStackIndex)
 {
-   return mTileParmsA.getRoiCenter(aStackIndex);
+   return mTileParms[0].getRoiCenter(aStackIndex);
 }
 
 
@@ -55,10 +60,23 @@ RCIndex StackObjectParms::getRoiCenter(int aStackIndex)
 
 void StackObjectParms::expand()
 {
-   mTileParmsA.expand();
-   mTileParmsB.expand();
-   mTileParmsC.expand();
-   mTileParmsD.expand();
+   for (int i = 0; i < cMaxTiles; i++)
+   {
+      if (strlen(mTileParmSections[i]) != 0 && strcmp(mTileParmSections[i], "empty") != 0)
+      {
+         if (mTileEnable[i])
+         {
+            readSection(mTileParmSections[i], &mTileParms[i]);
+            mTileParms[i].setName(mTileParmSections[i]);
+            mTileParms[i].mValid = true;
+         }
+      }
+   }
+
+   for (int i = 0; i < cMaxTiles; i++)
+   {
+      mTileParms[i].expand();
+   }
 }
 
 //******************************************************************************
@@ -69,12 +87,14 @@ void StackObjectParms::expand()
 void StackObjectParms::show()
 {
    printf("\n");
-   printf("StackObjectParms************************************************ %s\n", mTargetSection);
+   printf("StackObjectParms****************************************** %s\n", mTargetSection);
 
-   mTileParmsA.show("TileA");
-   mTileParmsB.show("TileB");
-   mTileParmsC.show("TileC");
-   mTileParmsD.show("TileD");
+   printf("Name           %20s\n", mName);
+
+   for (int i = 0; i < cMaxTiles; i++)
+   {
+      mTileParms[i].show("Tile");
+   }
 }
 
 //******************************************************************************
@@ -88,29 +108,11 @@ void StackObjectParms::execute(Ris::CmdLineCmd* aCmd)
 {
    if (!isTargetSection(aCmd)) return;
 
-   if (aCmd->isCmd("StackTileParmsA"))
-   {
-      readSection(aCmd->argString(1), &mTileParmsA);
-      mTileParmsA.setName(aCmd->argString(1));
-   }
+   if (aCmd->isCmd("Name"))              aCmd->copyArgString(1, mName, cMaxStringSize);
 
-   if (aCmd->isCmd("StackTileParmsB"))
-   {
-      readSection(aCmd->argString(1), &mTileParmsB);
-      mTileParmsB.setName(aCmd->argString(1));
-   }
-
-   if (aCmd->isCmd("StackTileParmsC"))
-   {
-      readSection(aCmd->argString(1), &mTileParmsC);
-      mTileParmsC.setName(aCmd->argString(1));
-   }
-
-   if (aCmd->isCmd("StackTileParmsD"))
-   {
-      readSection(aCmd->argString(1), &mTileParmsD);
-      mTileParmsD.setName(aCmd->argString(1));
-   }
+   if (aCmd->isCmd("TileEnable"))        nestedPush(aCmd, &mTileEnable);
+   if (aCmd->isCmd("TileHeight"))        nestedPush(aCmd, &mTileHeights);
+   if (aCmd->isCmd("TileParmSections"))  nestedPush(aCmd, &mTileParmSections);
 }
 
 //******************************************************************************
