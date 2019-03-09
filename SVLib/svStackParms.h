@@ -63,8 +63,8 @@ public:
    // Constants.
 
    static const int cMaxStringSize = 200;
-   static const int cMaxObjects = 4;
-   static const int cMaxRafts = 4;
+   static const int cMaxObjects = 8;
+   static const int cMaxRafts = 8;
 
    //***************************************************************************
    //***************************************************************************
