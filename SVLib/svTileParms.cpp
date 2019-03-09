@@ -110,7 +110,17 @@ void TileParms::expand()
 
 void TileParms::doAdjust(int aStackIndex)
 {
+   // Guard.
+   if (mStepV == 0)
+   {
+      printf("mStepV less than zero\n");
+      return;
+   }
+
+   // ADjust.
    mNumLoop = mStepL + mStepH * (aStackIndex / mStepV);
+
+   // Guard.
    if (mNumLoop < 0)
    {
       printf("mNumLoop less than zero\n");

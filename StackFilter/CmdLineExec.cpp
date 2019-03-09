@@ -63,9 +63,36 @@ void CmdLineExec::execute(Ris::CmdLineCmd* aCmd)
    if (aCmd->isCmd("GO3"))       executeGo3(aCmd);
    if (aCmd->isCmd("GO4"))       executeGo4(aCmd);
    if (aCmd->isCmd("GO5"))       executeGo5(aCmd);
+   if (aCmd->isCmd("Test"))      executeTest(aCmd);
    if (aCmd->isCmd("Parms"))     executeParms(aCmd);
    if (aCmd->isCmd("Parms2"))    executeParms2(aCmd);
    if (aCmd->isCmd("Parms3"))    executeParms3(aCmd);
+}
+
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+
+void CmdLineExec::executeTest(Ris::CmdLineCmd* aCmd)
+{
+   aCmd->setArgDefault(1, 0);
+   aCmd->setArgDefault(2, 0);
+
+   int tObjectIndex = 0;
+   int tObjectStackIndex = 0;
+   int tStackIndex = aCmd->argInt(1);
+
+   // Read parameters files.
+   SV::gParmParms.reset();
+   SV::gParmParms.readSection("default");
+   SV::gParmParms.readMoreParms("default");
+
+   //   SV::gTestParms.mTileParms.doAdjust(tStackIndex);
+   SV::RCIndex tRoiCenter = SV::gStackParms.getStackRoiCenter(tObjectIndex,tStackIndex);
+   printf("RoiCenter %4d $ %4d %4d\n",
+      tStackIndex,
+      tRoiCenter.mRow,
+      tRoiCenter.mCol);
 }
 
 //******************************************************************************
@@ -288,20 +315,16 @@ void CmdLineExec::executeGo5(Ris::CmdLineCmd* aCmd)
 
 void CmdLineExec::executeParms(Ris::CmdLineCmd* aCmd)
 {
+   aCmd->setArgDefault(1, 1);
+
    SV::gSysParms.reset();
    SV::gSysParms.readSection("default");
-   SV::gSysParms.show();
-
-   Display::gParms.reset();
-   Display::gParms.readSection("default");
-   Display::gParms.show();
 
    SV::gParmParms.reset();
    SV::gParmParms.readSection("default");
    SV::gParmParms.readMoreParms("default");
 
-   SV::gImageParms.show();
-   SV::gSimParms.show();
+   SV::gStackParms.show(aCmd->argInt(1));
 }
 
 //******************************************************************************
@@ -330,15 +353,20 @@ void CmdLineExec::executeParms2(Ris::CmdLineCmd* aCmd)
 
 void CmdLineExec::executeParms3(Ris::CmdLineCmd* aCmd)
 {
-   aCmd->setArgDefault(1, 0);
-
    SV::gSysParms.reset();
    SV::gSysParms.readSection("default");
+   SV::gSysParms.show();
+
+   Display::gParms.reset();
+   Display::gParms.readSection("default");
+   Display::gParms.show();
 
    SV::gParmParms.reset();
    SV::gParmParms.readSection("default");
    SV::gParmParms.readMoreParms("default");
 
-   SV::gStackParms.show(aCmd->argInt(1));
+   SV::gImageParms.show();
+   SV::gSimParms.show();
 }
+
 

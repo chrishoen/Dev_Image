@@ -78,16 +78,19 @@ public:
    Ris::CmdLineTable1D<bool, cMaxTiles>  mTileEnable;
 
    // Tile heights.
-   Ris::CmdLineTable1D<int, cMaxTiles>  mTileHeights;
-
+   Ris::CmdLineTable1D<int, cMaxTiles>  mTileHeight;
 
    // Tile parameters sections.
-   Ris::CmdLineTable1D<Ris::TableString, cMaxTiles>  mTileParmSections;
+   Ris::CmdLineTable1D<Ris::TableString, cMaxTiles>  mTileParmSection;
 
    //***************************************************************************
    //***************************************************************************
    //***************************************************************************
    // Expanded members that are not read from the parms file.
+
+   // Tile stack begin and end.
+   int mTileBegin[cMaxTiles];
+   int mTileEnd[cMaxTiles];
 
    // Tile parameters.
    TileParms  mTileParms[cMaxTiles];
@@ -122,6 +125,10 @@ public:
 
    // Return a roi center as a function of the stack index.
    RCIndex getRoiCenter(int aStackIndex);
+
+   // Return a tile index and a tile stack index as a function of a
+   // stack index.
+   void getTileIndex(int aStackIndex,int& aTileIndex, int& aTileStackIndex);
 };
 
 //******************************************************************************

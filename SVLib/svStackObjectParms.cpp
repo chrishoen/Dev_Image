@@ -29,11 +29,13 @@ void StackObjectParms::reset()
    mName[0] = 0;
 
    mTileEnable.reset();
-   mTileHeights.reset();
-   mTileParmSections.reset();
+   mTileHeight.reset();
+   mTileParmSection.reset();
 
    for (int i = 0; i < cMaxTiles; i++)
    {
+      mTileBegin[0] = 0;
+      mTileEnd[0] = 0;
       mTileParms[i].reset();
    }
 }
@@ -48,26 +50,68 @@ void StackObjectParms::setCenter(RCIndex aCenter)
 
 RCIndex StackObjectParms::getRoiCenter(int aStackIndex)
 {
-   return mTileParms[0].getRoiCenter(aStackIndex);
+   int tTileIndex = 0;
+   int tTileStackIndex = 0;
+   getTileIndex(aStackIndex, tTileIndex, tTileStackIndex);
+
+   return mTileParms[tTileIndex].getRoiCenter(tTileStackIndex);
 }
 
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+// Return a tile index and a tile stack index as a function of a
+// stack index.
+
+void StackObjectParms::getTileIndex(int aStackIndex, int& aTileIndex, int& aTileStackIndex)
+{
+   aTileIndex = 0;
+   aTileStackIndex = 0;
+   for (int i = 0; i < cMaxTiles; i++)
+   {
+      if (mTileEnable[i] && mTileBegin[i] <= aStackIndex && aStackIndex <= mTileEnd[i])
+      {
+         aTileIndex = i;
+         aTileStackIndex = aStackIndex - mTileBegin[i];
+         return;
+      }
+   }
+}
 
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
-// Simulate expanded member variables. This is called after the entire
+// Set expanded member variables. This is called after the entire
 // section of the command file has been processed.
 
 void StackObjectParms::expand()
 {
+   int tBegin = 0;
+   int tEnd = 0;
+
    for (int i = 0; i < cMaxTiles; i++)
    {
-      if (strlen(mTileParmSections[i]) != 0 && strcmp(mTileParmSections[i], "empty") != 0)
+      if (mTileEnable[i])
+      {
+         mTileBegin[i] = tBegin;
+         mTileEnd[i]   = tBegin + mTileHeight[i] - 1;
+         tBegin += mTileHeight[i];
+      }
+      else
+      {
+         mTileBegin[i] = -1;
+         mTileEnd[i] = -1;
+      }
+   }
+
+   for (int i = 0; i < cMaxTiles; i++)
+   {
+      if (strlen(mTileParmSection[i]) != 0 && strcmp(mTileParmSection[i], "empty") != 0)
       {
          if (mTileEnable[i])
          {
-            readSection(mTileParmSections[i], &mTileParms[i]);
-            mTileParms[i].setName(mTileParmSections[i]);
+            readSection(mTileParmSection[i], &mTileParms[i]);
+            mTileParms[i].setName(mTileParmSection[i]);
             mTileParms[i].mValid = true;
          }
       }
@@ -87,14 +131,24 @@ void StackObjectParms::expand()
 void StackObjectParms::show()
 {
    printf("\n");
-   printf("StackObjectParms****************************************** %s\n", mTargetSection);
+   printf("StackObjectParms*************************************BEGIN\n");
 
    printf("Name           %20s\n", mName);
+
+   mTileEnable.show("TileEnable");
+   mTileHeight.show("TileHeight");
+   mTileParmSection.show("TileParmSection");
+
+   for (int i = 0; i < cMaxTiles; i++)
+   {
+   printf("TileBeginEnd             %10d %4d\n", mTileBegin[i], mTileEnd[i]);
+   }
 
    for (int i = 0; i < cMaxTiles; i++)
    {
       mTileParms[i].show("Tile");
    }
+   printf("StackObjectParms*************************************END\n");
 }
 
 //******************************************************************************
@@ -111,8 +165,8 @@ void StackObjectParms::execute(Ris::CmdLineCmd* aCmd)
    if (aCmd->isCmd("Name"))              aCmd->copyArgString(1, mName, cMaxStringSize);
 
    if (aCmd->isCmd("TileEnable"))        nestedPush(aCmd, &mTileEnable);
-   if (aCmd->isCmd("TileHeight"))        nestedPush(aCmd, &mTileHeights);
-   if (aCmd->isCmd("TileParmSections"))  nestedPush(aCmd, &mTileParmSections);
+   if (aCmd->isCmd("TileHeight"))        nestedPush(aCmd, &mTileHeight);
+   if (aCmd->isCmd("TileParmSection"))   nestedPush(aCmd, &mTileParmSection);
 }
 
 //******************************************************************************
