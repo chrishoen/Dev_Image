@@ -69,9 +69,9 @@ public:
    // Methods.
 
    // Write a stack object slice to an output image, based on a
-   // stack index, according to the parms.
+   // reverse stack index, according to the parms.
    void doWriteStackObject(
-      int            aStackIndex,     // Control
+      int            aReverseIndex,   // Control
       cv::Mat&       aOutputImage);   // Output
 };
 

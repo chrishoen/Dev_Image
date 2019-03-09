@@ -63,7 +63,8 @@ void CmdLineExec::execute(Ris::CmdLineCmd* aCmd)
    if (aCmd->isCmd("GO3"))       executeGo3(aCmd);
    if (aCmd->isCmd("GO4"))       executeGo4(aCmd);
    if (aCmd->isCmd("GO5"))       executeGo5(aCmd);
-   if (aCmd->isCmd("Test"))      executeTest(aCmd);
+   if (aCmd->isCmd("Test1"))     executeTest1(aCmd);
+   if (aCmd->isCmd("Test2"))     executeTest2(aCmd);
    if (aCmd->isCmd("Parms"))     executeParms(aCmd);
    if (aCmd->isCmd("Parms2"))    executeParms2(aCmd);
    if (aCmd->isCmd("Parms3"))    executeParms3(aCmd);
@@ -73,7 +74,33 @@ void CmdLineExec::execute(Ris::CmdLineCmd* aCmd)
 //******************************************************************************
 //******************************************************************************
 
-void CmdLineExec::executeTest(Ris::CmdLineCmd* aCmd)
+void CmdLineExec::executeTest1(Ris::CmdLineCmd* aCmd)
+{
+   aCmd->setArgDefault(1, 0);
+   aCmd->setArgDefault(2, 0);
+
+   int tObjectIndex = 0;
+   int tObjectReverseIndex = 0;
+   int tReverseIndex = aCmd->argInt(1);
+
+   // Read parameters files.
+   SV::gParmParms.reset();
+   SV::gParmParms.readSection("default");
+   SV::gParmParms.readMoreParms("default");
+
+   //   SV::gTestParms.mTileParms.doAdjust(tReverseIndex);
+   SV::RCIndex tRoiCenter = SV::gStackParms.getReverseRoiCenter(tObjectIndex,tReverseIndex);
+   printf("ReverseRoiCenter %4d $ %4d %4d\n",
+      tReverseIndex,
+      tRoiCenter.mRow,
+      tRoiCenter.mCol);
+}
+
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+
+void CmdLineExec::executeTest2(Ris::CmdLineCmd* aCmd)
 {
    aCmd->setArgDefault(1, 0);
    aCmd->setArgDefault(2, 0);
@@ -88,8 +115,8 @@ void CmdLineExec::executeTest(Ris::CmdLineCmd* aCmd)
    SV::gParmParms.readMoreParms("default");
 
    //   SV::gTestParms.mTileParms.doAdjust(tStackIndex);
-   SV::RCIndex tRoiCenter = SV::gStackParms.getStackRoiCenter(tObjectIndex,tStackIndex);
-   printf("RoiCenter %4d $ %4d %4d\n",
+   SV::RCIndex tRoiCenter = SV::gStackParms.getStackRoiCenter(tObjectIndex, tStackIndex);
+   printf("StackRoiCenter   %4d $ %4d %4d\n",
       tStackIndex,
       tRoiCenter.mRow,
       tRoiCenter.mCol);

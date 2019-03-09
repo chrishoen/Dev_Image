@@ -142,10 +142,10 @@ public:
    void showRafts();
 
    // Return a roi center as a function of the stack index.
-   // Stack index is from top to bottom.
-   // Reverse index is from bottom to top.
-   RCIndex getStackRoiCenter(int aObjectIndex, int aStackIndex);
+   // Reverse index is from top to bottom.
+   // Stack index is from bottom to top.
    RCIndex getReverseRoiCenter(int aObjectIndex, int aReverseIndex);
+   RCIndex getStackRoiCenter(int aObjectIndex, int aStackIndex);
 };
 
 //******************************************************************************

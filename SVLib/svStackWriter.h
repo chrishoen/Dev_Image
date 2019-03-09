@@ -38,8 +38,8 @@ public:
    //***************************************************************************
    // Members.
 
-   // Number of images that were generated.
-   int mStackIndex;
+   // Reverse stack index, goes from top to bottom.
+   int mReverseIndex;
 
    //***************************************************************************
    //***************************************************************************
@@ -77,8 +77,8 @@ public:
    //***************************************************************************
    // Methods.
 
-   // Write the output image to a file.
-   void doWriteOutputImage(int aReverseIndex);
+   // Write the output image to a file based on the stack index.
+   void doWriteOutputImage(int aStackIndex);
 };
 
 //******************************************************************************

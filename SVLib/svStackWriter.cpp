@@ -55,7 +55,7 @@ void StackWriter::initialize(StackParms* aParms)
    mP = aParms;
 
    // Initialize variables.
-   mStackIndex = 0;
+   mReverseIndex = 0;
    mOutputImage.release();
 }
 
@@ -73,8 +73,8 @@ void StackWriter::doWriteStack()
    //***************************************************************************
    // Write the objects.
 
-   // Loop to write all of the object stack images.
-   for (int tObjectStackIndex = 0; tObjectStackIndex < mP->mObjectHeight; tObjectStackIndex++)
+   // Loop to write all of the object stack images from top to bottom.
+   for (int tObjectReverseIndex = 0; tObjectReverseIndex < mP->mObjectHeight; tObjectReverseIndex++)
    {
       // Initialize the output image to all zeros.
       createZeroImage(mOutputImage);
@@ -88,16 +88,17 @@ void StackWriter::doWriteStack()
             // Initialize the object writer with the object parms.
             mObjectWriter.initialize(&mP->mObjectParms[tObjectIndex]);
             // Write the object slice to the output image.
-            mObjectWriter.doWriteStackObject(tObjectStackIndex, mOutputImage);
+            mObjectWriter.doWriteStackObject(tObjectReverseIndex, mOutputImage);
          }
       }
 
-      // Write the stack output image.
-      int tReverseIndex = mP->mStackHeight - mStackIndex - 1;
-      doWriteOutputImage(tReverseIndex);
+      // Write the stack output image. The reverse index goes from top to 
+      // bottom and the stack index goes from bottom to top.
+      int tStackIndex = mP->mStackHeight - mReverseIndex - 1;
+      doWriteOutputImage(tStackIndex);
 
       // Update.
-      mStackIndex++;
+      mReverseIndex++;
    }
 
    //***************************************************************************
@@ -105,8 +106,8 @@ void StackWriter::doWriteStack()
    //***************************************************************************
    // Write the rafts.
 
-   // Loop to write all of the object stack images.
-   for (int tRaftStackIndex = 0; tRaftStackIndex < mP->mRaftHeight; tRaftStackIndex++)
+   // Loop to write all of the raft stack images from top to bottom.
+   for (int tRaftReverseIndex = 0; tRaftReverseIndex < mP->mRaftHeight; tRaftReverseIndex++)
    {
       // Initialize the output image to all zeros.
       createZeroImage(mOutputImage);
@@ -120,29 +121,30 @@ void StackWriter::doWriteStack()
             // Initialize the object writer with the object parms.
             mObjectWriter.initialize(&mP->mRaftParms[tRaftIndex]);
             // Write the object slice to the output image.
-            mObjectWriter.doWriteStackObject(tRaftStackIndex, mOutputImage);
+            mObjectWriter.doWriteStackObject(tRaftReverseIndex, mOutputImage);
          }
       }
 
-      // Write the stack output image.
-      int tReverseIndex = mP->mStackHeight - mStackIndex - 1;
-      doWriteOutputImage(tReverseIndex);
+      // Write the stack output image. The reverse index goes from top to 
+      // bottom and the stack index goes from bottom to top.
+      int tStackIndex = mP->mStackHeight - mReverseIndex - 1;
+      doWriteOutputImage(tStackIndex);
 
       // Update.
-      mStackIndex++;
+      mReverseIndex++;
    }
 }
 
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
-// Write the output image to a file.
+// Write the output image to a file based on the stack index.
 
-void StackWriter::doWriteOutputImage(int aReverseIndex)
+void StackWriter::doWriteOutputImage(int aStackIndex)
 {
    // Get output file path.
    char tFilePath[200];
-   sprintf(tFilePath, ".\\work\\%s%04d.png", mP->mStackName, aReverseIndex);
+   sprintf(tFilePath, ".\\work\\%s%04d.png", mP->mStackName, aStackIndex);
    Prn::print(Prn::View01, "WriteOutput %s", tFilePath);
 
    // Write output file.

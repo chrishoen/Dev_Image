@@ -123,12 +123,12 @@ public:
    // Set the tile centers.
    void setCenter(RCIndex aCenter);
 
-   // Return a roi center as a function of the stack index.
-   RCIndex getRoiCenter(int aStackIndex);
+   // Return a roi center as a function of a reverse stack index.
+   RCIndex getReverseRoiCenter(int aReverseIndex);
 
    // Return a tile index and a tile stack index as a function of a
-   // stack index.
-   void getTileIndex(int aStackIndex,int& aTileIndex, int& aTileStackIndex);
+   // reverse stack index.
+   void getTileIndex(int aReverseIndex,int& aTileIndex, int& aTileReverseIndex);
 };
 
 //******************************************************************************

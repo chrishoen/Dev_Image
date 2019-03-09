@@ -67,25 +67,25 @@ void StackParms::reset()
 //******************************************************************************
 // Get roi centers.
 
-RCIndex StackParms::getStackRoiCenter(int aObjectIndex, int aStackIndex)
+RCIndex StackParms::getReverseRoiCenter(int aObjectIndex, int aReverseIndex)
 {
-   int tObjectStackIndex = aStackIndex;
-   int tRaftStackIndex = aStackIndex - mObjectHeight;
+   int tObjectReverseIndex = aReverseIndex;
+   int tRaftReverseIndex = aReverseIndex - mObjectHeight;
 
-   if (aStackIndex < mObjectHeight)
+   if (aReverseIndex < mObjectHeight)
    {
-      return mObjectParms[aObjectIndex].getRoiCenter(tObjectStackIndex);
+      return mObjectParms[aObjectIndex].getReverseRoiCenter(tObjectReverseIndex);
    }
    else
    {
-      return mRaftParms[aObjectIndex].getRoiCenter(tRaftStackIndex);
+      return mRaftParms[aObjectIndex].getReverseRoiCenter(tRaftReverseIndex);
    }
 }
 
-RCIndex StackParms::getReverseRoiCenter(int aObjectIndex, int aReverseIndex)
+RCIndex StackParms::getStackRoiCenter(int aObjectIndex, int aStackIndex)
 {
-   int tStackIndex = mStackHeight - aReverseIndex - 1;
-   return getStackRoiCenter(aObjectIndex,tStackIndex);
+   int tReverseIndex = mStackHeight - aStackIndex - 1;
+   return getReverseRoiCenter(aObjectIndex,tReverseIndex);
 }
 
 //******************************************************************************

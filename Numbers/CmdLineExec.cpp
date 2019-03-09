@@ -47,12 +47,12 @@ void CmdLineExec::executeGo1(Ris::CmdLineCmd* aCmd)
    SV::gTestParms.readSection("default");
 
    aCmd->setArgDefault(1, 1);
-   for (int tStackIndex = 0; tStackIndex < 10; tStackIndex++)
+   for (int tReverseIndex = 0; tReverseIndex < 10; tReverseIndex++)
    {
-      SV::gTestParms.mTileParms.doAdjust(tStackIndex);
-      SV::RCIndex tRoiCenter = SV::gTestParms.mTileParms.getRoiCenter(tStackIndex);
+      SV::gTestParms.mTileParms.doAdjust(tReverseIndex);
+      SV::RCIndex tRoiCenter = SV::gTestParms.mTileParms.getReverseRoiCenter(tReverseIndex);
       printf("%4d $ %4d $ %4d %4d\n",
-         tStackIndex,
+         tReverseIndex,
          SV::gTestParms.mTileParms.mNumLoop,
          tRoiCenter.mRow,
          tRoiCenter.mCol);

@@ -52,22 +52,22 @@ void StackObjectWriter::initialize(StackObjectParms* aParms)
 //******************************************************************************
 //******************************************************************************
 // Write a stack object slice to an output image, based on a
-// stack index, according to the parms.
+// reverse stack index, according to the parms.
 
 void StackObjectWriter::doWriteStackObject(
-   int            aStackIndex,     // Control
+   int            aReverseIndex,   // Control
    cv::Mat&       aOutputImage)    // Output
 {
    Prn::print(Prn::View11, "StackObjectWriter::doWriteStackObject");
 
-   // Get the tile index and the tile stack index from 
-   // the stack index.
+   // Get the tile index and the tile reverse stack index from 
+   // the reverse stack index.
    int tTileIndex = 0;
-   int tTileStackIndex = 0;
-   mP->getTileIndex(aStackIndex, tTileIndex, tTileStackIndex);
+   int tTileReverseIndex = 0;
+   mP->getTileIndex(aReverseIndex, tTileIndex, tTileReverseIndex);
 
    // Adjust the selected tile parameters.
-   mP->mTileParms[tTileIndex].doAdjust(tTileStackIndex);
+   mP->mTileParms[tTileIndex].doAdjust(tTileReverseIndex);
 
    // Initialize the tile writer with the selected tile parameters.
    mTileWriter.initialize(&mP->mTileParms[tTileIndex]);

@@ -106,9 +106,9 @@ void TileParms::expand()
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
-// Adjust the loop number according to the stack index.
+// Adjust the loop number according to the reverse stack index.
 
-void TileParms::doAdjust(int aStackIndex)
+void TileParms::doAdjust(int aReverseIndex)
 {
    // Guard.
    if (mStepV == 0)
@@ -117,8 +117,8 @@ void TileParms::doAdjust(int aStackIndex)
       return;
    }
 
-   // ADjust.
-   mNumLoop = mStepL + mStepH * (aStackIndex / mStepV);
+   // Adjust.
+   mNumLoop = mStepL + mStepH * (aReverseIndex / mStepV);
 
    // Guard.
    if (mNumLoop < 0)
@@ -131,11 +131,12 @@ void TileParms::doAdjust(int aStackIndex)
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
-// Return a roi center as a function of the stack index.
+// Return a roi center as a function of the reverse stack index.
 
-RCIndex TileParms::getRoiCenter(int aStackIndex)
+RCIndex TileParms::getReverseRoiCenter(int aReverseIndex)
 {
-   doAdjust(aStackIndex);
+   doAdjust(aReverseIndex);
+
    int tRowCount = 0;
    int tColCount = 0;
    RCIndex tRoiCenter;

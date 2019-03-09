@@ -256,8 +256,8 @@ void StackShow::doShow()
    mResults.show(0, mReader.mString);
 
    // Set roi center.
-   SV::gImageParms.mRoiCenter = SV::gStackParms.getReverseRoiCenter(mObjectIndex,mStackIndex);
-   Prn::print(0, "ShowRoiCenter %4d %4d", SV::gImageParms.mRoiCenter.mRow, SV::gImageParms.mRoiCenter.mCol);
+   SV::gImageParms.mRoiCenter = SV::gStackParms.getStackRoiCenter(mObjectIndex,mStackIndex);
+   Prn::print(0, "StackRoiCenter %4d %4d", SV::gImageParms.mRoiCenter.mRow, SV::gImageParms.mRoiCenter.mCol);
 
    // Show.
    char tLabel[100];

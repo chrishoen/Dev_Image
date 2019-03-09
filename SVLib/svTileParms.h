@@ -142,11 +142,11 @@ public:
    //***************************************************************************
    // Methods.
 
-   // Adjust the loop number according to the stack index.
-   void doAdjust(int aStackIndex);
+   // Adjust the loop number according to the reverse stack index.
+   void doAdjust(int aReverseIndex);
 
-   // Return a roi center as a function of the stack index.
-   RCIndex getRoiCenter(int aStackIndex);
+   // Return a roi center as a function of the reverse stack index.
+   RCIndex getReverseRoiCenter(int aReverseIndex);
 };
 
 //******************************************************************************

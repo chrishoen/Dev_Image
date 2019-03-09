@@ -48,31 +48,31 @@ void StackObjectParms::setCenter(RCIndex aCenter)
    }
 }
 
-RCIndex StackObjectParms::getRoiCenter(int aStackIndex)
+RCIndex StackObjectParms::getReverseRoiCenter(int aReverseIndex)
 {
    int tTileIndex = 0;
-   int tTileStackIndex = 0;
-   getTileIndex(aStackIndex, tTileIndex, tTileStackIndex);
+   int tTileReverseIndex = 0;
+   getTileIndex(aReverseIndex, tTileIndex, tTileReverseIndex);
 
-   return mTileParms[tTileIndex].getRoiCenter(tTileStackIndex);
+   return mTileParms[tTileIndex].getReverseRoiCenter(tTileReverseIndex);
 }
 
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
-// Return a tile index and a tile stack index as a function of a
-// stack index.
+// Return a tile index and a tile reverse stack index as a function of a
+// reverse stack index.
 
-void StackObjectParms::getTileIndex(int aStackIndex, int& aTileIndex, int& aTileStackIndex)
+void StackObjectParms::getTileIndex(int aReverseIndex, int& aTileIndex, int& aTileReverseIndex)
 {
    aTileIndex = 0;
-   aTileStackIndex = 0;
+   aTileReverseIndex = 0;
    for (int i = 0; i < cMaxTiles; i++)
    {
-      if (mTileEnable[i] && mTileBegin[i] <= aStackIndex && aStackIndex <= mTileEnd[i])
+      if (mTileEnable[i] && mTileBegin[i] <= aReverseIndex && aReverseIndex <= mTileEnd[i])
       {
          aTileIndex = i;
-         aTileStackIndex = aStackIndex - mTileBegin[i];
+         aTileReverseIndex = aReverseIndex - mTileBegin[i];
          return;
       }
    }
