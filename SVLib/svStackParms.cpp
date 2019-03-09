@@ -160,7 +160,7 @@ void StackParms::expandObjects()
    // Set stack objects parameters.
    for (int i = 0; i < cMaxObjects; i++)
    {
-      mObjectParms[i].setCenter(mObjectSector[i].mCenter);
+      mObjectParms[i].setSector(mObjectSector[i]);
    }
 }
 
@@ -223,9 +223,8 @@ void StackParms::expandRafts()
    // Set stack objects parameters.
    for (int i = 0; i < cMaxRafts; i++)
    {
-      mRaftParms[i].setCenter(mRaftSector[i].mCenter);
+      mRaftParms[i].setSector(mRaftSector[i]);
    }
-
 }
 
 //******************************************************************************

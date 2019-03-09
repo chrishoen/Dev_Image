@@ -55,6 +55,16 @@ void RCSector::set(RCIndex aCorner, RCIndex aCenter)
 
 }
 
+// Execute to read variables from a command line command. 
+void RCSector::execute(Ris::CmdLineCmd* aCmd)
+{
+   RCIndex tCorner, tCenter;
+   tCorner.mRow = aCmd->argInt(1);
+   tCorner.mCol = aCmd->argInt(2);
+   tCenter.mRow = aCmd->argInt(1);
+   tCenter.mCol = aCmd->argInt(2);
+   set(tCorner, tCenter);
+}
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************

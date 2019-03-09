@@ -41,7 +41,7 @@ void TileParms::reset()
    mStepH = 0;
    mStepV = 0;
 
-   mCenter.reset();
+   mSector.reset();
 }
 
 //******************************************************************************
@@ -62,7 +62,9 @@ void TileParms::show(const char* aLabel)
    printf("StepL                    %10d\n", mStepL);
    printf("StepH                    %10d\n", mStepH);
    printf("StepV                    %10d\n", mStepV);
-   printf("Center                   %10d %10d\n", mCenter.mRow, mCenter.mCol);
+   printf("Sector                   %10d %4d %4d %4d\n", 
+      mSector.mCorner.mRow, mSector.mCorner.mCol,
+      mSector.mCenter.mRow, mSector.mCenter.mCol);
    printf("TileParms*******************\n");
 }
 
@@ -82,7 +84,7 @@ void TileParms::execute(Ris::CmdLineCmd* aCmd)
    if (aCmd->isCmd("StepL"))          mStepL = aCmd->argInt(1);
    if (aCmd->isCmd("StepH"))          mStepH = aCmd->argInt(1);
    if (aCmd->isCmd("StepV"))          mStepV = aCmd->argInt(1);
-   if (aCmd->isCmd("Center"))         mCenter.execute(aCmd);
+   if (aCmd->isCmd("Sector"))         mSector.execute(aCmd);
 
    if (aCmd->isCmd("Shape"))
    {
@@ -90,7 +92,6 @@ void TileParms::execute(Ris::CmdLineCmd* aCmd)
       if (aCmd->isArgString(1, asStringShape(cShapeSquare)))       mShape = cShapeSquare;
       if (aCmd->isArgString(1, asStringShape(cShapeDiamond)))      mShape = cShapeDiamond;
    }
-
 }
 
 //******************************************************************************
@@ -145,13 +146,13 @@ RCIndex TileParms::getReverseRoiCenter(int aReverseIndex)
    {
       tRowCount = mNumLoop * mNumRow;
       tColCount = mNumLoop * mNumCol;
-      tRoiCenter = mCenter + RCIndex(-tRowCount, -tColCount);
+      tRoiCenter = mSector.mCenter + RCIndex(-tRowCount, -tColCount);
    }
    else
    {
       tRowCount = mNumLoop * mNumRow - mNumRow / 2;
       tColCount = mNumLoop * mNumCol - mNumCol / 2;
-      tRoiCenter = mCenter + RCIndex(-tRowCount,0);
+      tRoiCenter = mSector.mCenter + RCIndex(-tRowCount,0);
    }
 
    return tRoiCenter;

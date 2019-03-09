@@ -71,7 +71,7 @@ void TileWriter::doWriteSquare()
    // Loop to set output image pixels high.
    int tDitherRows = mP->mNumRow * mP->mNumLoop;
    int tDitherCols = mP->mNumCol * mP->mNumLoop;
-   SV::RCDitherLoop2 tDitherLoop(mP->mCenter, tDitherRows, tDitherCols);
+   SV::RCDitherLoop2 tDitherLoop(mP->mSector.mCenter, tDitherRows, tDitherCols);
    while (tDitherLoop.loop())
    {
       mOutput.at(tDitherLoop()) = 255;
@@ -101,10 +101,10 @@ void TileWriter::doWriteDiamond()
          bool tFlag = tColIndex <= tNumLoop - tRowIndex - 1;
          if (tFlag)
          {
-            mOutput.at(mP->mCenter + RCIndex(-tRow, -tCol)) = 255;
-            mOutput.at(mP->mCenter + RCIndex(-tRow,  tCol)) = 255;
-            mOutput.at(mP->mCenter + RCIndex( tRow, -tCol)) = 255;
-            mOutput.at(mP->mCenter + RCIndex( tRow,  tCol)) = 255;
+            mOutput.at(mP->mSector.mCenter + RCIndex(-tRow, -tCol)) = 255;
+            mOutput.at(mP->mSector.mCenter + RCIndex(-tRow,  tCol)) = 255;
+            mOutput.at(mP->mSector.mCenter + RCIndex( tRow, -tCol)) = 255;
+            mOutput.at(mP->mSector.mCenter + RCIndex( tRow,  tCol)) = 255;
          }
       }
    }

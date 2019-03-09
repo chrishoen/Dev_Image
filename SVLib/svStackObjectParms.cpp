@@ -40,11 +40,11 @@ void StackObjectParms::reset()
    }
 }
 
-void StackObjectParms::setCenter(RCIndex aCenter)
+void StackObjectParms::setSector(RCSector& aSector)
 {
    for (int i = 0; i < cMaxTiles; i++)
    {
-      mTileParms[i].mCenter = aCenter;
+      mTileParms[i].mSector = aSector;
    }
 }
 

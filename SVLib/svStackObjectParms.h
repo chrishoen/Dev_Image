@@ -12,7 +12,7 @@ Parameters class whose values are read from a command file.
 #include "risCmdLineTables.h"
 #include "risCmdLineParms.h"
 #include "svRCIndex.h"
-#include "svRCSize.h"
+#include "svRCSector.h"
 #include "svTileParms.h"
 
 //******************************************************************************
@@ -120,8 +120,8 @@ public:
    //***************************************************************************
    // Methods.
 
-   // Set the tile centers.
-   void setCenter(RCIndex aCenter);
+   // Set the tile sectors.
+   void setSector(RCSector& aSector);
 
    // Return a roi center as a function of a reverse stack index.
    RCIndex getReverseRoiCenter(int aReverseIndex);

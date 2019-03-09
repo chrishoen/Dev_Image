@@ -11,7 +11,7 @@ Parameters class whose values are read from a command file.
 
 #include "risCmdLineExec.h"
 #include "svRCIndex.h"
-#include "svRCSize.h"
+#include "svRCSector.h"
 
 //******************************************************************************
 //******************************************************************************
@@ -102,7 +102,7 @@ public:
    int mStepL;
 
    // Row column center.
-   SV::RCIndex mCenter;
+   SV::RCSector mSector;
 
    //***************************************************************************
    //***************************************************************************
