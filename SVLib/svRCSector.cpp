@@ -61,8 +61,8 @@ void RCSector::execute(Ris::CmdLineCmd* aCmd)
    RCIndex tCorner, tCenter;
    tCorner.mRow = aCmd->argInt(1);
    tCorner.mCol = aCmd->argInt(2);
-   tCenter.mRow = aCmd->argInt(1);
-   tCenter.mCol = aCmd->argInt(2);
+   tCenter.mRow = aCmd->argInt(3);
+   tCenter.mCol = aCmd->argInt(4);
    set(tCorner, tCenter);
 }
 //******************************************************************************

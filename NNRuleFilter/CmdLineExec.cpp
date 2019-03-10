@@ -118,15 +118,20 @@ void CmdLineExec::executeGo2(Ris::CmdLineCmd* aCmd)
 
 void CmdLineExec::executeTile2d(Ris::CmdLineCmd* aCmd)
 {
-   aCmd->setArgDefault(1, 1);
+   aCmd->setArgDefault(1, 0);
 
    // Read parameters files.
    SV::gParmParms.reset();
    SV::gParmParms.readSection("default");
    SV::gParmParms.readMoreParms("default");
 
+   int tReverseIndex = aCmd->argInt(1);
    // Run.
+   SV::gTestParms.mTileParms.doAdjust(tReverseIndex);
    mImageSet.doSimInputTile2d();
+
+   SV::gImageParms.mRoiCenter = SV::gTestParms.mTileParms.getReverseRoiCenter(tReverseIndex);
+   mImageSet.doShow2d(1);
 }
 
 //******************************************************************************
