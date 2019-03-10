@@ -60,6 +60,7 @@ void TestParms::show()
 
    mTileParms.show("Tile");
 
+   return;
    printf("\n");
    printf("Corner                   %10d %4d\n", mCorner.mRow, mCorner.mCol);
    printf("Center                   %10d %4d\n", mCenter.mRow, mCenter.mCol);
