@@ -15,6 +15,7 @@ Parameters class whose values are read from a command file.
 #include "svRCSize.h"
 #include "svRCRect.h"
 #include "svRCSector.h"
+#include "svRational.h"
 #include "svStackObjectParms.h"
 
 //******************************************************************************
@@ -76,6 +77,9 @@ public:
    int  mStackHeight;
    int  mObjectHeight;
    int  mRaftHeight;
+
+   // Warp rational.
+   SV::Rational mWarp;
 
    // Stack object enable flags.
    Ris::CmdLineTable1D<bool, cMaxObjects>  mObjectEnable;

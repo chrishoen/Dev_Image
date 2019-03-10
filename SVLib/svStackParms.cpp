@@ -36,6 +36,7 @@ void StackParms::reset()
    mStackHeight = 0;
    mObjectHeight = 0;
    mRaftHeight = 0;
+   mWarp.reset();
 
    mObjectEnable.reset();
    mObjectFileName.reset();
@@ -139,22 +140,37 @@ void StackParms::expandObjects()
    mObjectSize.mRows = gSysParms.mImageSize.mRows / mObjectMajorSize.mRows;
    mObjectSize.mCols = gSysParms.mImageSize.mCols / mObjectMajorSize.mCols;
 
+   // Warp stack object size.
+   mObjectSize.mRows = mWarp * mObjectSize.mRows;
+   mObjectSize.mCols = mWarp * mObjectSize.mCols;
+
    // Set stack object positioning parameters.
    for (int i = 0; i < cMaxObjects; i++)
    {
-      RCIndex tCorner;
-      RCIndex tCenter;
+      if (mObjectEnable[i])
+      {
+         RCIndex tCorner;
+         RCIndex tCenter;
 
-      // Stack object row column upper left corner offsets.
-      tCorner.mRow = mObjectMajor[i].mRow * mObjectSize.mRows;
-      tCorner.mCol = mObjectMajor[i].mCol * mObjectSize.mCols;
+         // Stack object row column upper left corner offsets.
+         tCorner.mRow = mObjectMajor[i].mRow * mObjectSize.mRows;
+         tCorner.mCol = mObjectMajor[i].mCol * mObjectSize.mCols;
 
-      // Stack object row column centers.
-      tCenter.mRow = tCorner.mRow + mObjectSize.mRows / 2;
-      tCenter.mCol = tCorner.mCol + mObjectSize.mCols / 2;
+         // Stack object row column centers.
+         tCenter.mRow = tCorner.mRow + mObjectSize.mRows / 2;
+         tCenter.mCol = tCorner.mCol + mObjectSize.mCols / 2;
 
-      // Stack object row column sectors.
-      mObjectSector[i].set(tCorner, tCenter);
+         // Warp shift corners and centers.
+         int tRowWarpShift = (gSysParms.mImageSize.mRows - mWarp * gSysParms.mImageSize.mRows) / 2;
+         int tColWarpShift = (gSysParms.mImageSize.mCols - mWarp * gSysParms.mImageSize.mCols) / 2;
+         tCorner.mRow += tRowWarpShift;
+         tCorner.mCol += tColWarpShift;
+         tCenter.mRow += tRowWarpShift;
+         tCenter.mCol += tColWarpShift;
+
+         // Stack object row column sectors.
+         mObjectSector[i].set(tCorner, tCenter);
+      }
    }
 
    // Set stack objects parameters.
@@ -172,7 +188,7 @@ void StackParms::expandObjects()
 
 void StackParms::expandRafts()
 {
-   // Read Stack objects from object parms files.
+   // Read Stack rafts from raft parms files.
    for (int i = 0; i < cMaxRafts; i++)
    {
       if (strlen(mRaftFileName[i]) != 0 && strcmp(mRaftFileName[i], "empty") != 0)
@@ -186,7 +202,7 @@ void StackParms::expandRafts()
       }
    }
 
-   // Set object major positioning.
+   // Set raft major positioning.
    SV::RCIndexLoop tLoop(mRaftLayout.mRows, mRaftLayout.mCols);
    while (tLoop.loop())
    {
@@ -197,30 +213,45 @@ void StackParms::expandRafts()
       }
    }
 
-   // Stack object size.
+   // Stack raft size.
    mRaftMajorSize.set(mRaftLayout.mRows, mRaftLayout.mCols);
    mRaftSize.mRows = gSysParms.mImageSize.mRows / mRaftMajorSize.mRows;
    mRaftSize.mCols = gSysParms.mImageSize.mCols / mRaftMajorSize.mCols;
 
-   // Set stack object positioning parameters.
+   // Warp stack raft size.
+   mRaftSize.mRows = mWarp * mRaftSize.mRows;
+   mRaftSize.mCols = mWarp * mRaftSize.mCols;
+
+   // Set stack raft positioning parameters.
    for (int i = 0; i < cMaxRafts; i++)
    {
-      RCIndex tCorner;
-      RCIndex tCenter;
+      if (mRaftEnable[i])
+      {
+         RCIndex tCorner;
+         RCIndex tCenter;
 
-      // Stack object row column upper left corner offsets.
-      tCorner.mRow = mRaftMajor[i].mRow * mRaftSize.mRows;
-      tCorner.mCol = mRaftMajor[i].mCol * mRaftSize.mCols;
+         // Stack raft row column upper left corner offsets.
+         tCorner.mRow = mRaftMajor[i].mRow * mRaftSize.mRows;
+         tCorner.mCol = mRaftMajor[i].mCol * mRaftSize.mCols;
 
-      // Stack object row column centers.
-      tCenter.mRow = tCorner.mRow + mRaftSize.mRows / 2;
-      tCenter.mCol = tCorner.mCol + mRaftSize.mCols / 2;
+         // Stack raft row column centers.
+         tCenter.mRow = tCorner.mRow + mRaftSize.mRows / 2;
+         tCenter.mCol = tCorner.mCol + mRaftSize.mCols / 2;
 
-      // Stack object row column sectors.
-      mRaftSector[i].set(tCorner, tCenter);
+         // Warp shift corners and centers.
+         int tRowWarpShift = (gSysParms.mImageSize.mRows - mWarp * gSysParms.mImageSize.mRows) / 2;
+         int tColWarpShift = (gSysParms.mImageSize.mCols - mWarp * gSysParms.mImageSize.mCols) / 2;
+         tCorner.mRow += tRowWarpShift;
+         tCorner.mCol += tColWarpShift;
+         tCenter.mRow += tRowWarpShift;
+         tCenter.mCol += tColWarpShift;
+
+         // Stack raft row column sectors.
+         mRaftSector[i].set(tCorner, tCenter);
+      }
    }
 
-   // Set stack objects parameters.
+   // Set stack rafts parameters.
    for (int i = 0; i < cMaxRafts; i++)
    {
       mRaftParms[i].setSector(mRaftSector[i]);
@@ -268,6 +299,7 @@ void StackParms::showObjects()
    printf("StackHeight              %10d\n", mStackHeight);
    printf("ObjectHeight             %10d\n", mObjectHeight);
    printf("RaftHeight               %10d\n", mRaftHeight);
+   printf("Warp                     %10d %4d\n", mWarp.mNumer, mWarp.mDenom);
 
    mObjectEnable.show("ObjectEnable");
    mObjectFileName.show("ObjectFileName");
@@ -308,6 +340,7 @@ void StackParms::showRafts()
    printf("StackHeight              %10d\n", mStackHeight);
    printf("ObjectHeight             %10d\n", mObjectHeight);
    printf("RaftHeight               %10d\n", mRaftHeight);
+   printf("Warp                     %10d %4d\n", mWarp.mNumer, mWarp.mDenom);
 
    mRaftEnable.show("RaftEnable");
    mRaftFileName.show("RaftFileName");
@@ -343,6 +376,7 @@ void StackParms::execute(Ris::CmdLineCmd* aCmd)
    if (aCmd->isCmd("StackName"))         aCmd->copyArgString(1, mStackName, cMaxStringSize);
    if (aCmd->isCmd("ObjectHeight"))      mObjectHeight = aCmd->argInt(1);
    if (aCmd->isCmd("RaftHeight"))        mRaftHeight = aCmd->argInt(1);
+   if (aCmd->isCmd("Warp"))              mWarp.readArgs(aCmd);
 
    if (aCmd->isCmd("ObjectFileName"))    nestedPush(aCmd, &mObjectFileName);
    if (aCmd->isCmd("ObjectEnable"))      nestedPush(aCmd, &mObjectEnable);

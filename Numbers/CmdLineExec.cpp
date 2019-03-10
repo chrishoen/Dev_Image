@@ -4,6 +4,7 @@
 #include "svSysParms.h"
 #include "svTestParms.h"
 #include "svRCSector.h"
+#include "svRational.h"
 
 #include "CmdLineExec.h"
 
@@ -96,6 +97,17 @@ void CmdLineExec::executeGo3(Ris::CmdLineCmd* aCmd)
 
 void CmdLineExec::executeGo4(Ris::CmdLineCmd* aCmd)
 {
+   aCmd->setArgDefault(1, 1);
+   aCmd->setArgDefault(2, 1);
+
+   int tN = aCmd->argInt(1);
+   SV::Rational tR(aCmd->argInt(2), aCmd->argInt(3));
+
+   printf("%3d   %3d   %3d\n", tN, tR.mNumer, tR.mDenom);
+
+   tN = tR * tN;
+
+   printf("%3d\n", tN);
 }
 
 //******************************************************************************
