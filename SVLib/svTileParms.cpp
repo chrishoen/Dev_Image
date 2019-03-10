@@ -166,7 +166,7 @@ RCIndex TileParms::getReverseRoiCenter(int aReverseIndex)
    {
       tRowCount = mNumLoop * mNumRow;
       tColCount = mNumLoop * mNumCol;
-      tRoiCenter = mSector.mCenter + RCIndex(tRowCount, 0);
+      tRoiCenter = mSector.mCorner + RCIndex(tRowCount,0);
    }
 
    return tRoiCenter;

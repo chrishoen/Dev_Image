@@ -29,6 +29,7 @@ NN3dRuleParms::NN3dRuleParms()
 void NN3dRuleParms::reset()
 {
    mClassifyCode = 0;
+   mFullFlag = false;
    mHC1 = 0;
    mHC2 = 0;
 }
@@ -41,6 +42,7 @@ void NN3dRuleParms::reset()
 void NN3dRuleParms::show()
 {
    printf("NN3dRuleParms*******************\n");
+   printf("FullFlag                 %10s\n", my_string_from_bool(mFullFlag));
    printf("ClassifyCode             %10d\n", mClassifyCode);
    printf("HC1                      %10d\n", mHC1);
    printf("HC2                      %10d\n", mHC2);
@@ -56,6 +58,7 @@ void NN3dRuleParms::show()
 
 void NN3dRuleParms::execute(Ris::CmdLineCmd* aCmd)
 {
+   if (aCmd->isCmd("FullFlag"))       mFullFlag = aCmd->argBool(1);
    if (aCmd->isCmd("ClassifyCode"))   mClassifyCode = aCmd->argInt(1);
    if (aCmd->isCmd("HC1"))            mHC1 = aCmd->argInt(1);
    if (aCmd->isCmd("HC2"))            mHC2 = aCmd->argInt(1);

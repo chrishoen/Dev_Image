@@ -59,6 +59,10 @@ public:
    //***************************************************************************
    // Members that are read from the parms file.
 
+   // If true then filter the full image.
+   // If false then filter the lower half of the image.
+   bool mFullFlag;
+
    // Classify  parameter.
    int  mClassifyCode;
 

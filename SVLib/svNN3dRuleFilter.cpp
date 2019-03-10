@@ -9,6 +9,7 @@ Description:
 #include "stdafx.h"
 
 #include "svRCIndex.h"
+#include "svRCRect.h"
 #include "svRCLoop.h"
 #include "svNN3dRuleFilter.h"
 
@@ -94,7 +95,29 @@ void NN3dRuleFilter::doFilterImage(
 
    // Loop through the image. Ignore the top and bottom rows and ignore
    // the left and right edge columns.
-   SV::RCIndexLoop tLoop(RCIndex(1, 1),aInputS2.rows - 2, aInputS2.cols - 2);
+
+   // Rectangle for image loop.
+   RCRect tRect;
+
+   // Set rectangle for full image.
+   if (mP->mFullFlag)
+   {
+      tRect.mARow = 1;
+      tRect.mBRow = aInputS2.rows - 2;
+      tRect.mACol = 1;
+      tRect.mBCol = aInputS2.cols - 2;
+   }
+   // Set rectangle for lower half of image.
+   else
+   {
+      tRect.mARow = aInputS2.rows / 2;
+      tRect.mBRow = aInputS2.rows - 2;
+      tRect.mACol = 1;
+      tRect.mBCol = aInputS2.cols - 2;
+   }
+
+   // Loop through the image region defined by the rectangle.
+   SV::RCRectLoop tLoop(tRect);
    while (tLoop.loop())
    {
       // Filter each pixel that is high.
