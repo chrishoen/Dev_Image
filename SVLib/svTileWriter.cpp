@@ -153,7 +153,7 @@ void TileWriter::doWriteQuarterDiamond()
          bool tFlag = tColIndex <= tNumLoop - tRowIndex - 1;
          if (tFlag)
          {
-            mOutput.at(mP->mSector.mCenter + RCIndex(tRow, tCol)) = 255;
+            mOutput.at(mP->mSector.mCorner + RCIndex(tRow, tCol)) = 255;
          }
       }
    }
