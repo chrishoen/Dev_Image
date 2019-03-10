@@ -19,6 +19,13 @@ public:
   void reset();
   void execute(Ris::CmdLineCmd* aCmd);
 
+  void executeGo81(Ris::CmdLineCmd* aCmd);
+  void executeGo82(Ris::CmdLineCmd* aCmd);
+  void executeGo83(Ris::CmdLineCmd* aCmd);
+  void executeGo84(Ris::CmdLineCmd* aCmd);
+
+
+
   void executeGo1(Ris::CmdLineCmd* aCmd);
   void executeGo2(Ris::CmdLineCmd* aCmd);
   void executeGo3(Ris::CmdLineCmd* aCmd);

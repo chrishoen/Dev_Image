@@ -55,7 +55,7 @@ void TileParms::show(const char* aLabel)
 
    printf("TileParms******************* %s\n",aLabel);
    printf("Name           %20s\n", mName);
-   printf("Shape                    %10s\n", asStringShape(mShape));
+   printf("Shape          %20s\n", asStringShape(mShape));
    printf("NumLoop                  %10d\n", mNumLoop);
    printf("NumRow                   %10d\n", mNumRow);
    printf("NumCol                   %10d\n", mNumCol);
@@ -88,9 +88,11 @@ void TileParms::execute(Ris::CmdLineCmd* aCmd)
 
    if (aCmd->isCmd("Shape"))
    {
-      if (aCmd->isArgString(1, asStringShape(cNone)))              mShape = cNone;
-      if (aCmd->isArgString(1, asStringShape(cShapeSquare)))       mShape = cShapeSquare;
-      if (aCmd->isArgString(1, asStringShape(cShapeDiamond)))      mShape = cShapeDiamond;
+      if (aCmd->isArgString(1, asStringShape(cNone)))                 mShape = cNone;
+      if (aCmd->isArgString(1, asStringShape(cShapeSquare)))          mShape = cShapeSquare;
+      if (aCmd->isArgString(1, asStringShape(cShapeDiamond)))         mShape = cShapeDiamond;
+      if (aCmd->isArgString(1, asStringShape(cShapeQuarterSquare)))   mShape = cShapeQuarterSquare;
+      if (aCmd->isArgString(1, asStringShape(cShapeQuarterDiamond)))  mShape = cShapeQuarterDiamond;
    }
 }
 
@@ -148,11 +150,23 @@ RCIndex TileParms::getReverseRoiCenter(int aReverseIndex)
       tColCount = mNumLoop * mNumCol;
       tRoiCenter = mSector.mCenter + RCIndex(-tRowCount, -tColCount);
    }
-   else
+   if (isDiamond())
    {
       tRowCount = mNumLoop * mNumRow - mNumRow / 2;
       tColCount = mNumLoop * mNumCol - mNumCol / 2;
       tRoiCenter = mSector.mCenter + RCIndex(-tRowCount,0);
+   }
+   if (isQuarterSquare())
+   {
+      tRowCount = mNumLoop * mNumRow;
+      tColCount = mNumLoop * mNumCol;
+      tRoiCenter = mSector.mCorner + RCIndex(tRowCount, tColCount);
+   }
+   if (isQuarterDiamond())
+   {
+      tRowCount = mNumLoop * mNumRow;
+      tColCount = mNumLoop * mNumCol;
+      tRoiCenter = mSector.mCenter + RCIndex(tRowCount, 0);
    }
 
    return tRoiCenter;
@@ -175,6 +189,8 @@ char* TileParms::asStringShape(int aX)
    case cNone: return "None";
    case cShapeSquare: return "Square";
    case cShapeDiamond: return "Diamond";
+   case cShapeQuarterSquare: return "QuarterSquare";
+   case cShapeQuarterDiamond: return "QuarterDiamond";
    default: return "UNKNOWN";
    }
 }

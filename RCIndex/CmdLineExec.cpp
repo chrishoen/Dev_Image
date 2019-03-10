@@ -61,6 +61,10 @@ void CmdLineExec::execute(Ris::CmdLineCmd* aCmd)
    if (aCmd->isCmd("GO52"))  executeGo52(aCmd);
    if (aCmd->isCmd("GO53"))  executeGo53(aCmd);
    if (aCmd->isCmd("GO54"))  executeGo54(aCmd);
+   if (aCmd->isCmd("GO81"))  executeGo81(aCmd);
+   if (aCmd->isCmd("GO82"))  executeGo82(aCmd);
+   if (aCmd->isCmd("GO83"))  executeGo83(aCmd);
+   if (aCmd->isCmd("GO84"))  executeGo84(aCmd);
 
    if(aCmd->isCmd("Parms"  ))  executeParms(aCmd);
 }
@@ -69,9 +73,12 @@ void CmdLineExec::execute(Ris::CmdLineCmd* aCmd)
 //******************************************************************************
 //******************************************************************************
 
-void CmdLineExec::executeGo51(Ris::CmdLineCmd* aCmd)
+void CmdLineExec::executeGo81(Ris::CmdLineCmd* aCmd)
 {
-   SV::RCRectLoop tLoop(SV::RCRect(100, 103, 200, 203));
+   aCmd->setArgDefault(1, 3);
+   aCmd->setArgDefault(2, 3);
+
+   SV::RCIndexLoop tLoop(aCmd->argInt(1), aCmd->argInt(2));
    while (tLoop.loop())
    {
       Prn::print(0, "Loop %3d %3d", tLoop.mRow, tLoop.mCol);
@@ -82,9 +89,28 @@ void CmdLineExec::executeGo51(Ris::CmdLineCmd* aCmd)
 //******************************************************************************
 //******************************************************************************
 
-void CmdLineExec::executeGo52(Ris::CmdLineCmd* aCmd)
+void CmdLineExec::executeGo82(Ris::CmdLineCmd* aCmd)
 {
-   SV::RCRectLoop tLoop(SV::RCRect(100, 103, 200, 203));
+   aCmd->setArgDefault(1, 3);
+   aCmd->setArgDefault(2, 3);
+
+   SV::RCIndexLoop tLoop(SV::RCIndex(100, 200), aCmd->argInt(1), aCmd->argInt(2));
+   while (tLoop.loop())
+   {
+      Prn::print(0, "Loop %3d %3d", tLoop.mRow, tLoop.mCol);
+   }
+}
+
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+
+void CmdLineExec::executeGo83(Ris::CmdLineCmd* aCmd)
+{
+   aCmd->setArgDefault(1, 3);
+   aCmd->setArgDefault(2, 3);
+
+   SV::RCIndexLoop tLoop(SV::RCIndex(100, 200), aCmd->argInt(1), aCmd->argInt(2));
    for (tLoop.first(); tLoop.test(); tLoop.next())
    {
       Prn::print(0, "Loop %3d %3d", tLoop.mRow, tLoop.mCol);
@@ -95,23 +121,7 @@ void CmdLineExec::executeGo52(Ris::CmdLineCmd* aCmd)
 //******************************************************************************
 //******************************************************************************
 
-void CmdLineExec::executeGo53(Ris::CmdLineCmd* aCmd)
-{
-   SV::RCRectLoop tLoop(SV::RCRect(100, 103, 200, 203));
-   for (tLoop.firstRow(); tLoop.testRow(); tLoop.nextRow())
-   {
-      for (tLoop.firstCol(); tLoop.testCol(); tLoop.nextCol())
-      {
-         Prn::print(0, "Loop %3d %3d", tLoop.mRow, tLoop.mCol);
-      }
-   }
-}
-
-//******************************************************************************
-//******************************************************************************
-//******************************************************************************
-
-void CmdLineExec::executeGo54(Ris::CmdLineCmd* aCmd)
+void CmdLineExec::executeGo84(Ris::CmdLineCmd* aCmd)
 {
 }
 
@@ -226,7 +236,10 @@ void CmdLineExec::executeGo6(Ris::CmdLineCmd* aCmd)
 
 void CmdLineExec::executeGo7(Ris::CmdLineCmd* aCmd)
 {
-   SV::RCIndexLoop tLoop(4, 4);
+   aCmd->setArgDefault(1, 4);
+   aCmd->setArgDefault(2, 4);
+
+   SV::RCIndexLoop tLoop(SV::RCIndex(100, 200),aCmd->argInt(1), aCmd->argInt(2));
    while (tLoop.loop())
    {
       Prn::print(0, "Loop %3d %3d", tLoop.mRow, tLoop.mCol);
@@ -541,5 +554,55 @@ void CmdLineExec::executeGo44(Ris::CmdLineCmd* aCmd)
    {
       Prn::print(0, "Loop %3d %3d", tLoop.mRow, tLoop.mCol);
    }
+}
+
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+
+void CmdLineExec::executeGo51(Ris::CmdLineCmd* aCmd)
+{
+   SV::RCRectLoop tLoop(SV::RCRect(100, 103, 200, 203));
+   while (tLoop.loop())
+   {
+      Prn::print(0, "Loop %3d %3d", tLoop.mRow, tLoop.mCol);
+   }
+}
+
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+
+void CmdLineExec::executeGo52(Ris::CmdLineCmd* aCmd)
+{
+   SV::RCRectLoop tLoop(SV::RCRect(100, 103, 200, 203));
+   for (tLoop.first(); tLoop.test(); tLoop.next())
+   {
+      Prn::print(0, "Loop %3d %3d", tLoop.mRow, tLoop.mCol);
+   }
+}
+
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+
+void CmdLineExec::executeGo53(Ris::CmdLineCmd* aCmd)
+{
+   SV::RCRectLoop tLoop(SV::RCRect(100, 103, 200, 203));
+   for (tLoop.firstRow(); tLoop.testRow(); tLoop.nextRow())
+   {
+      for (tLoop.firstCol(); tLoop.testCol(); tLoop.nextCol())
+      {
+         Prn::print(0, "Loop %3d %3d", tLoop.mRow, tLoop.mCol);
+      }
+   }
+}
+
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+
+void CmdLineExec::executeGo54(Ris::CmdLineCmd* aCmd)
+{
 }
 

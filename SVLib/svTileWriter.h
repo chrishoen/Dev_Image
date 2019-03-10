@@ -75,6 +75,12 @@ public:
 
    // Write a diamond tile, according to the parms.
    void doWriteDiamond();
+
+   // Write a quarter square tile, according to the parms.
+   void doWriteQuarterSquare();
+
+   // Write a quarter diamond tile, according to the parms.
+   void doWriteQuarterDiamond();
 };
 
 

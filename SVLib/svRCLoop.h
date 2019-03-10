@@ -94,10 +94,10 @@ public:
       mColForward = true;
       mRowA = 0;
       mRowB = aOffset.mRow;
-      mRow = 0;
+      mRow = aOffset.mRow;
       mColA = 0;
       mColB = aOffset.mCol;
-      mCol = 0;
+      mCol = aOffset.mCol;
       mRows = aRows;
       mCols = aCols;
    }
@@ -126,10 +126,10 @@ public:
       mColForward = true;
       mRowA = 0;
       mRowB = aOffset.mRow;
-      mRow = 0;
+      mRow = aOffset.mRow;
       mColA = 0;
-      mColB = aOffset.mRow;
-      mCol = 0;
+      mColB = aOffset.mCol;
+      mCol = aOffset.mCol;
       mRows = aSize.mRows;
       mCols = aSize.mCols;
    }

@@ -69,8 +69,11 @@ public:
    static const int cNone = 0;
 
    // SimImage types.
-   static const int cShapeSquare  = 1;
-   static const int cShapeDiamond = 2;
+   static const int cShapeSquare         = 1;
+   static const int cShapeDiamond        = 2;
+   static const int cShapeQuarterSquare  = 3;
+   static const int cShapeQuarterDiamond = 4;
+
 
    //***************************************************************************
    //***************************************************************************
@@ -134,6 +137,8 @@ public:
 
    bool isSquare() { return mShape == cShapeSquare; }
    bool isDiamond() { return mShape == cShapeDiamond; }
+   bool isQuarterSquare() { return mShape == cShapeQuarterSquare; }
+   bool isQuarterDiamond() { return mShape == cShapeQuarterDiamond; }
 
    void setName(const char* aName);
 

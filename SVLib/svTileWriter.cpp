@@ -58,6 +58,8 @@ void TileWriter::doWrite(
    // Write the tile.
    if (mP->isSquare())  doWriteSquare();
    if (mP->isDiamond()) doWriteDiamond();
+   if (mP->isQuarterSquare())  doWriteQuarterSquare();
+   if (mP->isQuarterDiamond()) doWriteQuarterDiamond();
 
 }
 
@@ -105,6 +107,53 @@ void TileWriter::doWriteDiamond()
             mOutput.at(mP->mSector.mCenter + RCIndex(-tRow,  tCol)) = 255;
             mOutput.at(mP->mSector.mCenter + RCIndex( tRow, -tCol)) = 255;
             mOutput.at(mP->mSector.mCenter + RCIndex( tRow,  tCol)) = 255;
+         }
+      }
+   }
+}
+
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+// Write a quarter square tile according to the parms.
+
+void TileWriter::doWriteQuarterSquare()
+{
+   // Loop to set output image pixels high.
+   int tRows = mP->mNumRow * (mP->mNumLoop + 1);
+   int tCols = mP->mNumCol * (mP->mNumLoop + 1);
+
+   SV::RCIndexLoop tIndexLoop(mP->mSector.mCorner, tRows, tCols);
+   while (tIndexLoop.loop())
+   {
+      mOutput.at(tIndexLoop()) = 255;
+   }
+}
+
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+// Write a quarter diamond tile according to the parms.
+
+void TileWriter::doWriteQuarterDiamond()
+{
+   int tNumLoop = mP->mNumLoop + 1;
+   int tNumRow = mP->mNumRow;
+   int tNumCol = mP->mNumCol;
+
+   int tRowCount = tNumLoop * tNumRow;
+   int tColCount = tNumLoop * tNumCol;
+
+   for (int tRow = 0; tRow < tRowCount; tRow++)
+   {
+      int tRowIndex = tRow / tNumRow;
+      for (int tCol = 0; tCol < tColCount; tCol++)
+      {
+         int tColIndex = tCol / tNumCol;
+         bool tFlag = tColIndex <= tNumLoop - tRowIndex - 1;
+         if (tFlag)
+         {
+            mOutput.at(mP->mSector.mCenter + RCIndex(tRow, tCol)) = 255;
          }
       }
    }
