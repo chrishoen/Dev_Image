@@ -37,25 +37,62 @@ void FutureVar::show()
 //******************************************************************************
 //******************************************************************************
 // Plan the variable.
+
 void FutureVar::doPlan(bool aCertain, int aPlanValue)
 {
+   // Set members.
+   mCertain = aCertain;
+   mPlanValue = aPlanValue;
+
+   // Show
+   if (mCertain)
+   {
+      Prn::print(0, "Certain  future %4d", mPlanValue);
+   }
+   else
+   {
+      Prn::print(0, "Possible future");
+   }
 }
 
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
 // Launch the variable.
+
 void FutureVar::doLaunch()
 {
+   Ris::portableSleep(2000);
+   doUpdate();
+   Prn::print(0, "now              %4d", mValue);
 }
 
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
 // Update the variable.
+
 void FutureVar::doUpdate()
 {
+   if (mCertain)
+   {
+      // Set certain value.
+      mValue = mPlanValue;
+   }
+   else
+   {
+      // Seed generator.
+      std::random_device tRandomDevice;
+      mRandomGenerator.seed(tRandomDevice());
+
+      // Set random distribution
+      mRandomDistribution = std::uniform_int_distribution<>(0, 7);
+
+      // Set random value.
+      mValue = mRandomDistribution(mRandomGenerator);
+   }
 }
+
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************

@@ -44,7 +44,11 @@ void CmdLineExec::execute(Ris::CmdLineCmd* aCmd)
 
 void CmdLineExec::executeGo1(Ris::CmdLineCmd* aCmd)
 {
-   Prn::print(0, "IsNumber %s", my_string_from_bool(aCmd->isArgNumber(1)));
+   aCmd->setArgDefault(1, true);
+   aCmd->setArgDefault(2, 3);
+   
+   mFutureVar.doPlan(aCmd->argBool(1), aCmd->argInt(2));
+   mFutureVar.doLaunch();
 }
 
 //******************************************************************************
@@ -53,6 +57,17 @@ void CmdLineExec::executeGo1(Ris::CmdLineCmd* aCmd)
 
 void CmdLineExec::executeGo2(Ris::CmdLineCmd* aCmd)
 {
+   aCmd->setArgDefault(1, false);
+   aCmd->setArgDefault(2, 3);
+
+   bool tCertain = aCmd->argBool(1);
+   int tPlanValue = aCmd->argInt(2);
+
+   while (true)
+   {
+      mFutureVar.doPlan(tCertain, tPlanValue);
+      mFutureVar.doLaunch();
+   }
 }
 
 //******************************************************************************
