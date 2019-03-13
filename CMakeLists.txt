@@ -8,9 +8,6 @@ project ("Dev_Image")
 my_init_variables()
 my_init_import_variables()
 
-add_subdirectory ("Experiment")
-return()
-
 add_subdirectory ("CommonLib")
 add_subdirectory ("RCIndex")
 add_subdirectory ("StackFilter")
