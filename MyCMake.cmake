@@ -6,12 +6,9 @@ function(my_init_variables)
 
    if(MSVC)
       set (MyRisLibConfigPath "C:\\MyTools\\MyLib\\lib\\cmake\\RisLib" PARENT_SCOPE)
-      set (MyDspLibConfigPath "C:\\MyTools\\MyLib\\lib\\cmake\\DspLib" PARENT_SCOPE)
       set (MyEigenIncludePath "C:\\MyTools\\Eigen" PARENT_SCOPE)
-      set (MyOpenCVConfigPath "C:\\MyTools\\MyLib\\lib\\cmake\\OpenCV" PARENT_SCOPE)
    else()
       set (MyRisLibConfigPath "/usr/local/lib/cmake/RisLib" PARENT_SCOPE)
-      set (MyDspLibConfigPath "/usr/local/lib/cmake/DspLib" PARENT_SCOPE)
       set (MyEigenIncludePath "/usr/include/eigen3" PARENT_SCOPE)
    endif()
 

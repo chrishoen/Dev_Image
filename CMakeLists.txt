@@ -9,6 +9,9 @@ my_init_variables()
 my_init_import_variables()
 
 add_subdirectory ("CommonLib")
+return()
+
+add_subdirectory ("CommonLib")
 add_subdirectory ("RCIndex")
 add_subdirectory ("StackFilter")
 add_subdirectory ("NNRuleFilter")
