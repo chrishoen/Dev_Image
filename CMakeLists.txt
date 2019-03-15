@@ -9,6 +9,7 @@ my_init_variables()
 my_init_import_variables()
 
 add_subdirectory ("CommonLib")
+add_subdirectory ("DisplayLib")
 return()
 
 add_subdirectory ("CommonLib")
