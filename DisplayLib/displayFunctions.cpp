@@ -72,7 +72,7 @@ void showImage(
    }
    else
    {
-      cv::cvtColor(aInputImage, tColorImage, CV_GRAY2RGB);
+      cv::cvtColor(aInputImage, tColorImage, cv::COLOR_GRAY2RGB);
    }
 
    // Convert to display size.
@@ -86,7 +86,7 @@ void showImage(
    }
    else
    {
-      cv::resize(tColorImage, tDisplayImage, cv::Size(tDisplayRows,tDisplayCols), 0, 0, CV_INTER_LINEAR);
+      cv::resize(tColorImage, tDisplayImage, cv::Size(tDisplayRows,tDisplayCols), 0, 0, cv::INTER_LINEAR);
    }
 
    printf("Display::showImage2 %4d %4d $ %1d %1d $\n",

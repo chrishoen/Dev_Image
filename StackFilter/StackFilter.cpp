@@ -132,7 +132,7 @@ void StackFilter::doFirstInLoop()
    // S1 = empty
    // S2 = zeros
    // S3 = input
-   mInputImageS3 = cv::imread(mReader.mString, CV_LOAD_IMAGE_GRAYSCALE);
+   mInputImageS3 = cv::imread(mReader.mString, cv::IMREAD_GRAYSCALE);
    mRows = mInputImageS3.rows;
    mCols = mInputImageS3.cols;
    mInputImageS2 = cv::Mat(mRows, mCols, CV_8UC1, cv::Scalar(255));
@@ -161,7 +161,7 @@ void StackFilter::doNotFirstInLoop()
    // S3 = input
    mInputImageS1 = mInputImageS2;
    mInputImageS2 = mInputImageS3;
-   mInputImageS3 = cv::imread(mReader.mString, CV_LOAD_IMAGE_GRAYSCALE);
+   mInputImageS3 = cv::imread(mReader.mString, cv::IMREAD_GRAYSCALE);
 
    // Show.
    Prn::print(Prn::View03, "%3d %-25s %-25s %-25s $ %-25s",

@@ -6,7 +6,6 @@
 //******************************************************************************
 #include "stdafx.h"
 
-
 #include "risProgramTime.h"
 #include "risAlphaDir.h"
 

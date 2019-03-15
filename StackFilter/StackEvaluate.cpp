@@ -58,7 +58,7 @@ bool StackEvaluate::doTestScriptFile()
       if (mReader.mCmdCode == PX::cScriptCmd_Slice)
       {
          // Read image.
-         cv::Mat tImage = cv::imread(mReader.mString, CV_LOAD_IMAGE_GRAYSCALE);
+         cv::Mat tImage = cv::imread(mReader.mString, cv::IMREAD_GRAYSCALE);
 
          // Evaluate image.
          mResults.reset();

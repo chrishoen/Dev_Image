@@ -221,7 +221,7 @@ void StackShow::doShow()
    // Read images.
 
    // Read image S2.
-   mInputImageS2 = cv::imread(mSelectPathS2.c_str(), CV_LOAD_IMAGE_GRAYSCALE);
+   mInputImageS2 = cv::imread(mSelectPathS2.c_str(), cv::IMREAD_GRAYSCALE);
    mRows = mInputImageS2.rows;
    mCols = mInputImageS2.cols;
 
@@ -232,7 +232,7 @@ void StackShow::doShow()
    }
    else
    {
-      mInputImageS1 = cv::imread(mSelectPathS1.c_str(), CV_LOAD_IMAGE_GRAYSCALE);
+      mInputImageS1 = cv::imread(mSelectPathS1.c_str(), cv::IMREAD_GRAYSCALE);
    }
 
    // Read image S3.
@@ -242,7 +242,7 @@ void StackShow::doShow()
    }
    else
    {
-      mInputImageS3 = cv::imread(mSelectPathS3.c_str(), CV_LOAD_IMAGE_GRAYSCALE);
+      mInputImageS3 = cv::imread(mSelectPathS3.c_str(), cv::IMREAD_GRAYSCALE);
    }
 
    //***************************************************************************

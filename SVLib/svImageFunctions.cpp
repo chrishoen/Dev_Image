@@ -44,7 +44,7 @@ void convertImageToTarget(
    cv::Mat&      aInput,    // Input
    cv::Mat&      aOutput)   // Output
 {
-   cv::cvtColor(aInput, aOutput, CV_GRAY2RGB);
+   cv::cvtColor(aInput, aOutput, cv::COLOR_GRAY2RGB);
 }
 
 //******************************************************************************
@@ -76,7 +76,7 @@ void readImageFromFile(
 
    // Write the image to a file.
    char tBuffer[100];
-   aImage =  cv::imread(Ris::getAlphaFilePath_Image(tBuffer, aFileName), CV_LOAD_IMAGE_GRAYSCALE);
+   aImage =  cv::imread(Ris::getAlphaFilePath_Image(tBuffer, aFileName), cv::IMREAD_GRAYSCALE);
 }
 
 //******************************************************************************
