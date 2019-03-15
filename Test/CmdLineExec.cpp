@@ -1,5 +1,6 @@
 #include "stdafx.h"
 
+#include "risProgramTime.h"
 #include "CmdLineExec.h"
 
 //******************************************************************************
@@ -53,6 +54,8 @@ void CmdLineExec::executeGo1(Ris::CmdLineCmd* aCmd)
 
 void CmdLineExec::executeGo2(Ris::CmdLineCmd* aCmd)
 {
+   double tTime = Ris::getCurrentProgramTime();
+   Prn::print(0, "time %10.4f", tTime);
 }
 
 //******************************************************************************
