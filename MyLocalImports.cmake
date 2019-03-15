@@ -2,9 +2,18 @@
 #*******************************************************************************
 #*******************************************************************************
 
-function(my_exe_import_CommonLib _target)
+function(my_lib_import_CommonLib _target)
 
    target_link_libraries(${_target} CommonLib)
+
+endfunction()
+
+#*******************************************************************************
+#*******************************************************************************
+#*******************************************************************************
+
+function(my_inc_import_CommonLib _target)
+
    target_include_directories(${_target} PRIVATE $<TARGET_PROPERTY:CommonLib,INTERFACE_INCLUDE_DIRECTORIES>)
 
 endfunction()
@@ -13,9 +22,18 @@ endfunction()
 #*******************************************************************************
 #*******************************************************************************
 
-function(my_exe_import_SVLib _target)
+function(my_lib_import_SVLib _target)
 
    target_link_libraries(${_target} SVLib)
+
+endfunction()
+
+#*******************************************************************************
+#*******************************************************************************
+#*******************************************************************************
+
+function(my_inc_import_SVLib _target)
+
    target_include_directories(${_target} PRIVATE $<TARGET_PROPERTY:SVLib,INTERFACE_INCLUDE_DIRECTORIES>)
 
 endfunction()
@@ -24,9 +42,18 @@ endfunction()
 #*******************************************************************************
 #*******************************************************************************
 
-function(my_exe_import_DisplayLib _target)
+function(my_lib_import_DisplayLib _target)
 
    target_link_libraries(${_target} DisplayLib)
+
+endfunction()
+
+#*******************************************************************************
+#*******************************************************************************
+#*******************************************************************************
+
+function(my_inc_import_DisplayLib _target)
+
    target_include_directories(${_target} PRIVATE $<TARGET_PROPERTY:DisplayLib,INTERFACE_INCLUDE_DIRECTORIES>)
 
 endfunction()

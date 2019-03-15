@@ -10,11 +10,6 @@ my_add_pch (SVLib)
 
 target_include_directories(SVLib INTERFACE ${PROJECT_SOURCE_DIR})
 
-my_lib_import_OpenCV(SVLib)
-my_lib_import_RisLib(SVLib)
-my_lib_import_DspLib(SVLib)
-return()
-
-find_package(DspLib CONFIG REQUIRED PATHS ${MyDspLibConfigPath} NO_DEFAULT_PATH)
-target_include_directories(SVLib PUBLIC DspLib)
-target_link_libraries(SVLib DspLib)
+my_inc_import_OpenCV(SVLib)
+my_inc_import_RisLib(SVLib)
+my_inc_import_DspLib(SVLib)

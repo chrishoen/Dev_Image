@@ -10,6 +10,7 @@ function(my_init_variables)
    else()
       set (MyRisLibConfigPath "/usr/local/lib/cmake/RisLib" PARENT_SCOPE)
       set (MyEigenIncludePath "/usr/include/eigen3" PARENT_SCOPE)
+      set (MyInstallPath      "/opt/cprint/bin" PARENT_SCOPE)
    endif()
 
 endfunction()

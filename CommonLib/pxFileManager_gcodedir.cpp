@@ -7,7 +7,6 @@ Description:
 //******************************************************************************
 
 #include "stdafx.h"
-#include <windows.h>
 
 #include "risSystemCalls.h"
 #include "CPrintDir.h"
@@ -20,23 +19,23 @@ namespace PX
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
-// Get the zip name list from the zip directory.
+// Get the gcode name list from the gcode directory.
 
-void FileManager::getZipNameList()
+void FileManager::getGCodeNameList()
 {
-   CPrint::getZipNameList(mZipDirPath, mZipNameList);
+   CPrint::getGCodeNameList(mGCodeDirPath, mGCodeNameList);
 }
 
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
-// Get the zip name list from the zip directory.
+// Get the gcode name list from the gcode directory.
 
-void FileManager::showZipNameList()
+void FileManager::showGCodeNameList()
 {
-   for (int i = 0; i < mZipNameList.size(); i++)
+   for (int i = 0; i < mGCodeNameList.size(); i++)
    {
-      Prn::print(0, "%3d %s", i, mZipNameList[i].c_str());
+      Prn::print(0, "%3d %s", i, mGCodeNameList[i].c_str());
    }
    Prn::print(0, "done");
    Prn::print(0, "");
@@ -45,42 +44,43 @@ void FileManager::showZipNameList()
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
-// Select a zip name from the zip name list. Return true if successful.
+// Select a gcode name from the gcode name list. Return true if successful.
 
-bool FileManager::setZipName(int aZipNum)
+bool FileManager::setGCodeName(int aGCodeNum)
 {
    // Do this first.
-   mZipName.clear();
-   mZipFilePath.clear();
+   mGCodeName.clear();
+   mGCodeFilePath.clear();
 
    // Guard.
-   if (mZipNameList.empty())
+   if (mGCodeNameList.empty())
    {
-      Prn::print(0, "ERROR Zip name list does not exist");
+      mError = "ERROR GCode name list does not exist";
+      Prn::print(0, mError.c_str());
       return false;
    }
 
    // Guard.
-   if (aZipNum <0 || aZipNum >= mZipNameList.size())
+   if (aGCodeNum <0 || aGCodeNum >= mGCodeNameList.size())
    {
-      mError = "ERROR Zip number out of bounds";
+      mError = "ERROR GCode number out of bounds";
       Prn::print(0, mError.c_str());
-      mZipName = "NULL";
-      mZipFilePath = "NULL FILE";
+      mGCodeName = "NULL";
+      mGCodeFilePath = "NULL FILE";
       return false;
    }
 
-   // Set zip name and file path.
-   mZipName = mZipNameList[aZipNum];
-   mZipFilePath = mZipDirPath + mZipName;
+   // Set gcode name and file path.
+   mGCodeName = mGCodeNameList[aGCodeNum];
+   mGCodeFilePath = mGCodeDirPath + mGCodeName;
 
-   // Test if the zip file exists.
-   if (!exists(mZipFilePath))
+   // Test if the gcode file exists.
+   if (!exists(mGCodeFilePath))
    {
-      mError = "ERROR Zip File does not exist " + mZipFilePath;
+      mError = "ERROR GCode File does not exist " + mGCodeFilePath;
       Prn::print(0, mError.c_str());
-      mZipName.clear();
-      mZipFilePath.clear();
+      mGCodeName.clear();
+      mGCodeFilePath.clear();
       return false;
    }
 
@@ -91,21 +91,21 @@ bool FileManager::setZipName(int aZipNum)
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
-// Set the zip name. Return true if successful.
+// Set the gcode name. Return true if successful.
 
-bool FileManager::setZipName(const char* aZipName)
+bool FileManager::setGCodeName(const char* aGCodeName)
 {
-   // Set zip name and file path.
-   mZipName = aZipName;
-   mZipFilePath = mZipDirPath + mZipName;
+   // Set gcode name and file path.
+   mGCodeName = aGCodeName;
+   mGCodeFilePath = mGCodeDirPath + mGCodeName;
 
-   // Test if the zip file exists.
-   if (!exists(mZipFilePath))
+   // Test if the gcode file exists.
+   if (!exists(mGCodeFilePath))
    {
-      mError = "ERROR Zip File does not exist " + mZipFilePath;
+      mError = "ERROR GCode File does not exist " + mGCodeFilePath;
       Prn::print(0, mError.c_str());
-      mZipName.clear();
-      mZipFilePath.clear();
+      mGCodeName.clear();
+      mGCodeFilePath.clear();
       return false;
    }
 
@@ -116,47 +116,47 @@ bool FileManager::setZipName(const char* aZipName)
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
-// Unzip the zip file from the zip directory into the work directory.
+// Ungcode the gcode file from the gcode directory into the work directory.
 // Return true if successful.
 
-bool FileManager::doLoadZip(int aZipNum)
+bool FileManager::doLoadGCode(int aGCodeNum)
 {
    mError.clear();
-   // Try to set the zip name.
-   if (!setZipName(aZipNum)) return false;
+   // Try to set the gcode name.
+   if (!setGCodeName(aGCodeNum)) return false;
 
-   // Load the zip.
-   return doLoadZip();
+   // Load the gcode.
+   return doLoadGCode();
 }
 
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
-// Unzip the zip file from the zip directory into the work directory.
+// Ungcode the gcode file from the gcode directory into the work directory.
 // Return true if successful.
 
-bool FileManager::doLoadZip(const char* aZipName)
+bool FileManager::doLoadGCode(const char* aGCodeName)
 {
    mError.clear();
-   // Try to set the zip name.
-   if (!setZipName(aZipName)) return false;
+   // Try to set the gcode name.
+   if (!setGCodeName(aGCodeName)) return false;
 
-   // Load the zip.
-   return doLoadZip();
+   // Load the gcode.
+   return doLoadGCode();
 }
 
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
-// Unzip the zip file from the zip directory into the work directory.
+// Ungcode the gcode file from the gcode directory into the work directory.
 // Return true if successful.
 
-bool FileManager::doLoadZip()
+bool FileManager::doLoadGCode()
 {
    // Guard.
-   if (!exists(mZipFilePath))
+   if (!exists(mGCodeFilePath))
    {
-      mError = "ERROR Zip File does not exist " + mZipFilePath;
+      mError = "ERROR GCode File does not exist " + mGCodeFilePath;
       Prn::print(0, mError.c_str());
       return false;
    }
@@ -164,14 +164,13 @@ bool FileManager::doLoadZip()
    // Clean the work directory.
    CPrint::doCleanWork();
 
-   // Unzip the zip file into the work directory.
-   CPrint::doUnzipToWork(mZipFilePath);
+   // Copy the gcode file into the work directory.
+   CPrint::doCopyToWork(mGCodeFilePath);
 
    // Done.
    mError = "PASS";
-   Prn::print(Prn::View01, "LoadZip %s",mZipName.c_str());
-   Prn::print(Prn::View02, "done");
-   Prn::print(Prn::View02, "");
+   Prn::print(0, "done");
+   Prn::print(0, "");
    return true;
 }
 

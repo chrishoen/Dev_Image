@@ -7,7 +7,6 @@ Description:
 //******************************************************************************
 
 #include "stdafx.h"
-#include <windows.h>
 
 #include "risSystemCalls.h"
 #include "CPrintDir.h"

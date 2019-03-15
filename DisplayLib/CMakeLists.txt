@@ -10,6 +10,6 @@ my_add_pch (DisplayLib)
 
 target_include_directories(DisplayLib INTERFACE ${PROJECT_SOURCE_DIR})
 
-my_lib_import_RisLib(DisplayLib)
-my_lib_import_SDL2(DisplayLib)
-my_lib_import_OpenCV(DisplayLib)
+my_inc_import_RisLib(DisplayLib)
+my_inc_import_SDL2(DisplayLib)
+my_inc_import_OpenCV(DisplayLib)

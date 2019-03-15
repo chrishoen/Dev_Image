@@ -31,7 +31,7 @@ endfunction()
 #*******************************************************************************
 #*******************************************************************************
 
-function(my_exe_import_RisLib _target)
+function(my_lib_import_RisLib _target)
 
    add_library(RisLib STATIC IMPORTED)
    set_target_properties(RisLib PROPERTIES IMPORTED_LOCATION ${MyRisLibImportPath})
@@ -45,7 +45,6 @@ function(my_exe_import_RisLib _target)
       target_link_libraries(RisLib INTERFACE Threads::Threads)
    endif()
 
-   target_include_directories(${_target} PRIVATE ${MyRisLibIncludePath})
    target_link_libraries(${_target} RisLib)
 
 endfunction()
@@ -54,7 +53,7 @@ endfunction()
 #*******************************************************************************
 #*******************************************************************************
 
-function(my_lib_import_RisLib _target)
+function(my_inc_import_RisLib _target)
 
    target_include_directories(${_target} PUBLIC ${MyRisLibIncludePath})
 
@@ -64,12 +63,11 @@ endfunction()
 #*******************************************************************************
 #*******************************************************************************
 
-function(my_exe_import_DspLib _target)
+function(my_lib_import_DspLib _target)
 
    add_library(DspLib STATIC IMPORTED)
    set_target_properties(DspLib PROPERTIES IMPORTED_LOCATION ${MyDspLibImportPath})
 
-   target_include_directories(${_target} PRIVATE ${MyDspLibIncludePath})
    target_link_libraries(${_target} DspLib)
 
 endfunction()
@@ -78,7 +76,7 @@ endfunction()
 #*******************************************************************************
 #*******************************************************************************
 
-function(my_lib_import_DspLib _target)
+function(my_inc_import_DspLib _target)
 
    target_include_directories(${_target} PUBLIC ${MyDspLibIncludePath})
 
@@ -88,16 +86,14 @@ endfunction()
 #*******************************************************************************
 #*******************************************************************************
 
-function(my_exe_import_OpenCV _target)
+function(my_lib_import_OpenCV _target)
 
    if(MSVC)
       add_library(OpenCV STATIC IMPORTED)
       set_target_properties(OpenCV PROPERTIES IMPORTED_LOCATION ${MyOpenCVImportPath})
-      target_include_directories(${_target} PRIVATE ${MyOpenCVIncludePath})
       target_link_libraries(${_target} OpenCV)
    else()
       find_package(OpenCV CONFIG REQUIRED)
-      target_include_directories(${_target} PUBLIC ${OpenCV_INCLUDE_DIRS})
       target_link_libraries(${_target} ${OpenCV_LIBRARIES})
    endif()
 
@@ -107,7 +103,7 @@ endfunction()
 #*******************************************************************************
 #*******************************************************************************
 
-function(my_lib_import_OpenCV _target)
+function(my_inc_import_OpenCV _target)
 
    target_include_directories(${_target} PUBLIC ${MyOpenCVIncludePath})
 
@@ -117,7 +113,7 @@ endfunction()
 #*******************************************************************************
 #*******************************************************************************
 
-function(my_exe_import_SDL2 _target)
+function(my_lib_import_SDL2 _target)
 
    if(MSVC)
       add_library(SDL2 STATIC IMPORTED)
@@ -127,13 +123,11 @@ function(my_exe_import_SDL2 _target)
       set_target_properties(SDL2main PROPERTIES IMPORTED_LOCATION ${MySDL2mainImportPath})
       set_target_properties(SDL2_image PROPERTIES IMPORTED_LOCATION ${MySDL2_imageImportPath})
 
-      target_include_directories(${_target} PRIVATE ${MySDL2IncludePath})
       target_link_libraries(${_target} SDL2)
       target_link_libraries(${_target} SDL2main)
       target_link_libraries(${_target} SDL2_image)
    else()
       find_package(SDL2 CONFIG REQUIRED)
-      target_include_directories(${_target} PUBLIC ${SDL2_INCLUDE_DIRS})
       target_link_libraries(${_target} ${SDL2_LIBRARIES})
    endif()
 
@@ -143,7 +137,7 @@ endfunction()
 #*******************************************************************************
 #*******************************************************************************
 
-function(my_lib_import_SDL2 _target)
+function(my_inc_import_SDL2 _target)
 
    target_include_directories(${_target} PUBLIC ${MySDL2IncludePath})
 
