@@ -66,7 +66,7 @@ public:
       mCols = aCol;
    }
 
-   void RCSize::reset()
+   void reset()
    {
       mRows = 0;
       mCols = 0;

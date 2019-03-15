@@ -726,7 +726,7 @@ public:
    // Methods.
 
    // Constructor.
-   RCCircuitLoop::RCCircuitLoop(int aDelta)
+   RCCircuitLoop(int aDelta)
    {
       mFirst = true;
       mSide = 0;
@@ -740,7 +740,7 @@ public:
    }
 
    // Constructor.
-   RCCircuitLoop::RCCircuitLoop(RCIndex aCenter, int aDelta)
+   RCCircuitLoop(RCIndex aCenter, int aDelta)
    {
       mFirst = true;
       mSide = 0;
@@ -754,7 +754,7 @@ public:
    }
 
    // Return the current row and column.
-   RCIndex RCCircuitLoop::operator()()
+   RCIndex operator()()
    {
       return RCIndex(mRow, mCol);
    }
