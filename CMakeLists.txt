@@ -10,11 +10,11 @@ my_init_import_variables()
 
 
 add_subdirectory ("CPrintLib")
+add_subdirectory ("SVLib")
 add_subdirectory ("DisplayLib")
 add_subdirectory ("DisplayTest")
 add_subdirectory ("Session")
 add_subdirectory ("StackFilter")
-add_subdirectory ("SVLib")
 return()
 
 add_subdirectory ("CPrintLib")

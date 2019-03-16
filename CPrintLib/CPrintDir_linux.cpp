@@ -204,7 +204,7 @@ void doZipFromWork(std::string& aZipFilePath)
    Prn::print(Prn::View02, "doCommand %s", tString);
    Ris::doSystemCommand(tString);
 
-   sprintf(tString, "/usr/bin/zip -r %s ./work", aZipFilePath.c_str());
+   sprintf(tString, "/usr/bin/zip -jrq %s ./work/*.*", aZipFilePath.c_str());
    Prn::print(Prn::View02, "doCommand %s", tString);
    Ris::doSystemCommand(tString);
 }
