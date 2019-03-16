@@ -23,8 +23,6 @@
 #include "StackFilter.h"
 #include "StackShow.h"
 
-#include "svSimStackGenerator.h"
-
 #include "CmdLineExec.h"
 
 //******************************************************************************
