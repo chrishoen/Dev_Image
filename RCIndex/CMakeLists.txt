@@ -8,9 +8,11 @@ my_add_pch (RCIndex)
 
 my_inc_import_RisLib(RCIndex)
 my_inc_import_SVLib(RCIndex)
+my_inc_import_CPrintLib(RCIndex)
 my_inc_import_OpenCV(RCIndex)
 
 my_lib_import_OpenCV(RCIndex)
 my_lib_import_SVLib(RCIndex)
+my_lib_import_CPrintLib(RCIndex)
 my_lib_import_RisLib(RCIndex)
 

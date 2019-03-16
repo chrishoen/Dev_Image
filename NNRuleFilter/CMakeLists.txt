@@ -11,10 +11,12 @@ my_inc_import_SVLib(NNRuleFilter)
 my_inc_import_DisplayLib(NNRuleFilter)
 my_inc_import_OpenCV(NNRuleFilter)
 my_inc_import_SDL2(NNRuleFilter)
+my_inc_import_CPrint(NNRuleFilter)
 
 my_lib_import_OpenCV(NNRuleFilter)
 my_lib_import_SDL2(NNRuleFilter)
 my_lib_import_SVLib(NNRuleFilter)
+my_lib_import_CPrint(NNRuleFilter)
 my_lib_import_DisplayLib(NNRuleFilter)
 my_lib_import_RisLib(NNRuleFilter)
 

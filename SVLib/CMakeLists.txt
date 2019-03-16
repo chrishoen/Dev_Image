@@ -12,3 +12,4 @@ target_include_directories(SVLib INTERFACE ${PROJECT_SOURCE_DIR})
 
 my_inc_import_OpenCV(SVLib)
 my_inc_import_RisLib(SVLib)
+my_inc_import_CPrintLib(SVLib)

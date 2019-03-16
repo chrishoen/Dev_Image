@@ -8,10 +8,12 @@ Description:
 
 #include "stdafx.h"
 
-#include "svStackWriter.h"
+#include "CPrintDir.h"
 
 #include "svImageFunctions.h"
 #include "svImageShow.h"
+
+#include "svStackWriter.h"
 
 namespace SV
 {
@@ -144,7 +146,7 @@ void StackWriter::doWriteOutputImage(int aStackIndex)
 {
    // Get output file path.
    char tFilePath[200];
-   sprintf(tFilePath, ".\\work\\%s%04d.png", mP->mStackName, aStackIndex);
+   sprintf(tFilePath, "%s%s%04d.png", CPrint::getWorkDirPath().c_str(),mP->mStackName, aStackIndex);
    Prn::print(Prn::View01, "WriteOutput %s", tFilePath);
 
    // Write output file.
