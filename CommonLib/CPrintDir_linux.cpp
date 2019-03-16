@@ -247,7 +247,7 @@ void doCopyToWork(std::string& aFilePath)
    // Copy the file into the work directory.
    // Ex. "cp ./gcode/Test100.gcode ./work"
    char tString[200];
-   sprintf(tString, "cp %s .\\work", aFilePath.c_str());
+   sprintf(tString, "cp %s ./work", aFilePath.c_str());
    Ris::doSystemCommand(tString);
 }
 
