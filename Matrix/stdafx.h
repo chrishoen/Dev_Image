@@ -14,6 +14,5 @@
 #include "prnPrint.h"
 #include "my_functions.h"
 #include "risPortableCalls.h"
-//#include "dsp_math.h"
 
 

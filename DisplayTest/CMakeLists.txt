@@ -11,12 +11,10 @@ my_inc_import_OpenCV(DisplayTest)
 my_inc_import_SDL2(DisplayTest)
 my_inc_import_DisplayLib(DisplayTest)
 my_inc_import_SVLib(DisplayTest)
-my_inc_import_DspLib(DisplayTest)
 
 my_lib_import_OpenCV(DisplayTest)
 my_lib_import_SDL2(DisplayTest)
 my_lib_import_DisplayLib(DisplayTest)
 my_lib_import_SVLib(DisplayTest)
 my_lib_import_RisLib(DisplayTest)
-my_lib_import_DspLib(DisplayTest)
 

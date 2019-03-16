@@ -11,5 +11,4 @@ my_add_pch (CPrintLib)
 target_include_directories(CPrintLib INTERFACE ${PROJECT_SOURCE_DIR})
 
 my_inc_import_RisLib(CPrintLib)
-my_inc_import_DspLib(CPrintLib)
 

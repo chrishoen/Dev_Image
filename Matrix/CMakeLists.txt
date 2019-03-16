@@ -10,11 +10,9 @@ my_inc_import_RisLib(Matrix)
 my_inc_import_SVLib(Matrix)
 my_inc_import_OpenCV(Matrix)
 my_inc_import_CPrintLib(Matrix)
-my_inc_import_DspLib(Matrix)
 
 my_lib_import_OpenCV(Matrix)
 my_lib_import_SVLib(Matrix)
 my_lib_import_CPrintLib(Matrix)
 my_lib_import_RisLib(Matrix)
-my_lib_import_DspLib(Matrix)
 
