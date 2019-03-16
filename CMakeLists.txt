@@ -32,7 +32,6 @@ add_subdirectory ("Session")
 return()
 
 add_subdirectory ("CommonLib")
-add_subdirectory ("ContourFilter")
 add_subdirectory ("DisplayLib")
 add_subdirectory ("DisplayTest")
 add_subdirectory ("Matrix")
