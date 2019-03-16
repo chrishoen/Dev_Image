@@ -11,9 +11,9 @@ Description:
 #include "risSystemCalls.h"
 #include "CPrintDir.h"
 
-#include "pxFileManager.h"
+#include "cxFileManager.h"
 
-namespace PX
+namespace CX
 {
 //******************************************************************************
 //******************************************************************************

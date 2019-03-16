@@ -10,7 +10,7 @@ Session file manager.
 #include <string>
 #include <vector>
 
-namespace PX
+namespace CX
 {
 
 //******************************************************************************
@@ -189,7 +189,7 @@ public:
 //******************************************************************************
 // Global instance.
 
-#ifdef _PXFILEMANAGER_CPP_
+#ifdef _CXFILEMANAGER_CPP_
 FileManager gFileManager;
 #else
 extern FileManager gFileManager;

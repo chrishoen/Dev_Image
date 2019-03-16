@@ -6,7 +6,7 @@
 #include "MainPrint.h"
 
 #include "CPrintDir.h"
-#include "pxFileManager.h"
+#include "cxFileManager.h"
 
 #include "svSysParms.h"
 #include "displayParms.h"
@@ -86,7 +86,7 @@ void main_initialize(int argc,char** argv)
    // Initialize program resources.
 
    // Initialize the file manager.
-   PX::gFileManager.initialize();
+   CX::gFileManager.initialize();
 }
 
 //******************************************************************************

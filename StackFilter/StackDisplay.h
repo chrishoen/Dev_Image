@@ -9,7 +9,7 @@ printer executive - script file tester.
 
 #include <string>
 
-#include "pxScriptReader.h"
+#include "cxScriptReader.h"
 
 //******************************************************************************
 //******************************************************************************
@@ -26,7 +26,7 @@ public:
    // Members.
 
    // Parameterized functions and variables.
-   PX::ScriptReader   mReader;
+   CX::ScriptReader   mReader;
 
    // Metrics.
    int mReadCount;

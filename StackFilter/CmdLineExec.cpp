@@ -14,10 +14,10 @@
 #include "displayFunctions.h"
 #include "StackGenerate.h"
 
-#include "pxFileManager.h"
-#include "pxScriptWriter.h"
-#include "pxScriptReader.h"
-#include "pxScriptTester.h"
+#include "cxFileManager.h"
+#include "cxScriptWriter.h"
+#include "cxScriptReader.h"
+#include "cxScriptTester.h"
 #include "StackEvaluate.h"
 #include "StackDisplay.h"
 #include "StackFilter.h"
@@ -144,8 +144,8 @@ void CmdLineExec::executeGen(Ris::CmdLineCmd* aCmd)
 
 void CmdLineExec::executeDirZip(Ris::CmdLineCmd* aCmd)
 {
-   PX::gFileManager.getZipNameList();
-   PX::gFileManager.showZipNameList();
+   CX::gFileManager.getZipNameList();
+   CX::gFileManager.showZipNameList();
 }
 
 //******************************************************************************
@@ -157,25 +157,25 @@ void CmdLineExec::executeLoadZip(Ris::CmdLineCmd* aCmd)
    bool tPass = false;
 
    // Load the zip.
-   tPass = PX::gFileManager.doLoadZip(aCmd->argInt(1));
+   tPass = CX::gFileManager.doLoadZip(aCmd->argInt(1));
    if (!tPass) return;
 
    // Find the gcode name.
-   tPass = PX::gFileManager.doFindWorkGCodeName();
+   tPass = CX::gFileManager.doFindWorkGCodeName();
    if (!tPass) return;
 
    // Write the script.
-   PX::ScriptWriter tScriptWriter;
+   CX::ScriptWriter tScriptWriter;
    tPass = tScriptWriter.doWrite(
-      PX::gFileManager.mWorkGCodeFilePath,
-      PX::gFileManager.mWorkSliceFilePrefixPath,
-      PX::gFileManager.mWorkDirPath,
-      PX::gFileManager.mWorkScriptFilePath);
+      CX::gFileManager.mWorkGCodeFilePath,
+      CX::gFileManager.mWorkSliceFilePrefixPath,
+      CX::gFileManager.mWorkDirPath,
+      CX::gFileManager.mWorkScriptFilePath);
    if (!tPass) return;
 
    // Test the script.
-   PX::ScriptTester tScriptTester;
-   tPass = tScriptTester.doTestScriptFile(PX::gFileManager.mWorkScriptFilePath);
+   CX::ScriptTester tScriptTester;
+   tPass = tScriptTester.doTestScriptFile(CX::gFileManager.mWorkScriptFilePath);
    if (!tPass) return;
 
    // Show the test results.
@@ -237,7 +237,7 @@ void CmdLineExec::executeDisplayZip(Ris::CmdLineCmd* aCmd)
 
    // Test the image stack.
    StackDisplay tStackDisplay;
-   tStackDisplay.doTestScriptFile(PX::gFileManager.mWorkScriptFilePath);
+   tStackDisplay.doTestScriptFile(CX::gFileManager.mWorkScriptFilePath);
 }
 
 //******************************************************************************
@@ -257,7 +257,7 @@ void CmdLineExec::executeFilterZip(Ris::CmdLineCmd* aCmd)
    // Test the image stack.
    StackFilter tStackFilter;
 
-   tStackFilter.doFilterScriptFile(PX::gFileManager.mZipFilePath);
+   tStackFilter.doFilterScriptFile(CX::gFileManager.mZipFilePath);
    tStackFilter.show();
 }
 

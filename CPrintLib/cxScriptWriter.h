@@ -10,7 +10,7 @@ printer eexecutive - script file writer
 #include <fstream>
 #include <string>
 
-namespace PX
+namespace CX
 {
 
 //******************************************************************************

@@ -15,7 +15,6 @@ Parameters class whose values are read from a command file.
 #include "svNN2dRuleParms.h"
 #include "svNN3dRuleParms.h"
 #include "svSimParms.h"
-#include "svConParms.h"
 
 //******************************************************************************
 //******************************************************************************
@@ -83,9 +82,6 @@ public:
    // Image filter.
    NN2dRuleParms mNN2dRuleFilterParms;
    NN3dRuleParms mNN3dRuleFilterParms;
-
-   // Image filter.
-   ConParms mContourFilterParms;
 
    //***************************************************************************
    //***************************************************************************

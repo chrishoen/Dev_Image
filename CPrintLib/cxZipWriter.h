@@ -1,6 +1,6 @@
 #pragma once
 /*==============================================================================
-printer eexecutive - synthetic gcode file writer
+printer eexecutive - zip file writer
 ==============================================================================*/
 
 //******************************************************************************
@@ -10,7 +10,7 @@ printer eexecutive - synthetic gcode file writer
 #include <fstream>
 #include <string>
 
-namespace PX
+namespace CX
 {
 
 //******************************************************************************
@@ -18,7 +18,7 @@ namespace PX
 //******************************************************************************
 // This class encalsulates a synthetic gcode file generator.
 
-class GCodeWriter
+class ZipWriter
 {
 public:
    //***************************************************************************
@@ -34,16 +34,9 @@ public:
    // Members.
 
    // File paths.
-   std::string mInputBeginFilePath;
-   std::string mInputRepeatFilePath;
-   std::string mInputEndFilePath;
-   std::string mOutputGCodeFilePath;
-
-   // File descriptors.
-   std::ifstream mInputBeginFile;
-   std::ifstream mInputRepeatFile;
-   std::ifstream mInputEndFile;
-   std::ofstream mOutputGCodeFile;
+   std::string mWorkDirPath;
+   std::string mZipDirPath;
+   std::string mZipFilePath;
 
    //***************************************************************************
    //***************************************************************************
@@ -56,23 +49,16 @@ public:
    // Methods.
 
    // Constructor.
-   GCodeWriter();
+   ZipWriter();
 
    //***************************************************************************
    //***************************************************************************
    //***************************************************************************
    // Methods.
 
-   // Generate a synthetic gcode file from the prototype files
-   void doWrite(
-      const std::string& aGCodeFileName,
-      int aRepeatCount);
-
-   // Generate a synthetic gcode file from the prototype files
-   void doWrite(
-      const char* aGCodeFileName,
-      int aRepeatCount);
-
+   // Zip the work directory to the zip directory with a zip filename
+   // that is a name plus a postfix.
+   void doZipWork(const char* aZipName);
 };
 
 //******************************************************************************

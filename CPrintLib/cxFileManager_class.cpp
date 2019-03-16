@@ -9,9 +9,12 @@ Description:
 #include "stdafx.h"
 
 #include "CPrintDir.h"
-#include "pxZipWriter.h"
+#include "risSystemCalls.h"
 
-namespace PX
+#define _CXFILEMANAGER_CPP_
+#include "cxFileManager.h"
+
+namespace CX
 {
 
 //******************************************************************************
@@ -19,37 +22,46 @@ namespace PX
 //******************************************************************************
 // Constructor.
 
-ZipWriter::ZipWriter()
+FileManager::FileManager()
 {
+   mZipInProgress = false;
+}
+
+void FileManager::initialize()
+{
+   mBaseDirPath  = CPrint::getBaseDirPath();
+   mZipDirPath   = CPrint::getZipDirPath();
+   mGCodeDirPath = CPrint::getGCodeDirPath();
+   mWorkDirPath  = CPrint::getWorkDirPath();
 }
 
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
-// Zip the work directory to the zip directory with a zip filename
-// that is a name plus a postfix.
+// Show.
 
-void ZipWriter::doZipWork(const char* aZipName)
+void FileManager::show1()
 {
-   //***************************************************************************
-   //***************************************************************************
-   //***************************************************************************
-   // File paths.
+   std::cout << "BaseDirPath  " << mBaseDirPath << std::endl;
+   std::cout << "ZipDirPath   " << mZipDirPath << std::endl;
+   std::cout << "GCodeDirPath " << mGCodeDirPath << std::endl;
+   std::cout << "WorkDirPath  " << mWorkDirPath << std::endl;
+   std::cout << std::endl;
+   std::cout << "ZipName      " << mZipName << std::endl;
+   std::cout << "ZipFilePath  " << mZipFilePath << std::endl;
+}
 
-   mWorkDirPath = CPrint::getWorkDirPath();
-   mZipDirPath = CPrint::getZipDirPath();
-   mZipFilePath = mZipDirPath + aZipName + ".zip";
+void FileManager::show2()
+{
+   std::cout << std::endl;
+   std::cout << "ZipName     " << mZipName << std::endl;
+   std::cout << "ZipFilePath " << mZipFilePath << std::endl;
+}
 
-   Prn::print(Prn::View02, "WorkDirPath               %s", mWorkDirPath.c_str());
-   Prn::print(Prn::View01, "ZipFilePath               %s", mZipFilePath.c_str());
-
-
-   //***************************************************************************
-   //***************************************************************************
-   //***************************************************************************
-   // Zip.
-
-   CPrint::doZipFromWork(mZipFilePath);
+// Return true if the file exists,
+bool FileManager::exists(std::string aFilePath)
+{
+   return Ris::portableFilePathExists(aFilePath.c_str());
 }
 
 //******************************************************************************

@@ -1,6 +1,6 @@
 #pragma once
 /*==============================================================================
-image stack filter
+printer executive - script file tester.
 ==============================================================================*/
 
 //******************************************************************************
@@ -8,58 +8,42 @@ image stack filter
 //******************************************************************************
 
 #include <string>
-#include <opencv2/core/core.hpp>
 
 #include "cxScriptReader.h"
-#include "svNN3dRuleFilter.h"
+
+namespace CX
+{
+
 
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
-// This class encalsulates an image stack filter. It reads from a script file
-// to obtain the file paths of images contained in an image stack. It reads
-// the stack of image files and filters them.
-// reader to .
+// This class encalsulates a script file tester. It uses the script file
+// reader to test a script file.
 
-class StackFilter
+class ScriptTester
 {
 public:
-
-   //***************************************************************************
-   //***************************************************************************
-   //***************************************************************************
-   // Members:
-
-   // File paths.
-   std::string mScriptFilePath;
-   std::string mInputZipFilePath;
-   std::string mOutputZipFilePath;
-
-   // Images.
-   cv::Mat mInputImageS1;
-   cv::Mat mInputImageS2;
-   cv::Mat mInputImageS3;
-   cv::Mat mOutputImageW2;
-
-   // Image file paths.
-   std::string mInputPathS1;
-   std::string mInputPathS2;
-   std::string mInputPathS3;
-   std::string mOutputPathW2;
-
    //***************************************************************************
    //***************************************************************************
    //***************************************************************************
    // Members.
 
-   // Parameterized functions and variables.
-   CX::ScriptReader   mReader;
-   SV::NN3dRuleFilter mFilter;
+   ScriptReader mReader;
 
-   // Metrics.
+   // Test results.
    int mReadCount;
-   int mRows;
-   int mCols;
+   int mCountNone;
+   int mCountSend;
+   int mCountSlice;
+   int mCountSliceExists;
+   int mCountPWM;
+   int mCountTest;
+   int mCountState1;
+   int mCountState2;
+   int mCountState3;
+   int mCountInfo;
+   int mCountError;
 
    //***************************************************************************
    //***************************************************************************
@@ -67,36 +51,26 @@ public:
    // Methods.
 
    // Constructor.
-   StackFilter();
+   ScriptTester();
    void reset();
+
+   //***************************************************************************
+   //***************************************************************************
+   //***************************************************************************
+   // Methods.
+
+   // Test a script file. Return true if successful.
+   bool doTestScriptFile(std::string& aScriptFilePath);
+
+   // Show test results.
    void show();
 
-   //***************************************************************************
-   //***************************************************************************
-   //***************************************************************************
-   // Methods.
-
-   // Filter the images pointed to by a script file. Return true if successful.
-   bool doFilterScriptFile(std::string& aInputZipFileName);
-
-   //***************************************************************************
-   //***************************************************************************
-   //***************************************************************************
-   // Methods.
-
-   // Loop processing decomposition.
-   void doBeforeLoop();
-   void doFirstInLoop();
-   void doNotFirstInLoop();
-   void doAfterLoop();
-
-   // Zip the output work directory to the zip directory.
-   void doZipOutput();
 };
 
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
+}//namespace
 
 
 

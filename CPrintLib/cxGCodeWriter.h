@@ -1,42 +1,24 @@
 #pragma once
 /*==============================================================================
-printer executive - script file reader.
+printer eexecutive - synthetic gcode file writer
 ==============================================================================*/
 
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
 
-#include <stdio.h>
+#include <fstream>
 #include <string>
 
-namespace PX
+namespace CX
 {
 
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
-// Constants.
+// This class encalsulates a synthetic gcode file generator.
 
-// script file command codes.
-static const int cScriptCmd_None   = 0;
-static const int cScriptCmd_Send   = 1;
-static const int cScriptCmd_Slice  = 2;
-static const int cScriptCmd_PWM    = 3;
-static const int cScriptCmd_Test   = 4;
-static const int cScriptCmd_State1 = 5;
-static const int cScriptCmd_State2 = 6;
-static const int cScriptCmd_State3 = 7;
-static const int cScriptCmd_Info   = 8;
-static const int cScriptCmd_Error  = 9;
-
-//******************************************************************************
-//******************************************************************************
-//******************************************************************************
-// This class encalsulates a script file reader. It reads inputs from
-// a script file and provides commands to the print sequencer thread.
-
-class ScriptReader
+class GCodeWriter
 {
 public:
    //***************************************************************************
@@ -51,19 +33,22 @@ public:
    //***************************************************************************
    // Members.
 
+   // File paths.
+   std::string mInputBeginFilePath;
+   std::string mInputRepeatFilePath;
+   std::string mInputEndFilePath;
+   std::string mOutputGCodeFilePath;
+
    // File descriptors.
-   FILE* mFile;
+   std::ifstream mInputBeginFile;
+   std::ifstream mInputRepeatFile;
+   std::ifstream mInputEndFile;
+   std::ofstream mOutputGCodeFile;
 
    //***************************************************************************
    //***************************************************************************
    //***************************************************************************
    // Members.
-
-   // After a read call from the script file (which reads two lines), these
-   // contain the command code and string for the script command.
-   int mCmdCode;
-   char mString[cMaxStringSize];
-   int mStringLength;
 
    //***************************************************************************
    //***************************************************************************
@@ -71,29 +56,23 @@ public:
    // Methods.
 
    // Constructor.
-   ScriptReader();
+   GCodeWriter();
 
    //***************************************************************************
    //***************************************************************************
    //***************************************************************************
    // Methods.
 
-   // Open the files. Return true if successful.
-   bool doOpenFile(std::string& aScriptFilePath);
+   // Generate a synthetic gcode file from the prototype files
+   void doWrite(
+      const std::string& aGCodeFileName,
+      int aRepeatCount);
 
-   // Close the files.
-   void doCloseFile();
+   // Generate a synthetic gcode file from the prototype files
+   void doWrite(
+      const char* aGCodeFileName,
+      int aRepeatCount);
 
-   // Read two lines from the script file. The first line is a command and
-   // the second line is a string that is associated with the command.
-   // Set the corresponding member variables. Return true if successful.
-   // Return false if end of file.
-   bool doRead();
-
-   //***************************************************************************
-   //***************************************************************************
-   //***************************************************************************
-   // Methods.
 };
 
 //******************************************************************************

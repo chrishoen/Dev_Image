@@ -2,9 +2,9 @@
 #*******************************************************************************
 #*******************************************************************************
 
-function(my_lib_import_CommonLib _target)
+function(my_lib_import_CPrintLib _target)
 
-   target_link_libraries(${_target} CommonLib)
+   target_link_libraries(${_target} CPrintLib)
 
 endfunction()
 
@@ -12,9 +12,9 @@ endfunction()
 #*******************************************************************************
 #*******************************************************************************
 
-function(my_inc_import_CommonLib _target)
+function(my_inc_import_CPrintLib _target)
 
-   target_include_directories(${_target} PRIVATE $<TARGET_PROPERTY:CommonLib,INTERFACE_INCLUDE_DIRECTORIES>)
+   target_include_directories(${_target} PRIVATE $<TARGET_PROPERTY:CPrintLib,INTERFACE_INCLUDE_DIRECTORIES>)
 
 endfunction()
 

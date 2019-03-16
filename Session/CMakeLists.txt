@@ -7,10 +7,10 @@ my_add_compile_options (Session)
 my_add_pch (Session)
 
 my_inc_import_RisLib(Session)
-my_inc_import_CommonLib(Session)
+my_inc_import_CPrintLib(Session)
 my_inc_import_DspLib(Session)
 
-my_lib_import_CommonLib(Session)
+my_lib_import_CPrintLib(Session)
 my_lib_import_DspLib(Session)
 my_lib_import_RisLib(Session)
 

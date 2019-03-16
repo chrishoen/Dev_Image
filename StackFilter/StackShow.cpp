@@ -88,7 +88,7 @@ bool StackShow::doShowScriptFile(int aObjectIndex, int aStackIndex)
       if (!mReader.doRead()) break;
 
       // Test the command code for a slice command.
-      if (mReader.mCmdCode == PX::cScriptCmd_Slice)
+      if (mReader.mCmdCode == CX::cScriptCmd_Slice)
       {
          // Filter.
          if (mReadCount == 0)

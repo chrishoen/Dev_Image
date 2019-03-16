@@ -55,7 +55,7 @@ bool StackEvaluate::doTestScriptFile()
       mReadCount++;
 
       // Test the command code.
-      if (mReader.mCmdCode == PX::cScriptCmd_Slice)
+      if (mReader.mCmdCode == CX::cScriptCmd_Slice)
       {
          // Read image.
          cv::Mat tImage = cv::imread(mReader.mString, cv::IMREAD_GRAYSCALE);

@@ -10,7 +10,7 @@ image stack filter
 #include <string>
 #include <opencv2/core/core.hpp>
 
-#include "pxScriptReader.h"
+#include "cxScriptReader.h"
 #include "svImageEvaluator.h"
 #include "svImageResults.h"
 
@@ -61,7 +61,7 @@ public:
    // Members.
 
    // Parameterized functions and variables.
-   PX::ScriptReader   mReader;
+   CX::ScriptReader   mReader;
    SV::ImageEvaluator mEvaluator;
    SV::ImageResults   mResults;
 

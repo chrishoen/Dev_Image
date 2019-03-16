@@ -9,7 +9,7 @@ printer executive - script file tester.
 
 #include <string>
 
-#include "pxScriptReader.h"
+#include "cxScriptReader.h"
 #include "svImageEvaluator.h"
 #include "svImageResults.h"
 
@@ -31,7 +31,7 @@ public:
    std::string mScriptFilePath;
       
    // Parameterized functions and variables.
-   PX::ScriptReader   mReader;
+   CX::ScriptReader   mReader;
    SV::ImageEvaluator mEvaluator;
    SV::ImageResults   mResults;
 

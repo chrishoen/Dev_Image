@@ -11,8 +11,8 @@ Description:
 #include "CPrintDir.h"
 #include "svStackParms.h"
 #include "svStackWriter.h"
-#include "pxGCodeWriter.h"
-#include "pxZipWriter.h"
+#include "cxGCodeWriter.h"
+#include "cxZipWriter.h"
 
 #include "StackGenerate.h"
 
@@ -43,11 +43,11 @@ void StackGenerate::doGenerateStack()
    tStackWriter.doWriteStack();
 
    // Generate the stack gcode file.
-   PX::GCodeWriter tGCodeWriter;
+   CX::GCodeWriter tGCodeWriter;
    tGCodeWriter.doWrite(SV::gStackParms.mStackName, SV::gStackParms.mStackHeight);
 
    // Zip the work directory.
-   PX::ZipWriter tZipWriter;
+   CX::ZipWriter tZipWriter;
    tZipWriter.doZipWork(SV::gStackParms.mStackName);
 }
 

@@ -9,9 +9,9 @@ Description:
 #include "stdafx.h"
 
 #include "CPrintDir.h"
-#include "pxGCodeWriter.h"
+#include "cxGCodeWriter.h"
 
-namespace PX
+namespace CX
 {
 
 //******************************************************************************

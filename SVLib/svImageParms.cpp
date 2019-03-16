@@ -34,7 +34,6 @@ void ImageParms::reset()
 
    mNN2dRuleFilterParms.reset();
    mNN3dRuleFilterParms.reset();
-   mContourFilterParms.reset();
 
    mRoiCenter.reset();
    mRoiB = 0;
@@ -72,7 +71,6 @@ void ImageParms::show()
    printf("InputImageFileName                %s\n", mInputImageFileName);
    printf("OutputImageFileName               %s\n", mOutputImageFileName);
    mNN2dRuleFilterParms.show();
-   mContourFilterParms.show();
 }
 
 //******************************************************************************
@@ -97,7 +95,6 @@ void ImageParms::execute(Ris::CmdLineCmd* aCmd)
 
    if (aCmd->isCmd("NN2dRuleFilterParms")) readSection(aCmd->argString(1), &mNN2dRuleFilterParms);
    if (aCmd->isCmd("NN3dRuleFilterParms")) readSection(aCmd->argString(1), &mNN3dRuleFilterParms);
-   if (aCmd->isCmd("ContourFilterParms"))  readSection(aCmd->argString(1), &mContourFilterParms);
 }
 
 //******************************************************************************

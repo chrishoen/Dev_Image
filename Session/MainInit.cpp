@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "risPortableCalls.h"
 #include "CPrintDir.h"
-#include "pxFileManager.h"
+#include "cxFileManager.h"
 
 //******************************************************************************
 //******************************************************************************
@@ -32,7 +32,6 @@ void main_initialize(int argc,char** argv)
 
    // Initialize print facility.
    Prn::resetPrint();
-   Prn::useConsole(1);
    Prn::initializePrint();
 
    // Initialize print filters
@@ -61,7 +60,7 @@ void main_initialize(int argc,char** argv)
    // Initialize program resources.
 
    // Initialize the file manager.
-   PX::gFileManager.initialize();
+   CX::gFileManager.initialize();
 
    //***************************************************************************
    //***************************************************************************

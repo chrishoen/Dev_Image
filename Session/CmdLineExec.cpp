@@ -5,11 +5,11 @@
 #include "risSystemCalls.h"
 #include "CPrintDir.h"
 
-#include "pxFileManager.h"
-#include "pxScriptWriter.h"
-#include "pxScriptReader.h"
-#include "pxScriptTester.h"
-#include "pxGCodeWriter.h"
+#include "cxFileManager.h"
+#include "cxScriptWriter.h"
+#include "cxScriptReader.h"
+#include "cxScriptTester.h"
+#include "cxGCodeWriter.h"
 
 #include "CmdLineExec.h"
 
@@ -76,7 +76,7 @@ void CmdLineExec::executeWriteGCode(Ris::CmdLineCmd* aCmd)
 {
    std::string tGCodeName("MyStack");
    int tRepeatCount = 10;
-   PX::GCodeWriter tGCodeWriter;
+   CX::GCodeWriter tGCodeWriter;
    tGCodeWriter.doWrite(
       tGCodeName,
       tRepeatCount);
@@ -92,8 +92,8 @@ void CmdLineExec::executeWriteGCode(Ris::CmdLineCmd* aCmd)
 
 void CmdLineExec::executeDirZip(Ris::CmdLineCmd* aCmd)
 {
-   PX::gFileManager.getZipNameList();
-   PX::gFileManager.showZipNameList();
+   CX::gFileManager.getZipNameList();
+   CX::gFileManager.showZipNameList();
 }
 
 //******************************************************************************
@@ -102,8 +102,8 @@ void CmdLineExec::executeDirZip(Ris::CmdLineCmd* aCmd)
 
 void CmdLineExec::executeDirGCode(Ris::CmdLineCmd* aCmd)
 {
-   PX::gFileManager.getGCodeNameList();
-   PX::gFileManager.showGCodeNameList();
+   CX::gFileManager.getGCodeNameList();
+   CX::gFileManager.showGCodeNameList();
 }
 
 //******************************************************************************
@@ -117,30 +117,30 @@ void CmdLineExec::executeLoadZip(Ris::CmdLineCmd* aCmd)
    // Load the zip.
    if (aCmd->isArgNumber(1))
    {
-      tPass = PX::gFileManager.doLoadZip(aCmd->argInt(1));
+      tPass = CX::gFileManager.doLoadZip(aCmd->argInt(1));
    }
    else
    {
-      tPass = PX::gFileManager.doLoadZip(aCmd->argString(1));
+      tPass = CX::gFileManager.doLoadZip(aCmd->argString(1));
    }
    if (!tPass) return;
 
    // Find the gcode name.
-   tPass = PX::gFileManager.doFindWorkGCodeName();
+   tPass = CX::gFileManager.doFindWorkGCodeName();
    if (!tPass) return;
 
    // Write the script.
-   PX::ScriptWriter tScriptWriter;
+   CX::ScriptWriter tScriptWriter;
    tPass = tScriptWriter.doWrite(
-      PX::gFileManager.mWorkGCodeFilePath,
-      PX::gFileManager.mWorkSliceFilePrefixPath,
-      PX::gFileManager.mWorkDirPath,
-      PX::gFileManager.mWorkScriptFilePath);
+      CX::gFileManager.mWorkGCodeFilePath,
+      CX::gFileManager.mWorkSliceFilePrefixPath,
+      CX::gFileManager.mWorkDirPath,
+      CX::gFileManager.mWorkScriptFilePath);
    if (!tPass) return;
 
    // Test the script.
-   PX::ScriptTester tScriptTester;
-   tPass = tScriptTester.doTestScriptFile(PX::gFileManager.mWorkScriptFilePath);
+   CX::ScriptTester tScriptTester;
+   tPass = tScriptTester.doTestScriptFile(CX::gFileManager.mWorkScriptFilePath);
    if (!tPass) return;
 
    // Show the test results.
@@ -158,30 +158,30 @@ void CmdLineExec::executeLoadGCode(Ris::CmdLineCmd* aCmd)
    // Load the zip.
    if (aCmd->isArgNumber(1))
    {
-      tPass = PX::gFileManager.doLoadGCode(aCmd->argInt(1));
+      tPass = CX::gFileManager.doLoadGCode(aCmd->argInt(1));
    }
    else
    {
-      tPass = PX::gFileManager.doLoadGCode(aCmd->argString(1));
+      tPass = CX::gFileManager.doLoadGCode(aCmd->argString(1));
    }
    if (!tPass) return;
 
    // Find the gcode name.
-   tPass = PX::gFileManager.doFindWorkGCodeName();
+   tPass = CX::gFileManager.doFindWorkGCodeName();
    if (!tPass) return;
 
    // Write the script.
-   PX::ScriptWriter tScriptWriter;
+   CX::ScriptWriter tScriptWriter;
    tPass = tScriptWriter.doWrite(
-      PX::gFileManager.mWorkGCodeFilePath,
-      PX::gFileManager.mWorkSliceFilePrefixPath,
-      PX::gFileManager.mWorkDirPath,
-      PX::gFileManager.mWorkScriptFilePath);
+      CX::gFileManager.mWorkGCodeFilePath,
+      CX::gFileManager.mWorkSliceFilePrefixPath,
+      CX::gFileManager.mWorkDirPath,
+      CX::gFileManager.mWorkScriptFilePath);
    if (!tPass) return;
 
    // Test the script.
-   PX::ScriptTester tScriptTester;
-   tPass = tScriptTester.doTestScriptFile(PX::gFileManager.mWorkScriptFilePath);
+   CX::ScriptTester tScriptTester;
+   tPass = tScriptTester.doTestScriptFile(CX::gFileManager.mWorkScriptFilePath);
    if (!tPass) return;
 
    // Show the test results.
@@ -198,16 +198,16 @@ void CmdLineExec::executeSetZip(Ris::CmdLineCmd* aCmd)
 
    if (aCmd->isArgNumber(1))
    {
-      tPass = PX::gFileManager.setZipName(aCmd->argInt(1));
+      tPass = CX::gFileManager.setZipName(aCmd->argInt(1));
    }
    else
    {
-      tPass = PX::gFileManager.setZipName(aCmd->argString(1));
+      tPass = CX::gFileManager.setZipName(aCmd->argString(1));
    }
 
    if (tPass)
    {
-      PX::gFileManager.show2();
+      CX::gFileManager.show2();
    }
    Prn::print(0, "done");
 }
@@ -222,16 +222,16 @@ void CmdLineExec::executeSetGCode(Ris::CmdLineCmd* aCmd)
 
    if (aCmd->isArgNumber(1))
    {
-      tPass = PX::gFileManager.setGCodeName(aCmd->argInt(1));
+      tPass = CX::gFileManager.setGCodeName(aCmd->argInt(1));
    }
    else
    {
-      tPass = PX::gFileManager.setGCodeName(aCmd->argString(1));
+      tPass = CX::gFileManager.setGCodeName(aCmd->argString(1));
    }
 
    if (tPass)
    {
-      PX::gFileManager.show2();
+      CX::gFileManager.show2();
    }
    Prn::print(0, "done");
 }
@@ -242,7 +242,7 @@ void CmdLineExec::executeSetGCode(Ris::CmdLineCmd* aCmd)
 
 void CmdLineExec::executeFindWorkGCode(Ris::CmdLineCmd* aCmd)
 {
-   PX::gFileManager.doFindWorkGCodeName();
+   CX::gFileManager.doFindWorkGCodeName();
    Prn::print(0, "done");
 }
 
@@ -253,7 +253,7 @@ void CmdLineExec::executeFindWorkGCode(Ris::CmdLineCmd* aCmd)
 void CmdLineExec::executeWorkSlice(Ris::CmdLineCmd* aCmd)
 {
    aCmd->setArgDefault(1, 1);
-   std::string tString =  PX::gFileManager.getWorkSliceFilePath(aCmd->argInt(1));
+   std::string tString =  CX::gFileManager.getWorkSliceFilePath(aCmd->argInt(1));
    Prn::print(0, "%s",tString.c_str());
 }
 
@@ -263,12 +263,12 @@ void CmdLineExec::executeWorkSlice(Ris::CmdLineCmd* aCmd)
 
 void CmdLineExec::executeGen(Ris::CmdLineCmd* aCmd)
 {
-   PX::ScriptWriter tWriter;
+   CX::ScriptWriter tWriter;
    tWriter.doWrite(
-      PX::gFileManager.mWorkGCodeFilePath,
-      PX::gFileManager.mWorkSliceFilePrefixPath,
-      PX::gFileManager.mWorkDirPath,
-      PX::gFileManager.mWorkScriptFilePath);
+      CX::gFileManager.mWorkGCodeFilePath,
+      CX::gFileManager.mWorkSliceFilePrefixPath,
+      CX::gFileManager.mWorkDirPath,
+      CX::gFileManager.mWorkScriptFilePath);
 }
 
 //******************************************************************************
@@ -277,8 +277,8 @@ void CmdLineExec::executeGen(Ris::CmdLineCmd* aCmd)
 
 void CmdLineExec::executeTest(Ris::CmdLineCmd* aCmd)
 {
-   PX::ScriptTester tTester;
-   if (tTester.doTestScriptFile(PX::gFileManager.mWorkScriptFilePath))
+   CX::ScriptTester tTester;
+   if (tTester.doTestScriptFile(CX::gFileManager.mWorkScriptFilePath))
    {
       tTester.show();
    }
@@ -377,7 +377,7 @@ void CmdLineExec::executeGo9(Ris::CmdLineCmd* aCmd)
 
 void CmdLineExec::executeShow(Ris::CmdLineCmd* aCmd)
 {
-   PX::gFileManager.show1();
+   CX::gFileManager.show1();
 }
 
 //******************************************************************************

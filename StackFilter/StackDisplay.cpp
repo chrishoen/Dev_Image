@@ -48,7 +48,7 @@ bool StackDisplay::doTestScriptFile(std::string& aScriptFilePath)
       mReadCount++;
 
       // Test the command code.
-      if (mReader.mCmdCode == PX::cScriptCmd_Slice)
+      if (mReader.mCmdCode == CX::cScriptCmd_Slice)
       {
          // Display image.
          Display::showImageFullPath(mReader.mString);

@@ -8,9 +8,9 @@ Description:
 
 #include "stdafx.h"
 
-#include "pxScriptReader.h"
+#include "cxScriptReader.h"
 
-namespace PX
+namespace CX
 {
 
 //******************************************************************************
