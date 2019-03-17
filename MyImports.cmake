@@ -9,6 +9,8 @@ function(my_init_import_variables)
       set (MyRisLibImportPath  "C:\\MyTools\\MyLib\\lib\\RisLib.lib" PARENT_SCOPE)
       set (MyDspLibIncludePath "C:\\MyTools\\MyLib\\include\\DspLib" PARENT_SCOPE)
       set (MyDspLibImportPath  "C:\\MyTools\\MyLib\\lib\\DspLib.lib" PARENT_SCOPE)
+      set (MyCPrintLibIncludePath "C:\\MyTools\\MyLib\\include\\CPrintLib" PARENT_SCOPE)
+      set (MyCPrintLibImportPath  "C:\\MyTools\\MyLib\\lib\\CPrintLib.lib" PARENT_SCOPE)
       set (MyEigenIncludePath  "C:\\MyTools\\Eigen" PARENT_SCOPE)
       set (MyOpenCVIncludePath "C:\\MyTools\\opencv\\build\\include" PARENT_SCOPE)
       set (MyOpenCVImportPath  "C:\\MyTools\\opencv\\build\\x64\\vc15\\lib\\opencv_world401.lib" PARENT_SCOPE)
@@ -21,6 +23,8 @@ function(my_init_import_variables)
       set (MyRisLibImportPath  "/usr/local/lib/libRisLib.a" PARENT_SCOPE)
       set (MyDspLibIncludePath "/usr/local/include/DspLib" PARENT_SCOPE)
       set (MyDspLibImportPath  "/usr/local/lib/libDspLib.a" PARENT_SCOPE)
+      set (MyCPrintLibIncludePath "/usr/local/include/CPrintLib" PARENT_SCOPE)
+      set (MyCPrintLibImportPath  "/usr/local/lib/libCPrintLib.a" PARENT_SCOPE)
       set (MyEigenIncludePath "/usr/include/eigen3" PARENT_SCOPE)
       set (MyOpenCVIncludePath "/usr/local/include/opencv4" PARENT_SCOPE)
       set (MySDL2IncludePath   "/usr/local/include/SDL2" PARENT_SCOPE)
@@ -49,10 +53,6 @@ function(my_lib_import_RisLib _target)
 
 endfunction()
 
-#*******************************************************************************
-#*******************************************************************************
-#*******************************************************************************
-
 function(my_inc_import_RisLib _target)
 
    target_include_directories(${_target} PUBLIC ${MyRisLibIncludePath})
@@ -72,13 +72,28 @@ function(my_lib_import_DspLib _target)
 
 endfunction()
 
-#*******************************************************************************
-#*******************************************************************************
-#*******************************************************************************
-
 function(my_inc_import_DspLib _target)
 
    target_include_directories(${_target} PUBLIC ${MyDspLibIncludePath})
+
+endfunction()
+
+#*******************************************************************************
+#*******************************************************************************
+#*******************************************************************************
+
+function(my_lib_import_CPrintLib _target)
+
+   add_library(CPrintLib STATIC IMPORTED)
+   set_target_properties(CPrintLib PROPERTIES IMPORTED_LOCATION ${MyCPrintLibImportPath})
+
+   target_link_libraries(${_target} CPrintLib)
+
+endfunction()
+
+function(my_inc_import_CPrintLib _target)
+
+   target_include_directories(${_target} PUBLIC ${MyCPrintLibIncludePath})
 
 endfunction()
 
@@ -98,10 +113,6 @@ function(my_lib_import_OpenCV _target)
    endif()
 
 endfunction()
-
-#*******************************************************************************
-#*******************************************************************************
-#*******************************************************************************
 
 function(my_inc_import_OpenCV _target)
 
@@ -132,10 +143,6 @@ function(my_lib_import_SDL2 _target)
    endif()
 
 endfunction()
-
-#*******************************************************************************
-#*******************************************************************************
-#*******************************************************************************
 
 function(my_inc_import_SDL2 _target)
 
