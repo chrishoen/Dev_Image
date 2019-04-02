@@ -2,7 +2,7 @@
 #*******************************************************************************
 #*******************************************************************************
 
-function(my_init_import_variables)
+function(my_init_global_import_variables)
 
    if(MSVC)
       set (MyRisLibIncludePath "C:\\MyTools\\MyLib\\include\\RisLib" PARENT_SCOPE)
@@ -18,9 +18,11 @@ function(my_init_import_variables)
       set (MySDL2ImportPath        "C:\\MyTools\\SDL2\\lib\\SDL2.lib" PARENT_SCOPE)
       set (MySDL2mainImportPath    "C:\\MyTools\\SDL2\\lib\\SDL2main.lib" PARENT_SCOPE)
       set (MySDL2_imageImportPath  "C:\\MyTools\\SDL2\\lib\\SDL2_image.lib" PARENT_SCOPE)
+      set (MyNodeIncludePath "C:\\MyTools\\Node\\sdk\\src" PARENT_SCOPE)
+      set (MyNodeImportPath  "C:\\MyTools\\Node\\sdk\\Release\\node.lib" PARENT_SCOPE)
    else()
       set (MyRisLibIncludePath "/usr/local/include/RisLib" PARENT_SCOPE)
-      set (MyRisLibImportPath  "/usr/local/lib/libRisLib.a" PARENT_SCOPE)
+      set (MyRisLibImportPath  "/usr/local/lib/libRisLib.so" PARENT_SCOPE)
       set (MyDspLibIncludePath "/usr/local/include/DspLib" PARENT_SCOPE)
       set (MyDspLibImportPath  "/usr/local/lib/libDspLib.a" PARENT_SCOPE)
       set (MyCPrintLibIncludePath "/usr/local/include/CPrintLib" PARENT_SCOPE)
@@ -28,6 +30,8 @@ function(my_init_import_variables)
       set (MyEigenIncludePath "/usr/include/eigen3" PARENT_SCOPE)
       set (MyOpenCVIncludePath "/usr/local/include/opencv4" PARENT_SCOPE)
       set (MySDL2IncludePath   "/usr/local/include/SDL2" PARENT_SCOPE)
+      set (MyGPIOIncludePath "/usr/local/include" PARENT_SCOPE)
+      set (MyGPIOImportPath  "/usr/local/lib/libwiringPi.so" PARENT_SCOPE)
    endif()
 endfunction()
 
@@ -37,7 +41,12 @@ endfunction()
 
 function(my_lib_import_RisLib _target)
 
-   add_library(RisLib STATIC IMPORTED)
+   if (MSVC)
+      add_library(RisLib STATIC IMPORTED)
+   else()
+      add_library(RisLib SHARED IMPORTED)
+   endif()
+
    set_target_properties(RisLib PROPERTIES IMPORTED_LOCATION ${MyRisLibImportPath})
 
    if (MSVC)
@@ -147,6 +156,49 @@ endfunction()
 function(my_inc_import_SDL2 _target)
 
    target_include_directories(${_target} PUBLIC ${MySDL2IncludePath})
+
+endfunction()
+
+#*******************************************************************************
+#*******************************************************************************
+#*******************************************************************************
+
+function(my_lib_import_GPIO _target)
+
+   if(MSVC)
+   else()
+      add_library(wiringPi SHARED IMPORTED)
+      set_target_properties(wiringPi PROPERTIES IMPORTED_LOCATION ${MyGPIOImportPath})
+      target_link_libraries(${_target} wiringPi)
+   endif()
+
+endfunction()
+
+function(my_inc_import_GPIO _target)
+
+   if(MSVC)
+   else()
+      target_include_directories(${_target} PUBLIC ${MyGPIOIncludePath})
+   endif()
+
+endfunction()
+
+#*******************************************************************************
+#*******************************************************************************
+#*******************************************************************************
+
+function(my_lib_import_Node _target)
+
+   add_library(Node STATIC IMPORTED)
+   set_target_properties(Node PROPERTIES IMPORTED_LOCATION ${MyNodeImportPath})
+
+   target_link_libraries(${_target} Node)
+
+endfunction()
+
+function(my_inc_import_Node _target)
+
+   target_include_directories(${_target} PUBLIC ${MyNodeIncludePath})
 
 endfunction()
 
