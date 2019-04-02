@@ -1,2 +1,2 @@
 # Dev_Image
-opencv image filters, C++, vstudio, windows, linux cmake
+opencv image filters, C++, vstudio, cmake windows and linux
