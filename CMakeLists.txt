@@ -13,6 +13,11 @@ my_init_export_variables()
 
 add_subdirectory ("SVLib")
 add_subdirectory ("DisplayLib")
+add_subdirectory ("StackFilter")
+return()
+
+add_subdirectory ("SVLib")
+add_subdirectory ("DisplayLib")
 add_subdirectory ("DisplayTest")
 add_subdirectory ("Matrix")
 add_subdirectory ("RCIndex")
