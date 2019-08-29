@@ -22,7 +22,7 @@ function(my_init_global_import_variables)
       set (MyNodeImportPath  "C:\\MyTools\\Node\\sdk\\Release\\node.lib" PARENT_SCOPE)
    else()
       set (MyRisLibIncludePath "/usr/local/include/RisLib" PARENT_SCOPE)
-      set (MyRisLibImportPath  "/usr/local/lib/libRisLib.so" PARENT_SCOPE)
+      set (MyRisLibImportPath  "/usr/local/lib/libRisLib.a" PARENT_SCOPE)
       set (MyDspLibIncludePath "/usr/local/include/DspLib" PARENT_SCOPE)
       set (MyDspLibImportPath  "/usr/local/lib/libDspLib.a" PARENT_SCOPE)
       set (MyCPrintLibIncludePath "/usr/local/include/CPrintLib" PARENT_SCOPE)
@@ -41,11 +41,7 @@ endfunction()
 
 function(my_lib_import_RisLib _target)
 
-   if (MSVC)
-      add_library(RisLib STATIC IMPORTED)
-   else()
-      add_library(RisLib SHARED IMPORTED)
-   endif()
+   add_library(RisLib STATIC IMPORTED)
 
    set_target_properties(RisLib PROPERTIES IMPORTED_LOCATION ${MyRisLibImportPath})
 
@@ -156,6 +152,16 @@ endfunction()
 function(my_inc_import_SDL2 _target)
 
    target_include_directories(${_target} PUBLIC ${MySDL2IncludePath})
+
+endfunction()
+
+#*******************************************************************************
+#*******************************************************************************
+#*******************************************************************************
+
+function(my_inc_import_Eigen _target)
+
+   target_include_directories(${_target} PUBLIC ${MyEigenIncludePath})
 
 endfunction()
 
